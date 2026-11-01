@@ -13,7 +13,9 @@ The conventions, where the game itself does not define them:
 
 - A death is **traded** when its killer is killed by one of the victim's
   teammates within 5 s; that kill is a **trade kill**.
-- The round's first kill is its **opening** duel.
+- The round's first kill of an enemy, while it is live, is its **opening**
+  duel; a teamkill, a suicide or a death to the world before it is passed
+  over.
 - **KAST**: the share of rounds in which a player killed, assisted (a flash
   assist counts), survived, or was traded.
 - **Damage** is what the victim actually lost: a 137 damage headshot on a
@@ -21,8 +23,10 @@ The conventions, where the game itself does not define them:
 - A **clutch** is being the last player alive on a side with enemies still
   standing; it is won when the side wins the round.
 - **Buy**, per side, from the average equipment value at the end of freeze
-  time: the first round of each half is a pistol round, then under $1,500 is
-  an eco, under $4,000 a force buy, and anything more a full buy.
+  time: the first round of each regulation half is a pistol round, then under
+  $1,500 is an eco, under $4,000 a force buy, and anything more a full buy.
+  The half is as long as the match played it: the sides first swap after it.
+  Overtime starts with money set by the server and has no pistol round.
 """
 
 from __future__ import annotations
@@ -34,9 +38,12 @@ from dataclasses import dataclass, field
 import numpy as np
 import pandas as pd
 
-from .demo import TICKRATE, RawPart
+from .demo import OVERTIME, TICKRATE, RawPart
 
 TRADE_SECONDS = 5.0
+
+#: The game's round win status: who won the round, once it is decided.
+WIN_STATUS = {1: "", 2: "T", 3: "CT"}
 
 #: The game's round end reasons (CSRoundEndReason) that occur in a defusal match.
 REASONS = {
@@ -160,6 +167,7 @@ class Round:
     start: float
     end: float
     until: float
+    #: `T` or `CT`; empty for a draw, which the game decides with no winner.
     winner: str
     reason: str
     #: Team name -> rounds won after this one, and the side it played.
@@ -168,8 +176,10 @@ class Round:
     #: Side -> team equipment value at the end of freeze time, and the buy.
     equipment: dict[str, int] = field(default_factory=dict)
     buy: dict[str, str] = field(default_factory=dict)
-    #: The bomb plant, if any: site, match seconds, planter, position.
+    #: The bomb plant, if any: site, seconds into the round, planter, position, place.
     plant: dict | None = None
+    #: Match seconds the planted bomb went off, if it did.
+    exploded: float | None = None
 
 
 @dataclass
@@ -192,6 +202,9 @@ class Match:
     blinds: pd.DataFrame
     #: Skipped rounds (cut off by the end of a demo), by the game's number.
     incomplete: list[int] = field(default_factory=list)
+    #: Rounds in a regulation half, where the recording shows the sides swap; and the pistol rounds.
+    half: int | None = None
+    pistol: list[int] = field(default_factory=list)
 
 
 # ---------------------------------------------------------------- the clock
@@ -279,9 +292,32 @@ def _flag(df: pd.DataFrame, column: str) -> pd.Series:
 def _rules(samples: pd.DataFrame) -> pd.DataFrame:
     """The game state once per sampled tick, from the players' rows."""
     s = samples[samples["team_num"].isin([2, 3])]
-    return s.drop_duplicates("tick").sort_values("tick")[
-        ["tick", "total_rounds_played", "round_win_status", "round_win_reason", "is_warmup_period"]
-    ]
+    columns = ["tick", "total_rounds_played", "round_win_status", "round_win_reason", "is_warmup_period"]
+    return s.drop_duplicates("tick").sort_values("tick")[columns + [c for c in (OVERTIME,) if c in s]]
+
+
+def _plant_sites(plants: pd.DataFrame) -> list[str]:
+    """
+    `A` or `B` for each plant. The game says which bomb zone the planter
+    stood in (1 is A, 2 is B); a demo without it has the planter's place name.
+    The event's own `site` is the zone's entity, a number: where one plant
+    does not say its letter, another plant on the same entity can.
+    """
+    zones = plants["user_which_bomb_zone"] if "user_which_bomb_zone" in plants else pd.Series(np.nan, index=plants.index)
+    places = plants["user_last_place_name"] if "user_last_place_name" in plants else pd.Series("", index=plants.index)
+    entities = plants["site"] if "site" in plants else pd.Series(np.nan, index=plants.index)
+    letters = []
+    for zone, place in zip(zones, places.fillna("").astype(str)):
+        zone = int(zone) if pd.notna(zone) else 0
+        letters.append(
+            "A" if zone == 1 else "B" if zone == 2 else "A" if "BombsiteA" in place else "B" if "BombsiteB" in place else ""
+        )
+    by_entity: dict[str, set[str]] = {}
+    for entity, letter in zip(entities.astype(str), letters):
+        if letter:
+            by_entity.setdefault(entity, set()).add(letter)
+    known = {e: next(iter(v)) for e, v in by_entity.items() if len(v) == 1}
+    return [letter or known.get(entity, "") for entity, letter in zip(entities.astype(str), letters)]
 
 
 @dataclass
@@ -293,6 +329,10 @@ class _Window:
     end_tick: int
     #: team number (2 T, 3 CT) -> rounds won after this one, NaN where the demo had none.
     score: dict[int, float]
+    #: side -> living players at the end of freeze time, whose equipment is summed.
+    players: dict[str, int] = field(default_factory=dict)
+    #: The game's overtime count at the end of freeze time (0 in regulation); None where the demo has none.
+    overtime: int | None = None
 
 
 def _rounds_in(part: _Part, origin: float) -> tuple[dict[int, tuple[Round, _Window]], list[int]]:
@@ -309,6 +349,11 @@ def _rounds_in(part: _Part, origin: float) -> tuple[dict[int, tuple[Round, _Wind
     teams = raw.samples[raw.samples["team_num"].isin([2, 3])]
     last_tick = int(raw.samples["tick"].max())
     plants = raw.events.get("bomb_planted")
+    if plants is not None and len(plants):
+        plants = plants[(plants["tick"] >= part.live_from) & ~_flag(plants, "is_warmup_period")].sort_values("tick")
+        plants = plants.assign(letter=_plant_sites(plants))
+    exploded = raw.events.get("bomb_exploded")
+    exploded_ticks = np.sort(exploded["tick"].to_numpy()) if exploded is not None else np.array([])
     out: dict[int, tuple[Round, _Window]] = {}
     cut: list[int] = []
     freeze_ticks = freezes["tick"].to_numpy()
@@ -319,7 +364,7 @@ def _rounds_in(part: _Part, origin: float) -> tuple[dict[int, tuple[Round, _Wind
             (rules["tick"] > tick)
             & (rules["tick"] < limit)
             & (rules["total_rounds_played"] == index + 1)
-            & rules["round_win_status"].isin([2, 3])
+            & rules["round_win_status"].isin(list(WIN_STATUS))
         ]
         if not len(done):
             cut.append(index + 1)
@@ -341,40 +386,48 @@ def _rounds_in(part: _Part, origin: float) -> tuple[dict[int, tuple[Round, _Wind
             for team_num, group in at_start.groupby("team_num"):
                 equipment[side_of(team_num)] = int(group["current_equip_value"].fillna(0).sum())
                 counts[side_of(team_num)] = len(group)
+        overtime = None
+        if OVERTIME in rules:
+            playing = rules.loc[rules["tick"] >= tick, OVERTIME].dropna()
+            overtime = int(playing.iloc[0]) if len(playing) else None
         number = index + 1
-        pistol = number in (1, 13)
-        buy = {s: buy_type(v / max(1, counts.get(s, 1)), pistol) for s, v in equipment.items()}
+        start, end, until = part.at([tick, end_tick, until_tick]) - origin
         plant = None
+        bomb = None
         if plants is not None and len(plants):
             p = plants[(plants["tick"] > tick) & (plants["tick"] <= end_tick)]
             if len(p):
                 row = p.iloc[0]
-                place = str(row.get("user_last_place_name") or "")
-                site = "A" if "BombsiteA" in place else "B" if "BombsiteB" in place else str(row.get("site", ""))
                 plant = {
-                    "site": site,
-                    "time": float(part.at([row["tick"]])[0] - origin),
+                    "site": row["letter"],
+                    # Seconds into the round, as the kills' times are.
+                    "time": float(part.at([row["tick"]])[0] - origin - start),
                     "player": str(row.get("user_name") or ""),
+                    "steamid": str(row.get("user_steamid") or ""),
                     "x": float(row["user_X"]),
                     "y": float(row["user_Y"]),
                     "z": float(row["user_Z"]),
+                    # Where the planter stood is where the bomb lies.
+                    "place": str(row.get("user_last_place_name") or ""),
                 }
-        start, end, until = part.at([tick, end_tick, until_tick]) - origin
+                went_off = exploded_ticks[(exploded_ticks > row["tick"]) & (exploded_ticks < limit)]
+                if len(went_off):
+                    bomb = float(part.at([went_off[0]])[0] - origin)
         out[index] = (
             Round(
                 number=number,
                 start=float(start),
                 end=float(end),
                 until=float(max(until, end)),
-                winner="T" if status == 2 else "CT",
+                winner=WIN_STATUS[status],
                 reason=reason,
                 score={},
                 sides={},
                 equipment=equipment,
-                buy=buy,
                 plant=plant,
+                exploded=bomb,
             ),
-            _Window(part, int(tick), end_tick, score_by_num),
+            _Window(part, int(tick), end_tick, score_by_num, counts, overtime),
         )
     return out, cut
 
@@ -413,6 +466,32 @@ def _players(parts: list[_Part]) -> dict[str, dict]:
         team = clan[0][0] if clan else f"Started {side_of(first[sid][2])}"
         out[sid] = {"name": name, "team": team}
     return out
+
+
+def _pistol_rounds(rounds: list[Round], windows: list[_Window]) -> tuple[int | None, list[int]]:
+    """
+    The length of a regulation half and the pistol rounds: the first round,
+    and the first after the half. A half ends where the sides first swap
+    between two rounds that follow each other, both in regulation; the game's
+    overtime count says which rounds are overtime, and where a demo has none,
+    every round past two halves is. A recording that never shows the swap
+    leaves the half unknown, and only round 1 a pistol round.
+    """
+    half = None
+    for a, (b, wb) in zip(rounds, zip(rounds[1:], windows[1:])):
+        if b.number != a.number + 1 or (wb.overtime or 0) > 0:
+            continue
+        common = set(a.sides) & set(b.sides)
+        if common and all(a.sides[t] != b.sides[t] for t in common):
+            half = a.number
+            break
+    firsts = {1} if half is None else {1, half + 1}
+    pistol = []
+    for r, w in zip(rounds, windows):
+        regulation = w.overtime == 0 if w.overtime is not None else half is None or r.number <= 2 * half
+        if r.number in firsts and regulation:
+            pistol.append(r.number)
+    return half, pistol
 
 
 def _name_teams(rounds: list[Round], windows: list[_Window], players: dict[str, dict]) -> list[str]:
@@ -469,12 +548,15 @@ ROW_COLUMNS = [
     "equipment",
     "weapon",
     "place",
+    "throwerPlace",
     "other",
     "damage",
     "duration",
     "headshot",
     "opening",
     "traded",
+    "noscope",
+    "attackerBlind",
     "won",
     "buy",
 ]
@@ -526,6 +608,8 @@ NUMERIC = {
     "headshot",
     "opening",
     "traded",
+    "noscope",
+    "attackerBlind",
     "won",
 }
 
@@ -616,6 +700,10 @@ def build_match(raws: list[RawPart], name: str) -> Match:
     map_name = next((p.raw.map for p in parts if p.raw.map), "")
     players = _players(parts)
     teams = _name_teams(rounds, windows, players)
+    # The buy waits for the teams: a pistol round is known from where they swap sides.
+    half, pistol = _pistol_rounds(rounds, windows)
+    for r, w in zip(rounds, windows):
+        r.buy = {s: buy_type(v / max(1, w.players.get(s, 1)), r.number in pistol) for s, v in r.equipment.items()}
 
     frames: list[pd.DataFrame] = []
     deaths: list[pd.DataFrame] = []
@@ -696,6 +784,9 @@ def build_match(raws: list[RawPart], name: str) -> Match:
                 continue
             rows = _event_rows(part, origin, "user", g, kind)
             rows.update(x=g["x"].to_numpy(dtype=float), y=g["y"].to_numpy(dtype=float), z=g["z"].to_numpy(dtype=float))
+            # The event names no place where the grenade went off, only the
+            # thrower's at that moment: kept, under its own name.
+            rows["throwerPlace"] = rows.pop("place")
             rows["weapon"] = {"smoke": "Smoke Grenade", "flash": "Flashbang", "he": "High Explosive Grenade", "molotov": "Molotov", "decoy": "Decoy Grenade"}[kind]
             frames.append(_frame(rows))
         for event_name, kind in (("bomb_planted", "plant"), ("bomb_defused", "defuse")):
@@ -745,20 +836,23 @@ def build_match(raws: list[RawPart], name: str) -> Match:
                 }
             )
         )
-    # The bomb going off, where it was planted.
+    # The bomb going off, where it was planted: when the demo says it did,
+    # else when a round won by the bomb was decided. It is the planting team's.
     for r in rounds:
-        if r.reason == "bomb" and r.plant:
+        if r.plant and (r.exploded is not None or r.reason == "bomb"):
             frames.append(
                 _frame(
                     {
-                        "time": [r.end],
+                        "time": [r.exploded if r.exploded is not None else r.end],
                         "event": "explode",
                         "player": [r.plant["player"]],
+                        "steamid": [r.plant["steamid"]],
                         "side": ["T"],
+                        "team": [next((t for t, s in r.sides.items() if s == "T"), "")],
                         "x": [r.plant["x"]],
                         "y": [r.plant["y"]],
                         "z": [r.plant["z"]],
-                        "place": [f"Bombsite{r.plant['site']}"],
+                        "place": [r.plant["place"]],
                         "weapon": ["C4 Explosive"],
                     }
                 )
@@ -782,6 +876,8 @@ def build_match(raws: list[RawPart], name: str) -> Match:
         damage=damage,
         blinds=flashed,
         incomplete=sorted(incomplete),
+        half=half,
+        pistol=pistol,
     )
 
 
@@ -813,7 +909,7 @@ def _kills(deaths: pd.DataFrame, rounds: list[Round]) -> pd.DataFrame:
     """One row per death: who killed whom where, opening, traded, trade kill, assist."""
     columns = [
         "round", "time", "roundTime", "phase", "attacker", "attackerId", "attackerSide", "victim", "victimId",
-        "victimSide", "assister", "assisterId", "flashAssist", "weapon", "headshot", "teamkill", "wallbang",
+        "victimSide", "assister", "assisterId", "flashAssist", "weapon", "headshot", "teamkill", "suicide", "wallbang",
         "throughSmoke", "noscope", "attackerBlind", "opening", "traded", "trade",
         "ax", "ay", "az", "aplace", "vx", "vy", "vz", "vplace",
     ]
@@ -855,13 +951,14 @@ def _kills(deaths: pd.DataFrame, rounds: list[Round]) -> pd.DataFrame:
             "vplace": d["user_last_place_name"].fillna("").astype(str),
         }
     )
-    out["teamkill"] = (out["attackerSide"] == out["victimSide"]) & (out["attackerId"] != "")
-    enemy = (out["attackerId"] != "") & ~out["teamkill"] & (out["attackerId"] != out["victimId"])
-    # Opening: the first death of each round, while it was live.
+    # A suicide - an own grenade, say - is no teamkill.
+    out["suicide"] = (out["attackerId"] != "") & (out["attackerId"] == out["victimId"])
+    out["teamkill"] = (out["attackerSide"] == out["victimSide"]) & (out["attackerId"] != "") & ~out["suicide"]
+    enemy = _enemy(out)
+    # Opening: the first kill of an enemy in each round, while it was live.
     out["opening"] = False
-    live = out[out["phase"] == "live"]
+    live = out[(out["phase"] == "live") & enemy]
     out.loc[live.groupby("round").head(1).index, "opening"] = True
-    out.loc[~enemy, "opening"] = False
     # Traded: the killer killed by a teammate of the victim within TRADE_SECONDS.
     out["traded"] = False
     out["trade"] = False
@@ -880,11 +977,16 @@ def _kills(deaths: pd.DataFrame, rounds: list[Round]) -> pd.DataFrame:
     return out[columns]
 
 
+def _enemy(kills: pd.DataFrame) -> pd.Series:
+    """The deaths that are an enemy's kill: not the world's, not a teamkill, not a suicide."""
+    return (kills["attackerId"] != "") & ~kills["teamkill"] & ~kills["suicide"]
+
+
 def _kill_rows(kills: pd.DataFrame) -> list[pd.DataFrame]:
     """A kill at the killer's position and a death at the victim's, for the heatmap."""
     if not len(kills):
         return []
-    enemy = kills[(kills["attackerId"] != "") & ~kills["teamkill"]]
+    enemy = kills[_enemy(kills)]
     kill = _frame(
         {
             "time": enemy["time"].to_numpy(),
@@ -901,6 +1003,8 @@ def _kill_rows(kills: pd.DataFrame) -> list[pd.DataFrame]:
             "headshot": enemy["headshot"].astype(float).to_numpy(),
             "opening": enemy["opening"].astype(float).to_numpy(),
             "traded": enemy["trade"].astype(float).to_numpy(),
+            "noscope": enemy["noscope"].astype(float).to_numpy(),
+            "attackerBlind": enemy["attackerBlind"].astype(float).to_numpy(),
         }
     )
     death = _frame(
@@ -919,6 +1023,8 @@ def _kill_rows(kills: pd.DataFrame) -> list[pd.DataFrame]:
             "headshot": kills["headshot"].astype(float).to_numpy(),
             "opening": kills["opening"].astype(float).to_numpy(),
             "traded": kills["traded"].astype(float).to_numpy(),
+            "noscope": kills["noscope"].astype(float).to_numpy(),
+            "attackerBlind": kills["attackerBlind"].astype(float).to_numpy(),
         }
     )
     return [kill, death]

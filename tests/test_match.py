@@ -13,11 +13,11 @@ import pandas as pd
 import pyarrow.parquet as pq
 import pytest
 
-from heat3d_cs2.match import build_match, chains
+from heat3d_cs2.match import _plant_sites, build_match, chains
 from heat3d_cs2.output import HINTS, write
 from heat3d_cs2.stats import player_stats, round_summaries, scoreboard_text, summary
 
-from .fixtures import two_rounds
+from .fixtures import death, halves, samples, two_rounds
 
 
 @pytest.fixture(scope="module")
@@ -47,7 +47,57 @@ class TestRounds:
     def test_economy_and_the_plant(self, match):
         assert match.rounds[0].buy == {"T": "pistol", "CT": "pistol"}
         assert match.rounds[1].buy == {"T": "full", "CT": "full"}
-        assert match.rounds[1].plant["site"] == "A" and match.rounds[1].plant["player"] == "ash"
+        plant = match.rounds[1].plant
+        assert plant["site"] == "A" and plant["player"] == "ash" and plant["steamid"] == "2"
+        # Planted at tick 4000 of a round whose freeze time ended at 2560:
+        # seconds into the round, as a kill's time is.
+        assert plant["time"] == pytest.approx((4000 - 2560) / 64)
+        assert plant["place"] == "BombsiteA"
+        assert match.rounds[1].exploded == pytest.approx(4790 / 64)
+
+    def test_a_plant_site_is_a_letter_never_an_entity(self):
+        plants = pd.DataFrame(
+            {
+                # The game's bomb zone; else the place name; else another plant on the same zone entity.
+                "user_which_bomb_zone": [2, np.nan, 0, 0, np.nan],
+                "user_last_place_name": ["Middle", "BombsiteA", "Middle", "Middle", None],
+                "site": [326, 325, 325, 999, 326],
+            }
+        )
+        assert _plant_sites(plants) == ["B", "A", "A", "", "B"]
+        no_zone = plants.drop(columns=["user_which_bomb_zone"])
+        assert _plant_sites(no_zone) == ["", "A", "A", "", ""]
+
+    def test_a_draw_is_decided_with_no_winner(self):
+        raw = two_rounds()
+        rounds = [
+            {"freeze": 640, "end": 1664, "winner": 2, "reason": 9, "deaths": {"3": 1280, "1": 1400, "4": 1600}},
+            {"freeze": 2560, "end": 4800, "winner": 1, "reason": 10, "deaths": {}},
+        ]
+        raw.samples = samples(rounds)
+        m = build_match([raw], "x")
+        assert [(r.number, r.winner, r.reason) for r in m.rounds] == [(1, "T", "elimination"), (2, "", "draw")]
+        assert m.incomplete == []
+        assert m.rounds[1].score == {"Alpha": 1, "Bravo": 0}
+        r2 = summary(m)["rounds"][1]
+        assert (r2["winner"], r2["winnerTeam"]) == ("", "")
+        assert set(m.rows.loc[m.rows["round"] == 2, "won"].dropna()) == {0.0}
+
+    def test_pistol_rounds_from_where_the_sides_swap(self):
+        # Halves of three, then an overtime whose own halves swap too.
+        plan = [(False, 0)] * 3 + [(True, 0)] * 3 + [(True, 1), (False, 1)]
+        for overtime in (True, False):
+            m = build_match([halves(plan, overtime=overtime)], "x")
+            assert [r.sides["Alpha"] for r in m.rounds] == ["T"] * 3 + ["CT"] * 4 + ["T"]
+            assert (m.half, m.pistol) == (3, [1, 4])
+            assert [r.buy["T"] for r in m.rounds] == ["pistol", "full", "full", "pistol", "full", "full", "full", "full"]
+        doc = summary(m)
+        assert (doc["halfLength"], doc["pistolRounds"]) == (3, [1, 4])
+
+    def test_without_a_swap_only_round_one_is_a_pistol_round(self, match):
+        assert (match.half, match.pistol) == (None, [1])
+        m = build_match([halves([(False, 0)] * 4)], "x")
+        assert m.pistol == [1] and [r.buy["T"] for r in m.rounds] == ["pistol", "full", "full", "full"]
 
     def test_teams_without_clan_names_are_named_by_their_first_side(self):
         m = build_match([two_rounds(clans=False)], "x")
@@ -64,6 +114,46 @@ class TestKills:
         assert list(k["traded"]) == [True, True, False]
         assert list(k["trade"]) == [False, True, True]
         assert bool(k["headshot"].iloc[0]) and k["weapon"].iloc[0] == "AK-47"
+
+    def test_a_suicide_is_no_teamkill_and_the_opening_is_an_enemys_kill(self):
+        raw = two_rounds()
+        # ash kills his teammate ace, bob dies to his own grenade, then ash kills ben.
+        raw.events["player_death"] = pd.DataFrame(
+            [death(1200, "2", "1"), death(1250, "3", "3", weapon="hegrenade"), death(1600, "2", "4")]
+        )
+        m = build_match([raw], "x")
+        k = m.kills
+        assert list(k["victim"]) == ["ace", "bob", "ben"]
+        assert list(k["teamkill"]) == [True, False, False]
+        assert list(k["suicide"]) == [False, True, False]
+        assert list(k["opening"]) == [False, False, True]
+        p = by_name(player_stats(m))
+        assert (p["ash"]["teamkills"], p["bob"]["teamkills"]) == (1, 0)
+        assert (p["ash"]["kills"], p["ash"]["openingKills"], p["ben"]["openingDeaths"]) == (1, 1, 1)
+        assert (p["bob"]["deaths"], p["bob"]["kills"]) == (1, 0)
+        counts = m.rows["event"].value_counts().to_dict()
+        assert (counts["kill"], counts["death"]) == (1, 3)
+        flags = [(x["teamkill"], x["suicide"], x["opening"]) for x in round_summaries(m)[0]["kills"]]
+        assert flags == [(True, False, False), (False, True, False), (False, False, True)]
+
+    def test_noscope_and_a_blind_attacker_are_written(self, tmp_path):
+        raw = two_rounds()
+        raw.events["player_death"].loc[0, "noscope"] = True
+        raw.events["player_death"].loc[1, "attackerblind"] = True
+        m = build_match([raw], "x")
+        rows = m.rows
+        kill = rows[rows["event"] == "kill"].set_index("other")
+        died = rows[rows["event"] == "death"].set_index("player")
+        assert (kill.loc["bob", "noscope"], kill.loc["bob", "attackerBlind"]) == (1, 0)
+        assert (kill.loc["ace", "noscope"], kill.loc["ace", "attackerBlind"]) == (0, 1)
+        assert died.loc["bob", "noscope"] == 1 and died.loc["ace", "attackerBlind"] == 1
+        assert rows.loc[rows["event"] == "position", "noscope"].isna().all()
+        flags = [(x["noscope"], x["attackerBlind"]) for x in round_summaries(m)[0]["kills"]]
+        assert flags == [(True, False), (False, True), (False, False)]
+        data, _ = write(m, tmp_path)
+        table = pq.read_table(data)
+        assert str(table.schema.field("noscope").type) == "int8"
+        assert str(table.schema.field("attackerBlind").type) == "int8"
 
     def test_damage_is_health_lost(self, match):
         # 60 then a 137 on 40 health; 100 on ace; 120 on ben.
@@ -105,6 +195,14 @@ class TestTheTable:
         assert counts["smoke"] == 1 and counts["plant"] == 1 and counts["explode"] == 1
         smoke = rows[rows["event"] == "smoke"].iloc[0]
         assert (smoke["x"], smoke["y"], smoke["player"]) == (50.0, 60.0, "ash")
+        # Where it went off has no place name of its own; where the thrower stood is said as that.
+        assert (smoke["place"], smoke["throwerPlace"]) == ("", "BombsiteA")
+        assert set(rows.loc[rows["event"] != "smoke", "throwerPlace"]) == {""}
+        explode = rows[rows["event"] == "explode"].iloc[0]
+        # The planting team's, when the demo says the bomb went off.
+        assert (explode["player"], explode["steamid"], explode["side"], explode["team"]) == ("ash", "2", "T", "Alpha")
+        assert explode["place"] == "BombsiteA"
+        assert explode["time"] == pytest.approx(4790 / 64)
         kill = rows[rows["event"] == "kill"].iloc[0]
         assert (kill["player"], kill["other"], kill["opening"], kill["round"]) == ("ace", "bob", 1, 1)
 
@@ -130,6 +228,8 @@ class TestTheTable:
         assert table.num_rows == len(match.rows)
         summary_doc = json.loads(doc.read_text(encoding="utf-8"))
         assert summary_doc["format"] == "heat3d-cs2-match"
+        assert summary_doc["version"] == 2
+        assert summary_doc["rounds"][1]["plant"]["time"] == 22.5
         assert summary_doc["score"] == {"Alpha": 2, "Bravo": 0}
         assert summary_doc["missing"] == []
 

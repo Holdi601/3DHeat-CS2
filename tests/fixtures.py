@@ -9,7 +9,7 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
-from heat3d_cs2.demo import RawPart
+from heat3d_cs2.demo import OVERTIME, RawPart
 
 #: steamid -> (name, team, team_num in the first half)
 PLAYERS = {
@@ -27,25 +27,33 @@ def samples(
     clock0: float = 1000.0,
     last_tick: int | None = None,
     clans: bool = True,
+    overtime: bool = False,
 ) -> pd.DataFrame:
     """
     Every player every `every` ticks. `rounds`: dicts with `freeze` (tick the
-    freeze time ends), `end` (tick decided), `winner` (2 or 3), `reason`, and
-    `deaths` {steamid: tick}. Before a round's freeze ends the players are
-    frozen; between rounds the next round's count is shown, as the game does.
+    freeze time ends), `end` (tick decided), `winner` (2 or 3, 1 a draw),
+    `reason`, `deaths` {steamid: tick}, and optionally `swapped` (the teams on
+    the other sides) and `overtime` (the game's overtime count, a column only
+    with `overtime`). Before a round's freeze ends the players are frozen;
+    between rounds the next round's count is shown, as the game does.
     """
     last_tick = last_tick or rounds[-1]["end"] + 640
     rows = []
-    score = {2: 0, 3: 0}
+
+    def side(num: int, r: dict) -> int:
+        return 5 - num if r.get("swapped") else num
+
     for tick in range(0, last_tick + 1, every):
         played = sum(1 for r in rounds if tick >= r["end"])
         current = rounds[min(played, len(rounds) - 1)]
         decided = [r for r in rounds if r["end"] <= tick]
-        score = {2: sum(1 for r in decided if r["winner"] == 2), 3: sum(1 for r in decided if r["winner"] == 3)}
         status = decided[-1]["winner"] if decided and tick < decided[-1]["end"] + 448 else 0
         reason = decided[-1]["reason"] if status else 0
         freeze = tick < current["freeze"] and played < len(rounds)
-        for sid, (name, clan, num) in PLAYERS.items():
+        for sid, (name, clan, first) in PLAYERS.items():
+            num = side(first, current)
+            # The team's rounds won, whichever side it won them on.
+            score = sum(1 for r in decided if r["winner"] == side(first, r))
             died = current.get("deaths", {}).get(sid)
             alive = not (died is not None and tick >= died and tick < current["end"] + 448)
             x, y = POSITIONS[sid]
@@ -72,9 +80,10 @@ def samples(
                     "total_rounds_played": played,
                     "round_win_status": status,
                     "round_win_reason": reason,
-                    "team_rounds_total": score[num],
+                    "team_rounds_total": score,
                     "is_warmup_period": False,
                     "is_freeze_period": freeze,
+                    **({OVERTIME: current.get("overtime", 0)} if overtime else {}),
                 }
             )
     return pd.DataFrame(rows)
@@ -131,7 +140,7 @@ def two_rounds(clans: bool = True, clock0: float = 1000.0) -> RawPart:
     Round 1 (T win by elimination): ace kills bob (the opening), ben kills ace
     1.9 s later (a trade: bob's death is traded), ash kills ben - alone
     against one, a clutch won. Round 2 (T win, the bomb): ash plants on A,
-    nobody dies.
+    nobody dies, the bomb goes off.
     """
     rounds = [
         {"freeze": 640, "end": 1664, "winner": 2, "reason": 9, "deaths": {"3": 1280, "1": 1400, "4": 1600}},
@@ -161,6 +170,9 @@ def two_rounds(clans: bool = True, clock0: float = 1000.0) -> RawPart:
         "bomb_planted": pd.DataFrame(
             [{"tick": 4000, **player_columns("user", "2", 4000), "site": 325, "is_warmup_period": False}]
         ),
+        "bomb_exploded": pd.DataFrame(
+            [{"tick": 4790, "user_name": "ash", "user_steamid": "2", "site": 325, "is_warmup_period": False}]
+        ),
         "weapon_fire": pd.DataFrame(
             [
                 {"tick": 1270, **player_columns("user", "1", 1270), "weapon": "weapon_ak47", "is_warmup_period": False},
@@ -175,6 +187,26 @@ def two_rounds(clans: bool = True, clock0: float = 1000.0) -> RawPart:
     for df in events.values():
         df.columns = [str(c) for c in df.columns]
     return RawPart("synthetic.dem", "de_test", s, events)
+
+
+def halves(plan: list[tuple[bool, int]], overtime: bool = True) -> RawPart:
+    """
+    One round per entry of `plan`, (swapped, overtime count): the teams on
+    their first sides or swapped, and the game's overtime count - a column
+    only with `overtime`. Every round a T win by elimination, nobody dies.
+    """
+    rounds = [
+        {"freeze": 2000 * k + 640, "end": 2000 * k + 1600, "winner": 2, "reason": 9, "swapped": swapped, "overtime": ot}
+        for k, (swapped, ot) in enumerate(plan)
+    ]
+    s = samples(rounds, overtime=overtime)
+    events = {
+        "round_freeze_end": pd.DataFrame(
+            {"tick": [r["freeze"] for r in rounds], "total_rounds_played": list(range(len(rounds))), "is_warmup_period": False}
+        ),
+        "round_prestart": pd.DataFrame({"tick": [2000 * k for k in range(len(rounds))]}),
+    }
+    return RawPart("halves.dem", "de_test", s, events)
 
 
 def frame_series(n: int, value) -> np.ndarray:

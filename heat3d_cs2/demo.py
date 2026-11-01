@@ -43,8 +43,12 @@ PLAYER_FIELDS = [
     "current_equip_value",
 ]
 
+#: The game's count of the overtime being played, 0 in regulation: it has no
+#: shorter name in the parser, so it is asked for by the game's own.
+OVERTIME = "CCSGameRulesProxy.CCSGameRules.m_nOvertimePlaying"
+
 #: The game's own state, read alongside: the round count, who won it and how,
-#: the score, the clock.
+#: the score, the clock, overtime.
 RULES_FIELDS = [
     "game_time",
     "total_rounds_played",
@@ -53,10 +57,12 @@ RULES_FIELDS = [
     "team_rounds_total",
     "is_warmup_period",
     "is_freeze_period",
+    OVERTIME,
 ]
 
-#: For each player in an event: where they were and on which side.
-EVENT_PLAYER = ["X", "Y", "Z", "team_num", "last_place_name"]
+#: For each player in an event: where they were, on which side, and which bomb
+#: zone they stood in (0 none, 1 A, 2 B) - what names a plant's site.
+EVENT_PLAYER = ["X", "Y", "Z", "team_num", "last_place_name", "which_bomb_zone"]
 
 #: Events read, where the demo has them.
 EVENTS = [
@@ -75,7 +81,6 @@ EVENTS = [
     "round_freeze_end",
     "round_prestart",
     "round_announce_match_start",
-    "cs_win_panel_match",
 ]
 
 #: Far past the end of any match: the sampled ticks are a stride up to here,

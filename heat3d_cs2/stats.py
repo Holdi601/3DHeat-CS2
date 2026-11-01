@@ -55,7 +55,7 @@ def round_summaries(match: Match) -> list[dict]:
                 "sides": r.sides,
                 "equipment": r.equipment,
                 "buy": r.buy,
-                "plant": r.plant,
+                "plant": {**r.plant, "time": round(r.plant["time"], 2)} if r.plant else None,
                 "survivors": {s: sorted(match.players.get(i, {}).get("name", i) for i in ids) for s, ids in alive.items()},
                 "clutches": clutches,
                 "kills": [
@@ -71,10 +71,13 @@ def round_summaries(match: Match) -> list[dict]:
                         "headshot": bool(k.headshot),
                         "wallbang": bool(k.wallbang),
                         "throughSmoke": bool(k.throughSmoke),
+                        "noscope": bool(k.noscope),
+                        "attackerBlind": bool(k.attackerBlind),
                         "opening": bool(k.opening),
                         "traded": bool(k.traded),
                         "trade": bool(k.trade),
                         "teamkill": bool(k.teamkill),
+                        "suicide": bool(k.suicide),
                         "after": k.phase == "after",
                         "place": k.vplace,
                     }
@@ -90,7 +93,7 @@ def player_stats(match: Match, summaries: list[dict] | None = None) -> list[dict
     summaries = summaries if summaries is not None else round_summaries(match)
     rounds = len(match.rounds)
     kills = match.kills
-    enemy = kills[(kills["attackerId"] != "") & ~kills["teamkill"] & (kills["attackerId"] != kills["victimId"])]
+    enemy = kills[(kills["attackerId"] != "") & ~kills["teamkill"] & ~kills["suicide"]]
     stat: dict[str, dict] = defaultdict(lambda: defaultdict(float))
     kast: dict[str, set[int]] = defaultdict(set)
     for k in enemy.itertuples():
@@ -188,7 +191,8 @@ def summary(match: Match) -> dict:
     rounds = round_summaries(match)
     return {
         "format": "heat3d-cs2-match",
-        "version": 1,
+        # 2: a plant's time is seconds into the round, as the kills' are (1: match seconds).
+        "version": 2,
         "match": match.name,
         "map": match.map,
         "demos": [p.replace("\\", "/").rsplit("/", 1)[-1] for p in match.parts],
@@ -198,10 +202,13 @@ def summary(match: Match) -> dict:
         "incomplete": match.incomplete,
         # Rounds before the first the demo has: the recording started late.
         "missing": list(range(1, match.rounds[0].number)) if match.rounds else [],
+        # The half's length where the recording shows the sides swap, else null; the pistol rounds by it.
+        "halfLength": match.half,
+        "pistolRounds": match.pistol,
         "players": player_stats(match, rounds),
         "conventions": {
             "tradeSeconds": 5,
-            "buy": "pistol: rounds 1 and 13; else average equipment under $1500 eco, under $4000 force, otherwise full",
+            "buy": "pistol: the first round of each regulation half (pistolRounds), none in overtime; else average equipment under $1500 eco, under $4000 force, otherwise full",
             "damage": "health actually lost, enemies only",
             "kast": "rounds with a kill, an assist (flash assists count), survival or a traded death",
         },

@@ -35,9 +35,11 @@ default). Matches already written are skipped unless `--force`.
 | `x`, `y`, `z` | the game's own coordinates (inches, Z up) |
 | `dirX`, `dirY`, `dirZ` | where a player looks, a unit vector in the same frame |
 | `health`, `armor`, `money`, `equipment` | for positions |
-| `weapon`, `place` | the weapon as the game names it (every knife skin as `Knife`); the map's own place name |
+| `weapon`, `place` | the weapon as the game names it (every knife skin as `Knife`); the map's own place name (none where a grenade went off) |
+| `throwerPlace` | for a grenade going off: where its thrower was at that moment |
 | `other`, `damage`, `duration` | the other player of a kill, hit or flash; health lost; seconds blinded |
-| `headshot`, `opening`, `traded` | 0/1: a headshot; the round's first kill; for a kill, a trade - for a death, avenged within 5 s |
+| `headshot`, `opening`, `traded` | 0/1: a headshot; the round's first kill of an enemy; for a kill, a trade - for a death, avenged within 5 s |
+| `noscope`, `attackerBlind` | 0/1, for a kill or death: a scoped weapon fired unscoped; the killer was flashed |
 | `won`, `buy` | 0/1 whether this row's side won the round; its side's buy that round |
 
 The file's Parquet footer carries reading instructions under the key
@@ -62,7 +64,8 @@ Where the game does not define them:
 - A **clutch** is being the last player alive on a side with enemies still
   standing; it is won when the side wins the round.
 - **Buy**, per side, from the average equipment value when freeze time ends:
-  the first round of each half is a pistol round, then under $1,500 an eco,
+  the first round of each regulation half is a pistol round (the half as
+  long as the match played it; overtime has none), then under $1,500 an eco,
   under $4,000 a force buy, anything more a full buy.
 
 ## Demos as they come

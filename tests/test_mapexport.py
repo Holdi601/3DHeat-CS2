@@ -35,6 +35,10 @@ def test_clips_and_sky_are_left_out_and_surfaces_named():
     assert surface_of("physics_group_concrete") == "concrete"
     assert surface_of("physics_passbullets_chainlink") == "chainlink"
     assert surface_of("physics_group") == "world"
+    # Whatever the case of the name.
+    assert surface_of("Physics_PlayerClip") is None
+    assert surface_of("PHYSICS_SKYBOX") is None
+    assert surface_of("Physics_Group_Concrete") == "concrete"
 
 
 def test_ground_faces_up_structure_does_not():

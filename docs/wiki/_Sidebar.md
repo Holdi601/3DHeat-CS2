@@ -1,3 +1,15 @@
 **3DHeat CS2**
 
-- [[Home]]
+- [Home](Home)
+- [Installing](installing)
+- [Commands](commands)
+- [Reading a demo](reading-demos)
+- [Building a match](building-matches)
+- [Statistics](statistics)
+- [The heatmap table](output-table)
+- [The match summary](output-match-json)
+- [Map export](map-export)
+- [Using it with 3DHeat](using-with-3dheat)
+- [Limits](limits)
+- [Updates](updates)
+- [Development](development)

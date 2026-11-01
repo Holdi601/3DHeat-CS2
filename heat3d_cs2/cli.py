@@ -28,7 +28,8 @@ def matches_in(paths: list[str]) -> dict[str, list[Path]]:
     files: list[Path] = []
     for p in map(Path, paths):
         if p.is_dir():
-            files += sorted(p.rglob("*.dem"))
+            # `.dem` in any case, as for a file given by name.
+            files += sorted(f for f in p.rglob("*") if f.suffix.lower() == ".dem" and f.is_file())
         elif p.suffix.lower() == ".dem":
             files.append(p)
     out: dict[str, list[Path]] = {}
@@ -62,10 +63,20 @@ def convert(name: str, files: list[Path], folder: Path, every: int) -> str:
     return "\n".join(lines)
 
 
+def written(folder: Path) -> set[str]:
+    """
+    The matches already written under `folder`: a table with its summary
+    beside it. A run stopped between the two left the match unfinished.
+    """
+    if not folder.exists():
+        return set()
+    return {p.stem for p in folder.rglob("*.parquet") if p.with_name(p.stem + ".match.json").is_file()}
+
+
 def _demos(args) -> int:
     folder = Path(args.out)
-    written = {p.stem for p in folder.rglob("*.parquet")} if folder.exists() else set()
-    todo = {n: f for n, f in matches_in(args.paths).items() if args.force or n not in written}
+    done = written(folder)
+    todo = {n: f for n, f in matches_in(args.paths).items() if args.force or n not in done}
     if args.map:
         todo = {n: f for n, f in todo.items() if args.map.lower() in n.lower()}
     if not todo:

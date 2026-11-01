@@ -51,6 +51,8 @@ HINTS = {
 INT16 = {"round", "health", "armor"}
 INT32 = {"money", "equipment"}
 FLOAT64 = {"time"}
+#: 0/1 flags, stored as int8.
+FLAGS = {"headshot", "opening", "traded", "noscope", "attackerBlind", "won"}
 
 
 def table(match: Match) -> pa.Table:
@@ -67,7 +69,7 @@ def table(match: Match) -> pa.Table:
                 ints = np.where(mask, 0, values).astype(np.int64)
                 arrays.append(pa.array(ints, type=kind, mask=mask))
                 fields.append(pa.field(c, kind))
-            elif c in {"headshot", "opening", "traded", "won"}:
+            elif c in FLAGS:
                 mask = ~np.isfinite(values)
                 arrays.append(pa.array(np.where(mask, 0, values).astype(np.int8), type=pa.int8(), mask=mask))
                 fields.append(pa.field(c, pa.int8()))

@@ -93,7 +93,8 @@ def to_viewer(game: np.ndarray) -> np.ndarray:
 
 
 def surface_of(node: str) -> str | None:
-    """The surface a physics group is made of; None for clip brushes and the sky."""
+    """The surface a physics group is made of, in lower case; None for clip brushes and the sky."""
+    node = node.lower()
     if "clip" in node or "sky" in node:
         return None
     surface = re.sub(r"^physics(_group|_passbullets)?_?", "", node)

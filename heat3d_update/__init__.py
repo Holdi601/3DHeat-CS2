@@ -20,9 +20,8 @@ How an update is applied depends on how the tools were installed:
   one cannot shadow its replacement.
 
 Nothing is updated without the user knowing: a command-line tool asks first
-(and only notifies when there is nobody to ask), the watcher updates itself
-while no game is running and says so. `HEAT3D_NO_UPDATE=1` switches both the
-check and the update off.
+(and only notifies when there is nobody to ask). `HEAT3D_NO_UPDATE=1` switches
+both the check and the update off.
 """
 
 from __future__ import annotations
@@ -216,7 +215,9 @@ def _sync(src: Path, dst: Path) -> None:
         else:
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(path, target)
-    for package in src.glob("*/heat3d_*"):
+    # A tool's packages sit at the top of its repository; one level down is the
+    # old monorepo's layout, kept so an update from it still cleans up.
+    for package in [*src.glob("heat3d_*"), *src.glob("*/heat3d_*")]:
         if not package.is_dir():
             continue
         mine = dst / package.relative_to(src)
