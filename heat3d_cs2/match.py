@@ -31,6 +31,7 @@ The conventions, where the game itself does not define them:
 
 from __future__ import annotations
 
+import json
 import math
 from collections import Counter
 from dataclasses import dataclass, field
@@ -38,6 +39,7 @@ from dataclasses import dataclass, field
 import numpy as np
 import pandas as pd
 
+from . import events as more
 from .demo import OVERTIME, TICKRATE, RawPart
 
 TRADE_SECONDS = 5.0
@@ -205,6 +207,17 @@ class Match:
     #: Rounds in a regulation half, where the recording shows the sides swap; and the pistol rounds.
     half: int | None = None
     pistol: list[int] = field(default_factory=list)
+    #: Events about no player (round beeps, server messages, the broadcast camera...): name, time, fields.
+    events: list[dict] = field(default_factory=list)
+    #: The game's state where it changed: time, field, value.
+    state: list[dict] = field(default_factory=list)
+    #: steamid -> what stays the same through the match (crosshair, music kit, rank, colour).
+    profiles: dict[str, dict] = field(default_factory=dict)
+    #: The first part's header; every part's players as the demo lists them, skins and item drops.
+    header: dict = field(default_factory=dict)
+    player_info: list[dict] = field(default_factory=list)
+    skins: list[dict] = field(default_factory=list)
+    item_drops: list[dict] = field(default_factory=list)
 
 
 # ---------------------------------------------------------------- the clock
@@ -268,6 +281,9 @@ class _Part:
         self.rounds = (int(index.min()), int(index.max())) if len(index) else (0, 0)
         #: Server clock at the match's zero: set when the parts are put in order.
         self.offset = self.first_clock
+        #: The ticks between player samples, as the part was read.
+        ticks = np.unique(s["tick"].to_numpy()) if len(s) else np.array([])
+        self.every = int(np.median(np.diff(ticks))) if len(ticks) > 1 else 8
 
     def at(self, ticks):
         """
@@ -560,6 +576,8 @@ ROW_COLUMNS = [
     "won",
     "buy",
 ]
+# Everything else the demo says about a row: see `events`.
+ROW_COLUMNS += [c for c in more.EXTRA_TEXT + more.EXTRA_NUMERIC + more.SAMPLE_COLUMNS if c not in ROW_COLUMNS]
 
 
 def _direction(yaw_deg, pitch_deg):
@@ -579,6 +597,22 @@ def _assign(times: np.ndarray, rounds: list[Round]) -> tuple[np.ndarray, np.ndar
         which[inside] = k
         after[inside] = times[inside] > r.end
     return which, after
+
+
+def _assign_phases(times: np.ndarray, rounds: list[Round]) -> tuple[np.ndarray, np.ndarray]:
+    """
+    For each time: the round it belongs to (-1 if none) and its phase: `freeze`
+    from the previous round's end (two minutes before the first round's start)
+    to the end of this round's freeze time, then `live`, then `after`.
+    """
+    which, after = _assign(times, rounds)
+    phase = np.where(after, "after", "live").astype(object)
+    for k, r in enumerate(rounds):
+        since = rounds[k - 1].until if k else r.start - 120.0
+        frozen = (which < 0) & (times >= since) & (times < r.start)
+        which[frozen] = k
+        phase[frozen] = "freeze"
+    return which, phase
 
 
 def _frame(columns: dict) -> pd.DataFrame:
@@ -612,6 +646,7 @@ NUMERIC = {
     "attackerBlind",
     "won",
 }
+NUMERIC |= set(more.EXTRA_NUMERIC) | {c for c in more.SAMPLE_COLUMNS if c not in more.TEXT_SAMPLES}
 
 
 def _event_rows(part: _Part, origin: float, prefix: str, df: pd.DataFrame, event: str, **extra) -> dict:
@@ -706,18 +741,16 @@ def build_match(raws: list[RawPart], name: str) -> Match:
         r.buy = {s: buy_type(v / max(1, w.players.get(s, 1)), r.number in pistol) for s, v in r.equipment.items()}
 
     frames: list[pd.DataFrame] = []
+    other_events: list[dict] = []
+    state: list[dict] = []
     deaths: list[pd.DataFrame] = []
     hurts: list[pd.DataFrame] = []
     blinds: list[pd.DataFrame] = []
     for part in parts:
         s = part.raw.samples
         s = s[s["team_num"].isin([2, 3])]
-        live = s[
-            _flag(s, "is_alive")
-            & ~_flag(s, "is_freeze_period")
-            & ~_flag(s, "is_warmup_period")
-            & (s["tick"] >= part.live_from)
-        ]
+        # Freeze time too: where the players wait and what they buy.
+        live = s[_flag(s, "is_alive") & ~_flag(s, "is_warmup_period") & (s["tick"] >= part.live_from)]
         origin = part.offset
         times = part.at(live["tick"].to_numpy()) - origin
         dx, dy, dz = _direction(live["yaw"].to_numpy(), live["pitch"].to_numpy())
@@ -741,6 +774,7 @@ def build_match(raws: list[RawPart], name: str) -> Match:
                     "equipment": live["current_equip_value"].to_numpy(dtype=float),
                     "weapon": [held(w) for w in live["active_weapon_name"]],
                     "place": live["last_place_name"].fillna("").astype(str).to_numpy(),
+                    **more.sample_columns(live),
                 }
             )
         )
@@ -761,9 +795,11 @@ def build_match(raws: list[RawPart], name: str) -> Match:
         if "weapon_fire" in ev:
             f = live_ev(ev["weapon_fire"])
             w = f["weapon"].fillna("").astype(str).str.removeprefix("weapon_")
-            keep = ~w.str.contains("knife|bayonet") & (w != "c4")
+            # The bomb's "shot" is the start of a plant, which bomb_beginplant has.
+            keep = w != "c4"
             f, w = f[keep], w[keep]
             thrown = w.isin(GRENADES).to_numpy()
+            slashed = w.str.contains("knife|bayonet").to_numpy()
             frames.append(
                 _frame(
                     _event_rows(
@@ -773,8 +809,52 @@ def build_match(raws: list[RawPart], name: str) -> Match:
                         f,
                         "shot",
                         weapon=[weapon_name(v) for v in w],
+                        detail=more.fire_details(f, ev.get("fire_bullets")),
                     )
-                ).assign(event=np.where(thrown, "throw", "shot"))
+                ).assign(event=np.where(thrown, "throw", np.where(slashed, "slash", "shot")))
+            )
+        # Every other event about a player, where the player was; the rest for the summary.
+        about, rest = more.other_events(ev)
+        for event_name, g in about.items():
+            g = live_ev(g)
+            if not len(g):
+                continue
+            rows = _event_rows(part, origin, "user", g, "chat" if event_name == "chat_message" else event_name)
+            if {"x", "y", "z"} <= set(g.columns):
+                rows.update(x=g["x"].to_numpy(dtype=float), y=g["y"].to_numpy(dtype=float), z=g["z"].to_numpy(dtype=float))
+            for key in ("weapon", "item"):
+                if key in g:
+                    rows["weapon"] = [weapon_name(v) for v in g[key]]
+                    break
+            if event_name == "chat_message":
+                rows["text"] = g["chat_message"].fillna("").astype(str).to_numpy()
+            if "entityid" in g:
+                rows["entity"] = g["entityid"].to_numpy(dtype=float)
+            rows["detail"] = more.detail(g)
+            frames.append(_frame(rows))
+        for event_name, g in rest.items():
+            times = part.at(g["tick"].to_numpy()) - origin
+            for t, fields in zip(times, more.detail(g)):
+                other_events.append({"event": event_name, "time": round(float(t), 3), **(json.loads(fields) if fields else {})})
+        for tick, field_name, value in more.state_changes(part.raw.samples):
+            state.append({"time": round(float(part.at([tick])[0] - origin), 3), "field": field_name, "value": value})
+        g = more.flights(part.raw.grenades, part.every)
+        if len(g):
+            g = g[g["tick"] >= part.live_from]
+            frames.append(
+                _frame(
+                    {
+                        "time": part.at(g["tick"].to_numpy()) - origin,
+                        "event": "grenade",
+                        "player": g["name"].fillna("").astype(str).to_numpy(),
+                        "steamid": g["steamid"].fillna("").astype(str).to_numpy(),
+                        "x": g["x"].to_numpy(dtype=float),
+                        "y": g["y"].to_numpy(dtype=float),
+                        "z": g["z"].to_numpy(dtype=float),
+                        "weapon": [more.PROJECTILES[c] for c in g["grenade_type"]],
+                        "entity": g["grenade_entity_id"].to_numpy(dtype=float),
+                    }
+                )
             )
         for event_name, kind in DETONATIONS.items():
             if event_name not in ev:
@@ -788,6 +868,8 @@ def build_match(raws: list[RawPart], name: str) -> Match:
             # thrower's at that moment: kept, under its own name.
             rows["throwerPlace"] = rows.pop("place")
             rows["weapon"] = {"smoke": "Smoke Grenade", "flash": "Flashbang", "he": "High Explosive Grenade", "molotov": "Molotov", "decoy": "Decoy Grenade"}[kind]
+            if "entityid" in g:
+                rows["entity"] = g["entityid"].to_numpy(dtype=float)
             frames.append(_frame(rows))
         for event_name, kind in (("bomb_planted", "plant"), ("bomb_defused", "defuse")):
             if event_name in ev and len(ev[event_name]):
@@ -798,41 +880,51 @@ def build_match(raws: list[RawPart], name: str) -> Match:
     damage = _damage(pd.concat(hurts, ignore_index=True) if hurts else pd.DataFrame(), rounds)
     flashed = _blinds(pd.concat(blinds, ignore_index=True) if blinds else pd.DataFrame(), rounds)
     frames.extend(_kill_rows(kills))
-    if len(damage):
+    # Every hit and every flash, teammates' and the world's too (the statistics count enemies only).
+    all_hurts = pd.concat(hurts, ignore_index=True).sort_values("time").reset_index(drop=True) if hurts else pd.DataFrame()
+    if len(all_hurts):
+        which, _ = _assign(all_hurts["time"].to_numpy(dtype=float), rounds)
         frames.append(
             _frame(
                 {
-                    "time": damage["time"].to_numpy(),
+                    "time": all_hurts["time"].to_numpy(dtype=float),
                     "event": "hurt",
-                    "player": damage["victim"].to_numpy(),
-                    "steamid": damage["victimId"].to_numpy(),
-                    "side": damage["victimSide"].to_numpy(),
-                    "x": damage["x"].to_numpy(),
-                    "y": damage["y"].to_numpy(),
-                    "z": damage["z"].to_numpy(),
-                    "place": damage["place"].to_numpy(),
-                    "other": damage["attacker"].to_numpy(),
-                    "damage": damage["damage"].to_numpy(),
-                    "weapon": damage["weapon"].to_numpy(),
+                    "player": all_hurts["user_name"].fillna("").astype(str).to_numpy(),
+                    "steamid": all_hurts["user_steamid"].fillna("").astype(str).to_numpy(),
+                    "side": [side_of(v) for v in all_hurts["user_team_num"]],
+                    "x": all_hurts["user_X"].to_numpy(dtype=float),
+                    "y": all_hurts["user_Y"].to_numpy(dtype=float),
+                    "z": all_hurts["user_Z"].to_numpy(dtype=float),
+                    "place": all_hurts["user_last_place_name"].fillna("").astype(str).to_numpy(),
+                    "other": all_hurts["attacker_name"].fillna("").astype(str).to_numpy(),
+                    "damage": more.health_lost(all_hurts, which),
+                    "health": all_hurts["health"].to_numpy(dtype=float),
+                    "armor": _numbers(all_hurts, "armor"),
+                    "armorDamage": _numbers(all_hurts, "dmg_armor"),
+                    "hitgroup": _texts(all_hurts, "hitgroup"),
+                    "weapon": [weapon_name(w) for w in all_hurts["weapon"]],
+                    "detail": more.detail(all_hurts),
                 }
             )
         )
-    if len(flashed):
+    all_blinds = pd.concat(blinds, ignore_index=True) if blinds else pd.DataFrame()
+    if len(all_blinds):
         frames.append(
             _frame(
                 {
-                    "time": flashed["time"].to_numpy(),
+                    "time": all_blinds["time"].to_numpy(dtype=float),
                     "event": "blind",
-                    "player": flashed["victim"].to_numpy(),
-                    "steamid": flashed["victimId"].to_numpy(),
-                    "side": flashed["victimSide"].to_numpy(),
-                    "x": flashed["x"].to_numpy(),
-                    "y": flashed["y"].to_numpy(),
-                    "z": flashed["z"].to_numpy(),
-                    "place": flashed["place"].to_numpy(),
-                    "other": flashed["attacker"].to_numpy(),
-                    "duration": flashed["duration"].to_numpy(),
+                    "player": all_blinds["user_name"].fillna("").astype(str).to_numpy(),
+                    "steamid": all_blinds["user_steamid"].fillna("").astype(str).to_numpy(),
+                    "side": [side_of(v) for v in all_blinds["user_team_num"]],
+                    "x": all_blinds["user_X"].to_numpy(dtype=float),
+                    "y": all_blinds["user_Y"].to_numpy(dtype=float),
+                    "z": all_blinds["user_Z"].to_numpy(dtype=float),
+                    "place": all_blinds["user_last_place_name"].fillna("").astype(str).to_numpy(),
+                    "other": all_blinds["attacker_name"].fillna("").astype(str).to_numpy(),
+                    "duration": all_blinds["blind_duration"].fillna(0).to_numpy(dtype=float),
                     "weapon": "Flashbang",
+                    "entity": _numbers(all_blinds, "entityid"),
                 }
             )
         )
@@ -864,6 +956,7 @@ def build_match(raws: list[RawPart], name: str) -> Match:
     missing = rows["team"].fillna("") == ""
     rows.loc[missing, "team"] = rows.loc[missing, "steamid"].map(team_of).fillna("")
     rows = _label(rows, rounds, name, map_name)
+    first = parts[0].raw
     return Match(
         name=name,
         map=map_name,
@@ -878,15 +971,30 @@ def build_match(raws: list[RawPart], name: str) -> Match:
         incomplete=sorted(incomplete),
         half=half,
         pistol=pistol,
+        events=sorted(other_events, key=lambda e: e["time"]),
+        state=state,
+        profiles={k: v for p in parts for k, v in more.profiles(p.raw.samples).items()},
+        header=dict(first.header),
+        player_info=[r for p in parts for r in more.table_records(p.raw.player_info)],
+        skins=[r for p in parts for r in more.table_records(p.raw.skins)],
+        item_drops=[r for p in parts for r in more.table_records(p.raw.item_drops)],
     )
 
 
+def _numbers(df: pd.DataFrame, column: str) -> np.ndarray:
+    return df[column].to_numpy(dtype=float) if column in df else np.full(len(df), np.nan)
+
+
+def _texts(df: pd.DataFrame, column: str) -> np.ndarray:
+    return df[column].fillna("").astype(str).to_numpy() if column in df else np.full(len(df), "", dtype=object)
+
+
 def _label(rows: pd.DataFrame, rounds: list[Round], name: str, map_name: str) -> pd.DataFrame:
-    """Round, phase, round time, won and buy for every row; rows outside a round are dropped."""
-    which, after = _assign(rows["time"].to_numpy(dtype=float), rounds)
+    """Round, phase, round time, won and buy for every row; rows outside a round and its freeze time are dropped."""
+    which, phase = _assign_phases(rows["time"].to_numpy(dtype=float), rounds)
     keep = which >= 0
     rows = rows[keep].copy()
-    which, after = which[keep], after[keep]
+    which, phase = which[keep], phase[keep]
     numbers = np.array([r.number for r in rounds])
     starts = np.array([r.start for r in rounds])
     winners = np.array([r.winner for r in rounds])
@@ -894,7 +1002,7 @@ def _label(rows: pd.DataFrame, rounds: list[Round], name: str, map_name: str) ->
     rows["map"] = map_name
     rows["round"] = numbers[which]
     rows["roundId"] = [f"{name} #{n:02d}" for n in numbers[which]]
-    rows["phase"] = np.where(after, "after", "live")
+    rows["phase"] = phase
     rows["roundTime"] = rows["time"].to_numpy(dtype=float) - starts[which]
     sides = rows["side"].to_numpy()
     rows["won"] = np.where(sides == "", np.nan, (winners[which] == sides).astype(float))
@@ -912,6 +1020,7 @@ def _kills(deaths: pd.DataFrame, rounds: list[Round]) -> pd.DataFrame:
         "victimSide", "assister", "assisterId", "flashAssist", "weapon", "headshot", "teamkill", "suicide", "wallbang",
         "throughSmoke", "noscope", "attackerBlind", "opening", "traded", "trade",
         "ax", "ay", "az", "aplace", "vx", "vy", "vz", "vplace",
+        "penetrated", "distance", "hitgroup", "detail",
     ]
     if not len(deaths):
         return pd.DataFrame(columns=columns)
@@ -949,6 +1058,11 @@ def _kills(deaths: pd.DataFrame, rounds: list[Round]) -> pd.DataFrame:
             "vy": d["user_Y"].to_numpy(dtype=float),
             "vz": d["user_Z"].to_numpy(dtype=float),
             "vplace": d["user_last_place_name"].fillna("").astype(str),
+            "penetrated": _numbers(d, "penetrated"),
+            "distance": _numbers(d, "distance"),
+            "hitgroup": _texts(d, "hitgroup"),
+            # Everything else the game says of the death: dominated, revenge, in the air, a wipe...
+            "detail": more.detail(d),
         }
     )
     # A suicide - an own grenade, say - is no teamkill.
@@ -1005,6 +1119,7 @@ def _kill_rows(kills: pd.DataFrame) -> list[pd.DataFrame]:
             "traded": enemy["trade"].astype(float).to_numpy(),
             "noscope": enemy["noscope"].astype(float).to_numpy(),
             "attackerBlind": enemy["attackerBlind"].astype(float).to_numpy(),
+            **_death_extra(enemy),
         }
     )
     death = _frame(
@@ -1025,9 +1140,22 @@ def _kill_rows(kills: pd.DataFrame) -> list[pd.DataFrame]:
             "traded": kills["traded"].astype(float).to_numpy(),
             "noscope": kills["noscope"].astype(float).to_numpy(),
             "attackerBlind": kills["attackerBlind"].astype(float).to_numpy(),
+            **_death_extra(kills),
         }
     )
     return [kill, death]
+
+
+def _death_extra(k: pd.DataFrame) -> dict:
+    """What else a kill or death row carries: through walls, through smoke, how far, where hit, who assisted."""
+    return {
+        "penetrated": k["penetrated"].to_numpy(dtype=float),
+        "throughSmoke": k["throughSmoke"].astype(float).to_numpy(),
+        "distance": k["distance"].to_numpy(dtype=float),
+        "hitgroup": k["hitgroup"].to_numpy(),
+        "assister": k["assister"].to_numpy(),
+        "detail": k["detail"].to_numpy(),
+    }
 
 
 def _damage(hurts: pd.DataFrame, rounds: list[Round]) -> pd.DataFrame:

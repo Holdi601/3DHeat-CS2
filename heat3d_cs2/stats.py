@@ -192,7 +192,8 @@ def summary(match: Match) -> dict:
     return {
         "format": "heat3d-cs2-match",
         # 2: a plant's time is seconds into the round, as the kills' are (1: match seconds).
-        "version": 2,
+        # 3: freeze time in the table; everything else the demo holds (below).
+        "version": 3,
         "match": match.name,
         "map": match.map,
         "demos": [p.replace("\\", "/").rsplit("/", 1)[-1] for p in match.parts],
@@ -206,6 +207,15 @@ def summary(match: Match) -> dict:
         "halfLength": match.half,
         "pistolRounds": match.pistol,
         "players": player_stats(match, rounds),
+        # Everything else the demo holds.
+        "header": match.header,
+        "profiles": match.profiles,
+        "playerInfo": match.player_info,
+        "skins": match.skins,
+        "itemDrops": match.item_drops,
+        "chat": _chat(match),
+        "events": match.events,
+        "state": match.state,
         "conventions": {
             "tradeSeconds": 5,
             "buy": "pistol: the first round of each regulation half (pistolRounds), none in overtime; else average equipment under $1500 eco, under $4000 force, otherwise full",
@@ -213,6 +223,14 @@ def summary(match: Match) -> dict:
             "kast": "rounds with a kill, an assist (flash assists count), survival or a traded death",
         },
     }
+
+
+def _chat(match: Match) -> list[dict]:
+    rows = match.rows[match.rows["event"] == "chat"]
+    return [
+        {"time": round(float(r.time), 3), "round": int(r.round), "player": r.player, "side": r.side, "text": r.text}
+        for r in rows.itertuples()
+    ]
 
 
 def scoreboard_text(doc: dict) -> str:

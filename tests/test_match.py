@@ -208,7 +208,10 @@ class TestTheTable:
 
     def test_positions_are_live_and_labelled(self, match):
         pos = match.rows[match.rows["event"] == "position"]
-        assert len(pos) and (pos["roundTime"] >= 0).all()
+        # Freeze time is kept, before the round's start, as its own phase.
+        frozen = pos["phase"] == "freeze"
+        assert frozen.any() and (pos.loc[frozen, "roundTime"] < 0).all()
+        assert len(pos) and (pos.loc[~frozen, "roundTime"] >= 0).all()
         assert set(pos["side"]) == {"T", "CT"}
         assert set(pos["team"]) == {"Alpha", "Bravo"}
         assert set(pos.loc[pos["player"] == "ace", "weapon"]) == {"Knife"}
@@ -228,7 +231,7 @@ class TestTheTable:
         assert table.num_rows == len(match.rows)
         summary_doc = json.loads(doc.read_text(encoding="utf-8"))
         assert summary_doc["format"] == "heat3d-cs2-match"
-        assert summary_doc["version"] == 2
+        assert summary_doc["version"] == 3
         assert summary_doc["rounds"][1]["plant"]["time"] == 22.5
         assert summary_doc["score"] == {"Alpha": 2, "Bravo": 0}
         assert summary_doc["missing"] == []

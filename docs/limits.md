@@ -51,6 +51,15 @@ verified. Each point is from the code as it stands.
 
 ## Events
 
+- **Everything the parser offers is read**, with these exceptions: the
+  players' velocity (the parser derives it from positions; it is not in the
+  demo), voice (audio, `parse_voice`), and the bomb's `weapon_fire` (the
+  start of a plant, which `bomb_beginplant` has). Grenade flights are kept at
+  the players' sampling (`--every`) and where each grenade stopped, not every
+  tick.
+- **Rows outside a round** (warmup, a pause between the match's start and
+  the first freeze time beyond two minutes) are left out of the table; the
+  events about no player are all in the summary's `events`.
 - **Detonation rows** (`smoke`, `flash`, `he`, `molotov`, `decoy`) have no
   `place`: the demo names places for players, not for grenades. The
   thrower's place at that moment is in `throwerPlace`.

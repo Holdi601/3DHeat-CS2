@@ -15,10 +15,13 @@ Per match, `demos` writes into a folder per map (`out/de_mirage/...`), so a
 map's matches load together:
 
 - `<match>.parquet` - every player eight times a second (`--every 8` ticks of
-  64) and every event where it happened, one row each: the heatmap's data.
+  64) with everything the demo says of them, freeze time included, every
+  grenade's flight, and every event where it happened, one row each: the
+  heatmap's data.
 - `<match>.match.json` - teams, score, every round (winner, how, economy, the
-  plant, every kill in order, clutches, survivors) and every player's
-  scoreboard line: the match analysis' data.
+  plant, every kill in order, clutches, survivors), every player's
+  scoreboard line, the chat, every event about no player, and the game's
+  state as it changed: the match analysis' data.
 
 A folder of a few hundred demos takes minutes (`--jobs`, half the cores by
 default). Matches already written are skipped unless `--force`.
@@ -28,9 +31,9 @@ default). Matches already written are skipped unless `--force`.
 | Column | What |
 |---|---|
 | `match`, `map`, `round`, `roundId` | which match and round; `roundId` is `<match> #NN` |
-| `phase` | `live` until the round is decided, `after` while the winners hunt and the losers save |
+| `phase` | `freeze` in freeze time, `live` until the round is decided, `after` while the winners hunt and the losers save |
 | `time`, `roundTime` | seconds since the match started; since this round's freeze time ended |
-| `event` | `position`, `kill` (where the killer stood), `death` (where the victim fell), `hurt` (the victim), `shot`, `throw`, `smoke` / `flash` / `he` / `molotov` / `decoy` (where it went off), `blind` (the player flashed), `plant`, `defuse`, `explode` |
+| `event` | `position`, `kill` (where the killer stood), `death` (where the victim fell), `hurt` (the victim), `shot`, `slash` (a knife), `throw`, `grenade` (in flight), `smoke` / `flash` / `he` / `molotov` / `decoy` (where it went off), `blind` (the player flashed), `plant`, `defuse`, `explode`, `chat`, and every other game event about a player under the game's name (`item_pickup`, `player_footstep`, `weapon_reload`, `bomb_dropped`, ...) |
 | `player`, `steamid`, `side`, `team` | who: `side` is `T` or `CT` this round, `team` the team's name |
 | `x`, `y`, `z` | the game's own coordinates (inches, Z up) |
 | `dirX`, `dirY`, `dirZ` | where a player looks, a unit vector in the same frame |
@@ -41,6 +44,13 @@ default). Matches already written are skipped unless `--force`.
 | `headshot`, `opening`, `traded` | 0/1: a headshot; the round's first kill of an enemy; for a kill, a trade - for a death, avenged within 5 s |
 | `noscope`, `attackerBlind` | 0/1, for a kill or death: a scoped weapon fired unscoped; the killer was flashed |
 | `won`, `buy` | 0/1 whether this row's side won the round; its side's buy that round |
+| `detail`, `text`, `entity` | every other field of the event as JSON; a chat line; a grenade's entity (flight, detonation and flashes share it) |
+| `hitgroup`, `armorDamage`, `penetrated`, `throughSmoke`, `distance`, `assister` | where a bullet struck, armour lost; for a kill: walls, smoke, distance, assist |
+| the player's state, on positions | flash, helmet, defuser, scoped, zoom, walking, crouch, airborne, buy and bomb zone, defusing, spotted and by whom, inventory, ammunition, recoil, ping, the game's scoreboard counts, money spent |
+
+Every column, and which events fill which: [docs/output-table.md](docs/output-table.md).
+Not read: the players' velocity (not in the demo: the parser derives it from
+positions), voice, and grenade flights between the players' samples.
 
 The file's Parquet footer carries reading instructions under the key
 `heat3d`: which column is the position, the time, the player, the side, the
@@ -93,6 +103,15 @@ was met in a collection of 177 tournament demos:
 Checked over all of it: 165 matches, 3,565 rounds; in every match the score
 follows the round winners, each side's kills are the other side's deaths,
 and every round starts five against five.
+
+The rest of the demo, checked on a Dust2 match of it (22 rounds): every
+player's kills and damage counted from the events equal the game's own
+scoreboard counts at the end (`kills_total`, `damage_total`: 10 of 10
+players), deaths 8 of 10 (one apart for the other two); the health a `hurt`
+leaves equals the next sample's for 365 of 395 hits (the rest were hit again
+before it); every smoke, flash, HE and decoy that went off (329) has a
+flight with its entity, ending a median 0 units (95% within 50) from where it
+went off - the fires (103) carry the fire's entity, not the bottle's.
 
 ## The map
 

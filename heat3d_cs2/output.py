@@ -43,16 +43,21 @@ HINTS = {
         "dirX": "dirX",
         "dirY": "dirY",
         "dirZ": "dirZ",
-        "extra": ["event", "match", "round", "roundTime", "phase", "weapon", "place", "won", "buy", "opening", "team"],
+        "extra": ["event", "match", "round", "roundTime", "phase", "weapon", "place", "won", "buy", "opening", "team",
+                  "other", "damage", "health", "armor", "money", "text", "detail"],
     },
 }
 
 #: Columns stored as small integers or 32-bit floats; the rest are strings or float64.
-INT16 = {"round", "health", "armor"}
-INT32 = {"money", "equipment"}
+INT16 = {"round", "health", "armor", "armorDamage", "penetrated", "ammo", "ammoReserve", "shotsFired", "zoom",
+         "moveType", "ping", "killsTotal", "deathsTotal", "assistsTotal", "headshotKillsTotal", "enemiesFlashedTotal",
+         "objectiveTotal", "aceRoundsTotal", "threeKillRoundsTotal", "mvps", "score"}
+INT32 = {"money", "equipment", "entity", "damageTotal", "utilityDamageTotal", "aliveTimeTotal", "moneySavedTotal",
+         "cashSpent", "cashSpentTotal", "roundStartEquipment"}
 FLOAT64 = {"time"}
 #: 0/1 flags, stored as int8.
-FLAGS = {"headshot", "opening", "traded", "noscope", "attackerBlind", "won"}
+FLAGS = {"headshot", "opening", "traded", "noscope", "attackerBlind", "won", "throughSmoke", "helmet", "defuser",
+         "scoped", "walking", "airborne", "buyZone", "bombZone", "defusing", "spotted"}
 
 
 def table(match: Match) -> pa.Table:
