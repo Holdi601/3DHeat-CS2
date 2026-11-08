@@ -44,7 +44,7 @@ HINTS = {
         "dirY": "dirY",
         "dirZ": "dirZ",
         "extra": ["event", "match", "round", "roundTime", "phase", "weapon", "place", "won", "buy", "opening", "team",
-                  "other", "damage", "health", "armor", "money", "text", "detail"],
+                  "other", "damage", "health", "armor", "money", "text", "detail", "hitgroup"],
     },
 }
 
