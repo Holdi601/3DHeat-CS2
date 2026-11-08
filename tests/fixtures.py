@@ -211,3 +211,130 @@ def halves(plan: list[tuple[bool, int]], overtime: bool = True) -> RawPart:
 
 def frame_series(n: int, value) -> np.ndarray:
     return np.full(n, value)
+
+
+# ---------------------------------------------------------------- a demo file, built byte by byte
+
+
+def varint(n: int) -> bytes:
+    out = bytearray()
+    while True:
+        b = n & 0x7F
+        n >>= 7
+        out.append(b | (0x80 if n else 0))
+        if not n:
+            return bytes(out)
+
+
+def pb(number: int, value) -> bytes:
+    """One protobuf field: a whole number as a varint, bytes or text length-delimited, a float as 32 bits."""
+    if isinstance(value, float):
+        import struct
+
+        return varint(number << 3 | 5) + struct.pack("<f", value)
+    if isinstance(value, int):
+        return varint(number << 3) + varint(value)
+    data = value.encode() if isinstance(value, str) else value
+    return varint(number << 3 | 2) + varint(len(data)) + data
+
+
+def bitstream(messages: list[tuple[int, bytes]]) -> bytes:
+    """Network messages as a demo packet holds them: type, size and bytes, bit by bit - none aligned to bytes."""
+    bits: list[int] = []
+
+    def put(value: int, n: int) -> None:
+        bits.extend((value >> i) & 1 for i in range(n))
+
+    for kind, body in messages:
+        if kind < 16:
+            put(kind, 6)
+        elif kind < 256:
+            put((kind & 15) | 0x10, 6)
+            put(kind >> 4, 4)
+        elif kind < 4096:
+            put((kind & 15) | 0x20, 6)
+            put(kind >> 4, 8)
+        else:
+            put((kind & 15) | 0x30, 6)
+            put(kind >> 4, 28)
+        for b in varint(len(body)) + body:
+            put(b, 8)
+    bits.extend([0] * (-len(bits) % 8))
+    return bytes(sum(bits[i + j] << j for j in range(8)) for i in range(0, len(bits), 8))
+
+
+def demo_file(frames: list[tuple[int, int, bytes, bool]]) -> bytes:
+    """A demo of (command, tick, data, compressed) frames."""
+    import pyarrow as pa
+
+    out = bytearray(b"PBDEMS2\0" + bytes(8))
+    for cmd, tick, data, compressed in frames:
+        if compressed:
+            data = pa.Codec("snappy").compress(data).to_pybytes()
+            cmd |= 64
+        out += varint(cmd) + varint(tick & 0xFFFFFFFF) + varint(len(data)) + data
+    return bytes(out)
+
+
+#: What `synthetic_demo` holds: (source, number) -> how many.
+SYNTHETIC_ITEMS = {
+    ("frame", 1): 1,
+    ("message", 6): 1,
+    ("message", 40): 1,
+    ("message", 44): 1,
+    ("message", 4): 2,
+    ("message", 55): 2,
+    ("message", 118): 1,
+    ("message", 999): 1,
+    ("frame", 16): 1,
+    ("frame", 0): 1,
+}
+
+
+def synthetic_demo() -> bytes:
+    """
+    A small demo: its header; a signon packet with a console variable, the
+    server's info and a string table created; the string tables (userinfo:
+    ace and the SourceTV slot); two packets of ticks, entities, a chat line
+    and a message nobody knows; an animation frame; the end.
+    """
+    signon = bitstream([
+        (6, pb(1, pb(1, pb(1, "mp_friendlyfire") + pb(2, "true")))),
+        (40, pb(13, 1 / 64) + pb(14, "/game/csgo") + pb(15, "de_test")),
+        (44, pb(1, "userinfo") + pb(2, 2)),
+    ])
+    ace = pb(1, "ace") + varint(2 << 3 | 1) + (1).to_bytes(8, "little") + pb(3, 2) + varint(4 << 3 | 1) + (1).to_bytes(8, "little")
+    tv = pb(1, "SourceTV") + pb(5, 1) + pb(6, 1)
+    tables = pb(1, pb(1, "userinfo") + pb(2, pb(1, "0") + pb(2, tv)) + pb(2, pb(1, "1") + pb(2, ace)) + pb(4, 0))
+    tables += pb(1, pb(1, "lightstyles") + pb(2, pb(1, "0") + pb(2, b"m")))
+    first = bitstream([(4, pb(1, 640)), (55, b"\x01\x02\x03entities")])
+    second = bitstream([
+        (4, pb(1, 1100)),
+        (55, bytes(range(40))),
+        (118, pb(1, 4) + pb(2, 1) + pb(3, "Cstrike_Chat_All") + pb(4, "bob") + pb(5, "gl hf")),
+        (999, b"unknown"),
+    ])
+    return demo_file([
+        (1, 0, pb(1, "PBDEMS2\0") + pb(5, "de_test"), False),
+        (8, -1, pb(3, signon), False),
+        (6, -1, tables, True),
+        (7, 640, pb(3, first), False),
+        (7, 1100, pb(3, second), True),
+        (16, 1100, b"animation", False),
+        (0, 1200, b"", False),
+    ])
+
+
+def synthetic_props() -> pd.DataFrame:
+    """Property changes as `keep.read_props` gives them: a health, a view angle, the rules' phase, a team name."""
+    return pd.DataFrame({
+        "tick": [640, 1280, 1400, 640, 1100, 0, 1664, 0],
+        "type": ["CCSPlayerPawn.m_iHealth"] * 3 + ["CCSPlayerPawn.m_angEyeAngles"] * 2
+        + ["CCSGameRulesProxy.CCSGameRules.m_gamePhase"] * 2 + ["CCSTeam.m_szTeamname"],
+        "name": ["bob", "bob", "ace", "ace", "ace", "CCSGameRulesProxy", "CCSGameRulesProxy", "CCSTeam"],
+        "player": ["3", "3", "1", "1", "1", "", "", ""],
+        "entity": [3, 3, 1, 1, 1, -1, -1, 2],
+        "value": [100.0, 0.0, 0.0, None, None, 2.0, 4.0, None],
+        "vector": [None, None, None, [10.0, 90.0, 0.0], [12.0, 80.0, 0.0], None, None, None],
+        "decoded": [None] * 7 + ['"Alpha"'],
+    })

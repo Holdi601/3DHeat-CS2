@@ -41,6 +41,7 @@ decimals for rounds and two for kills and the plant.
 | `chat` | object[] | every chat line in the match: time, round, player, side, text |
 | `events` | object[] | every game event about no player, in time order, with all its fields: round beeps and phases, `round_officially_ended`, `buytime_ended`, `server_message`, `server_cvar` (the server's settings as they changed), the broadcast camera director's chase and fixed shots, `cs_win_panel_match`, ... |
 | `state` | object[] | the game's state where it changed: time, field, value - timeouts (`is_terrorist_timeout`, `num_ct_timeouts`, `is_technical_timeout`, `is_waiting_for_resume`), the bomb (`is_bomb_planted`, `is_bomb_dropped`), `ct_losing_streak` / `t_losing_streak`, `game_phase`, `round_in_progress`, the players alive, the server's `match_start_time` and `round_start_time` |
+| `selfCheck` | object | `completeness`: where everything of the demo went - per event name, property class, network message, frame and string table its `seen`, `decoded`, `partial`, `raw` and `lost` counts, the sidecars written, the total `lost` (0 unless `--no-bulk`), the properties the parser lists but cannot read (`unreadProps`). The convention: [Converters keep everything](https://github.com/Holdi601/3DHeat/blob/main/docs/converters.md); the sidecars: the README's Completeness section |
 
 ## Rounds
 

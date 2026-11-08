@@ -1,6 +1,7 @@
 """
 What a match is written as: one Parquet table for the heatmap and one JSON
-document for the match analysis.
+document for the match analysis - and beside them, in sidecars, everything
+else the demo holds (`keep.py`).
 
 The table carries its own reading instructions in the Parquet footer, under
 the key `heat3d`: which column is the position, the time, the player, the
@@ -44,7 +45,8 @@ HINTS = {
         "dirY": "dirY",
         "dirZ": "dirZ",
         "extra": ["event", "match", "round", "roundTime", "phase", "weapon", "place", "won", "buy", "opening", "team",
-                  "other", "damage", "health", "armor", "money", "text", "detail", "hitgroup"],
+                  "other", "damage", "health", "armor", "money", "text", "detail", "hitgroup", "armorDamage",
+                  "hitLocalX", "hitLocalY", "hitLocalZ", "hitDirX", "hitDirY", "hitDirZ", "hitMiss", "hitFrom"],
     },
 }
 
@@ -89,12 +91,22 @@ def table(match: Match) -> pa.Table:
     return pa.Table.from_arrays(arrays, schema=schema)
 
 
-def write(match: Match, folder: str | Path) -> tuple[Path, Path]:
-    """`<match>.parquet` and `<match>.match.json` in `folder`."""
+def write(match: Match, folder: str | Path, bulk: bool = True) -> tuple[Path, Path]:
+    """
+    `<match>.parquet` and `<match>.match.json` in `folder`, and beside them
+    the sidecars with everything else the demo holds (`keep.py`; `bulk`
+    False leaves out the entity stream, the players' commands and the
+    animation, which the self-check then counts lost). The document is
+    written last: a match with its table and document is a finished one.
+    """
+    from .keep import write_sidecars
+
     folder = Path(folder)
     folder.mkdir(parents=True, exist_ok=True)
     data = folder / f"{match.name}.parquet"
     doc = folder / f"{match.name}.match.json"
     pq.write_table(table(match), data, compression="snappy", row_group_size=256_000)
-    doc.write_text(json.dumps(summary(match), indent=1, ensure_ascii=False), encoding="utf-8")
+    document = summary(match)
+    document["selfCheck"] = {"completeness": write_sidecars(match, folder, bulk=bulk)}
+    doc.write_text(json.dumps(document, indent=1, ensure_ascii=False), encoding="utf-8")
     return data, doc

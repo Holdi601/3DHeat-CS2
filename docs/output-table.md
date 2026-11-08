@@ -60,6 +60,8 @@ string. Numeric columns are null where a row has no value.
 | `entity` | int32 | the grenade's entity: a `throw`'s flight (`grenade` rows), its detonation and the players it blinded share it |
 | `hitgroup` | string | where the bullet struck (`head`, `chest`, ...); `hurt`, `kill`, `death` |
 | `armorDamage` | int16 | armour lost; `hurt` only |
+| `hitLocalX`, `hitLocalY`, `hitLocalZ` | float32 | where on the body the bullet struck, in the victim's frame in metres (x forward, y up from the feet, z right): the shot's ray (`fire_bullets`, else the attacker's eye and view) traced to a body posed as the victim stood and crouched, onto the part `hitgroup` names; `hurt` only |
+| `hitDirX`, `hitDirY`, `hitDirZ` | float32 | the shot's direction in the same frame; `hitMiss` how far (m) the ray passed the named part by (0: through it); `hitFrom` `bullet` or `aim` |
 | `penetrated` | int16 | walls the killing bullet went through; `kill` and `death` |
 | `throughSmoke` | int8 | 0/1, killed through a smoke; `kill` and `death` |
 | `distance` | float32 | the kill's distance as the game counts it (metres); `kill` and `death` |

@@ -127,8 +127,10 @@ RULES_FIELDS = [
 ]
 
 #: For each player in an event: where they were, on which side, and which bomb
-#: zone they stood in (0 none, 1 A, 2 B) - what names a plant's site.
-EVENT_PLAYER = ["X", "Y", "Z", "team_num", "last_place_name", "which_bomb_zone"]
+#: zone they stood in (0 none, 1 A, 2 B) - what names a plant's site; which way
+#: they looked and how far they crouched - where a hit's ray is traced from and
+#: to (`impact.py`).
+EVENT_PLAYER = ["X", "Y", "Z", "team_num", "last_place_name", "which_bomb_zone", "pitch", "yaw", "duck_amount"]
 
 #: Events the match is built from. Every other event the demo lists is read too (`read_part`).
 EVENTS = [
@@ -173,6 +175,9 @@ class RawPart:
     player_info: pd.DataFrame | None = None
     skins: pd.DataFrame | None = None
     item_drops: pd.DataFrame | None = None
+    #: Every entity property's changes, as `keep.read_props` gives them; None reads them from the file when
+    #: the sidecars are written (`keep.py`), which is where the rest of the demo is read too.
+    props: pd.DataFrame | None = None
 
 
 def _safe(read):

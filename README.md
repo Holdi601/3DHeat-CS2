@@ -21,7 +21,11 @@ map's matches load together:
 - `<match>.match.json` - teams, score, every round (winner, how, economy, the
   plant, every kill in order, clutches, survivors), every player's
   scoreboard line, the chat, every event about no player, and the game's
-  state as it changed: the match analysis' data.
+  state as it changed: the match analysis' data. Its `selfCheck` says where
+  everything of the demo went.
+- `<match>.events.parquet`, `.props.parquet`, `.strings.parquet`,
+  `.packets.parquet` - everything else the demo holds, whole (see
+  [Completeness](#completeness)).
 
 A folder of a few hundred demos takes minutes (`--jobs`, half the cores by
 default). Matches already written are skipped unless `--force`.
@@ -49,8 +53,9 @@ default). Matches already written are skipped unless `--force`.
 | the player's state, on positions | flash, helmet, defuser, scoped, zoom, walking, crouch, airborne, buy and bomb zone, defusing, spotted and by whom, inventory, ammunition, recoil, ping, the game's scoreboard counts, money spent |
 
 Every column, and which events fill which: [docs/output-table.md](docs/output-table.md).
-Not read: the players' velocity (not in the demo: the parser derives it from
-positions), voice, and grenade flights between the players' samples.
+Not in the table: the players' velocity (not in the demo: the parser derives it from
+positions), voice, and grenade flights between the players' samples (every
+tick in the props sidecar).
 
 The file's Parquet footer carries reading instructions under the key
 `heat3d`: which column is the position, the time, the player, the side, the
@@ -112,6 +117,89 @@ leaves equals the next sample's for 365 of 395 hits (the rest were hit again
 before it); every smoke, flash, HE and decoy that went off (329) has a
 flight with its entity, ending a median 0 units (95% within 50) from where it
 went off - the fires (103) carry the fire's entity, not the bottle's.
+
+## Completeness
+
+3DHeat's converters keep everything a recording holds:
+[Converters keep everything](https://github.com/Holdi601/3DHeat/blob/main/docs/converters.md).
+Beside each match's table and document, `demos` writes four sidecars, each
+with `time` on the table's clock (empty before the first tick), the demo's
+`tick` and `part` (which file of the match, in order), and the match
+document's `selfCheck.completeness` counts, for every kind of thing as the
+demo has it - every event name, every property class, every network message
+and frame, every string table - how many there were, how many went into the
+table or document in part (`partial`), how many only into a sidecar (`raw`),
+and how many were lost.
+
+### Read
+
+Into the table and the document: as above. What the sidecars decode besides,
+each checked against something independent on five demos and over the whole
+collection (below):
+
+- **Console variables** (`net_SetConVar`, `decoded` in `packets`): every name
+  and value equals the parser's `server_cvar` (which repeats the start's list
+  once per stretch of the demo it reads apart: 1,770 rows for 59 variables).
+- **Chat lines** (`UM_SayText2`): speaker, text and kind equal the parser's
+  `chat_message`, tick for tick.
+- **The server's info** (`svc_ServerInfo`): the map and the game folder equal
+  the demo's header, the tick interval is 1/64 s.
+- **String tables created** (`svc_CreateStringTable`): the table's name, the
+  same as the tables' own snapshot.
+- **Players' entries** (`userinfo` in `strings`): name, steamid, user id, bot
+  or SourceTV; every player the parser lists is there with the same steamid
+  (names can differ: the entry is from the start, `BIT` where the scoreboard
+  later says `Coach | BIT`).
+
+### Kept raw
+
+- `<match>.events.parquet` - every game event the parser reads, warmup and
+  all, every key as the parser gives it (`decoded`: the players named by
+  name and steamid, not where they stood - that is in `props`); `name` and
+  `player` the event's player, `entity` its entity where it has one.
+- `<match>.props.parquet` - every property the parser can read, one row each
+  time it changed (`type` the property's path, `value` a number - flags 0/1 -
+  `vector` a list of numbers, `decoded` anything else as JSON, whole numbers
+  past 2^53 as text): every player's pawn and controller, their active weapon
+  (`Weapon.*`), their commands (`usercmd_*`: view angles, buttons, mouse,
+  moves), keyed by the controller's entity with `name` and `player` (steamid);
+  the game rules (entity -1), the teams (entity 2/3, `CCSTeam`), and every
+  grenade, held or flying, by its own entity, its class as `name` and its
+  thrower as `player`. Read a tick at a time, the demo's own resolution: a
+  first value, each change, and where a value went empty.
+- `<match>.strings.parquet` - every entry of every string table snapshot
+  (`type` the table, `name` the key, `entity` the index, `payload` the data;
+  each table also as a row of its own, index -1), the players' entries decoded.
+- `<match>.packets.parquet` - every other frame and network message, whole,
+  in file order (`seq`): `type` `message <n>` or `frame <n>`, `name` Valve's
+  name where it was matched, `payload` the bytes. Among them the server info,
+  string table updates, sounds, user messages (the end-of-match scoreboard
+  data, player stats, weapon sounds, text messages), temp entities, the game
+  events as sent (with their list), the bullets, SourceTV status, the send
+  tables and class list (what a decoder of the entity stream needs), and -
+  unless `--no-bulk` - the bulk: the entity stream (`svc_PacketEntities`),
+  the players' commands (`svc_UserCmds`, sub-tick inputs) and the animation
+  stream (`DEM_AnimationData`).
+
+The bulk is over half a demo's size even compressed (on a 258 MB demo:
+commands 67 MB, animation 39 MB, entities 35 MB); everything else together
+is about a tenth (props 8%, packets without the bulk 2%, events, strings).
+`--no-bulk` leaves it out, and the self-check then counts it lost, by name.
+
+### Not available
+
+- **Entities the parser does not read**: the world, dropped weapons, the
+  bomb, fires, chickens, doors - and the properties it lists but gives no
+  value for (`unreadProps` in the self-check: weapon lists, ammunition,
+  purchase records, fire positions). They are in the entity stream, kept
+  whole with what decoding it needs, but not decoded here.
+- **Within a tick**: the props are as the parser has them at each tick, the
+  demo's own resolution; the sub-tick inputs are in the commands, whole.
+- **Voice**: these SourceTV demos announce a voice codec (`svc_VoiceInit`,
+  Speex) but carry no voice data; where a demo does (`svc_VoiceData`), it is
+  kept whole in `packets`.
+- **A file with no round in it** (a pause, warmup only) belongs to no match
+  and is not written; the command line names it.
 
 ## The map
 

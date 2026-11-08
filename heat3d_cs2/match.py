@@ -40,6 +40,7 @@ import numpy as np
 import pandas as pd
 
 from . import events as more
+from . import impact
 from .demo import OVERTIME, TICKRATE, RawPart
 
 TRADE_SECONDS = 5.0
@@ -218,6 +219,10 @@ class Match:
     player_info: list[dict] = field(default_factory=list)
     skins: list[dict] = field(default_factory=list)
     item_drops: list[dict] = field(default_factory=list)
+    #: Each part as read, in order, and its clock: (the part, server clock at its first sampled tick, that
+    #: tick, the match's zero on the server clock) - for the sidecars (`keep.py`), which put everything on
+    #: the table's clock.
+    sources: list[tuple] = field(default_factory=list)
 
 
 # ---------------------------------------------------------------- the clock
@@ -788,6 +793,8 @@ def build_match(raws: list[RawPart], name: str) -> Match:
             deaths.append(d)
         if "player_hurt" in ev:
             h = live_ev(ev["player_hurt"])
+            # Where on the body: traced in the part, whose ticks the shots share.
+            h = h.assign(**impact.hit_points(h, ev.get("fire_bullets")))
             hurts.append(h.assign(time=part.at(h["tick"].to_numpy()) - origin))
         if "player_blind" in ev:
             b = live_ev(ev["player_blind"])
@@ -902,6 +909,8 @@ def build_match(raws: list[RawPart], name: str) -> Match:
                     "armor": _numbers(all_hurts, "armor"),
                     "armorDamage": _numbers(all_hurts, "dmg_armor"),
                     "hitgroup": _texts(all_hurts, "hitgroup"),
+                    **{c: _numbers(all_hurts, c) for c in impact.COLUMNS},
+                    "hitFrom": _texts(all_hurts, "hitFrom"),
                     "weapon": [weapon_name(w) for w in all_hurts["weapon"]],
                     "detail": more.detail(all_hurts),
                 }
@@ -978,6 +987,10 @@ def build_match(raws: list[RawPart], name: str) -> Match:
         player_info=[r for p in parts for r in more.table_records(p.raw.player_info)],
         skins=[r for p in parts for r in more.table_records(p.raw.skins)],
         item_drops=[r for p in parts for r in more.table_records(p.raw.item_drops)],
+        sources=[
+            (p.raw, float(p.clock[0]) if len(p.ticks) else 0.0, float(p.ticks[0]) if len(p.ticks) else 0.0, p.offset)
+            for p in parts
+        ],
     )
 
 

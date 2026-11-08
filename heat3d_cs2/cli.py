@@ -1,13 +1,14 @@
 """
 Command line.
 
-    python -m heat3d_cs2 demos <demo files or folders> -o <folder> [--every 8] [--jobs N]
+    python -m heat3d_cs2 demos <demo files or folders> -o <folder> [--every 8] [--jobs N] [--no-bulk]
     python -m heat3d_cs2 map <de_mirage | path to its .vpk> -o mirage.glb
     python -m heat3d_cs2 scoreboard <match.json>
 
 `demos` groups a match's parts by name (`...-p1.dem`, `...-p2.dem` are one
 match) and writes `<map>/<match>.parquet` and `<map>/<match>.match.json` for
-each, skipping what is already written unless `--force`.
+each, with the sidecars beside them (`<match>.events|props|strings|packets.parquet`),
+skipping what is already written unless `--force`.
 """
 
 from __future__ import annotations
@@ -38,16 +39,22 @@ def matches_in(paths: list[str]) -> dict[str, list[Path]]:
     return out
 
 
-def convert(name: str, files: list[Path], folder: Path, every: int) -> str:
+def convert(name: str, files: list[Path], folder: Path, every: int, bulk: bool = True) -> str:
     from .demo import read_part
     from .match import build_match, chains
     from .output import write
 
     lines = []
     # Files named as one match can be two: each chain of parts is its own.
-    groups = chains([read_part(f, every) for f in files])
+    raws_all = [read_part(f, every) for f in files]
+    groups = chains(raws_all)
     if not groups:
         return f"{name}: no round in {len(files)} file(s) - nothing written"
+    used = {id(r) for g in groups for r in g}
+    alone = [Path(r.path).name for r in raws_all if id(r) not in used]
+    if alone:
+        # A file with no round of any match in it (a pause, warmup) is in no match, nor its sidecars.
+        lines.append(f"{name}: no round in {', '.join(alone)} - not written")
     for k, raws in enumerate(groups):
         label = name if k == 0 else f"{name}-{chr(ord('a') + k)}"
         match = build_match(raws, label)
@@ -55,11 +62,14 @@ def convert(name: str, files: list[Path], folder: Path, every: int) -> str:
             lines.append(f"{label}: no complete round in {len(raws)} file(s) - nothing written")
             continue
         # A folder per map: a heatmap is of one map, so loading one folder is loading one map.
-        write(match, folder / (match.map or "unknown"))
+        _, doc = write(match, folder / (match.map or "unknown"), bulk=bulk)
         score = " ".join(f"{t} {s}" for t, s in match.rounds[-1].score.items()) if match.rounds else "no rounds"
         cut = f", {len(match.incomplete)} incomplete round(s) left out" if match.incomplete else ""
         late = f", recorded from round {match.rounds[0].number}" if match.rounds and match.rounds[0].number > 1 else ""
-        lines.append(f"{label}: {match.map}, {len(match.rounds)} rounds ({score}), {len(match.rows):,} rows{cut}{late}")
+        check = json.loads(doc.read_text(encoding="utf-8"))["selfCheck"]["completeness"]
+        gone = [t for t, c in check["types"].items() if c["lost"]]
+        lost = f", lost {check['lost']:,} ({', '.join(gone)})" if check["lost"] else ", lost 0"
+        lines.append(f"{label}: {match.map}, {len(match.rounds)} rounds ({score}), {len(match.rows):,} rows{cut}{late}{lost}")
     return "\n".join(lines)
 
 
@@ -86,7 +96,7 @@ def _demos(args) -> int:
     print(f"{len(todo)} match(es), {jobs} at a time")
     failed = 0
     with ProcessPoolExecutor(jobs) as pool:
-        futures = {pool.submit(convert, n, f, folder, args.every): n for n, f in todo.items()}
+        futures = {pool.submit(convert, n, f, folder, args.every, not args.no_bulk): n for n, f in todo.items()}
         for done in as_completed(futures):
             try:
                 print(done.result(), flush=True)
@@ -121,6 +131,9 @@ def main(argv: list[str] | None = None) -> int:
     d.add_argument("--jobs", type=int, default=0, help="matches converted at once (default: half the cores)")
     d.add_argument("--map", help="only matches whose name contains this, e.g. mirage")
     d.add_argument("--force", action="store_true", help="rewrite matches already written")
+    d.add_argument("--no-bulk", action="store_true",
+                   help="leave the entity stream, the players' commands and the animation (over half a demo's size) "
+                        "out of the packets sidecar; the self-check counts them lost")
     d.set_defaults(run=_demos)
     m = sub.add_parser("map", help="a map's collision geometry -> .glb in the demos' frame")
     m.add_argument("name", help="map name (de_mirage) or the path to its .vpk")

@@ -6,7 +6,7 @@ nav_order: 3
 # Commands
 
 ```text
-python -m heat3d_cs2 demos <demo files or folders> -o <folder> [--every 8] [--jobs N] [--map TEXT] [--force]
+python -m heat3d_cs2 demos <demo files or folders> -o <folder> [--every 8] [--jobs N] [--map TEXT] [--force] [--no-bulk]
 python -m heat3d_cs2 map <de_mirage | path to its .vpk> -o <file.glb> [--game FOLDER] [--source2viewer EXE]
 python -m heat3d_cs2 scoreboard <match.json>
 ```
@@ -33,6 +33,7 @@ python -m heat3d_cs2 demos D:\Demos -o out --map inferno --jobs 4
 | `--jobs N` | `0` = half the CPU cores | how many matches are converted at once, each in its own process. Never fewer than 1, never more than there are matches to do. |
 | `--map TEXT` | - | only matches whose **name** contains *TEXT*, case-insensitive (`--map mirage`). It filters on the file name, not on the map the demo turns out to hold. |
 | `--force` | off | convert matches that are already written, overwriting them |
+| `--no-bulk` | off | leave the entity stream, the players' commands and the animation stream out of the packets sidecar - over half of a demo's size even compressed. The match summary's self-check then counts them `lost`, by name. |
 
 ### Which files are one match
 
@@ -124,6 +125,11 @@ folder of a few hundred demos takes minutes with the default `--jobs`. Memory
 per job grows with the match length and with a smaller `--every`: each worker
 holds every sampled player row of its match (roughly ten players times
 64 / *N* rows per second of recording) before writing.
+
+The sidecars take longer than the table: every property the parser reads is
+read at every tick, a window of ticks at a time (about two minutes for a
+40-minute demo, near 3 GB of memory at most per job), then the demo is
+walked once more for its frames and messages.
 
 ## `map` - a map's geometry as `.glb`
 
