@@ -1,14 +1,16 @@
 """
 Command line.
 
-    python -m heat3d_cs2 demos <demo files or folders> -o <folder> [--every 8] [--jobs N] [--no-bulk]
+    python -m heat3d_cs2 demos <demo files or folders> -o <folder> [--every 8] [--jobs N] [--no-bulk] [--loose]
     python -m heat3d_cs2 map <de_mirage | path to its .vpk> -o mirage.glb
     python -m heat3d_cs2 scoreboard <match.json>
 
 `demos` groups a match's parts by name (`...-p1.dem`, `...-p2.dem` are one
 match) and writes `<map>/<match>.parquet` and `<map>/<match>.match.json` for
 each, with the sidecars beside them (`<match>.events|props|strings|packets.parquet`),
-skipping what is already written unless `--force`.
+skipping what is already written unless `--force`. Each match is then packed
+into one file, `<map>/<match>.3dheat` (container.py); `--loose` keeps the
+separate files instead.
 """
 
 from __future__ import annotations
@@ -39,7 +41,14 @@ def matches_in(paths: list[str]) -> dict[str, list[Path]]:
     return out
 
 
-def convert(name: str, files: list[Path], folder: Path, every: int, bulk: bool = True) -> str:
+def _version() -> str | None:
+    try:
+        return (Path(__file__).resolve().parents[1] / "VERSION").read_text(encoding="utf-8").strip()
+    except OSError:
+        return None
+
+
+def convert(name: str, files: list[Path], folder: Path, every: int, bulk: bool = True, container: bool = True) -> str:
     from .demo import read_part
     from .match import build_match, chains
     from .output import write
@@ -62,11 +71,16 @@ def convert(name: str, files: list[Path], folder: Path, every: int, bulk: bool =
             lines.append(f"{label}: no complete round in {len(raws)} file(s) - nothing written")
             continue
         # A folder per map: a heatmap is of one map, so loading one folder is loading one map.
-        _, doc = write(match, folder / (match.map or "unknown"), bulk=bulk)
+        data, doc = write(match, folder / (match.map or "unknown"), bulk=bulk)
         score = " ".join(f"{t} {s}" for t, s in match.rounds[-1].score.items()) if match.rounds else "no rounds"
         cut = f", {len(match.incomplete)} incomplete round(s) left out" if match.incomplete else ""
         late = f", recorded from round {match.rounds[0].number}" if match.rounds and match.rounds[0].number > 1 else ""
         check = json.loads(doc.read_text(encoding="utf-8"))["selfCheck"]["completeness"]
+        if container:
+            from .container import pack
+
+            pack(data, {"game": "cs2", "source": "demo", "converter": {"name": "heat3d_cs2", "version": _version()},
+                        "match": match.name, "map": match.map, "mode": None, "started": None})
         gone = [t for t, c in check["types"].items() if c["lost"]]
         lost = f", lost {check['lost']:,} ({', '.join(gone)})" if check["lost"] else ", lost 0"
         lines.append(f"{label}: {match.map}, {len(match.rounds)} rounds ({score}), {len(match.rows):,} rows{cut}{late}{lost}")
@@ -80,7 +94,9 @@ def written(folder: Path) -> set[str]:
     """
     if not folder.exists():
         return set()
-    return {p.stem for p in folder.rglob("*.parquet") if p.with_name(p.stem + ".match.json").is_file()}
+    loose = {p.stem for p in folder.rglob("*.parquet") if p.with_name(p.stem + ".match.json").is_file()}
+    # A container is written whole or not at all.
+    return loose | {p.stem for p in folder.rglob("*.3dheat")}
 
 
 def _demos(args) -> int:
@@ -96,7 +112,8 @@ def _demos(args) -> int:
     print(f"{len(todo)} match(es), {jobs} at a time")
     failed = 0
     with ProcessPoolExecutor(jobs) as pool:
-        futures = {pool.submit(convert, n, f, folder, args.every, not args.no_bulk): n for n, f in todo.items()}
+        futures = {pool.submit(convert, n, f, folder, args.every, not args.no_bulk, not args.loose): n
+                   for n, f in todo.items()}
         for done in as_completed(futures):
             try:
                 print(done.result(), flush=True)
@@ -134,6 +151,9 @@ def main(argv: list[str] | None = None) -> int:
     d.add_argument("--no-bulk", action="store_true",
                    help="leave the entity stream, the players' commands and the animation (over half a demo's size) "
                         "out of the packets sidecar; the self-check counts them lost")
+    d.add_argument("--container", action="store_true", help="pack each match into one .3dheat file (the default)")
+    d.add_argument("--loose", action="store_true",
+                   help="keep each match as separate files (table, match.json, sidecars), not one .3dheat container")
     d.set_defaults(run=_demos)
     m = sub.add_parser("map", help="a map's collision geometry -> .glb in the demos' frame")
     m.add_argument("name", help="map name (de_mirage) or the path to its .vpk")
