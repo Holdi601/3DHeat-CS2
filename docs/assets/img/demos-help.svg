@@ -3,27 +3,27 @@
 <rect width="632" height="26" rx="8" fill="#2c2e35"/><rect y="18" width="632" height="8" fill="#2c2e35"/>
 <circle cx="16" cy="13" r="5" fill="#ff5f57"/><circle cx="32" cy="13" r="5" fill="#febc2e"/><circle cx="48" cy="13" r="5" fill="#28c840"/>
 <text x="316.0" y="17" fill="#9aa0aa" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="12" text-anchor="middle">demos --help</text>
-<g font-family="Consolas,Menlo,DejaVu Sans Mono,monospace" font-size="13" xml:space="preserve">
-<text x="16" y="46" fill="#7ee787">$ python -m heat3d_cs2 demos --help</text>
-<text x="16" y="64" fill="#d6d9df">usage: heat3d_cs2 demos [-h] -o OUT [--every EVERY] [--jobs JOBS] [--map MAP]</text>
-<text x="16" y="82" fill="#d6d9df">                        [--force] [--no-bulk] [--container] [--loose]</text>
-<text x="16" y="100" fill="#d6d9df">                        paths [paths ...]</text>
-<text x="16" y="118" fill="#d6d9df"></text>
-<text x="16" y="136" fill="#d6d9df">positional arguments:</text>
-<text x="16" y="154" fill="#d6d9df">  paths          demo files or folders</text>
-<text x="16" y="172" fill="#d6d9df"></text>
-<text x="16" y="190" fill="#d6d9df">options:</text>
-<text x="16" y="208" fill="#d6d9df">  -h, --help     show this help message and exit</text>
-<text x="16" y="226" fill="#d6d9df">  -o, --out OUT  folder to write into</text>
-<text x="16" y="244" fill="#d6d9df">  --every EVERY  sample players every N ticks (64 a second; default 8: 8 a</text>
-<text x="16" y="262" fill="#d6d9df">                 second)</text>
-<text x="16" y="280" fill="#d6d9df">  --jobs JOBS    matches converted at once (default: half the cores)</text>
-<text x="16" y="298" fill="#d6d9df">  --map MAP      only matches whose name contains this, e.g. mirage</text>
-<text x="16" y="316" fill="#d6d9df">  --force        rewrite matches already written</text>
-<text x="16" y="334" fill="#d6d9df">  --no-bulk      leave the entity stream, the players&#x27; commands and the</text>
-<text x="16" y="352" fill="#d6d9df">                 animation (over half a demo&#x27;s size) out of the packets</text>
-<text x="16" y="370" fill="#d6d9df">                 sidecar; the self-check counts them lost</text>
-<text x="16" y="388" fill="#d6d9df">  --container    pack each match into one .3dheat file (the default)</text>
-<text x="16" y="406" fill="#d6d9df">  --loose        keep each match as separate files (table, match.json,</text>
-<text x="16" y="424" fill="#d6d9df">                 sidecars), not one .3dheat container</text>
+<g font-family="Consolas,Menlo,DejaVu Sans Mono,monospace" font-size="13" xml:space="preserve" style="white-space:pre">
+<text x="16" y="46" fill="#7ee787" xml:space="preserve" style="white-space:pre">$&#160;python&#160;-m&#160;heat3d_cs2&#160;demos&#160;--help</text>
+<text x="16" y="64" fill="#d6d9df" xml:space="preserve" style="white-space:pre">usage:&#160;heat3d_cs2&#160;demos&#160;[-h]&#160;-o&#160;OUT&#160;[--every&#160;EVERY]&#160;[--jobs&#160;JOBS]&#160;[--map&#160;MAP]</text>
+<text x="16" y="82" fill="#d6d9df" xml:space="preserve" style="white-space:pre">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;[--force]&#160;[--no-bulk]&#160;[--container]&#160;[--loose]</text>
+<text x="16" y="100" fill="#d6d9df" xml:space="preserve" style="white-space:pre">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;paths&#160;[paths&#160;...]</text>
+<text x="16" y="118" fill="#d6d9df" xml:space="preserve" style="white-space:pre"></text>
+<text x="16" y="136" fill="#d6d9df" xml:space="preserve" style="white-space:pre">positional&#160;arguments:</text>
+<text x="16" y="154" fill="#d6d9df" xml:space="preserve" style="white-space:pre">&#160;&#160;paths&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;demo&#160;files&#160;or&#160;folders</text>
+<text x="16" y="172" fill="#d6d9df" xml:space="preserve" style="white-space:pre"></text>
+<text x="16" y="190" fill="#d6d9df" xml:space="preserve" style="white-space:pre">options:</text>
+<text x="16" y="208" fill="#d6d9df" xml:space="preserve" style="white-space:pre">&#160;&#160;-h,&#160;--help&#160;&#160;&#160;&#160;&#160;show&#160;this&#160;help&#160;message&#160;and&#160;exit</text>
+<text x="16" y="226" fill="#d6d9df" xml:space="preserve" style="white-space:pre">&#160;&#160;-o,&#160;--out&#160;OUT&#160;&#160;folder&#160;to&#160;write&#160;into</text>
+<text x="16" y="244" fill="#d6d9df" xml:space="preserve" style="white-space:pre">&#160;&#160;--every&#160;EVERY&#160;&#160;sample&#160;players&#160;every&#160;N&#160;ticks&#160;(64&#160;a&#160;second;&#160;default&#160;8:&#160;8&#160;a</text>
+<text x="16" y="262" fill="#d6d9df" xml:space="preserve" style="white-space:pre">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;second)</text>
+<text x="16" y="280" fill="#d6d9df" xml:space="preserve" style="white-space:pre">&#160;&#160;--jobs&#160;JOBS&#160;&#160;&#160;&#160;matches&#160;converted&#160;at&#160;once&#160;(default:&#160;half&#160;the&#160;cores)</text>
+<text x="16" y="298" fill="#d6d9df" xml:space="preserve" style="white-space:pre">&#160;&#160;--map&#160;MAP&#160;&#160;&#160;&#160;&#160;&#160;only&#160;matches&#160;whose&#160;name&#160;contains&#160;this,&#160;e.g.&#160;mirage</text>
+<text x="16" y="316" fill="#d6d9df" xml:space="preserve" style="white-space:pre">&#160;&#160;--force&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;rewrite&#160;matches&#160;already&#160;written</text>
+<text x="16" y="334" fill="#d6d9df" xml:space="preserve" style="white-space:pre">&#160;&#160;--no-bulk&#160;&#160;&#160;&#160;&#160;&#160;leave&#160;the&#160;entity&#160;stream,&#160;the&#160;players&#x27;&#160;commands&#160;and&#160;the</text>
+<text x="16" y="352" fill="#d6d9df" xml:space="preserve" style="white-space:pre">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;animation&#160;(over&#160;half&#160;a&#160;demo&#x27;s&#160;size)&#160;out&#160;of&#160;the&#160;packets</text>
+<text x="16" y="370" fill="#d6d9df" xml:space="preserve" style="white-space:pre">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;sidecar;&#160;the&#160;self-check&#160;counts&#160;them&#160;lost</text>
+<text x="16" y="388" fill="#d6d9df" xml:space="preserve" style="white-space:pre">&#160;&#160;--container&#160;&#160;&#160;&#160;pack&#160;each&#160;match&#160;into&#160;one&#160;.3dheat&#160;file&#160;(the&#160;default)</text>
+<text x="16" y="406" fill="#d6d9df" xml:space="preserve" style="white-space:pre">&#160;&#160;--loose&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;keep&#160;each&#160;match&#160;as&#160;separate&#160;files&#160;(table,&#160;match.json,</text>
+<text x="16" y="424" fill="#d6d9df" xml:space="preserve" style="white-space:pre">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;sidecars),&#160;not&#160;one&#160;.3dheat&#160;container</text>
 </g></svg>

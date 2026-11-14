@@ -3,13 +3,13 @@
 <rect width="890" height="26" rx="8" fill="#2c2e35"/><rect y="18" width="890" height="8" fill="#2c2e35"/>
 <circle cx="16" cy="13" r="5" fill="#ff5f57"/><circle cx="32" cy="13" r="5" fill="#febc2e"/><circle cx="48" cy="13" r="5" fill="#28c840"/>
 <text x="445.0" y="17" fill="#9aa0aa" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="12" text-anchor="middle">inside a .3dheat container (synthetic match)</text>
-<g font-family="Consolas,Menlo,DejaVu Sans Mono,monospace" font-size="13" xml:space="preserve">
-<text x="16" y="46" fill="#7ee787">$ python -c &quot;import zipfile; [print(f\&quot;{i.file_size:&gt;9,}  {i.filename}\&quot;) for i in zipfile.ZipFile(\&quot;out/de_t…</text>
-<text x="16" y="64" fill="#d6d9df">    2,292  manifest.json</text>
-<text x="16" y="82" fill="#d6d9df">   38,769  alpha-vs-bravo-m1.parquet</text>
-<text x="16" y="100" fill="#d6d9df">    7,742  alpha-vs-bravo-m1.match.json</text>
-<text x="16" y="118" fill="#d6d9df">    3,233  alpha-vs-bravo-m1.events.parquet</text>
-<text x="16" y="136" fill="#d6d9df">      930  alpha-vs-bravo-m1.packets.parquet</text>
-<text x="16" y="154" fill="#d6d9df">    1,116  alpha-vs-bravo-m1.props.parquet</text>
-<text x="16" y="172" fill="#d6d9df">    1,122  alpha-vs-bravo-m1.strings.parquet</text>
+<g font-family="Consolas,Menlo,DejaVu Sans Mono,monospace" font-size="13" xml:space="preserve" style="white-space:pre">
+<text x="16" y="46" fill="#7ee787" xml:space="preserve" style="white-space:pre">$&#160;python&#160;-c&#160;&quot;import&#160;zipfile;&#160;[print(f\&quot;{i.file_size:&gt;9,}&#160;&#160;{i.filename}\&quot;)&#160;for&#160;i&#160;in&#160;zipfile.ZipFile(\&quot;out/de_t…</text>
+<text x="16" y="64" fill="#d6d9df" xml:space="preserve" style="white-space:pre">&#160;&#160;&#160;&#160;2,292&#160;&#160;manifest.json</text>
+<text x="16" y="82" fill="#d6d9df" xml:space="preserve" style="white-space:pre">&#160;&#160;&#160;38,769&#160;&#160;alpha-vs-bravo-m1.parquet</text>
+<text x="16" y="100" fill="#d6d9df" xml:space="preserve" style="white-space:pre">&#160;&#160;&#160;&#160;7,742&#160;&#160;alpha-vs-bravo-m1.match.json</text>
+<text x="16" y="118" fill="#d6d9df" xml:space="preserve" style="white-space:pre">&#160;&#160;&#160;&#160;3,233&#160;&#160;alpha-vs-bravo-m1.events.parquet</text>
+<text x="16" y="136" fill="#d6d9df" xml:space="preserve" style="white-space:pre">&#160;&#160;&#160;&#160;&#160;&#160;930&#160;&#160;alpha-vs-bravo-m1.packets.parquet</text>
+<text x="16" y="154" fill="#d6d9df" xml:space="preserve" style="white-space:pre">&#160;&#160;&#160;&#160;1,116&#160;&#160;alpha-vs-bravo-m1.props.parquet</text>
+<text x="16" y="172" fill="#d6d9df" xml:space="preserve" style="white-space:pre">&#160;&#160;&#160;&#160;1,122&#160;&#160;alpha-vs-bravo-m1.strings.parquet</text>
 </g></svg>
