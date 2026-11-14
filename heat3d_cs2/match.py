@@ -33,6 +33,7 @@ from __future__ import annotations
 
 import json
 import math
+import re
 from collections import Counter
 from dataclasses import dataclass, field
 
@@ -583,6 +584,25 @@ ROW_COLUMNS = [
 ]
 # Everything else the demo says about a row: see `events`.
 ROW_COLUMNS += [c for c in more.EXTRA_TEXT + more.EXTRA_NUMERIC + more.SAMPLE_COLUMNS if c not in ROW_COLUMNS]
+#: The player's state at every row of theirs, events included (`_states`), and
+#: the round's objective income (`_round_ends`): the viewer's factor and money
+#: columns (`state_*`, `earn_*`).
+STATE_COLUMNS = ["state_helmet", "state_defuser", "state_kevlar", "state_scoped", "state_flashed", "state_utility",
+                 "state_weapon"]
+ROW_COLUMNS += STATE_COLUMNS + ["earn_round_cs2"]
+
+#: Round rewards in competitive play: a win (by the bomb or a defuse, more),
+#: the loss bonus by the losing streak, the planting side's bonus for a lost
+#: round with the bomb down, and the planter's and the defuser's own. What a
+#: round paid is read from the players' money where it can be (`_round_ends`);
+#: these are for the rounds it cannot (a half's last, money at the cap).
+WIN_REWARD = {"elimination": 3250, "time": 3250, "bomb": 3500, "defuse": 3500}
+LOSS_BONUS = [1400, 1900, 2400, 2900, 3400]
+PLANT_BONUS = 600
+MONEY_CAP = 16000
+OBJECTIVE_REWARD = 300
+#: What counts as utility in an inventory.
+UTILITY = re.compile(r"grenade|flashbang|molotov|incendiary|decoy", re.I)
 
 
 def _direction(yaw_deg, pitch_deg):
@@ -650,7 +670,9 @@ NUMERIC = {
     "noscope",
     "attackerBlind",
     "won",
+    "earn_round_cs2",
 }
+NUMERIC |= set(STATE_COLUMNS) - {"state_weapon"}
 NUMERIC |= set(more.EXTRA_NUMERIC) | {c for c in more.SAMPLE_COLUMNS if c not in more.TEXT_SAMPLES}
 
 
@@ -962,9 +984,10 @@ def build_match(raws: list[RawPart], name: str) -> Match:
     rows = pd.concat(filled, ignore_index=True) if filled else _frame({})
     # Events name the player; the team is the player's.
     team_of = {pid: info["team"] for pid, info in players.items()}
+    rows = pd.concat([rows, _round_ends(rows, rounds)], ignore_index=True)
     missing = rows["team"].fillna("") == ""
     rows.loc[missing, "team"] = rows.loc[missing, "steamid"].map(team_of).fillna("")
-    rows = _label(rows, rounds, name, map_name)
+    rows = _states(_label(rows, rounds, name, map_name))
     first = parts[0].raw
     return Match(
         name=name,
@@ -992,6 +1015,133 @@ def build_match(raws: list[RawPart], name: str) -> Match:
             for p in parts
         ],
     )
+
+
+def _round_ends(rows: pd.DataFrame, rounds: list[Round]) -> pd.DataFrame:
+    """
+    A `round_end` row for every player who played a decided round, where they
+    last stood: whether their side won, how (`detail`), and what the round paid
+    them (`earn_round_cs2`): the win reward, or the loss bonus plus the
+    planting side's bonus after a plant; nothing for a T alive when the time
+    ran out. The amount is what the side's players' money rose by from their
+    last sample in the round to the next freeze time (the most common rise of
+    those below the cap), where that is one the rules can pay; else the rules'
+    own: the loss bonus by the side's losing streak (one at each half's start,
+    a win shortens it by one). Plants and defuses get their own 300.
+    """
+    events = rows["event"].to_numpy()
+    pos = rows[events == "position"]
+    deaths = rows[events == "death"]
+    rows.loc[np.isin(events, ["plant", "defuse"]), "earn_round_cs2"] = OBJECTIVE_REWARD
+    out = []
+    streak = {"T": 1, "CT": 1}
+    previous_sides: dict[str, str] = {}
+    pos_t = pos["time"].to_numpy(dtype=float)
+    for k, r in enumerate(rounds):
+        if r.sides != previous_sides:
+            # A new half (the sides swapped, or the match began): the streaks start again.
+            streak = {"T": 1, "CT": 1}
+            previous_sides = dict(r.sides)
+        if r.winner not in ("T", "CT") or r.reason not in WIN_REWARD:
+            continue
+        loser = "CT" if r.winner == "T" else "T"
+        loss = LOSS_BONUS[min(streak[loser], len(LOSS_BONUS) - 1)]
+        streak[loser] += 1
+        streak[r.winner] = max(streak[r.winner] - 1, 0)
+        here = pos[(pos["time"] >= r.start) & (pos["time"] <= r.end) & (pos["side"] != "")]
+        if not len(here):
+            continue
+        last = here.sort_values("time", kind="stable").groupby("steamid", sort=False).tail(1)
+        dead = set(deaths.loc[(deaths["time"] >= r.start) & (deaths["time"] <= r.end), "steamid"])
+        bonus = PLANT_BONUS if loser == "T" and r.plant else 0
+        paid = {r.winner: WIN_REWARD[r.reason], loser: loss + bonus}
+        if k + 1 < len(rounds):
+            nxt = pos[(pos_t >= r.until) & (pos_t < rounds[k + 1].start)].groupby("steamid")["money"].first()
+            for side in ("T", "CT"):
+                rise = [nxt[sid] - m for sid, sd, m in zip(last["steamid"], last["side"], last["money"])
+                        if sd == side and sid in nxt.index and nxt[sid] < MONEY_CAP
+                        and not (side == "T" and r.reason == "time" and sid not in dead)]
+                if rise:
+                    common = Counter(rise).most_common(1)[0][0]
+                    allowed = {WIN_REWARD[r.reason]} if side == r.winner else {b + bonus for b in LOSS_BONUS}
+                    if common in allowed:
+                        paid[side] = int(common)
+        loss = paid[loser] - bonus
+        if loss in LOSS_BONUS:
+            # The streak as the game counts it, for the rounds the money cannot tell.
+            streak[loser] = LOSS_BONUS.index(loss) + 1
+        reward = []
+        for sid, side in zip(last["steamid"], last["side"]):
+            if side == "T" and side == loser and r.reason == "time" and sid not in dead:
+                reward.append(0)
+            else:
+                reward.append(paid[side])
+        detail = {side: json.dumps({"winner": r.winner, "reason": r.reason, "lossBonus": loss if side == loser else 0,
+                                    "plant": bool(r.plant)}) for side in ("T", "CT")}
+        out.append(_frame({
+            "time": np.full(len(last), r.end),
+            "event": "round_end",
+            "player": last["player"].to_numpy(),
+            "steamid": last["steamid"].to_numpy(),
+            "side": last["side"].to_numpy(),
+            "x": last["x"].to_numpy(dtype=float),
+            "y": last["y"].to_numpy(dtype=float),
+            "z": last["z"].to_numpy(dtype=float),
+            "place": last["place"].to_numpy(),
+            "detail": [detail[x] for x in last["side"]],
+            "earn_round_cs2": np.asarray(reward, dtype=float),
+        }))
+    return pd.concat(out, ignore_index=True) if out else _frame({})
+
+
+def _states(rows: pd.DataFrame) -> pd.DataFrame:
+    """
+    Every row of a player's carries their state at the time, as their last
+    position sample up to it had it: helmet, defuser, armour, scoped, utility
+    count, the weapon in hand (`state_*`), and flashed from the blinds that
+    hit them. Events also get the inventory, money and equipment value where
+    they have none of their own.
+    """
+    rows = rows.reset_index(drop=True)
+    n = len(rows)
+    sid = rows["steamid"].fillna("").astype(str).to_numpy()
+    t = rows["time"].to_numpy(dtype=float)
+    ev = rows["event"].to_numpy()
+    dur = rows["duration"].to_numpy(dtype=float)
+    src = np.full(n, -1, dtype=np.int64)
+    flashed = np.zeros(n)
+    for player, idx in pd.Series(np.arange(n)).groupby(sid).groups.items():
+        if not player:
+            continue
+        idx = np.sort(np.asarray(idx))
+        p = idx[ev[idx] == "position"]
+        if len(p):
+            k = np.searchsorted(t[p], t[idx], side="right") - 1
+            src[idx[k >= 0]] = p[k[k >= 0]]
+        for start, length in zip(t[idx][ev[idx] == "blind"], dur[idx][ev[idx] == "blind"]):
+            if length > 0:
+                flashed[idx[(t[idx] >= start) & (t[idx] < start + length)]] = 1
+    has = src >= 0
+    pick = np.where(has, src, 0)
+
+    def taken(column: str) -> np.ndarray:
+        return np.where(has, rows[column].to_numpy(dtype=float)[pick], np.nan)
+
+    rows["state_helmet"] = taken("helmet")
+    rows["state_defuser"] = taken("defuser")
+    rows["state_kevlar"] = np.where(has, (taken("armor") > 0).astype(float), np.nan)
+    rows["state_scoped"] = taken("scoped")
+    rows["state_flashed"] = np.where(sid != "", flashed, np.nan)
+    inventory = rows["inventory"].fillna("").astype(str).to_numpy()
+    held = inventory[pick]
+    count = np.array([sum(1 for x in h.split("|") if x and UTILITY.search(x)) for h in held], dtype=float)
+    rows["state_utility"] = np.where(has, count, np.nan)
+    rows["state_weapon"] = np.where(has, rows["weapon"].fillna("").astype(str).to_numpy()[pick], "")
+    rows["inventory"] = np.where((inventory == "") & has, held, inventory)
+    for column in ("money", "equipment"):
+        v = rows[column].to_numpy(dtype=float)
+        rows[column] = np.where(np.isnan(v) & has, taken(column), v)
+    return rows
 
 
 def _numbers(df: pd.DataFrame, column: str) -> np.ndarray:

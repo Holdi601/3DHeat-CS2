@@ -18,7 +18,7 @@ the end of its freeze time to the next round's start) are in it.
 
 ## Columns
 
-35 columns, always in this order. Text columns are dictionary-encoded strings
+The columns, always in this order. Text columns are dictionary-encoded strings
 (`dictionary<int32, string>`) and are never null: "no value" is an empty
 string. Numeric columns are null where a row has no value.
 
@@ -76,12 +76,18 @@ string. Numeric columns are null where a row has no value.
 | `ping` | int16 | milliseconds; positions |
 | `killsTotal`, `deathsTotal`, `assistsTotal`, `headshotKillsTotal`, `damageTotal`, `utilityDamageTotal`, `enemiesFlashedTotal`, `objectiveTotal`, `aceRoundsTotal`, `threeKillRoundsTotal`, `aliveTimeTotal`, `moneySavedTotal`, `mvps`, `score` | int | the game's own scoreboard counts for the match so far; positions |
 | `cashSpent`, `cashSpentTotal`, `roundStartEquipment` | int32 | money spent this round and in the match; equipment value when the round started; positions |
+| `state_helmet`, `state_defuser`, `state_kevlar`, `state_scoped`, `state_flashed` | int8 | 0/1, the player's state at the row's time, events included: helmet, defuse kit, any armour, scoped (from the player's last position sample up to the row), flashed (inside a `blind` that hit them); every row naming a player |
+| `state_utility` | int16 | grenades carried at the time (from `inventory`); every row naming a player |
+| `state_weapon` | string | the weapon in hand at the time (on a `death`, the victim's own, where `weapon` is the killer's); every row naming a player |
+| `earn_round_cs2` | int16 | what the round paid: on `round_end` the win reward or the loss bonus (with the planting side's bonus), on `plant` and `defuse` the player's 300 |
 
 ## Events
 
 Which player a row names, where it stands, and which columns it fills.
 `match`, `map`, `round`, `roundId`, `phase`, `time`, `roundTime`, `event`,
-`won` and `buy` are filled on every row.
+`won` and `buy` are filled on every row; `inventory`, `money`, `equipment` and
+the `state_*` columns on every row naming a player (events take them from the
+player's last position sample).
 
 | `event` | `player` / `side` / `team` | `x`, `y`, `z` | Also filled |
 |---|---|---|---|
@@ -95,8 +101,9 @@ Which player a row names, where it stands, and which columns it fills.
 | `throw` | the thrower | where the grenade was thrown from | `weapon` (the grenade), `place` |
 | `smoke`, `flash`, `he`, `molotov`, `decoy` | the thrower | where it went off | `weapon`, `throwerPlace` (the thrower's place at that moment); `place` stays empty |
 | `blind` | the player flashed | where they stood | `other` (flasher), `duration`, `weapon` = `Flashbang`, `entity`, `place` - teammates flashed too |
-| `plant` | the planter | where they planted | `weapon` = `C4 Explosive`, `place` |
-| `defuse` | the defuser | where they defused | `weapon` = `C4 Explosive`, `place` |
+| `plant` | the planter | where they planted | `weapon` = `C4 Explosive`, `place`, `earn_round_cs2` (300) |
+| `defuse` | the defuser | where they defused | `weapon` = `C4 Explosive`, `place`, `earn_round_cs2` (300) |
+| `round_end` | every player who played the round | where the player last stood | `won`, `earn_round_cs2` (what the round paid them: the rise of the side's money to the next freeze time where the rules allow it, else the rules' own), `detail` (`winner`, `reason`, `lossBonus`, `plant`) |
 | `explode` | the planter (with their Steam ID), side `T`, the planting team | the plant's position | `weapon` = `C4 Explosive`, `place` (the planter's at the plant: where the bomb lay); its time is when the bomb went off |
 | `chat` | the sender | where they were | `text` |
 | every other game event about a player, under the game's name: `item_pickup`, `item_equip`, `player_footstep`, `player_jump`, `weapon_reload`, `weapon_zoom`, `player_spawn`, `bomb_beginplant`, `bomb_begindefuse`, `bomb_dropped`, `bomb_pickup`, `bomb_exploded`, `smokegrenade_expired`, `inferno_expire`, `decoy_started`, `player_team`, `player_disconnect`, ... | the player | where they were (a grenade's events: where it was) | `weapon` (an item's), `entity`, `detail` (every field of the event) |

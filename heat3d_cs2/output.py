@@ -53,13 +53,14 @@ HINTS = {
 #: Columns stored as small integers or 32-bit floats; the rest are strings or float64.
 INT16 = {"round", "health", "armor", "armorDamage", "penetrated", "ammo", "ammoReserve", "shotsFired", "zoom",
          "moveType", "ping", "killsTotal", "deathsTotal", "assistsTotal", "headshotKillsTotal", "enemiesFlashedTotal",
-         "objectiveTotal", "aceRoundsTotal", "threeKillRoundsTotal", "mvps", "score"}
+         "objectiveTotal", "aceRoundsTotal", "threeKillRoundsTotal", "mvps", "score", "state_utility", "earn_round_cs2"}
 INT32 = {"money", "equipment", "entity", "damageTotal", "utilityDamageTotal", "aliveTimeTotal", "moneySavedTotal",
          "cashSpent", "cashSpentTotal", "roundStartEquipment"}
 FLOAT64 = {"time"}
 #: 0/1 flags, stored as int8.
 FLAGS = {"headshot", "opening", "traded", "noscope", "attackerBlind", "won", "throughSmoke", "helmet", "defuser",
-         "scoped", "walking", "airborne", "buyZone", "bombZone", "defusing", "spotted"}
+         "scoped", "walking", "airborne", "buyZone", "bombZone", "defusing", "spotted", "state_helmet", "state_defuser",
+         "state_kevlar", "state_scoped", "state_flashed"}
 
 
 def table(match: Match) -> pa.Table:

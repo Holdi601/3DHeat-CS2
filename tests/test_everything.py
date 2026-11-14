@@ -73,6 +73,17 @@ def test_the_players_state_on_every_sample(match):
     assert pos.loc[pos["time"] == pos["time"].max(), "killsTotal"].max() == 1
 
 
+
+def test_events_carry_the_players_state_and_rounds_their_pay(match):
+    rows = match.rows
+    named = rows[(rows["steamid"] != "") & (rows["event"] != "position")]
+    held = named[named["state_helmet"].notna()]
+    assert len(held) and set(held["state_helmet"]) == {1.0} and set(held["state_utility"]) == {0.0}
+    assert set(held["inventory"]) == {"Glock-18|AK-47"}
+    ends = rows[rows["event"] == "round_end"]
+    assert len(ends) and set(ends["won"]) <= {0.0, 1.0} and (ends["earn_round_cs2"] >= 0).all()
+
+
 def test_other_events_are_rows_where_the_player_was(match):
     rows = match.rows
     (chat,) = rows[rows["event"] == "chat"].itertuples()
