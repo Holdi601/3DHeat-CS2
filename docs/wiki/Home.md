@@ -3,7 +3,7 @@
 
 3DHeat CS2 turns **Counter-Strike 2 demos** into a heatmap table and a match
 summary per match, and a **CS2 map** into level geometry. The outputs are made
-for the [3DHeat](https://holdi601.github.io/3DHeat-Docs) telemetry viewer, but they
+for the [3DHeat](https://holdi601.github.io/3DHeat) telemetry viewer, but they
 are ordinary files - Parquet, JSON and glTF binary - that anything else can
 read too.
 

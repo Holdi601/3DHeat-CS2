@@ -12,6 +12,8 @@ damage, flashes and economy. Code:
 [`heat3d_cs2/match.py`](https://github.com/Holdi601/3DHeat-CS2/blob/main/heat3d_cs2/match.py).
 The scoreboard computed from it is on [Statistics](statistics.md).
 
+![which files are one match](assets/img/match-parts.svg)
+
 ## Overview
 
 1. Every file of a match name is read ([Reading a demo](reading-demos.md)).

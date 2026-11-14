@@ -1,8 +1,23 @@
 # CS2 demos and maps
 
 Counter-Strike 2 demos into heatmap tables and match summaries, and CS2 maps
-into level geometry, for the 3DHeat viewer - or anything that reads Parquet,
-JSON and glTF.
+into level geometry, for the [3DHeat viewer](https://github.com/Holdi601/3DHeat)
+([documentation](https://holdi601.github.io/3DHeat/)) - or anything that reads
+Parquet, JSON and glTF.
+
+Useful for reviewing your own matches in 3D - where players stood, died, threw
+and planted, round by round - for overlaying many matches of one map into one
+heatmap, and for match statistics (ADR, KAST, trades, clutches, economy)
+without a third-party site.
+
+**Documentation: <https://holdi601.github.io/3DHeat-CS2/>** - a page per command
+and output, with examples.
+
+![demos: from demo files to one file a match](docs/assets/img/pipeline.svg)
+
+## Install
+
+A current Python 3 (3.9 or later), then in a clone or a downloaded release:
 
 ```bash
 pip install -r requirements.txt
@@ -11,10 +26,40 @@ python -m heat3d_cs2 map de_mirage -o out/de_mirage/de_mirage.glb  # the map fro
 python -m heat3d_cs2 scoreboard out/de_mirage/<match>.match.json   # a match's scoreboard as text
 ```
 
-Per match, `demos` writes into a folder per map (`out/de_mirage/...`), so a
-map's matches load together:
+`map` needs Source2Viewer's command line build (see [The map](#the-map)).
 
-- `<match>.parquet` - every player eight times a second (`--every 8` ticks of
+## Commands
+
+| Command | Option | Default | Does |
+|---|---|---|---|
+| `demos <paths>` | | | demo files (`.dem`, any case) and folders, searched recursively; parts of one match (`-p1`, `_p2`) are joined |
+| | `-o`, `--out` | required | the folder to write into, a folder per map inside |
+| | `--every N` | `8` | sample every player every *N* ticks (64 a second: 8 is eight samples a second); events always at their own tick |
+| | `--jobs N` | half the cores | matches converted at once |
+| | `--map TEXT` | | only matches whose file name contains *TEXT* |
+| | `--force` | off | rewrite matches already written (else skipped) |
+| | `--loose` | off | separate files per match instead of one `.3dheat` container |
+| | `--container` | on | one `.3dheat` file per match (the default) |
+| | `--no-bulk` | off | leave the entity stream, players' commands and animation out of the packets sidecar (the self-check counts them lost) |
+| `map <name or .vpk>` | `-o`, `--out` | required | the `.glb` to write |
+| | `--game FOLDER` | from Steam | the CS2 install folder |
+| | `--source2viewer EXE` | `PATH`, `HEAT3D_SOURCE2VIEWER` | the Source2Viewer CLI |
+| `scoreboard <match.json>` | | | print a match summary's scoreboard as text |
+
+`python -m heat3d_cs2 <command> --help` lists the same. Every option with examples:
+[Commands](https://holdi601.github.io/3DHeat-CS2/commands.html).
+
+![demos on a synthetic demo](docs/assets/img/demos-run.svg)
+
+## Output
+
+Per match, `demos` writes one file into a folder per map (`out/de_mirage/...`),
+so a map's matches load together: `<match>.3dheat`, a
+[`.3dheat` container](https://holdi601.github.io/3DHeat/container.html) - a ZIP
+with a manifest naming each member's role. The members, or with `--loose` the
+separate files:
+
+- `<match>.parquet` (role `table`) - every player eight times a second (`--every 8` ticks of
   64) with everything the demo says of them, freeze time included, every
   grenade's flight, and every event where it happened, one row each: the
   heatmap's data.
@@ -24,11 +69,13 @@ map's matches load together:
   state as it changed: the match analysis' data. Its `selfCheck` says where
   everything of the demo went.
 - `<match>.events.parquet`, `.props.parquet`, `.strings.parquet`,
-  `.packets.parquet` - everything else the demo holds, whole (see
+  `.packets.parquet` (sidecar roles `events`, `props`, `strings`, `packets`) - everything else the demo holds, whole (see
   [Completeness](#completeness)).
 
 A folder of a few hundred demos takes minutes (`--jobs`, half the cores by
 default). Matches already written are skipped unless `--force`.
+
+![inside a .3dheat container](docs/assets/img/container-members.svg)
 
 ## The table
 
@@ -37,7 +84,7 @@ default). Matches already written are skipped unless `--force`.
 | `match`, `map`, `round`, `roundId` | which match and round; `roundId` is `<match> #NN` |
 | `phase` | `freeze` in freeze time, `live` until the round is decided, `after` while the winners hunt and the losers save |
 | `time`, `roundTime` | seconds since the match started; since this round's freeze time ended |
-| `event` | `position`, `kill` (where the killer stood), `death` (where the victim fell), `hurt` (the victim), `shot`, `slash` (a knife), `throw`, `grenade` (in flight), `smoke` / `flash` / `he` / `molotov` / `decoy` (where it went off), `blind` (the player flashed), `plant`, `defuse`, `explode`, `chat`, and every other game event about a player under the game's name (`item_pickup`, `player_footstep`, `weapon_reload`, `bomb_dropped`, ...) |
+| `event` | `position`, `kill` (where the killer stood), `death` (where the victim fell), `hurt` (the victim), `shot`, `slash` (a knife), `throw`, `grenade` (in flight), `smoke` / `flash` / `he` / `molotov` / `decoy` (where it went off), `blind` (the player flashed), `plant`, `defuse`, `explode`, `round_end` (one per player: what the round paid them in `earn_round_cs2`), `chat`, and every other game event about a player under the game's name (`item_pickup`, `player_footstep`, `weapon_reload`, `bomb_dropped`, ...) |
 | `player`, `steamid`, `side`, `team` | who: `side` is `T` or `CT` this round, `team` the team's name |
 | `x`, `y`, `z` | the game's own coordinates (inches, Z up) |
 | `dirX`, `dirY`, `dirZ` | where a player looks, a unit vector in the same frame |
@@ -50,6 +97,7 @@ default). Matches already written are skipped unless `--force`.
 | `won`, `buy` | 0/1 whether this row's side won the round; its side's buy that round |
 | `detail`, `text`, `entity` | every other field of the event as JSON; a chat line; a grenade's entity (flight, detonation and flashes share it) |
 | `hitgroup`, `armorDamage`, `penetrated`, `throughSmoke`, `distance`, `assister` | where a bullet struck, armour lost; for a kill: walls, smoke, distance, assist |
+| `state_helmet`, `state_defuser`, `state_kevlar`, `state_scoped`, `state_flashed`, `state_utility`, `state_weapon` | the player's state at the row's time, on every row naming a player (events take it from the last sample) |
 | the player's state, on positions | flash, helmet, defuser, scoped, zoom, walking, crouch, airborne, buy and bomb zone, defusing, spotted and by whom, inventory, ammunition, recoil, ping, the game's scoreboard counts, money spent |
 
 Every column, and which events fill which: [docs/output-table.md](docs/output-table.md).
@@ -238,7 +286,7 @@ HEAT3D_CS2_DEMO=<a demo> HEAT3D_SOURCE2VIEWER=<cli> python -m pytest   # also th
 
 ## Part of 3DHeat
 
-3DHeat CS2 is one of the free tools around the 3DHeat telemetry viewer. Each is its
+3DHeat CS2 is one of the free tools around the [3DHeat](https://github.com/Holdi601/3DHeat) telemetry viewer. Each is its
 own project, with its own releases and licence:
 
 | Tool | What it does |
@@ -264,4 +312,6 @@ settings, exports - are never touched. To update on request: `python -m heat3d_u
 MIT - see [`LICENSE`](LICENSE), and [`LICENSES.md`](LICENSES.md) for the
 third-party packages it uses and what the games it reads oblige.
 
-Documentation: the [wiki](https://github.com/Holdi601/3DHeat-CS2/wiki).
+Documentation: <https://holdi601.github.io/3DHeat-CS2/> (the source pages are in
+[`docs/`](docs/)). The viewer: <https://github.com/Holdi601/3DHeat>,
+<https://holdi601.github.io/3DHeat/>.

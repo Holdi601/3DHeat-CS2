@@ -12,6 +12,8 @@ Everything is counted from the match built as on
 [Building a match](building-matches.md): its kill records, its damage (health
 lost, enemies only), its blinds (enemies only) and its rows.
 
+![the text scoreboard of a synthetic match](assets/img/scoreboard.svg)
+
 ## The conventions
 
 Where the game itself does not define a number, these are the definitions.

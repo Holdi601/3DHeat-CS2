@@ -12,6 +12,8 @@ geometry: the world's **collision mesh**, in the frame and units the
 [`heat3d_cs2/glb.py`](https://github.com/Holdi601/3DHeat-CS2/blob/main/heat3d_cs2/glb.py).
 Options and messages: [Commands](commands.md#map---a-maps-geometry-as-glb).
 
+![map export](assets/img/map-export.svg)
+
 ## Why the collision mesh
 
 The collision mesh is what players stand on and hide behind - floors, walls,

@@ -16,6 +16,13 @@ The file is written with Snappy compression in row groups of 256,000 rows.
 Rows are sorted by `time`, then by `event`. Only rows inside a round (from
 the end of its freeze time to the next round's start) are in it.
 
+On the synthetic demo of the tests, the event rows of the first round:
+
+![event rows of the table](assets/img/table-rows.svg)
+
+In a `.3dheat` container the table is the member with role `table`
+([One file a match](output-container.md)).
+
 ## Columns
 
 The columns, always in this order. Text columns are dictionary-encoded strings

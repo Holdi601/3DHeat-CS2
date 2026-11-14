@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="609" height="140" viewBox="0 0 609 140" role="img" aria-label="demos: one .3dheat file a match (synthetic demo)">
+<rect width="609" height="140" rx="8" fill="#1e1f24"/>
+<rect width="609" height="26" rx="8" fill="#2c2e35"/><rect y="18" width="609" height="8" fill="#2c2e35"/>
+<circle cx="16" cy="13" r="5" fill="#ff5f57"/><circle cx="32" cy="13" r="5" fill="#febc2e"/><circle cx="48" cy="13" r="5" fill="#28c840"/>
+<text x="304.5" y="17" fill="#9aa0aa" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="12" text-anchor="middle">demos: one .3dheat file a match (synthetic demo)</text>
+<g font-family="Consolas,Menlo,DejaVu Sans Mono,monospace" font-size="13" xml:space="preserve">
+<text x="16" y="46" fill="#7ee787">$ python -m heat3d_cs2 demos demos -o out</text>
+<text x="16" y="64" fill="#d6d9df">1 match(es), 1 at a time</text>
+<text x="16" y="82" fill="#d6d9df">alpha-vs-bravo-m1: de_test, 2 rounds (Alpha 2 Bravo 0), 2,655 rows, lost 0</text>
+<text x="16" y="100" fill="#7ee787">$ ls out/de_test</text>
+<text x="16" y="118" fill="#d6d9df">alpha-vs-bravo-m1.3dheat</text>
+</g></svg>

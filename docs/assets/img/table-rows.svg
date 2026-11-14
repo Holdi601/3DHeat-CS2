@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="890" height="266" viewBox="0 0 890 266" role="img" aria-label="the heatmap table: event rows (synthetic match)">
+<rect width="890" height="266" rx="8" fill="#1e1f24"/>
+<rect width="890" height="26" rx="8" fill="#2c2e35"/><rect y="18" width="890" height="8" fill="#2c2e35"/>
+<circle cx="16" cy="13" r="5" fill="#ff5f57"/><circle cx="32" cy="13" r="5" fill="#febc2e"/><circle cx="48" cy="13" r="5" fill="#28c840"/>
+<text x="445.0" y="17" fill="#9aa0aa" font-family="Segoe UI,Helvetica,Arial,sans-serif" font-size="12" text-anchor="middle">the heatmap table: event rows (synthetic match)</text>
+<g font-family="Consolas,Menlo,DejaVu Sans Mono,monospace" font-size="13" xml:space="preserve">
+<text x="16" y="46" fill="#7ee787">$ python -c &quot;import pandas as pd; d = pd.read_parquet(\&quot;alpha-vs-bravo-m1.parquet\&quot;); print(d[d.event != \&quot;po…</text>
+<text x="16" y="64" fill="#d6d9df">              roundId     time event player side      x      y      z        weapon other</text>
+<text x="16" y="82" fill="#d6d9df">alpha-vs-bravo-m1 #01 18.75000 throw    ash    T  120.0   10.0 -160.0 Smoke Grenade      </text>
+<text x="16" y="100" fill="#d6d9df">alpha-vs-bravo-m1 #01 18.90625 slash    ash    T  120.0   10.0 -160.0         Knife      </text>
+<text x="16" y="118" fill="#d6d9df">alpha-vs-bravo-m1 #01 19.84375  hurt    bob   CT -500.0 -300.0 -160.0         AK-47   ace</text>
+<text x="16" y="136" fill="#d6d9df">alpha-vs-bravo-m1 #01 19.84375  shot    ace    T  100.0    0.0 -160.0         AK-47      </text>
+<text x="16" y="154" fill="#d6d9df">alpha-vs-bravo-m1 #01 20.00000 death    bob   CT -500.0 -300.0 -160.0         AK-47   ace</text>
+<text x="16" y="172" fill="#d6d9df">alpha-vs-bravo-m1 #01 20.00000  hurt    bob   CT -500.0 -300.0 -160.0         AK-47   ace</text>
+<text x="16" y="190" fill="#d6d9df">alpha-vs-bravo-m1 #01 20.00000  kill    ace    T  100.0    0.0 -160.0         AK-47   bob</text>
+<text x="16" y="208" fill="#d6d9df">alpha-vs-bravo-m1 #01 20.15625 smoke    ash    T   50.0   60.0 -150.0 Smoke Grenade      </text>
+<text x="16" y="226" fill="#d6d9df">alpha-vs-bravo-m1 #01 20.31250  hurt    ace    T  100.0    0.0 -160.0         AK-47   ben</text>
+<text x="16" y="244" fill="#d6d9df">alpha-vs-bravo-m1 #01 21.87500 death    ace    T  100.0    0.0 -160.0         AK-47   ben</text>
+</g></svg>

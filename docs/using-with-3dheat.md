@@ -5,21 +5,27 @@ nav_order: 10
 
 # Using it with 3DHeat
 
-The three outputs go into three places of the
-[3DHeat viewer](https://holdi601.github.io/3DHeat-Docs):
+The outputs go into these places of the
+[3DHeat viewer](https://holdi601.github.io/3DHeat):
 
 | File | Where | What it gives |
 |---|---|---|
+| `<match>.3dheat` (the default) | **Heatmap** tab, **Source** panel, or the **Match** tab | the table and the summary together, one file a match ([container](https://holdi601.github.io/3DHeat/container.html)) |
 | `<match>.parquet` | **Heatmap** tab, **Source** panel | positions and events as a heatmap, box replay, routes |
 | `<match>.match.json` | **Match** tab, **Load match files…** | the scoreboard, the rounds, the kill feed, statistics across matches, links into the heatmap |
 | `<map>.glb` | **Background / level** panel, **3D model…** | the map under the heatmap |
 
 The viewer's own documentation describes each tab in full: its
-[Match analysis](https://holdi601.github.io/3DHeat-Docs/match-analysis.html),
-[Loading files](https://holdi601.github.io/3DHeat-Docs/loading-files.html),
-[Column mapping](https://holdi601.github.io/3DHeat-Docs/column-mapping.html)
-and [Box replay](https://holdi601.github.io/3DHeat-Docs/box-replay.html)
+[Match analysis](https://holdi601.github.io/3DHeat/match-analysis.html),
+[Loading files](https://holdi601.github.io/3DHeat/loading-files.html),
+[Column mapping](https://holdi601.github.io/3DHeat/column-mapping.html)
+and [Box replay](https://holdi601.github.io/3DHeat/box-replay.html)
 pages. This page is the CS2 side of it.
+
+![using it with 3DHeat](assets/img/with-3dheat.svg)
+
+The viewer: [github.com/Holdi601/3DHeat](https://github.com/Holdi601/3DHeat),
+documentation [holdi601.github.io/3DHeat](https://holdi601.github.io/3DHeat/).
 
 ## A typical session
 

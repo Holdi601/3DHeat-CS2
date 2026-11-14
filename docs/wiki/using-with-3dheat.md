@@ -2,7 +2,7 @@
 # Using it with 3DHeat
 
 The three outputs go into three places of the
-[3DHeat viewer](https://holdi601.github.io/3DHeat-Docs):
+[3DHeat viewer](https://holdi601.github.io/3DHeat):
 
 | File | Where | What it gives |
 |---|---|---|
@@ -11,10 +11,10 @@ The three outputs go into three places of the
 | `<map>.glb` | **Background / level** panel, **3D model…** | the map under the heatmap |
 
 The viewer's own documentation describes each tab in full: its
-[Match analysis](https://holdi601.github.io/3DHeat-Docs/match-analysis.html),
-[Loading files](https://holdi601.github.io/3DHeat-Docs/loading-files.html),
-[Column mapping](https://holdi601.github.io/3DHeat-Docs/column-mapping.html)
-and [Box replay](https://holdi601.github.io/3DHeat-Docs/box-replay.html)
+[Match analysis](https://holdi601.github.io/3DHeat/match-analysis.html),
+[Loading files](https://holdi601.github.io/3DHeat/loading-files.html),
+[Column mapping](https://holdi601.github.io/3DHeat/column-mapping.html)
+and [Box replay](https://holdi601.github.io/3DHeat/box-replay.html)
 pages. This page is the CS2 side of it.
 
 ## A typical session

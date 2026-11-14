@@ -6,7 +6,7 @@ nav_order: 3
 # Commands
 
 ```text
-python -m heat3d_cs2 demos <demo files or folders> -o <folder> [--every 8] [--jobs N] [--map TEXT] [--force] [--no-bulk]
+python -m heat3d_cs2 demos <demo files or folders> -o <folder> [--every 8] [--jobs N] [--map TEXT] [--force] [--no-bulk] [--loose]
 python -m heat3d_cs2 map <de_mirage | path to its .vpk> -o <file.glb> [--game FOLDER] [--source2viewer EXE]
 python -m heat3d_cs2 scoreboard <match.json>
 ```
@@ -33,9 +33,15 @@ python -m heat3d_cs2 demos D:\Demos -o out --map inferno --jobs 4
 | `--jobs N` | `0` = half the CPU cores | how many matches are converted at once, each in its own process. Never fewer than 1, never more than there are matches to do. |
 | `--map TEXT` | - | only matches whose **name** contains *TEXT*, case-insensitive (`--map mirage`). It filters on the file name, not on the map the demo turns out to hold. |
 | `--force` | off | convert matches that are already written, overwriting them |
+| `--loose` | off | keep each match as separate files - table, `.match.json`, sidecars - instead of packing them into one `.3dheat` container. See [One file a match](output-container.md). |
+| `--container` | on | pack each match into one `.3dheat` file; the default, so only there to be explicit |
 | `--no-bulk` | off | leave the entity stream, the players' commands and the animation stream out of the packets sidecar - over half of a demo's size even compressed. The match summary's self-check then counts them `lost`, by name. |
 
+![demos --help](assets/img/demos-help.svg)
+
 ### Which files are one match
+
+![which files are one match](assets/img/match-parts.svg)
 
 The match name is the demo file's name without its extension and without a
 part suffix: `-p<digits>` or `_p<digits>` at the end, any case. So
@@ -56,18 +62,25 @@ only, a pause) belongs to no chain. How chains are found is described in
 ### What is written
 
 For each match, into a folder named after the map the demo header names
-(`unknown` when it names none):
+(`unknown` when it names none), one `.3dheat` file:
 
 ```text
 out/
   de_inferno/
-    alpha-vs-bravo-m1.parquet
-    alpha-vs-bravo-m1.match.json
-    alpha-vs-bravo-m2.parquet
-    alpha-vs-bravo-m2.match.json
+    alpha-vs-bravo-m1.3dheat
+    alpha-vs-bravo-m2.3dheat
   de_nuke/
     ...
 ```
+
+On the synthetic two-round demo of the tests:
+
+![demos on a synthetic demo](assets/img/demos-run.svg)
+
+With `--loose` each match is the table, its summary and four sidecars side by side
+([One file a match](output-container.md)):
+
+![demos --loose](assets/img/demos-loose.svg)
 
 A heatmap is of one map, so loading one folder in the viewer is loading one
 map's matches. See [The heatmap table](output-table.md) and
@@ -75,8 +88,9 @@ map's matches. See [The heatmap table](output-table.md) and
 
 ### What is skipped
 
-Before anything is read, every `*.parquet` anywhere under `--out` that has
-its summary (`<name>.match.json`) beside it is listed, and a match whose name
+Before anything is read, every `*.3dheat` anywhere under `--out` (a container
+is written whole or not at all), and every `*.parquet` that has
+its summary (`<name>.match.json`) beside it, is listed, and a match whose name
 equals one of their file names (without extension) is skipped, unless
 `--force`. A table without its summary - a run stopped between writing the
 two - does not count, so that match is converted again. The check is by name
@@ -95,15 +109,17 @@ order they finish, not the order of the files):
 
 ```text
 3 match(es), 3 at a time
-alpha-vs-bravo-m1: de_inferno, 21 rounds (Alpha 13 Bravo 8), 412,377 rows
-alpha-vs-bravo-m2: de_nuke, 30 rounds (Bravo 16 Alpha 14), 598,104 rows, 1 incomplete round(s) left out
-alpha-vs-bravo-m3: de_nuke, 18 rounds (Alpha 13 Bravo 5), 330,981 rows, recorded from round 3
+alpha-vs-bravo-m1: de_inferno, 21 rounds (Alpha 13 Bravo 8), 412,377 rows, lost 0
+alpha-vs-bravo-m2: de_nuke, 30 rounds (Bravo 16 Alpha 14), 598,104 rows, 1 incomplete round(s) left out, lost 0
+alpha-vs-bravo-m3: de_nuke, 18 rounds (Alpha 13 Bravo 5), 330,981 rows, recorded from round 3, lost 1,204,331 (svc_PacketEntities, svc_UserCmds, DEM_AnimationData)
 ```
 
 (The numbers are illustrative.) The score is the last round's, team by team
 in the order the summary lists them. *incomplete round(s) left out* counts
 rounds a demo cut off before they were decided; *recorded from round N* says
-the recording starts late. A match that yields nothing says why:
+the recording starts late; *lost* is the summary's self-check - how many items
+of the demo went nowhere, and of which kinds (`--no-bulk` makes the bulk lost).
+A match that yields nothing says why:
 
 ```text
 alpha-vs-bravo-m4: no round in 1 file(s) - nothing written
@@ -132,6 +148,8 @@ read at every tick, a window of ticks at a time (about two minutes for a
 walked once more for its frames and messages.
 
 ## `map` - a map's geometry as `.glb`
+
+![map --help](assets/img/map-help.svg)
 
 ```bash
 python -m heat3d_cs2 map de_mirage -o out/de_mirage/de_mirage.glb
@@ -172,7 +190,11 @@ python -m heat3d_cs2 scoreboard out/de_inferno/alpha-vs-bravo-m1.match.json
 ```
 
 Prints the match's scoreboard from its [summary](output-match-json.md),
-without opening the viewer. On the synthetic two-round demo of the tests:
+without opening the viewer. With `--loose` output the summary is a file of its
+own; from a container, take `<match>.match.json` out of it first (it is a ZIP).
+On the synthetic two-round demo of the tests:
+
+![scoreboard](assets/img/scoreboard.svg)
 
 ```text
 alpha-vs-bravo-m1 - de_test  Alpha 2  Bravo 0

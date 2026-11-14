@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1378" height="226" viewBox="0 0 1378 226" font-family="Segoe UI,Helvetica,Arial,sans-serif">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5f6368"/></marker></defs>
+<rect width="1378" height="226" rx="10" fill="#ffffff" stroke="#dadce0"/>
+<text x="24" y="34" font-size="17" font-weight="600" fill="#202124">map: a CS2 map&#x27;s collision mesh into the tables&#x27; frame</text>
+<rect x="24" y="97.0" width="210" height="64" rx="8" fill="#f1f3f4" stroke="#80868b" stroke-width="1.5"/>
+<text x="129.0" y="125.5" text-anchor="middle" font-weight="600" font-size="14" fill="#202124">&lt;map&gt;.vpk</text>
+<text x="129.0" y="142.5" text-anchor="middle" font-size="12" fill="#5f6368">from the installed game</text>
+<rect x="304" y="90.5" width="210" height="77" rx="8" fill="#e8f0fe" stroke="#3b6fd8" stroke-width="1.5"/>
+<text x="409.0" y="117.0" text-anchor="middle" font-weight="600" font-size="14" fill="#202124">Source2Viewer CLI</text>
+<text x="409.0" y="134.0" text-anchor="middle" font-size="12" fill="#5f6368">exports the world</text>
+<text x="409.0" y="151.0" text-anchor="middle" font-size="12" fill="#5f6368">(you install it)</text>
+<rect x="584" y="90.5" width="210" height="77" rx="8" fill="#e8f0fe" stroke="#3b6fd8" stroke-width="1.5"/>
+<text x="689.0" y="117.0" text-anchor="middle" font-weight="600" font-size="14" fill="#202124">collision mesh</text>
+<text x="689.0" y="134.0" text-anchor="middle" font-size="12" fill="#5f6368">clip brushes and sky</text>
+<text x="689.0" y="151.0" text-anchor="middle" font-size="12" fill="#5f6368">left out</text>
+<rect x="864" y="56.0" width="210" height="64" rx="8" fill="#e6f4ea" stroke="#2e8b57" stroke-width="1.5"/>
+<text x="969.0" y="84.5" text-anchor="middle" font-weight="600" font-size="14" fill="#202124">ground</text>
+<text x="969.0" y="101.5" text-anchor="middle" font-size="12" fill="#5f6368">facing up, walkable</text>
+<rect x="864" y="138.0" width="210" height="64" rx="8" fill="#e6f4ea" stroke="#2e8b57" stroke-width="1.5"/>
+<text x="969.0" y="166.5" text-anchor="middle" font-weight="600" font-size="14" fill="#202124">structure</text>
+<text x="969.0" y="183.5" text-anchor="middle" font-size="12" fill="#5f6368">walls, boxes</text>
+<rect x="1144" y="90.5" width="210" height="77" rx="8" fill="#fff1e0" stroke="#d9822b" stroke-width="1.5"/>
+<text x="1249.0" y="117.0" text-anchor="middle" font-weight="600" font-size="14" fill="#202124">&lt;map&gt;.glb</text>
+<text x="1249.0" y="134.0" text-anchor="middle" font-size="12" fill="#5f6368">Y up, game Y negated,</text>
+<text x="1249.0" y="151.0" text-anchor="middle" font-size="12" fill="#5f6368">same units as the table</text>
+<line x1="234" y1="129.0" x2="302" y2="129.0" stroke="#5f6368" stroke-width="1.4" marker-end="url(#a)"/>
+<line x1="514" y1="129.0" x2="582" y2="129.0" stroke="#5f6368" stroke-width="1.4" marker-end="url(#a)"/>
+<line x1="794" y1="129.0" x2="862" y2="88.0" stroke="#5f6368" stroke-width="1.4" marker-end="url(#a)"/>
+<line x1="794" y1="129.0" x2="862" y2="170.0" stroke="#5f6368" stroke-width="1.4" marker-end="url(#a)"/>
+<line x1="1074" y1="88.0" x2="1142" y2="129.0" stroke="#5f6368" stroke-width="1.4" marker-end="url(#a)"/>
+<line x1="1074" y1="170.0" x2="1142" y2="129.0" stroke="#5f6368" stroke-width="1.4" marker-end="url(#a)"/>
+</svg>

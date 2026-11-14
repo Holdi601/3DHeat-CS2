@@ -7,7 +7,8 @@ nav_order: 1
 
 3DHeat CS2 turns **Counter-Strike 2 demos** into a heatmap table and a match
 summary per match, and a **CS2 map** into level geometry. The outputs are made
-for the [3DHeat](https://holdi601.github.io/3DHeat-Docs) telemetry viewer, but they
+for the [3DHeat](https://holdi601.github.io/3DHeat/) telemetry viewer
+([source](https://github.com/Holdi601/3DHeat)), but they
 are ordinary files - Parquet, JSON and glTF binary - that anything else can
 read too.
 
@@ -26,12 +27,23 @@ python -m heat3d_cs2 map de_mirage -o out/de_mirage/de_mirage.glb  # the map fro
 python -m heat3d_cs2 scoreboard out/de_mirage/<match>.match.json   # a match's scoreboard as text
 ```
 
-`demos` writes, per match, into a folder named after the map:
+![demos: from demo files to one file a match](assets/img/pipeline.svg)
 
-| File | What it holds | Loaded in the viewer's |
+It is useful for reviewing your own matches in 3D - where players stood, died,
+threw and planted, round by round - for overlaying many matches of one map
+into one heatmap, and for match statistics (ADR, KAST, trades, clutches,
+economy) without a third-party site.
+
+`demos` writes, per match, one file into a folder named after the map:
+`out/<map>/<match>.3dheat`, a [`.3dheat` container](output-container.md) - the
+viewer's one-file-a-match format ([spec](https://holdi601.github.io/3DHeat/container.html)).
+It holds these members; `--loose` writes them as separate files instead:
+
+| Member | What it holds | Loaded in the viewer's |
 |---|---|---|
-| `out/<map>/<match>.parquet` | every live player eight times a second, and every event where it happened (kill, death, hurt, shot, throw, grenade detonations, blind, plant, defuse, explode), one row each | Heatmap tab |
-| `out/<map>/<match>.match.json` | teams, score, every round (winner, how, economy, plant, kills in order, clutches, survivors) and every player's scoreboard line | Match tab |
+| `<match>.parquet` (role `table`) | every live player eight times a second with their state (health, money, flash, scoped, zone, inventory, ...), and every event where it happened (kill, death, hurt, shot, throw, grenade detonations, blind, plant, defuse, explode, and a round end per player with what the round paid them), one row each | Heatmap tab |
+| `<match>.match.json` | teams, score, every round (winner, how, economy, plant, kills in order, clutches, survivors) and every player's scoreboard line | Match tab |
+| `<match>.events/props/strings/packets.parquet` | everything else the demo holds, whole (sidecars) | kept for completeness |
 
 `map` writes `<map>.glb`: the map's collision mesh - floors, walls, boxes,
 without decoration - split into ground and structure, in the same frame and
@@ -48,6 +60,7 @@ units as the tables, so it lies exactly under the heatmap (Level panel).
 | [Statistics](statistics.md) | the scoreboard: K/D/A, ADR, KAST, HS%, openings, trades, multi-kills, clutches, utility, flashes |
 | [The heatmap table](output-table.md) | the Parquet file: every column, its type, which events fill it, the `heat3d` footer hints, the axes |
 | [The match summary](output-match-json.md) | the `.match.json` document, field by field |
+| [One file a match](output-container.md) | the `.3dheat` container `demos` writes by default, `--loose` |
 | [Map export](map-export.md) | how a map's collision mesh is exported, the frame, node naming, units |
 | [Using it with 3DHeat](using-with-3dheat.md) | loading tables, summaries and maps into the viewer's Heatmap and Match tabs |
 | [Limits](limits.md) | what is assumed, what is not handled, what is unverified |
@@ -76,7 +89,9 @@ the tool reads demos from disk and fetches none.
 
 ## Part of 3DHeat
 
-3DHeat CS2 is one of several free tools around the 3DHeat viewer, each its own
+3DHeat CS2 is one of several free tools around the
+[3DHeat viewer](https://github.com/Holdi601/3DHeat)
+([documentation](https://holdi601.github.io/3DHeat/)), each its own
 repository with its own releases and licence:
 
 | Tool | What it does |
