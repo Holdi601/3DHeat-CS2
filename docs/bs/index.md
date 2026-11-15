@@ -15,7 +15,7 @@ permalink: /bs/
 gdje je ko stajao, poginuo, bacao i postavljao, runda po rundu. Može i
 pretvoriti CS2 mapu u 3D model na kojem se to prikazuje.
 
-**Zašto bih ga koristio?** Da pregledaš vlastite mečeve, da položiš mnogo mečeva
+**Zašto bih ga koristio?** Da pregledate vlastite mečeve, da položite mnogo mečeva
 jedne mape jedan preko drugog kao jednu toplotnu mapu i za statistike mečeva kao ADR
 (prosječna šteta po rundi) i KAST (udio rundi u kojima je igrač ubio,
 asistirao, preživio ili je osvećen (traded)).
@@ -40,7 +40,7 @@ instalirane igre pomoću komandno-linijske izvedbe Source2Viewera
 
 ## Brzi početak {#quick-start}
 
-Komandna linija ti je nova? Prvo pročitaj [Prije nego počneš](before-you-start.md).
+Komandna linija vam je nova? Prvo pročitajte [Prije nego počnete](before-you-start.md).
 
 ```bash
 pip install -r requirements.txt
@@ -49,11 +49,11 @@ python -m heat3d_cs2 map <map> -o out/<map>/<map>.glb       # the map from the i
 python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # a match's scoreboard as text
 ```
 
-Trebao bi vidjeti `1 match(es), 1 at a time ...`, zatim po jedan red za svaki meč
-(vidi [Naredbe](../commands.md#what-is-printed)).
+Trebali biste vidjeti `1 match(es), 1 at a time ...`, zatim po jedan red za svaki meč
+(pogledajte [Komande](commands.md#what-is-printed)).
 
 `demos` piše, po meču, jednu datoteku u folder nazvan po mapi:
-`out/<map>/<match>.3dheat`, [`.3dheat` spremnik](../output-container.md) - format
+`out/<map>/<match>.3dheat`, [`.3dheat` spremnik](output-container.md) - format
 preglednika s jednom datotekom po meču ([specifikacija](https://holdi601.github.io/3DHeat/container.html)).
 Drži ove članove; `--loose` ih umjesto toga piše kao odvojene datoteke:
 
@@ -71,22 +71,22 @@ jedinicama kao tabele, pa leži tačno ispod toplotne mape (panel Pozadina / niv
 
 | Stranica | Šta pokriva |
 |---|---|
-| [Prije nego počneš](before-you-start.md) | Python, terminal, rezervirana mjesta, kako izgledaju uspjeh i česte greške |
-| [Instalacija](../installing.md) | Python, paketi, CLI Source2Viewera, gdje CS2 mora biti |
-| [Naredbe](../commands.md) | `demos`, `map`, `scoreboard`: svaka opcija, šta se ispisuje, izlazni kodovi |
-| [Čitanje demoa](../reading-demos.md) | šta se čita iz datoteke demoa: uzorkovani tickovi, svojstva igrača, pravila igre, događaji |
-| [Građenje meča](../building-matches.md) | dijelovi i lanci, sat meča, runde, timovi i strane, redovi, ubistva, trades, otvaranja, šteta, flashevi, ekonomija |
-| [Statistike](../statistics.md) | tabela rezultata: K/D/A, ADR, KAST, HS%, otvaranja, trades, višestruka ubistva, clutchevi, pomagala, flashevi |
-| [Tabela toplotne mape](../output-table.md) | Parquet datoteka: svaka kolona, njen tip, koji je događaji pune, savjeti u podnožju `heat3d`, osi |
-| [Dokument meča](../output-match-json.md) | dokument `.match.json`, polje po polje |
-| [Jedna datoteka po meču](../output-container.md) | `.3dheat` spremnik koji `demos` piše zadano, `--loose` |
-| [Izvoz mape](../map-export.md) | kako se izvozi kolizijska mreža mape, okvir, imenovanje čvorova, jedinice |
-| [Korištenje s 3DHeat](../using-with-3dheat.md) | učitavanje tabela, dokumenata mečeva i mapa u preglednikove kartice Toplotna mapa i Meč |
-| [Ograničenja](../limits.md) | šta se pretpostavlja, šta se ne obrađuje, šta nije provjereno |
-| [Ažuriranja](../updates.md) | provjera izdanja pri pokretanju i `python -m heat3d_update` |
-| [Razvoj](../development.md) | raspored koda, testovi, sintetički demo fixture |
-| [Referenca naredbi](../cli-reference.md) | `--help` svake naredbe, generiran iz koda |
-| [Održavanje](../maintaining.md) | lista za provjeru pri izdanju ovih stranica |
+| [Prije nego počnete](before-you-start.md) | Python, terminal, rezervirana mjesta, kako izgledaju uspjeh i česte greške |
+| [Instalacija](installing.md) | Python, paketi, CLI Source2Viewera, gdje CS2 mora biti |
+| [Komande](commands.md) | `demos`, `map`, `scoreboard`: svaka opcija, šta se ispisuje, izlazni kodovi |
+| [Čitanje demoa](reading-demos.md) | šta se čita iz datoteke demoa: uzorkovani tickovi, svojstva igrača, pravila igre, događaji |
+| [Građenje meča](building-matches.md) | dijelovi i lanci, sat meča, runde, timovi i strane, redovi, ubistva, trades, otvaranja, šteta, flashevi, ekonomija |
+| [Statistike](statistics.md) | tabela rezultata: K/D/A, ADR, KAST, HS%, otvaranja, trades, višestruka ubistva, clutchevi, pomagala, flashevi |
+| [Tabela toplotne mape](output-table.md) | Parquet datoteka: svaka kolona, njen tip, koji je događaji pune, savjeti u podnožju `heat3d`, osi |
+| [Dokument meča](output-match-json.md) | dokument `.match.json`, polje po polje |
+| [Jedna datoteka po meču](output-container.md) | `.3dheat` spremnik koji `demos` piše zadano, `--loose` |
+| [Izvoz mape](map-export.md) | kako se izvozi kolizijska mreža mape, okvir, imenovanje čvorova, jedinice |
+| [Korištenje s 3DHeat](using-with-3dheat.md) | učitavanje tabela, dokumenata mečeva i mapa u preglednikove kartice Toplotna mapa i Meč |
+| [Ograničenja](limits.md) | šta se pretpostavlja, šta se ne obrađuje, šta nije provjereno |
+| [Ažuriranja](updates.md) | provjera izdanja pri pokretanju i `python -m heat3d_update` |
+| [Razvoj](development.md) | raspored koda, testovi, sintetički demo fixture |
+| [Referenca komandi](../cli-reference.md) | `--help` svake komande, generiran iz koda |
+| [Održavanje](maintaining.md) | lista za provjeru pri izdanju ovih stranica |
 
 ## Prema čemu je provjeren {#what-it-is-checked-against}
 
@@ -94,17 +94,17 @@ Demoi iz prakse nisu jedna čista datoteka po meču. Konverter obrađuje
 meč podijeljen na datoteke bilo kojim redoslijedom, server ponovo pokrenut usred meča, dva
 različita meča pohranjena pod jednim imenom, runde vraćene iz rezervne kopije, snimak
 koji počinje kasno ili završava rano, pauze i trenere na strani tima -
-vidi [Građenje meča](../building-matches.md). Provjereno na velikoj zbirci
+pogledajte [Građenje meča](building-matches.md). Provjereno na velikoj zbirci
 turnirskih demoa: u svakom meču rezultat
 slijedi pobjednike rundi, ubistva jedne strane su smrti druge strane,
 a svaka runda počinje pet protiv pet.
 
 ## Na šta ga usmjeriti {#what-to-point-it-at}
 
-Demoi tvojih vlastitih mečeva, demoi koje si ručno preuzeo sa stranice turnira
-ili demoi iz API-ja kojem imaš pristup. Demo je snimak čiji sadržaj
-pripada njegovom izdavaču i organizatorima: koristi ono što izađe za vlastitu
-analizu i ne redistribuiraj demoe ni podatke izvedene iz njih. Stranice koje
+Demoi vaših vlastitih mečeva, demoi koje ste ručno preuzeli sa stranice turnira
+ili demoi iz API-ja kojem imate pristup. Demo je snimak čiji sadržaj
+pripada njegovom izdavaču i organizatorima: koristite ono što izađe za vlastitu
+analizu i ne redistribuirajte demoe ni podatke izvedene iz njih. Stranice koje
 nude demoe često u svojim uvjetima zabranjuju automatsko preuzimanje, zbog čega
 alat čita demoe s diska i nijedan ne preuzima.
 
@@ -130,6 +130,6 @@ vlastitim repozitorijem, izdanjima i licencom:
 
 ## Licenca {#licence}
 
-MIT - vidi [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE),
+MIT - pogledajte [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE),
 i [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md)
 za pakete trećih strana i ono na šta obavezuju igre koje čita.

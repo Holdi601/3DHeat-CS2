@@ -73,4 +73,4 @@ Mali by ste vidieť: `usage: heat3d_cs2 [-h] {demos,map,scoreboard} ...`.
 | `No module named ...` | krok 4 sa preskočil alebo sa spustil v inom priečinku: `cd` do priečinka nástroja a spustite ho znova. |
 | `pip is not recognized` | použite `python -m pip ...` namiesto `pip ...`. |
 | `No such file or directory` / `can't open file` | terminál je v zlom priečinku, alebo je cesta zle napísaná: skontrolujte ju a cesty s medzerami dajte do úvodzoviek. |
-| červený text končiaci riadkom `error:` | prečítajte posledný riadok: hovorí, čo chýba. Stránka [Príkazy](../commands.md) uvádza hlásenia. |
+| červený text končiaci riadkom `error:` | prečítajte posledný riadok: hovorí, čo chýba. Stránka [Príkazy](commands.md) uvádza hlásenia. |

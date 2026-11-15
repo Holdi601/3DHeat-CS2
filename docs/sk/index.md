@@ -48,10 +48,10 @@ python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # výsledková tabu�
 ```
 
 Mali by ste vidieť `1 match(es), 1 at a time ...` a potom jeden riadok na zápas
-(pozri [Príkazy](../commands.md#what-is-printed)).
+(pozrite [Príkazy](commands.md#what-is-printed)).
 
 `demos` zapíše pre každý zápas jeden súbor do priečinka pomenovaného podľa mapy:
-`out/<map>/<match>.3dheat`, [kontajner `.3dheat`](../output-container.md) – formát prehliadača
+`out/<map>/<match>.3dheat`, [kontajner `.3dheat`](output-container.md) – formát prehliadača
 jeden súbor na zápas ([špecifikácia](https://holdi601.github.io/3DHeat/container.html)).
 Obsahuje tieto časti; `--loose` ich zapíše ako samostatné súbory:
 
@@ -70,27 +70,27 @@ jednotkách ako tabuľky, takže presne leží pod heatmapou (panel Pozadie / le
 | Stránka | Čo obsahuje |
 |---|---|
 | [Ako začať](before-you-start.md) | Python, terminál, zástupné znaky, ako vyzerá úspech a bežné chyby |
-| [Inštalácia](../installing.md) | Python, balíky, príkazový riadok Source2Viewer, kde musí byť CS2 |
-| [Príkazy](../commands.md) | `demos`, `map`, `scoreboard`: každá možnosť, čo sa vypisuje, stavové kódy |
-| [Čítanie dema](../reading-demos.md) | čo sa číta zo súboru dema: vzorkované ticky, vlastnosti hráčov, pravidlá hry, udalosti |
-| [Zostavenie zápasu](../building-matches.md) | časti a reťazce, herný čas, kolá, tímy a strany, riadky, zabitia, výmeny, otvorenia, poškodenie, záblesky, ekonomika |
-| [Štatistiky](../statistics.md) | výsledková tabuľka: K/D/A, ADR, KAST, HS%, otvorenia, výmeny, multizabitia, clutche, utility, záblesky |
-| [Tabuľka heatmapy](../output-table.md) | súbor Parquet: každý stĺpec, jeho typ, ktoré udalosti ho napĺňajú, nápovedy v pätičke `heat3d`, osi |
-| [Dokument zápasu](../output-match-json.md) | dokument `.match.json`, pole po poli |
-| [Jeden súbor na zápas](../output-container.md) | kontajner `.3dheat`, ktorý `demos` zapisuje štandardne, `--loose` |
-| [Export mapy](../map-export.md) | ako sa exportuje sieť kolízie mapy, rámec, pomenovanie uzlov, jednotky |
-| [Použitie s 3DHeat](../using-with-3dheat.md) | načítanie tabuliek, dokumentov zápasov a máp do kariet Heatmapa a Zápas prehliadača |
-| [Obmedzenia](../limits.md) | čo sa predpokladá, čo sa nerieši, čo nie je overené |
-| [Aktualizácie](../updates.md) | kontrola vydania pri štarte a `python -m heat3d_update` |
-| [Vývoj](../development.md) | rozloženie kódu, testy, syntetický testovací demo súbor |
+| [Inštalácia](installing.md) | Python, balíky, príkazový riadok Source2Viewer, kde musí byť CS2 |
+| [Príkazy](commands.md) | `demos`, `map`, `scoreboard`: každá možnosť, čo sa vypisuje, stavové kódy |
+| [Čítanie dema](reading-demos.md) | čo sa číta zo súboru dema: vzorkované ticky, vlastnosti hráčov, pravidlá hry, udalosti |
+| [Zostavenie zápasu](building-matches.md) | časti a reťazce, herný čas, kolá, tímy a strany, riadky, zabitia, výmeny, otvorenia, poškodenie, záblesky, ekonomika |
+| [Štatistiky](statistics.md) | výsledková tabuľka: K/D/A, ADR, KAST, HS%, otvorenia, výmeny, multizabitia, clutche, utility, záblesky |
+| [Tabuľka heatmapy](output-table.md) | súbor Parquet: každý stĺpec, jeho typ, ktoré udalosti ho napĺňajú, nápovedy v pätičke `heat3d`, osi |
+| [Dokument zápasu](output-match-json.md) | dokument `.match.json`, pole po poli |
+| [Jeden súbor na zápas](output-container.md) | kontajner `.3dheat`, ktorý `demos` zapisuje štandardne, `--loose` |
+| [Export mapy](map-export.md) | ako sa exportuje sieť kolízie mapy, rámec, pomenovanie uzlov, jednotky |
+| [Použitie s 3DHeat](using-with-3dheat.md) | načítanie tabuliek, dokumentov zápasov a máp do kariet Heatmapa a Zápas prehliadača |
+| [Obmedzenia](limits.md) | čo sa predpokladá, čo sa nerieši, čo nie je overené |
+| [Aktualizácie](updates.md) | kontrola vydania pri štarte a `python -m heat3d_update` |
+| [Vývoj](development.md) | rozloženie kódu, testy, syntetický testovací demo súbor |
 | [Referencia príkazov](../cli-reference.md) | `--help` každého príkazu, generované z kódu |
-| [Údržba](../maintaining.md) | kontrolný zoznam vydania pre tieto stránky |
+| [Údržba](maintaining.md) | kontrolný zoznam vydania pre tieto stránky |
 
 ## Overenie {#what-it-is-checked-against}
 
 Demá zo sveta nie sú jeden čistý súbor na zápas. Konvertor zvládne zápas rozdelený do súborov v ľubovoľnom
 poradí, server reštartovaný uprostred zápasu, dva rôzne zápasy uložené pod jedným názvom, kolá obnovené zo zálohy, záznam, ktorý začína neskoro alebo končí skoro, pauzy a trénerov na strane tímu –
-pozri [Zostavenie zápasu](../building-matches.md). Overené na veľkej zbierke turnajových
+pozrite [Zostavenie zápasu](building-matches.md). Overené na veľkej zbierke turnajových
 dem: v každom zápase skóre zodpovedá víťazom kôl, zabitia každej strany sú smrťami druhej strany
 a každé kolo začína piati proti piatim.
 
@@ -125,6 +125,6 @@ vlastnom repozitári s vlastnými vydaniami a licenciou:
 
 ## Licencia {#licence}
 
-MIT – pozri [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE),
+MIT – pozrite [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE),
 a [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md)
 pre balíky tretích strán a to, na čo zaväzujú hry, ktoré číta.
