@@ -50,10 +50,10 @@ python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # a match's scoreboa
 ```
 
 Du bør se `1 match(es), 1 at a time ...` og derefter en linje pr. kamp
-(se [Kommandoer](../commands.md#what-is-printed)).
+(se [Kommandoer](commands.md#what-is-printed)).
 
 `demos` skriver pr. kamp én fil i en mappe, der er opkaldt efter kortet:
-`out/<map>/<match>.3dheat`, en [`.3dheat`-container](../output-container.md) - viewerens
+`out/<map>/<match>.3dheat`, en [`.3dheat`-container](output-container.md) - viewerens
 format med én fil pr. kamp ([specifikation](https://holdi601.github.io/3DHeat/container.html)).
 Den holder disse dele; `--loose` skriver dem som separate filer i stedet:
 
@@ -72,21 +72,21 @@ enheder som tabellerne, så den ligger præcist under varmekortet (Baggrund / ba
 | Side | Hvad den dækker |
 |---|---|
 | [Før du går i gang](before-you-start.md) | Python, en terminal, pladsholdere, hvordan succes og de almindelige fejl ser ud |
-| [Installation](../installing.md) | Python, pakkerne, Source2Viewers CLI, hvor CS2 skal ligge |
-| [Kommandoer](../commands.md) | `demos`, `map`, `scoreboard`: hver valgmulighed, hvad der udskrives, exit-koder |
-| [Læsning af en demo](../reading-demos.md) | hvad der læses fra en demofil: samplede ticks, spilleregenskaber, spilleregler, hændelser |
-| [Opbygning af en kamp](../building-matches.md) | dele og kæder, kampuret, runder, hold og sider, rækker, drab, byt, åbninger, skade, blændinger, økonomi |
-| [Statistik](../statistics.md) | scoreboardet: K/D/A, ADR, KAST, HS%, åbninger, byt, multi-drab, clutches, utility, blændinger |
-| [Varmekortstabellen](../output-table.md) | Parquet-filen: hver kolonne, dens type, hvilke hændelser der udfylder den, `heat3d`-footerens hints, akserne |
-| [Kampdokumentet](../output-match-json.md) | `.match.json`-dokumentet, felt for felt |
-| [Én fil pr. kamp](../output-container.md) | `.3dheat`-containeren, `demos` skriver som standard, `--loose` |
-| [Kortexport](../map-export.md) | hvordan et korts kollisionsmesh eksporteres, rammen, knudenavngivning, enheder |
-| [Brug det med 3DHeat](../using-with-3dheat.md) | indlæsning af tabeller, kampdokumenter og kort i viewerens Heatmap- og Kamp-faner |
-| [Begrænsninger](../limits.md) | hvad der antages, hvad der ikke håndteres, hvad der ikke er kontrolleret |
-| [Opdateringer](../updates.md) | udgivelsestjekket ved opstart og `python -m heat3d_update` |
-| [Udvikling](../development.md) | kodens layout, tests, fixturen med syntetiske demoer |
+| [Installation](installing.md) | Python, pakkerne, Source2Viewers CLI, hvor CS2 skal ligge |
+| [Kommandoer](commands.md) | `demos`, `map`, `scoreboard`: hver valgmulighed, hvad der udskrives, exit-koder |
+| [Læsning af en demo](reading-demos.md) | hvad der læses fra en demofil: samplede ticks, spilleregenskaber, spilleregler, hændelser |
+| [Opbygning af en kamp](building-matches.md) | dele og kæder, kampuret, runder, hold og sider, rækker, drab, byt, åbninger, skade, blændinger, økonomi |
+| [Statistik](statistics.md) | scoreboardet: K/D/A, ADR, KAST, HS%, åbninger, byt, multi-drab, clutches, utility, blændinger |
+| [Varmekortstabellen](output-table.md) | Parquet-filen: hver kolonne, dens type, hvilke hændelser der udfylder den, `heat3d`-footerens hints, akserne |
+| [Kampdokumentet](output-match-json.md) | `.match.json`-dokumentet, felt for felt |
+| [Én fil pr. kamp](output-container.md) | `.3dheat`-containeren, `demos` skriver som standard, `--loose` |
+| [Kortexport](map-export.md) | hvordan et korts kollisionsmesh eksporteres, rammen, knudenavngivning, enheder |
+| [Brug det med 3DHeat](using-with-3dheat.md) | indlæsning af tabeller, kampdokumenter og kort i viewerens Heatmap- og Kamp-faner |
+| [Begrænsninger](limits.md) | hvad der antages, hvad der ikke håndteres, hvad der ikke er kontrolleret |
+| [Opdateringer](updates.md) | udgivelsestjekket ved opstart og `python -m heat3d_update` |
+| [Udvikling](development.md) | kodens layout, tests, fixturen med syntetiske demoer |
 | [Kommandoreference](../cli-reference.md) | hver kommandos `--help`, genereret ud fra koden |
-| [Vedligeholdelse](../maintaining.md) | udgivelsestjeklisten for disse sider |
+| [Vedligeholdelse](maintaining.md) | udgivelsestjeklisten for disse sider |
 
 ## Hvad det er kontrolleret mod {#what-it-is-checked-against}
 
@@ -94,7 +94,7 @@ Demoer fra det virkelige liv er ikke én ren fil pr. kamp. Konverteren håndtere
 delt over flere filer i en vilkårlig rækkefølge, en server, der er genstartet midt i kampen, to
 forskellige kampe gemt under ét navn, runder gendannet fra en backup, en optagelse der starter
 sent eller slutter tidligt, pauser og trænere på et holds side -
-se [Opbygning af en kamp](../building-matches.md). Kontrolleret over en stor samling
+se [Opbygning af en kamp](building-matches.md). Kontrolleret over en stor samling
 turneringsdemoer: i hver kamp følger
 scoren rundevinderne, hver sides drab er den andens dødsfald, og hver runde starter fem mod fem.
 

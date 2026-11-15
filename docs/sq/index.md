@@ -49,10 +49,10 @@ python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # a match's scoreboa
 ```
 
 Duhet të shohësh `1 match(es), 1 at a time ...` dhe pastaj një rresht për çdo ndeshje
-(shih [Komandat](../commands.md#what-is-printed)).
+(shih [Komandat](commands.md#what-is-printed)).
 
 `demos` shkruan, për çdo ndeshje, një skedar në një dosje me emrin e hartës:
-`out/<map>/<match>.3dheat`, një [kontejner `.3dheat`](../output-container.md) - formati i
+`out/<map>/<match>.3dheat`, një [kontejner `.3dheat`](output-container.md) - formati i
 shikuesit një-skedar-për-ndeshje ([specifikimi](https://holdi601.github.io/3DHeat/container.html)).
 Mban këta anëtarë; `--loose` i shkruan si skedarë të veçantë në vend të kësaj:
 
@@ -71,21 +71,21 @@ tabelat, kështu që shtrihet saktësisht nën hartën e nxehtësisë (paneli Sf
 | Faqja | Çfarë mbulon |
 |---|---|
 | [Para se të fillosh](before-you-start.md) | Python, një terminal, vendmbajtësit, si duken suksesi dhe gabimet e zakonshme |
-| [Instalimi](../installing.md) | Python, paketat, CLI i Source2Viewer, ku duhet të jetë CS2 |
-| [Komandat](../commands.md) | `demos`, `map`, `scoreboard`: çdo opsion, çfarë shtypet, kodet e daljes |
-| [Leximi i një demoje](../reading-demos.md) | çfarë lexohet nga një skedar demo: tick-et e mostruara, vetitë e lojtarëve, rregullat e lojës, ngjarjet |
-| [Ndërtimi i një ndeshjeje](../building-matches.md) | pjesët dhe zinxhirët, ora e ndeshjes, raundet, skuadrat dhe anët, rreshtat, vrasjet, hakmarrjet, hapjet, dëmi, verbimet, ekonomia |
-| [Statistikat](../statistics.md) | tabela e rezultateve: K/D/A, ADR, KAST, HS%, hapjet, hakmarrjet, multi-kill, clutch-et, utility, verbimet |
-| [Tabela e nxehtësisë](../output-table.md) | skedari Parquet: çdo kolonë, lloji i saj, cilat ngjarje e mbushin, sugjerimet e fundit `heat3d`, boshtet |
-| [Dokumenti i ndeshjes](../output-match-json.md) | dokumenti `.match.json`, fushë pas fushe |
-| [Një skedar për ndeshje](../output-container.md) | kontejneri `.3dheat` që `demos` e shkruan si parazgjedhje, `--loose` |
-| [Eksporti i hartës](../map-export.md) | si eksportohet rrjeta e kolizionit të një harte, korniza, emërtimi i nyjeve, njësitë |
-| [Përdorimi me 3DHeat](../using-with-3dheat.md) | ngarkimi i tabelave, dokumenteve të ndeshjeve dhe hartave në skedat Harta e nxehtësisë dhe Ndeshja të shikuesit |
-| [Kufizimet](../limits.md) | çfarë supozohet, çfarë nuk trajtohet, çfarë nuk është verifikuar |
-| [Përditësimet](../updates.md) | kontrolli i botimit në nisje dhe `python -m heat3d_update` |
-| [Zhvillimi](../development.md) | struktura e kodit, testet, pajisja sintetike e demos |
+| [Instalimi](installing.md) | Python, paketat, CLI i Source2Viewer, ku duhet të jetë CS2 |
+| [Komandat](commands.md) | `demos`, `map`, `scoreboard`: çdo opsion, çfarë shtypet, kodet e daljes |
+| [Leximi i një demoje](reading-demos.md) | çfarë lexohet nga një skedar demo: tick-et e mostruara, vetitë e lojtarëve, rregullat e lojës, ngjarjet |
+| [Ndërtimi i një ndeshjeje](building-matches.md) | pjesët dhe zinxhirët, ora e ndeshjes, raundet, skuadrat dhe anët, rreshtat, vrasjet, hakmarrjet, hapjet, dëmi, verbimet, ekonomia |
+| [Statistikat](statistics.md) | tabela e rezultateve: K/D/A, ADR, KAST, HS%, hapjet, hakmarrjet, multi-kill, clutch-et, utility, verbimet |
+| [Tabela e nxehtësisë](output-table.md) | skedari Parquet: çdo kolonë, lloji i saj, cilat ngjarje e mbushin, sugjerimet e fundit `heat3d`, boshtet |
+| [Dokumenti i ndeshjes](output-match-json.md) | dokumenti `.match.json`, fushë pas fushe |
+| [Një skedar për ndeshje](output-container.md) | kontejneri `.3dheat` që `demos` e shkruan si parazgjedhje, `--loose` |
+| [Eksporti i hartës](map-export.md) | si eksportohet rrjeta e kolizionit të një harte, korniza, emërtimi i nyjeve, njësitë |
+| [Përdorimi me 3DHeat](using-with-3dheat.md) | ngarkimi i tabelave, dokumenteve të ndeshjeve dhe hartave në skedat Harta e nxehtësisë dhe Ndeshja të shikuesit |
+| [Kufizimet](limits.md) | çfarë supozohet, çfarë nuk trajtohet, çfarë nuk është verifikuar |
+| [Përditësimet](updates.md) | kontrolli i botimit në nisje dhe `python -m heat3d_update` |
+| [Zhvillimi](development.md) | struktura e kodit, testet, pajisja sintetike e demos |
 | [Referenca e komandave](../cli-reference.md) | `--help` i çdo komande, e gjeneruar nga kodi |
-| [Mirëmbajtja](../maintaining.md) | lista e kontrollit të botimit për këto faqe |
+| [Mirëmbajtja](maintaining.md) | lista e kontrollit të botimit për këto faqe |
 
 ## Kundrejt çfarë kontrollohet {#what-it-is-checked-against}
 
@@ -93,7 +93,7 @@ Demot e vërteta nuk janë një skedar i pastër për çdo ndeshje. Konvertuesi 
 ndeshje të ndarë në skedarë në çdo renditje, një server të rinisur në mes të ndeshjes, dy
 ndeshje të ndryshme të ruajtura nën një emër, raunde të rikthyera nga një kopje rezervë, një
 regjistrim që nis vonë ose mbaron herët, pauza, dhe trajnerë në anën e një skuadre -
-shih [Ndërtimi i një ndeshjeje](../building-matches.md). Të kontrolluara mbi një koleksion të madh
+shih [Ndërtimi i një ndeshjeje](building-matches.md). Të kontrolluara mbi një koleksion të madh
 demosh turnirësh: në çdo ndeshje
 rezultati ndjek fituesit e raundeve, vrasjet e çdo ane janë vdekjet e tjetrës,
 dhe çdo raund nis pesë kundër pesë.

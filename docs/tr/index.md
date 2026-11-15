@@ -33,9 +33,9 @@ python -m heat3d_cs2 map <map> -o out/<map>/<map>.glb       # kurulu oyundaki ha
 python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # bir maçın skor tablosu, metin olarak
 ```
 
-`1 match(es), 1 at a time ...` ve ardından her maç için bir satır görmelisiniz (bkz. [Komutlar](../commands.md#what-is-printed)).
+`1 match(es), 1 at a time ...` ve ardından her maç için bir satır görmelisiniz (bkz. [Komutlar](commands.md#what-is-printed)).
 
-`demos`, her maç için bir dosyayı, haritanın adını taşıyan bir klasöre yazar: `out/<map>/<match>.3dheat`, bir [`.3dheat` kapsayıcısı](../output-container.md); görüntüleyicinin maç başına tek dosya biçimi ([belirtim](https://holdi601.github.io/3DHeat/container.html)). Bu, şu üyeleri tutar; `--loose` bunları ayrı dosyalar olarak yazar:
+`demos`, her maç için bir dosyayı, haritanın adını taşıyan bir klasöre yazar: `out/<map>/<match>.3dheat`, bir [`.3dheat` kapsayıcısı](output-container.md); görüntüleyicinin maç başına tek dosya biçimi ([belirtim](https://holdi601.github.io/3DHeat/container.html)). Bu, şu üyeleri tutar; `--loose` bunları ayrı dosyalar olarak yazar:
 
 | Üye | Ne tutar | Görüntüleyicide yüklendiği yer |
 |---|---|---|
@@ -50,25 +50,25 @@ python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # bir maçın skor t
 | Sayfa | Neyi anlatır |
 |---|---|
 | [Başlamadan önce](before-you-start.md) | Python, bir terminal, yer tutucular, başarının ve sık hataların nasıl göründüğü |
-| [Kurulum](../installing.md) | Python, paketler, Source2Viewer'ın CLI'si, CS2'nin nerede olması gerektiği |
-| [Komutlar](../commands.md) | `demos`, `map`, `scoreboard`: her seçenek, ne yazdırıldığı, çıkış kodları |
-| [Bir demoyu okumak](../reading-demos.md) | Bir demo dosyasından ne okunur: örneklenmiş tikler, oyuncu özellikleri, oyun kuralları, olaylar |
-| [Bir maç kurmak](../building-matches.md) | Parçalar ve zincirler, maç saati, turlar, takımlar ve taraflar, satırlar, öldürmeler, takaslar, açılışlar, hasar, flaşlar, ekonomi |
-| [İstatistikler](../statistics.md) | Skor tablosu: K/D/A, ADR, KAST, HS%, açılışlar, takaslar, çoklu öldürmeler, clutch'lar, yardımcı öğeler, flaşlar |
-| [Isı haritası tablosu](../output-table.md) | Parquet dosyası: her sütun, türü, hangi olayların doldurduğu, `heat3d` altbilgi ipuçları, eksenler |
-| [Maç belgesi](../output-match-json.md) | `.match.json` belgesi, alan alan |
-| [Maç başına tek dosya](../output-container.md) | `demos`'un varsayılan olarak yazdığı `.3dheat` kapsayıcısı, `--loose` |
-| [Harita dışa aktarımı](../map-export.md) | Bir haritanın çarpışma ağının nasıl dışa aktarıldığı, çerçeve, düğüm adlandırma, birimler |
-| [3DHeat ile kullanmak](../using-with-3dheat.md) | Tabloları, maç belgelerini ve haritaları görüntüleyicinin Isı haritası ve Maç sekmelerine yüklemek |
-| [Sınırlar](../limits.md) | Ne varsayılıyor, neler ele alınmıyor, neler doğrulanmadı |
-| [Güncellemeler](../updates.md) | Başlangıçtaki sürüm denetimi ve `python -m heat3d_update` |
-| [Geliştirme](../development.md) | Kod düzeni, testler, sentetik demo örneği |
+| [Kurulum](installing.md) | Python, paketler, Source2Viewer'ın CLI'si, CS2'nin nerede olması gerektiği |
+| [Komutlar](commands.md) | `demos`, `map`, `scoreboard`: her seçenek, ne yazdırıldığı, çıkış kodları |
+| [Bir demoyu okumak](reading-demos.md) | Bir demo dosyasından ne okunur: örneklenmiş tikler, oyuncu özellikleri, oyun kuralları, olaylar |
+| [Bir maç kurmak](building-matches.md) | Parçalar ve zincirler, maç saati, turlar, takımlar ve taraflar, satırlar, öldürmeler, takaslar, açılışlar, hasar, flaşlar, ekonomi |
+| [İstatistikler](statistics.md) | Skor tablosu: K/D/A, ADR, KAST, HS%, açılışlar, takaslar, çoklu öldürmeler, clutch'lar, yardımcı öğeler, flaşlar |
+| [Isı haritası tablosu](output-table.md) | Parquet dosyası: her sütun, türü, hangi olayların doldurduğu, `heat3d` altbilgi ipuçları, eksenler |
+| [Maç belgesi](output-match-json.md) | `.match.json` belgesi, alan alan |
+| [Maç başına tek dosya](output-container.md) | `demos`'un varsayılan olarak yazdığı `.3dheat` kapsayıcısı, `--loose` |
+| [Harita dışa aktarımı](map-export.md) | Bir haritanın çarpışma ağının nasıl dışa aktarıldığı, çerçeve, düğüm adlandırma, birimler |
+| [3DHeat ile kullanmak](using-with-3dheat.md) | Tabloları, maç belgelerini ve haritaları görüntüleyicinin Isı haritası ve Maç sekmelerine yüklemek |
+| [Sınırlar](limits.md) | Ne varsayılıyor, neler ele alınmıyor, neler doğrulanmadı |
+| [Güncellemeler](updates.md) | Başlangıçtaki sürüm denetimi ve `python -m heat3d_update` |
+| [Geliştirme](development.md) | Kod düzeni, testler, sentetik demo örneği |
 | [Komut başvurusu](../cli-reference.md) | Her komutun `--help` çıktısı, koddan üretilmiş |
-| [Bakım](../maintaining.md) | Bu sayfalar için sürüm kontrol listesi |
+| [Bakım](maintaining.md) | Bu sayfalar için sürüm kontrol listesi |
 
 ## Neye karşı denetlendi {#what-it-is-checked-against}
 
-Dışarıdan gelen demolar, maç başına tek temiz bir dosya değildir. Dönüştürücü, bir maçın dosyalar arasında herhangi bir sırayla bölünmüş olmasını, maç ortasında yeniden başlatılan bir sunucuyu, bir ad altında saklanan iki farklı maçı, bir yedekten geri yüklenen turları, geç başlayan ya da erken biten bir kaydı, duraklamaları ve bir takımın yanındaki koçları ele alır; bkz. [Bir maç kurmak](../building-matches.md). Büyük bir turnuva demo koleksiyonunda denetlendi: her maçta skor tur kazananlarını izler, her tarafın öldürmeleri diğer tarafın ölümleridir ve her tur beşe karşı beş başlar.
+Dışarıdan gelen demolar, maç başına tek temiz bir dosya değildir. Dönüştürücü, bir maçın dosyalar arasında herhangi bir sırayla bölünmüş olmasını, maç ortasında yeniden başlatılan bir sunucuyu, bir ad altında saklanan iki farklı maçı, bir yedekten geri yüklenen turları, geç başlayan ya da erken biten bir kaydı, duraklamaları ve bir takımın yanındaki koçları ele alır; bkz. [Bir maç kurmak](building-matches.md). Büyük bir turnuva demo koleksiyonunda denetlendi: her maçta skor tur kazananlarını izler, her tarafın öldürmeleri diğer tarafın ölümleridir ve her tur beşe karşı beş başlar.
 
 ## Neye yönlendirilir {#what-to-point-it-at}
 
