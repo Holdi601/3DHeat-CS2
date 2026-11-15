@@ -9,7 +9,7 @@
  "<match>-p2.dem": "<match>-p2.dem",
  "<match>.match.json": "<match>.match.json",
  "<match>.parquet": "<match>.parquet",
- "Background / level": "Panel Nivel",
+ "Background / level": "Fondo / nivel",
  "Heatmap tab": "Mapa de calor",
  "Heatmap tab, Match tab": "Mapa de calor, Partida",
  "Match tab": "Partida",

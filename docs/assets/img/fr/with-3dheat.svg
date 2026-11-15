@@ -4,7 +4,7 @@
 <text x="24" y="36" font-size="18" font-weight="600" fill="#202124">Utilisation avec 3DHeat</text>
 <rect x="24" y="98.0" width="236" height="60" rx="8" fill="#e8f0fe" stroke="#3b6fd8" stroke-width="1.5"/>
 <text x="142.0" y="124.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">heat3d_cs2 demos</text>
-<text x="142.0" y="143.0" text-anchor="middle" font-size="14" fill="#3c4043">&lt;carte&gt;/&lt;partie&gt;.3dheat</text>
+<text x="142.0" y="143.0" text-anchor="middle" font-size="14" fill="#3c4043">&lt;carte&gt;/&lt;match&gt;.3dheat</text>
 <rect x="24" y="174.0" width="236" height="60" rx="8" fill="#e8f0fe" stroke="#3b6fd8" stroke-width="1.5"/>
 <text x="142.0" y="200.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">heat3d_cs2 map</text>
 <text x="142.0" y="219.0" text-anchor="middle" font-size="14" fill="#3c4043">&lt;carte&gt;.glb</text>
@@ -15,7 +15,7 @@
 <text x="706.0" y="86.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">onglet Carte de chaleur</text>
 <text x="706.0" y="105.0" text-anchor="middle" font-size="14" fill="#3c4043">positions, éliminations, grenades</text>
 <rect x="588" y="136.0" width="236" height="60" rx="8" fill="#e6f4ea" stroke="#2e8b57" stroke-width="1.5"/>
-<text x="706.0" y="162.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">panneau Arrière-plan / niveau</text>
+<text x="706.0" y="162.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">Arrière-plan / niveau</text>
 <text x="706.0" y="181.0" text-anchor="middle" font-size="14" fill="#3c4043">la carte sous la chaleur</text>
 <rect x="588" y="212.0" width="236" height="60" rx="8" fill="#e6f4ea" stroke="#2e8b57" stroke-width="1.5"/>
 <text x="706.0" y="238.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">onglet Match</text>

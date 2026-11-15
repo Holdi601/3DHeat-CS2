@@ -47,10 +47,10 @@ python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # el marcador de una
 ```
 
 Deberías ver `1 match(es), 1 at a time ...` y luego una línea por partida
-(ver [Comandos](../commands.md#what-is-printed)).
+(ver [Comandos](commands.md#what-is-printed)).
 
 `demos` escribe, por cada partida, un archivo en una carpeta con el nombre del mapa:
-`out/<map>/<match>.3dheat`, un [contenedor `.3dheat`](../output-container.md) - el formato de un archivo por
+`out/<map>/<match>.3dheat`, un [contenedor `.3dheat`](output-container.md) - el formato de un archivo por
 partida del visor ([especificación](https://holdi601.github.io/3DHeat/container.html)). Contiene estos
 miembros; `--loose` los escribe como archivos separados:
 
@@ -69,21 +69,21 @@ queda exactamente bajo el mapa de calor (panel Fondo / nivel).
 | Página | Qué cubre |
 |---|---|
 | [Antes de empezar](before-you-start.md) | Python, una terminal, marcadores, cómo se ven el éxito y los errores habituales |
-| [Instalación](../installing.md) | Python, los paquetes, la CLI de Source2Viewer, dónde debe estar CS2 |
-| [Comandos](../commands.md) | `demos`, `map`, `scoreboard`: cada opción, lo que se imprime, códigos de salida |
-| [Leer una demo](../reading-demos.md) | qué se lee de un archivo de demo: ticks muestreados, propiedades de jugador, reglas de partida, eventos |
-| [Construir una partida](../building-matches.md) | partes y cadenas, el reloj de partida, rondas, equipos y lados, filas, bajas, remontadas, aperturas, daño, destellos, economía |
-| [Estadísticas](../statistics.md) | el marcador: K/D/A, ADR, KAST, HS%, aperturas, remontadas, multibajas, remontadas en solitario, utilidad, destellos |
-| [La tabla del mapa de calor](../output-table.md) | el archivo Parquet: cada columna, su tipo, qué eventos la llenan, las pistas del pie `heat3d`, los ejes |
-| [El documento de la partida](../output-match-json.md) | el documento `.match.json`, campo por campo |
-| [Un archivo por partida](../output-container.md) | el contenedor `.3dheat` que escribe `demos` por defecto, `--loose` |
-| [Exportación de mapas](../map-export.md) | cómo se exporta la malla de colisión de un mapa, el marco, nombres de nodos, unidades |
-| [Uso con 3DHeat](../using-with-3dheat.md) | cargar tablas, documentos de partida y mapas en las pestañas Mapa de calor y Partida del visor |
-| [Límites](../limits.md) | lo que se asume, lo que no se gestiona, lo que no está verificado |
-| [Actualizaciones](../updates.md) | la comprobación de versión al arrancar y `python -m heat3d_update` |
-| [Desarrollo](../development.md) | estructura del código, pruebas, la demo sintética de prueba |
+| [Instalación](installing.md) | Python, los paquetes, la CLI de Source2Viewer, dónde debe estar CS2 |
+| [Comandos](commands.md) | `demos`, `map`, `scoreboard`: cada opción, lo que se imprime, códigos de salida |
+| [Leer una demo](reading-demos.md) | qué se lee de un archivo de demo: ticks muestreados, propiedades de jugador, reglas de partida, eventos |
+| [Construir una partida](building-matches.md) | partes y cadenas, el reloj de partida, rondas, equipos y lados, filas, bajas, remontadas, aperturas, daño, destellos, economía |
+| [Estadísticas](statistics.md) | el marcador: K/D/A, ADR, KAST, HS%, aperturas, remontadas, multibajas, remontadas en solitario, utilidad, destellos |
+| [La tabla del mapa de calor](output-table.md) | el archivo Parquet: cada columna, su tipo, qué eventos la llenan, las pistas del pie `heat3d`, los ejes |
+| [El documento de la partida](output-match-json.md) | el documento `.match.json`, campo por campo |
+| [Un archivo por partida](output-container.md) | el contenedor `.3dheat` que escribe `demos` por defecto, `--loose` |
+| [Exportación de mapas](map-export.md) | cómo se exporta la malla de colisión de un mapa, el marco, nombres de nodos, unidades |
+| [Uso con 3DHeat](using-with-3dheat.md) | cargar tablas, documentos de partida y mapas en las pestañas Mapa de calor y Partida del visor |
+| [Límites](limits.md) | lo que se asume, lo que no se gestiona, lo que no está verificado |
+| [Actualizaciones](updates.md) | la comprobación de versión al arrancar y `python -m heat3d_update` |
+| [Desarrollo](development.md) | estructura del código, pruebas, la demo sintética de prueba |
 | [Referencia de comandos](../cli-reference.md) | el `--help` de cada comando, generado desde el código |
-| [Mantenimiento](../maintaining.md) | la lista de comprobación de cada versión de estas páginas |
+| [Mantenimiento](maintaining.md) | la lista de comprobación de cada versión de estas páginas |
 
 ## Contra qué se comprueba {#what-it-is-checked-against}
 
@@ -91,7 +91,7 @@ Las demos del mundo real no son un archivo limpio por partida. El convertidor ma
 en varios archivos en cualquier orden, un servidor reiniciado a mitad de partida, dos partidas distintas
 guardadas con el mismo nombre, rondas restauradas desde una copia de seguridad, una grabación que empieza
 tarde o acaba pronto, pausas y entrenadores en el bando de un equipo - ver
-[Construir una partida](../building-matches.md). Comprobado sobre una gran colección de demos de torneos: en
+[Construir una partida](building-matches.md). Comprobado sobre una gran colección de demos de torneos: en
 cada partida el marcador sigue a los ganadores de las rondas, las bajas de cada bando son las muertes del
 otro, y cada ronda empieza con cinco contra cinco.
 

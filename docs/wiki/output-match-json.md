@@ -134,7 +134,7 @@ is left out):
 ```json
 {
  "format": "heat3d-cs2-match",
- "version": 2,
+ "version": 3,
  "match": "alpha-vs-bravo-m1",
  "map": "de_test",
  "demos": ["synthetic.dem"],

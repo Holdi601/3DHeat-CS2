@@ -47,17 +47,17 @@ python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # a match's scoreboa
 ```
 
 Du solltest `1 match(es), 1 at a time ...` sehen und dann eine Zeile pro Match
-(siehe [Befehle](../commands.md#what-is-printed)).
+(siehe [Befehle](commands.md#what-is-printed)).
 
 `demos` schreibt pro Match eine Datei in einen Ordner, der nach der Karte benannt ist:
-`out/<map>/<match>.3dheat`, ein [`.3dheat`-Container](../output-container.md) - das Ein-Datei-pro-Match-Format
+`out/<map>/<match>.3dheat`, ein [`.3dheat`-Container](output-container.md) - das Ein-Datei-pro-Match-Format
 des Viewers ([Spezifikation](https://holdi601.github.io/3DHeat/container.html)).
 Er enthält diese Teile; `--loose` schreibt sie stattdessen als einzelne Dateien:
 
 | Teil | Was es enthält | Geladen im |
 |---|---|---|
-| `<match>.parquet` (Rolle `table`) | jeder lebende Spieler achtmal pro Sekunde mit seinem Zustand (Gesundheit, Geld, Blendung, Zielfernrohr, Zone, Inventar, ...), und jedes Ereignis, wo es geschah (Kill, Tod, Verletzung, Schuss, Wurf, Granatdetonationen, Blendung, Bombe legen, entschärfen, explodieren, und ein Rundenende pro Spieler mit dem, was die Runde ihm einbrachte), eine Zeile je Eintrag | Heatmap-Reiter |
-| `<match>.match.json` (Rolle `match`, das Match-Dokument) | Teams, Stand, jede Runde (Sieger, wie, Wirtschaft, Bombe, Kills in Reihenfolge, Clutches, Überlebende) und die Scoreboard-Zeile jedes Spielers | Match-Reiter |
+| `<match>.parquet` (Rolle `table`) | jeder lebende Spieler achtmal pro Sekunde mit seinem Zustand (Gesundheit, Geld, Blendung, Zielfernrohr, Zone, Inventar, ...), und jedes Ereignis, wo es geschah (Kill, Tod, Verletzung, Schuss, Wurf, Granatdetonationen, Blendung, Bombe legen, entschärfen, explodieren, und ein Rundenende pro Spieler mit dem, was die Runde ihm einbrachte), eine Zeile je Eintrag | Heatmap-Tab |
+| `<match>.match.json` (Rolle `match`, das Match-Dokument) | Teams, Stand, jede Runde (Sieger, wie, Wirtschaft, Bombe, Kills in Reihenfolge, Clutches, Überlebende) und die Scoreboard-Zeile jedes Spielers | Match-Tab |
 | `<match>.events/props/strings/packets.parquet` | alles andere, was die Demo enthält, ganz (Begleitdateien) | zur Vollständigkeit behalten |
 
 `map` schreibt `<map>.glb`: das Kollisionsnetz der Karte - Böden, Wände, Kisten, ohne Dekoration - aufgeteilt
@@ -69,21 +69,21 @@ Heatmap liegt (Panel „Hintergrund / Level“).
 | Seite | Was sie behandelt |
 |---|---|
 | [Bevor du anfängst](before-you-start.md) | Python, ein Terminal, Platzhalter, wie Erfolg und die häufigen Fehler aussehen |
-| [Installation](../installing.md) | Python, die Pakete, die CLI von Source2Viewer, wo CS2 liegen muss |
-| [Befehle](../commands.md) | `demos`, `map`, `scoreboard`: jede Option, was ausgegeben wird, Exit-Codes |
-| [Ein Demo lesen](../reading-demos.md) | was aus einer Demo-Datei gelesen wird: abgetastete Ticks, Spielereigenschaften, Spielregeln, Ereignisse |
-| [Ein Match aufbauen](../building-matches.md) | Teile und Ketten, die Match-Uhr, Runden, Teams und Seiten, Zeilen, Kills, Trades, Eröffnungen, Schaden, Blendungen, Wirtschaft |
-| [Statistiken](../statistics.md) | das Scoreboard: K/D/A, ADR, KAST, HS%, Eröffnungen, Trades, Mehrfach-Kills, Clutches, Utility, Blendungen |
-| [Die Heatmap-Tabelle](../output-table.md) | die Parquet-Datei: jede Spalte, ihr Typ, welche Ereignisse sie füllen, die `heat3d`-Footer-Hinweise, die Achsen |
-| [Das Match-Dokument](../output-match-json.md) | das `.match.json`-Dokument, Feld für Feld |
-| [Eine Datei pro Match](../output-container.md) | der `.3dheat`-Container, den `demos` standardmäßig schreibt, `--loose` |
-| [Karten-Export](../map-export.md) | wie das Kollisionsnetz einer Karte exportiert wird, der Rahmen, Knotenbenennung, Einheiten |
-| [Nutzung mit 3DHeat](../using-with-3dheat.md) | Tabellen, Match-Dokumente und Karten in die Reiter Heatmap und Match des Viewers laden |
-| [Grenzen](../limits.md) | was angenommen wird, was nicht behandelt wird, was ungeprüft ist |
-| [Updates](../updates.md) | die Release-Prüfung beim Start und `python -m heat3d_update` |
-| [Entwicklung](../development.md) | Code-Aufbau, Tests, das synthetische Demo-Testmaterial |
+| [Installation](installing.md) | Python, die Pakete, die CLI von Source2Viewer, wo CS2 liegen muss |
+| [Befehle](commands.md) | `demos`, `map`, `scoreboard`: jede Option, was ausgegeben wird, Exit-Codes |
+| [Ein Demo lesen](reading-demos.md) | was aus einer Demo-Datei gelesen wird: abgetastete Ticks, Spielereigenschaften, Spielregeln, Ereignisse |
+| [Ein Match aufbauen](building-matches.md) | Teile und Ketten, die Match-Uhr, Runden, Teams und Seiten, Zeilen, Kills, Trades, Eröffnungen, Schaden, Blendungen, Wirtschaft |
+| [Statistiken](statistics.md) | das Scoreboard: K/D/A, ADR, KAST, HS%, Eröffnungen, Trades, Mehrfach-Kills, Clutches, Utility, Blendungen |
+| [Die Heatmap-Tabelle](output-table.md) | die Parquet-Datei: jede Spalte, ihr Typ, welche Ereignisse sie füllen, die `heat3d`-Footer-Hinweise, die Achsen |
+| [Das Match-Dokument](output-match-json.md) | das `.match.json`-Dokument, Feld für Feld |
+| [Eine Datei pro Match](output-container.md) | der `.3dheat`-Container, den `demos` standardmäßig schreibt, `--loose` |
+| [Karten-Export](map-export.md) | wie das Kollisionsnetz einer Karte exportiert wird, der Rahmen, Knotenbenennung, Einheiten |
+| [Nutzung mit 3DHeat](using-with-3dheat.md) | Tabellen, Match-Dokumente und Karten in die Tabs Heatmap und Match des Viewers laden |
+| [Grenzen](limits.md) | was angenommen wird, was nicht behandelt wird, was ungeprüft ist |
+| [Updates](updates.md) | die Release-Prüfung beim Start und `python -m heat3d_update` |
+| [Entwicklung](development.md) | Code-Aufbau, Tests, das synthetische Demo-Testmaterial |
 | [Befehlsreferenz](../cli-reference.md) | das `--help` jedes Befehls, aus dem Code erzeugt |
-| [Pflege](../maintaining.md) | die Release-Checkliste für diese Seiten |
+| [Pflege](maintaining.md) | die Release-Checkliste für diese Seiten |
 
 ## Was es geprüft wird {#what-it-is-checked-against}
 
@@ -91,7 +91,7 @@ Demos aus der freien Wildbahn sind nicht eine saubere Datei pro Match. Der Konve
 das auf mehrere Dateien in beliebiger Reihenfolge verteilt ist, mit einem Server, der mitten im Match neu gestartet
 wurde, mit zwei verschiedenen Matches unter einem Namen, mit Runden aus einer Sicherung, mit einer Aufnahme, die
 spät beginnt oder früh endet, mit Pausen und mit Coaches auf der Seite eines Teams - siehe
-[Ein Match aufbauen](../building-matches.md). Geprüft über eine große Sammlung von Turnier-Demos: In jedem Match
+[Ein Match aufbauen](building-matches.md). Geprüft über eine große Sammlung von Turnier-Demos: In jedem Match
 folgt der Stand den Rundensiegern, die Kills jeder Seite sind die Tode der anderen Seite, und jede Runde beginnt
 mit fünf gegen fünf.
 

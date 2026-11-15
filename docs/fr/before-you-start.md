@@ -9,7 +9,7 @@ search_exclude: true
 ---
 # Avant de commencer {#before-you-start}
 
-Vous débutez avec la ligne de commande ? Cette page vous mène de zéro à une 3DHeat CS2 qui fonctionne,
+Vous débutez avec la ligne de commande ? Cette page vous mène de zéro à une installation de 3DHeat CS2 qui fonctionne,
 en une dizaine de minutes. Vous tapez des commandes dans un *terminal*, une fenêtre
 où vous écrivez une ligne et appuyez sur Entrée.
 
@@ -75,4 +75,4 @@ Vous devez voir : `usage: heat3d_cs2 [-h] {demos,map,scoreboard} ...`.
 | `No module named ...` | l'étape 4 a été sautée ou lancée dans un autre dossier : `cd` jusqu'au dossier de l'outil et relancez-la. |
 | `pip is not recognized` | utilisez `python -m pip ...` au lieu de `pip ...`. |
 | `No such file or directory` / `can't open file` | le terminal est dans le mauvais dossier, ou le chemin est mal tapé : vérifiez, et mettez les chemins contenant des espaces entre guillemets. |
-| du texte rouge se terminant par une ligne `error:` | lisez la dernière ligne : elle indique ce qui manque. La page [Commandes](../commands.md) liste les messages. |
+| du texte rouge se terminant par une ligne `error:` | lisez la dernière ligne : elle indique ce qui manque. La page [Commandes](commands.md) liste les messages. |
