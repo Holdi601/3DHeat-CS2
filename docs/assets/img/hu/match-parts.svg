@@ -12,7 +12,7 @@
 <text x="424.0" y="133.5" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">csoportosítás név szerint</text>
 <text x="424.0" y="152.5" text-anchor="middle" font-size="14" fill="#3c4043">-p&lt;n&gt; / _p&lt;n&gt; utótag elhagyva</text>
 <rect x="588" y="98.0" width="236" height="79" rx="8" fill="#e8f0fe" stroke="#3b6fd8" stroke-width="1.5"/>
-<text x="706.0" y="124.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">a részek sorrendbe rendezése</text>
+<text x="706.0" y="124.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">részek sorba rendezése</text>
 <text x="706.0" y="143.0" text-anchor="middle" font-size="14" fill="#3c4043">fordulószám szerint,</text>
 <text x="706.0" y="162.0" text-anchor="middle" font-size="14" fill="#3c4043">majd a szerver órája</text>
 <line x1="260" y1="80.5" x2="304" y2="137.5" stroke="#5f6368" stroke-width="1.5" marker-end="url(#a)"/>
@@ -26,7 +26,7 @@
 <rect x="24" y="337.0" width="236" height="79" rx="8" fill="#fff1e0" stroke="#d9822b" stroke-width="1.5"/>
 <text x="142.0" y="363.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">alpha-vs-bravo-m1-b</text>
 <text x="142.0" y="382.0" text-anchor="middle" font-size="14" fill="#3c4043">egy második lánc, ha a</text>
-<text x="142.0" y="401.0" text-anchor="middle" font-size="14" fill="#3c4043">fordulók átfedik egymást</text>
+<text x="142.0" y="401.0" text-anchor="middle" font-size="14" fill="#3c4043">fordulók átfedésben</text>
 <rect x="24" y="436" width="18" height="18" rx="3" fill="#f1f3f4" stroke="#80868b"/>
 <text x="48" y="450" font-size="14" fill="#3c4043">bemenet</text>
 <rect x="95.5" y="436" width="18" height="18" rx="3" fill="#e8f0fe" stroke="#3b6fd8"/>

@@ -1,5 +1,5 @@
 ---
-title: "Mielőtt elkezdi"
+title: "Mielőtt elkezded"
 nav_order: 2
 lang: hu
 source: before-you-start.md
@@ -7,7 +7,7 @@ source_hash: "41a5fe42a33a"
 nav_exclude: true
 search_exclude: true
 ---
-# Mielőtt elkezdi {#before-you-start}
+# Mielőtt elkezded {#before-you-start}
 
 Még nem használt parancssort? Ez az oldal a semmitől egy működő 3DHeat CS2-ig vezet, körülbelül tíz perc alatt.
 Parancsokat egy *terminálba* gépelsz be: ez egy ablak, ahol egy sort írsz, és Entert nyomsz.
@@ -65,7 +65,7 @@ Ezt kell látnod: `usage: heat3d_cs2 [-h] {demos,map,scoreboard} ...`.
 
 ## Gyakori hibák {#common-errors}
 
-| Amit lát | Mit tegyen |
+| Amit lát | Mit tegyél |
 |---|---|
 | `'python' is not recognized` vagy `command not found` | a Python nincs a PATH-ban: futtasd újra a telepítőt, és pipáld be az **Add python.exe to PATH** lehetőséget, majd nyiss új terminált. Macen/Linuxon próbáld a `python3`-at. |
 | `No module named ...` | a 4. lépés kimaradt, vagy másik mappában futott: lépj az eszköz mappájába a `cd` paranccsal, és futtasd újra. |

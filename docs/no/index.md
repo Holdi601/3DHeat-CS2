@@ -3,7 +3,7 @@ title: Hjem
 nav_order: 1
 lang: no
 source: index.md
-source_hash: "15444e8aae26"
+source_hash: "937e30dc7322"
 nav_exclude: true
 search_exclude: true
 permalink: /no/
@@ -24,7 +24,7 @@ ut (`de_x` er et oppdiktet kartnavn).
 
 ![demoer: fra demofiler til én fil per kamp](../assets/img/no/pipeline.svg)
 
-Mer i detalj: 3DHeat CS2 gjør **Counter-Strike 2-demoer** om til et varmekarttabell og et kampdokument per kamp, og et **CS2-kart** til nivågeometri. Utdataene er laget
+Mer i detalj: 3DHeat CS2 gjør **Counter-Strike 2-demoer** om til en varmekarttabell og et kampdokument per kamp, og et **CS2-kart** til nivågeometri. Utdataene er laget
 for [3DHeat](https://holdi601.github.io/3DHeat/)-telemetri-visningsprogrammet
 ([kilde](https://github.com/Holdi601/3DHeat)), men de er vanlige filer - Parquet, JSON og
 binær glTF - som alt annet også kan lese.
@@ -37,13 +37,13 @@ spillet med kommandolinjebygget av Source2Viewer
 
 ## Hurtigstart {#quick-start}
 
-Ny til kommandolinjen? Les [Før du begynner](before-you-start.md) først.
+Ny til kommandolinjen? Les [Før du starter](before-you-start.md) først.
 
 ```bash
 pip install -r requirements.txt
-python -m heat3d_cs2 demos <demo files or folders> -o out   # every match in them
-python -m heat3d_cs2 map <map> -o out/<map>/<map>.glb       # the map from the installed game
-python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # a match's scoreboard as text
+python -m heat3d_cs2 demos <demo files or folders> -o out   # hver kamp i dem
+python -m heat3d_cs2 map <map> -o out/<map>/<map>.glb       # kartet fra det installerte spillet
+python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # en kamps resultattavle som tekst
 ```
 
 Du bør se `1 match(es), 1 at a time ...` og deretter én linje per kamp
@@ -62,19 +62,19 @@ Den holder disse delene; `--loose` skriver dem som separate filer i stedet:
 
 `map` skriver `<map>.glb`: kartets kollisjonsnett - gulv, vegger, bokser,
 uten dekor - delt i bakke og struktur, i samme ramme og enheter som tabellene, så det
-ligger nøyaktig under varmekartet (Bane-panelet).
+ligger nøyaktig under varmekartet (Bakgrunn / nivå-panelet).
 
 ## Dokumentasjonens oversikt {#map-of-this-documentation}
 
 | Side | Hva den dekker |
 |---|---|
-| [Før du begynner](before-you-start.md) | Python, en terminal, plassholdere, hvordan suksess og de vanlige feilene ser ut |
+| [Før du starter](before-you-start.md) | Python, en terminal, plassholdere, hvordan suksess og de vanlige feilene ser ut |
 | [Installasjon](../installing.md) | Python, pakkene, Source2Viewers CLI, hvor CS2 må ligge |
 | [Kommandoer](../commands.md) | `demos`, `map`, `scoreboard`: hvert alternativ, hva som skrives ut, avslutningskoder |
 | [Lese en demo](../reading-demos.md) | hva som leses fra en demofil: samplede ticks, spilleregenskaper, spillregler, hendelser |
 | [Bygge en kamp](../building-matches.md) | deler og kjeder, kampklokken, runder, lag og sider, rader, drap, byttinger, åpninger, skade, blendinger, økonomi |
 | [Statistikk](../statistics.md) | resultattavlen: K/D/A, ADR, KAST, HS%, åpninger, byttinger, multidrap, clutcher, utility, blendinger |
-| [Varmekarttabellen](../output-table.md) | Parquet-filen: hver kolonne, dens type, hvilke hendelser som fyller den, `heat3d`-fotnotehintene, aksene |
+| [Varmekarttabellen](../output-table.md) | Parquet-filen: hver kolonne, dens type, hvilke hendelser som fyller den, `heat3d`-hintene i bunnteksten, aksene |
 | [Kampdokumentet](../output-match-json.md) | `.match.json`-dokumentet, felt for felt |
 | [Én fil per kamp](../output-container.md) | `.3dheat`-beholderen `demos` skriver som standard, `--loose` |
 | [Karteksport](../map-export.md) | hvordan et karts kollisjonsnett eksporteres, rammen, nodenavngivning, enheter |
@@ -83,11 +83,11 @@ ligger nøyaktig under varmekartet (Bane-panelet).
 | [Oppdateringer](../updates.md) | utgivelsessjekken ved oppstart og `python -m heat3d_update` |
 | [Utvikling](../development.md) | kodeoppsett, tester, den syntetiske demo-fiksturen |
 | [Kommandoreferanse](../cli-reference.md) | hver kommandos `--help`, generert fra koden |
-| [Vedlikehold](../maintaining.md) | utgivelsessjekklisten for disse sidene |
+| [Vedlikeholde dokumentasjonen](../maintaining.md) | utgivelsessjekklisten for disse sidene |
 
 ## Hva det er kontrollert mot {#what-it-is-checked-against}
 
-Demoer fra det ville er ikke én ren fil per kamp. Konverteren håndterer en kamp delt over filer i
+Demoer fra den virkelige verden er ikke én ren fil per kamp. Konverteren håndterer en kamp delt over filer i
 hvilken som helst rekkefølge, en server startet på nytt midt i en kamp, to forskjellige kamper lagret under ett
 navn, runder gjenopprettet fra en sikkerhetskopi, et opptak som starter sent eller slutter tidlig, pauser,
 og trenere på et lags side - se [Bygge en kamp](../building-matches.md). Kontrollert over en stor samling
@@ -121,7 +121,7 @@ repositorium med egne utgivelser og lisens:
 | [Ext-WoWs](https://github.com/Holdi601/3DHeat-Ext-WoWs) | World of Warships-replayer til tabeller og kampdokumenter | [nettsted](https://holdi601.github.io/3DHeat-Ext-WoWs/) |
 | [Ext-Squad](https://github.com/Holdi601/3DHeat-Ext-Squad) | Squad-serverdemoer til tabeller og kampdokumenter | [nettsted](https://holdi601.github.io/3DHeat-Ext-Squad/) |
 | [Ext-DCS](https://github.com/Holdi601/3DHeat-Ext-DCS) | DCS World-kart til 3D-modeller | [nettsted](https://holdi601.github.io/3DHeat-Ext-DCS/) |
-| [Ext-IL2](https://github.com/Holdi601/3DHeat-Ext-IL2) | IL-2 Sturmovik-kart til 3D-modeller | [nettsted](https://holdi601.github.io/3DHeat-Ext-IL2/) |
+| [Ext-IL2](https://github.com/Holdi601/3DHeat-Ext-IL2) | IL-2 Great Battles-kart til 3D-modeller | [nettsted](https://holdi601.github.io/3DHeat-Ext-IL2/) |
 
 ## Lisens {#licence}
 

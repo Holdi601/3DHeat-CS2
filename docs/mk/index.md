@@ -3,7 +3,7 @@ title: Почетна
 nav_order: 1
 lang: mk
 source: index.md
-source_hash: "15444e8aae26"
+source_hash: "937e30dc7322"
 nav_exclude: true
 search_exclude: true
 permalink: /mk/

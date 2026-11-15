@@ -3,7 +3,7 @@ title: Dar
 nav_order: 1
 lang: mt
 source: index.md
-source_hash: "15444e8aae26"
+source_hash: "937e30dc7322"
 nav_exclude: true
 search_exclude: true
 permalink: /mt/
@@ -38,7 +38,7 @@ demos mid-disk (ma jniżżel xejn) b'
 logħba installata bil-build tal-linja tal-kmandi ta' Source2Viewer
 ([ValveResourceFormat](https://github.com/ValveResourceFormat/ValveResourceFormat)).
 
-## Tluq malajr {#quick-start}
+## Bidu veloċi {#quick-start}
 
 Ġdid mal-linja tal-kmandi? Aqra [Qabel ma tibda](before-you-start.md) l-ewwel.
 
@@ -60,7 +60,7 @@ Iżomm dawn il-membri; `--loose` jiktibhom bħala fajls separati minflok:
 | Membru | X'iżomm | Mgħabbi fil-viewer |
 |---|---|---|
 | `<match>.parquet` (rwol `table`) | kull plejer ħaj tmien darbiet fis-sekonda bl-istat tiegħu (saħħa, flus, flash, scoped, żona, inventarju, ...), u kull avveniment fejn seħħ (qtil, mewt, hurt, sparatura, tixrid, ibbumbardjar tal-granati, blind, plant, defuse, explode, u tmiem ta' rawnd għal kull plejer b'dak li r-rawnd ħallsu), ringiela waħda kull wieħed | tab Heatmap |
-| `<match>.match.json` (rwol `match`, id-dokument tal-partita) | timijiet, punteġġ, kull rawnd (rebbieħ, kif, ekonomija, plant, qtil bl-ordni, clutches, superstiti) u l-linja tal-iscoreboard ta' kull plejer | tab Match |
+| `<match>.match.json` (rwol `match`, id-dokument tal-partita) | timijiet, punteġġ, kull rawnd (rebbieħ, kif, ekonomija, plant, qtil bl-ordni, clutches, superstiti) u l-linja tal-iscoreboard ta' kull plejer | tab Partita |
 | `<match>.events/props/strings/packets.parquet` | kull ħaġa oħra li fiha d-demo, sħiħa (sidecars) | miżmuma għall-kompletezza |
 
 `map` jikteb `<map>.glb`: il-mesh tal-kollużjoni tal-mappa - art, ħitan, kaxxi,
@@ -81,7 +81,7 @@ unitajiet bħat-tabelli, allura jinsab eżatt taħt il-heatmap (pannell Sfond / 
 | [Id-dokument tal-partita](../output-match-json.md) | id-dokument `.match.json`, qasam b'qasam |
 | [Fajl wieħed għal kull partita](../output-container.md) | il-container `.3dheat` li `demos` jikteb b'mod awtomatiku, `--loose` |
 | [Esportazzjoni tal-mappa](../map-export.md) | kif jiġi esportat il-mesh tal-kollużjoni ta' mappa, il-frame, l-ismijiet tan-nodes, unitajiet |
-| [L-użu ma' 3DHeat](../using-with-3dheat.md) | tgħabbija ta' tabelli, dokumenti tal-partiti u mapep fit-tabs Heatmap u Match tal-viewer |
+| [L-użu ma' 3DHeat](../using-with-3dheat.md) | tgħabbija ta' tabelli, dokumenti tal-partiti u mapep fit-tabs Heatmap u Partita tal-viewer |
 | [Limiti](../limits.md) | x'hu assunt, x'ma jiġix ittrattat, x'mhux ivverifikat |
 | [Aġġornamenti](../updates.md) | il-kontroll tar-rilaxx fil-bidu u `python -m heat3d_update` |
 | [Żvilupp](../development.md) | layout tal-kodiċi, testijiet, il-fixture tad-demo sintetika |
@@ -116,7 +116,7 @@ repożitorju tagħha bir-rilaxxi u l-liċenzja tagħha:
 | --- | --- | --- |
 | [3DHeat](https://github.com/Holdi601/3DHeat) | il-viewer: heatmaps, analiżi tat-tlielaq u reviżjoni tal-partiti f'3D | [sit](https://holdi601.github.io/3DHeat/) |
 | [GameFiles](https://github.com/Holdi601/3DHeat-GameFiles) | korsijiet u livelli mill-fajls li jipprovdu l-logħob, bħala mudelli 3D | [sit](https://holdi601.github.io/3DHeat-GameFiles/) |
-| [GameCapture](https://github.com/Holdi601/3DHeat-GameCapture) | telemetrija tal-laps minn logħob tat-tlielaq; livelli mibnija mill-ġdid minn vidjow tal-logħba | [sit](https://holdi601.github.io/3DHeat-GameCapture/) |
+| [GameCapture](https://github.com/Holdi601/3DHeat-GameCapture) | telemetrija tal-laps minn logħob tat-tlielaq; livelli mibnija mill-ġdid minn vidjo tal-logħba | [sit](https://holdi601.github.io/3DHeat-GameCapture/) |
 | [Unreal Exporter](https://github.com/Holdi601/3DHeat-UnrealExporter) | plugin ta' Unreal Editor li jesporta livell bħala mudell 3D wieħed | [sit](https://holdi601.github.io/3DHeat-UnrealExporter/) |
 | [CS2](https://github.com/Holdi601/3DHeat-CS2) | demos ta' Counter-Strike 2 f'tabelli u dokumenti tal-partiti; mapep f'mudelli 3D | [sit](https://holdi601.github.io/3DHeat-CS2/) |
 | [Watcher](https://github.com/Holdi601/3DHeat-Watcher) | jirrekordja fl-isfond dak li l-logħob jippubblikaw dwar il-logħob tiegħek | [sit](https://holdi601.github.io/3DHeat-Watcher/) |

@@ -61,8 +61,7 @@ Du bör se: `usage: heat3d_cs2 [-h] {demos,map,scoreboard} ...`.
 ## Så läser du kommandona på de här sidorna {#how-to-read-the-commands-on-these-pages}
 
 - Ord inom `<vinkelparenteser>` är platshållare: skriv in din egen fil eller mapp
-  i stället, utan parenteserna. `python -m heat3d_cs2 demos <demo files or folders> -o out` betyder
-  att du ersätter den inklämda delen.
+  i stället, utan parenteserna. I `python -m heat3d_cs2 demos <demo files or folders> -o out` ersätter du `<demo files or folders>` med dina egna filer.
 - En sökväg med mellanslag skrivs inom citattecken: `"C:\My Games\my file"`.
 - Rader som börjar med `#` i exemplen är kommentarer; du skriver dem inte.
 - Lyckat ser ut så här: efter `demos`, en rad `1 match(es), 1 at a time` och sedan en rad per match som slutar med `lost 0`.

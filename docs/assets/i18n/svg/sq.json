@@ -1,6 +1,6 @@
 {
  "(--loose: keep the files)": "(--loose: ruaj skedarët)",
- "(you install it)": "(e instaloni ju)",
+ "(you install it)": "(e instalon vetë)",
  "3DHeat viewer": "Shikuesi 3DHeat",
  "<map>.glb": "<map>.glb",
  "<map>.vpk": "<map>.vpk",
@@ -31,7 +31,7 @@
  "demos: from demo files to one file a match": "demos: nga skedarët demo te një skedar për ndeshje",
  "events, props, strings, packets": "ngjarje, veti, vargje, paketa",
  "exports the world": "eksporton botën",
- "facing up, walkable": "me fytyrë lart, e ecshme",
+ "facing up, walkable": "me faqe lart, e ecshme",
  "files written": "skedarë të shkruar",
  "from the installed game": "nga loja e instaluar",
  "ground": "toka",
@@ -57,7 +57,7 @@
  "rounds, scoreboard, selfCheck": "raunde, tabela e rezultateve, selfCheck",
  "rounds, teams, kills, trades": "raunde, skuadra, vrasje, hakmarrje",
  "same units as the table": "të njëjtat njësi si tabela",
- "sidecars": "skedarë ndihmës",
+ "sidecars": "skedarë anësorë",
  "step": "hapi",
  "structure": "struktura",
  "suffix -p<n> / _p<n> dropped": "prapashtesa -p<n> / _p<n> hiqet",
@@ -65,5 +65,5 @@
  "the map under the heat": "harta nën nxehtësi",
  "then the server's clock": "pastaj ora e serverit",
  "walls, boxes": "mure, kuti",
- "where you see it": "ku e shihni"
+ "where you see it": "ku e shikon"
 }

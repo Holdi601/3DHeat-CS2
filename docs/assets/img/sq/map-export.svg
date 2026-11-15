@@ -8,7 +8,7 @@
 <rect x="306" y="60.0" width="236" height="79" rx="8" fill="#e8f0fe" stroke="#3b6fd8" stroke-width="1.5"/>
 <text x="424.0" y="86.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">CLI i Source2Viewer</text>
 <text x="424.0" y="105.0" text-anchor="middle" font-size="14" fill="#3c4043">eksporton botën</text>
-<text x="424.0" y="124.0" text-anchor="middle" font-size="14" fill="#3c4043">(e instaloni ju)</text>
+<text x="424.0" y="124.0" text-anchor="middle" font-size="14" fill="#3c4043">(e instalon vetë)</text>
 <rect x="588" y="60.0" width="236" height="79" rx="8" fill="#e8f0fe" stroke="#3b6fd8" stroke-width="1.5"/>
 <text x="706.0" y="86.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">rrjeta e kolizionit</text>
 <text x="706.0" y="105.0" text-anchor="middle" font-size="14" fill="#3c4043">clip brush dhe qielli</text>
@@ -18,7 +18,7 @@
 <path d="M706.0,139.0 V162.0 H142.0 V183.0" fill="none" stroke="#5f6368" stroke-width="1.5" marker-end="url(#a)"/>
 <rect x="24" y="185.0" width="236" height="60" rx="8" fill="#e6f4ea" stroke="#2e8b57" stroke-width="1.5"/>
 <text x="142.0" y="211.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">toka</text>
-<text x="142.0" y="230.0" text-anchor="middle" font-size="14" fill="#3c4043">me fytyrë lart, e ecshme</text>
+<text x="142.0" y="230.0" text-anchor="middle" font-size="14" fill="#3c4043">me faqe lart, e ecshme</text>
 <rect x="24" y="261.0" width="236" height="60" rx="8" fill="#e6f4ea" stroke="#2e8b57" stroke-width="1.5"/>
 <text x="142.0" y="287.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">struktura</text>
 <text x="142.0" y="306.0" text-anchor="middle" font-size="14" fill="#3c4043">mure, kuti</text>

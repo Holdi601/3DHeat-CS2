@@ -3,7 +3,7 @@ title: "Startsäit"
 nav_order: 1
 lang: lb
 source: index.md
-source_hash: "15444e8aae26"
+source_hash: "937e30dc7322"
 nav_exclude: true
 search_exclude: true
 permalink: /lb/
@@ -52,7 +52,7 @@ python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # a match's scoreboa
 Dir sollt `1 match(es), 1 at a time ...` gesinn an dann eng Zeil pro Match
 (kuckt [Kommandoen](../commands.md#what-is-printed)).
 
-`demos` schreift pro Match eng Datei an en Ordner, deen no der Map benannt ass:
+`demos` schreift pro Match eng Datei an en Dossier, deen no der Map benannt ass:
 `out/<map>/<match>.3dheat`, e [`.3dheat`-Container](../output-container.md) - dem
 Viewer säi Format mat enger Datei pro Match ([Spezifikatioun](https://holdi601.github.io/3DHeat/container.html)).
 Hien hält dës Memberen; `--loose` schreift se amplaz als getrennt Dateien:
@@ -61,11 +61,11 @@ Hien hält dës Memberen; `--loose` schreift se amplaz als getrennt Dateien:
 |---|---|---|
 | `<match>.parquet` (Roll `table`) | all lieweg Spiller aacht Mol d'Sekonn mat sengem State (Gesondheet, Suen, Flash, scoped, Zon, Inventar, ...), an all Evenement, wou et geschitt ass (Kill, Doud, Hurt, Schoss, Wuerf, Grenade-Detonatiounen, Blend, Plant, Defuse, Explosioun, an en Ronn-Enn pro Spiller mat deem, wat d'Ronn him bruecht huet), eng Zeil pro Stéck | Heatmap-Tab |
 | `<match>.match.json` (Roll `match`, d'Match-Dokument) | Teams, Score, all Ronn (Gewënner, wéi, Wirtschaft, Plant, Kills an der Reihenfolleg, Clutches, Iwwerliewenden) an d'Scoreboard-Zeil vun all Spiller | Match-Tab |
-| `<match>.events/props/strings/packets.parquet` | alles anescht, wat d'Demo hält, komplett (Begleetdateien) | fir d'Vollstännegkeet gehalen |
+| `<match>.events/props/strings/packets.parquet` | alles anescht, wat d'Demo hält, komplett (Niewendateien) | fir d'Vollstännegkeet gehalen |
 
 `map` schreift `<map>.glb`: dem Map seng Kollisiouns-Mesh - Buedem, Maueren, Këschten,
 ouni Dekoratioun - opgedeelt a Buedem a Struktur, am selwechte Frame a mat de selwechten
-Eenheeten wéi d'Tabellen, sou datt se genau ënner der Heatmap läit (Level-Panneau).
+Eenheeten wéi d'Tabellen, sou datt se genau ënner der Heatmap läit (Panel „Hannergrond / Level“).
 
 ## Kaart vun dëser Dokumentatioun {#map-of-this-documentation}
 
@@ -102,8 +102,8 @@ a all Ronn fänkt fënnef géint fënnef un.
 ## Op wat et ze riichten ass {#what-to-point-it-at}
 
 Op d'Demoe vun Äre eegene Matcher, Demoen, déi Dir vun Hand vun enger Tournoi-Säit erofgelueden hutt,
-oder Demoen aus enger API, op déi Dir Zougrëff hutt. Eng Demo ass eng Opnam, dessen Inhalt
-hirem Verleeër an hiren Organisateure gehéiert: benotzt, wat erauskënnt, fir Är eege
+oder Demoen aus enger API, op déi Dir Zougrëff hutt. Eng Demo ass eng Opnam, a säin Inhalt
+gehéiert hirem Verleeër an hiren Organisateure: benotzt, wat erauskënnt, fir Är eege
 Analys, a verdeelt keng Demoen an Daten, déi doraus ofgeleet sinn, weider. Säiten, déi
 Demoen uginn, verbidden an hire Bedingungen dacks automatiséierten Download, dofir
 liest d'Tool Demoen vun der Plack a lued keng erof.

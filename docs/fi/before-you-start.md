@@ -28,7 +28,7 @@ esimerkiksi kansioon `C:\Tools\3DHeat-CS2`. (Jos sinulla on Git, `git clone` kä
 
 ## 3. Avaa pääte kyseisessä kansiossa {#open-a-terminal-in-that-folder}
 
-- **Windows:** avaa kansio File Explorerissa, napsauta osoitepalkkiin, kirjoita `powershell` ja
+- **Windows:** avaa kansio Resurssienhallinnassa, napsauta osoitepalkkiin, kirjoita `powershell` ja
   paina Enter. Sininen tai musta ikkuna aukeaa, jo kyseisessä kansiossa.
 - **macOS / Linux:** avaa *Terminal* ja kirjoita `cd ` (välilyönnin kanssa), vedä kansio
   ikkunaan ja paina Enter.

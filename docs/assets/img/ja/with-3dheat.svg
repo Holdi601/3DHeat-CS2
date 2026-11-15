@@ -12,13 +12,13 @@
 <text x="424.0" y="162.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">3DHeatビューア</text>
 <text x="424.0" y="181.0" text-anchor="middle" font-size="14" fill="#3c4043">フォルダーを開く、ドロップ、読み込み</text>
 <rect x="588" y="60.0" width="236" height="60" rx="8" fill="#e6f4ea" stroke="#2e8b57" stroke-width="1.5"/>
-<text x="706.0" y="86.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">ヒートマップタブ</text>
+<text x="706.0" y="86.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">ヒートマップ タブ</text>
 <text x="706.0" y="105.0" text-anchor="middle" font-size="14" fill="#3c4043">位置、キル、グレネード</text>
 <rect x="588" y="136.0" width="236" height="60" rx="8" fill="#e6f4ea" stroke="#2e8b57" stroke-width="1.5"/>
 <text x="706.0" y="162.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">背景/レベルパネル</text>
 <text x="706.0" y="181.0" text-anchor="middle" font-size="14" fill="#3c4043">ヒートの下のマップ</text>
 <rect x="588" y="212.0" width="236" height="60" rx="8" fill="#e6f4ea" stroke="#2e8b57" stroke-width="1.5"/>
-<text x="706.0" y="238.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">マッチタブ</text>
+<text x="706.0" y="238.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">マッチ タブ</text>
 <text x="706.0" y="257.0" text-anchor="middle" font-size="14" fill="#3c4043">ラウンド、経済、スコアボード</text>
 <line x1="260" y1="128.0" x2="304" y2="166.0" stroke="#5f6368" stroke-width="1.5" marker-end="url(#a)"/>
 <line x1="260" y1="204.0" x2="304" y2="166.0" stroke="#5f6368" stroke-width="1.5" marker-end="url(#a)"/>

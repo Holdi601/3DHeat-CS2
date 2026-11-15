@@ -9,7 +9,7 @@ search_exclude: true
 ---
 # 시작하기 전에 {#before-you-start}
 
-명령줄이 처음이신가요? 이 페이지는 약 10분 만에 아무것도 없는 상태에서 작동하는 3DHeat CS2까지 안내합니다. 명령은 *터미널*에 입력합니다. 한 줄을 쓰고 Enter를 누르는 창입니다.
+명령줄이 처음입니까? 이 페이지는 약 10분 만에 아무것도 없는 상태에서 작동하는 3DHeat CS2까지 안내합니다. 명령은 *터미널*에 입력합니다. 한 줄을 쓰고 Enter를 누르는 창입니다.
 
 ## 1. Python 설치 {#install-python}
 
@@ -51,7 +51,7 @@ python -m heat3d_cs2 --help
 - `<꺾쇠괄호>` 안의 말은 **자리 표시자**입니다. 괄호 없이 본인의 파일이나 폴더를 입력하세요. `python -m heat3d_cs2 demos <demo files or folders> -o out`에서는 괄호 부분을 바꾸면 됩니다.
 - 공백이 있는 경로는 따옴표로 감쌉니다: `"C:\My Games\my file"`.
 - 예시에서 `#`으로 시작하는 줄은 주석입니다. 입력하지 않습니다.
-- 성공의 모습: `demos` 뒤에 `1 match(es), 1 at a time`이라는 줄이 나오고, 경기마다 `lost 0`으로 끝나는 한 줄이 나옵니다.
+- 성공의 모습: `demos` 뒤에 `1 match(es), 1 at a time`이라는 줄이 나오고, 매치마다 `lost 0`으로 끝나는 한 줄이 나옵니다.
 
 ## 흔한 오류 {#common-errors}
 

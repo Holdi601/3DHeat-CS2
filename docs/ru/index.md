@@ -3,7 +3,7 @@ title: Главная
 nav_order: 1
 lang: ru
 source: index.md
-source_hash: "15444e8aae26"
+source_hash: "937e30dc7322"
 nav_exclude: true
 search_exclude: true
 permalink: /ru/
@@ -11,7 +11,7 @@ permalink: /ru/
 # 3DHeat CS2 {#dheat-cs2}
 
 **Что это?** Counter-Strike 2 может сохранить запись матча, которая называется *демо*. Этот
-инструмент превращает демо в файлы, которые визуализатор 3DHeat может показать в 3D: где стоял каждый
+инструмент превращает демо в файлы, которые просмотрщик 3DHeat может показать в 3D: где стоял каждый
 игрок, где погибал, бросал гранаты, ставил и обезвреживал бомбу, раунд за раундом. Он также может
 превратить карту CS2 в 3D-модель, на которой эти события будут показаны.
 
@@ -25,7 +25,7 @@ permalink: /ru/
 ![демо: от файлов демо к одному файлу на матч](../assets/img/ru/pipeline.svg)
 
 Подробнее: 3DHeat CS2 превращает **демо Counter-Strike 2** в таблицу тепловой карты и документ матча
-на каждый матч, а **карту CS2** — в геометрию уровня. Результаты сделаны для визуализатора
+на каждый матч, а **карту CS2** — в геометрию уровня. Результаты сделаны для просмотрщика
 [3DHeat](https://holdi601.github.io/3DHeat/) ([исходный код](https://github.com/Holdi601/3DHeat)), но это
 обычные файлы — Parquet, JSON и двоичный glTF, — которые может прочитать и что-то другое.
 
@@ -46,10 +46,10 @@ python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # таблица с�
 ```
 
 Вы увидите `1 match(es), 1 at a time ...` и затем по строке на матч
-(см. [Команды](../commands.md#что-печатается)).
+(см. [Команды](../commands.md#what-is-printed)).
 
 `demos` записывает на каждый матч один файл в папку, названную по карте:
-`out/<map>/<match>.3dheat`, [контейнер `.3dheat`](../output-container.md) — формат визуализатора «один файл
+`out/<map>/<match>.3dheat`, [контейнер `.3dheat`](../output-container.md) — формат просмотрщика «один файл
 на матч» ([спецификация](https://holdi601.github.io/3DHeat/container.html)). Он содержит такие части;
 `--loose` записывает их отдельными файлами:
 
@@ -77,7 +77,7 @@ python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # таблица с�
 | [Документ матча](../output-match-json.md) | документ `.match.json`, поле за полем |
 | [Один файл на матч](../output-container.md) | контейнер `.3dheat`, который `demos` пишет по умолчанию, и `--loose` |
 | [Экспорт карты](../map-export.md) | как экспортируется сетка коллизий карты, система координат, именование узлов, единицы |
-| [Использование с 3DHeat](../using-with-3dheat.md) | загрузка таблиц, документов матча и карт во вкладки «Тепловая карта» и «Матч» визуализатора |
+| [Использование с 3DHeat](../using-with-3dheat.md) | загрузка таблиц, документов матча и карт во вкладки «Тепловая карта» и «Матч» просмотрщика |
 | [Ограничения](../limits.md) | что предполагается, что не обрабатывается, что не проверено |
 | [Обновления](../updates.md) | проверка релиза при запуске и `python -m heat3d_update` |
 | [Разработка](../development.md) | структура кода, тесты, синтетическая фикстура демо |
@@ -86,7 +86,7 @@ python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # таблица с�
 
 ## Что это проверено {#what-it-is-checked-against}
 
-Демо из реального мира — это не один чистый файл на матч. Конвертер справляется с матчем, разбитым по
+Демо из реального мира — это не один чистый файл на матч. Преобразователь справляется с матчем, разбитым по
 нескольким файлам в любом порядке, с сервером, перезапущенным посреди матча, с двумя разными матчами
 под одним именем, с раундами, восстановленными из резервной копии, с записью, которая начинается
 поздно или заканчивается рано, с паузами и тренерами на стороне команды — см.
@@ -104,20 +104,20 @@ python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # таблица с�
 
 ## Часть 3DHeat {#part-of-3dheat}
 
-3DHeat CS2 — один из бесплатных инструментов вокруг визуализатора 3DHeat; у каждого свой репозиторий,
+3DHeat CS2 — один из бесплатных инструментов вокруг просмотрщика 3DHeat; у каждого свой репозиторий,
 свои выпуски и своя лицензия:
 
 | Инструмент | Что делает | Документация |
 |---|---|---|
-| [3DHeat](https://github.com/Holdi601/3DHeat) | визуализатор: тепловые карты, анализ заездов и разбор матчей в 3D | [сайт](https://holdi601.github.io/3DHeat/) |
+| [3DHeat](https://github.com/Holdi601/3DHeat) | просмотрщик: тепловые карты, анализ заездов и разбор матчей в 3D | [сайт](https://holdi601.github.io/3DHeat/) |
 | [GameFiles](https://github.com/Holdi601/3DHeat-GameFiles) | трассы и уровни из файлов, которые поставляют игры, как 3D-модели | [сайт](https://holdi601.github.io/3DHeat-GameFiles/) |
 | [GameCapture](https://github.com/Holdi601/3DHeat-GameCapture) | телеметрия кругов из гоночных игр; уровни, восстановленные по видео игры | [сайт](https://holdi601.github.io/3DHeat-GameCapture/) |
 | [Unreal Exporter](https://github.com/Holdi601/3DHeat-UnrealExporter) | плагин редактора Unreal, который экспортирует уровень как одну 3D-модель | [сайт](https://holdi601.github.io/3DHeat-UnrealExporter/) |
 | [CS2](https://github.com/Holdi601/3DHeat-CS2) | демо Counter-Strike 2 в таблицы и документы матчей; карты в 3D-модели | [сайт](https://holdi601.github.io/3DHeat-CS2/) |
 | [Watcher](https://github.com/Holdi601/3DHeat-Watcher) | записывает то, что игры публикуют о вашей игре, в фоне | [сайт](https://holdi601.github.io/3DHeat-Watcher/) |
-| [Ext-WarThunder](https://github.com/Holdi601/3DHeat-Ext-WarThunder) | повторы War Thunder в таблицы и документы матчей | [сайт](https://holdi601.github.io/3DHeat-Ext-WarThunder/) |
-| [Ext-WoT](https://github.com/Holdi601/3DHeat-Ext-WoT) | повторы World of Tanks в таблицы и документы матчей | [сайт](https://holdi601.github.io/3DHeat-Ext-WoT/) |
-| [Ext-WoWs](https://github.com/Holdi601/3DHeat-Ext-WoWs) | повторы World of Warships в таблицы и документы матчей | [сайт](https://holdi601.github.io/3DHeat-Ext-WoWs/) |
+| [Ext-WarThunder](https://github.com/Holdi601/3DHeat-Ext-WarThunder) | реплеи War Thunder в таблицы и документы матчей | [сайт](https://holdi601.github.io/3DHeat-Ext-WarThunder/) |
+| [Ext-WoT](https://github.com/Holdi601/3DHeat-Ext-WoT) | реплеи World of Tanks в таблицы и документы матчей | [сайт](https://holdi601.github.io/3DHeat-Ext-WoT/) |
+| [Ext-WoWs](https://github.com/Holdi601/3DHeat-Ext-WoWs) | реплеи World of Warships в таблицы и документы матчей | [сайт](https://holdi601.github.io/3DHeat-Ext-WoWs/) |
 | [Ext-Squad](https://github.com/Holdi601/3DHeat-Ext-Squad) | демо серверов Squad в таблицы и документы матчей | [сайт](https://holdi601.github.io/3DHeat-Ext-Squad/) |
 | [Ext-DCS](https://github.com/Holdi601/3DHeat-Ext-DCS) | карты DCS World в 3D-модели | [сайт](https://holdi601.github.io/3DHeat-Ext-DCS/) |
 | [Ext-IL2](https://github.com/Holdi601/3DHeat-Ext-IL2) | карты IL-2 Sturmovik в 3D-модели | [сайт](https://holdi601.github.io/3DHeat-Ext-IL2/) |

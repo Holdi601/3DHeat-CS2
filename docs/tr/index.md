@@ -3,7 +3,7 @@ title: "Ana sayfa"
 nav_order: 1
 lang: tr
 source: index.md
-source_hash: "15444e8aae26"
+source_hash: "937e30dc7322"
 nav_exclude: true
 search_exclude: true
 permalink: /tr/
@@ -28,9 +28,9 @@ Komut satırında yeni misiniz? Önce [Başlamadan önce](before-you-start.md) s
 
 ```bash
 pip install -r requirements.txt
-python -m heat3d_cs2 demos <demo files or folders> -o out   # every match in them
-python -m heat3d_cs2 map <map> -o out/<map>/<map>.glb       # the map from the installed game
-python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # a match's scoreboard as text
+python -m heat3d_cs2 demos <demo files or folders> -o out   # içlerindeki her maç
+python -m heat3d_cs2 map <map> -o out/<map>/<map>.glb       # kurulu oyundaki harita
+python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # bir maçın skor tablosu, metin olarak
 ```
 
 `1 match(es), 1 at a time ...` ve ardından her maç için bir satır görmelisiniz (bkz. [Komutlar](../commands.md#what-is-printed)).
@@ -43,7 +43,7 @@ python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # a match's scoreboa
 | `<match>.match.json` (rolü `match`, maç belgesi) | takımlar, skor, her tur (kazanan, nasıl, ekonomi, bomba kurma, öldürmeler sırayla, clutch'lar, hayatta kalanlar) ve her oyuncunun skor tablosu satırı | Maç sekmesi |
 | `<match>.events/props/strings/packets.parquet` | demonun tuttuğu diğer her şey, bütün olarak (yan dosyalar) | bütünlük için saklanır |
 
-`map`, `<map>.glb` yazar: haritanın çarpışma ağı (zeminler, duvarlar, kutular, süslemesiz), zemin ve yapı olarak bölünmüş; tabloların çerçevesi ve birimleriyle aynı, bu yüzden tam olarak ısı haritasının altına oturur (Bölüm paneli).
+`map`, `<map>.glb` yazar: haritanın çarpışma ağı (zeminler, duvarlar, kutular, süslemesiz), zemin ve yapı olarak bölünmüş; tabloların çerçevesi ve birimleriyle aynı, bu yüzden tam olarak ısı haritasının altına oturur (Arka plan / bölüm paneli).
 
 ## Bu belgelerin haritası {#map-of-this-documentation}
 

@@ -1,7 +1,7 @@
 {
  "(--loose: keep the files)": "(--loose: сохранить файлы)",
  "(you install it)": "(устанавливаете сами)",
- "3DHeat viewer": "Визуализатор 3DHeat",
+ "3DHeat viewer": "Просмотрщик 3DHeat",
  "<map>.glb": "<map>.glb",
  "<map>.vpk": "<map>.vpk",
  "<map>/<match>.3dheat": "<map>/<match>.3dheat",
@@ -57,7 +57,7 @@
  "rounds, scoreboard, selfCheck": "раунды, счёт, selfCheck",
  "rounds, teams, kills, trades": "раунды, команды, убийства, обмены",
  "same units as the table": "те же единицы, что у таблицы",
- "sidecars": "доп. файлы",
+ "sidecars": "вспом. файлы",
  "step": "шаг",
  "structure": "постройки",
  "suffix -p<n> / _p<n> dropped": "суффикс -p<n> / _p<n> отброшен",

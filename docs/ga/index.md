@@ -3,7 +3,7 @@ title: Baile
 nav_order: 1
 lang: ga
 source: index.md
-source_hash: "15444e8aae26"
+source_hash: "937e30dc7322"
 nav_exclude: true
 search_exclude: true
 permalink: /ga/
@@ -11,7 +11,7 @@ permalink: /ga/
 # 3DHeat CS2 {#dheat-cs2}
 
 **Cad é?** Is féidir le Counter-Strike 2 taifeadadh de chluiche a shábháil, ar a dtugtar
-*demo*. Casann an uirlis seo demo ina chomhaid is féidir leis an lucht féachana 3DHeat a thaispeáint i 3D:
+*demo*. Casann an uirlis seo demo ina chomhaid is féidir leis an amharcán 3DHeat a thaispeáint i 3D:
 cá raibh gach duine ina sheasamh, ag fáil bháis, ag caitheamh agus ag cur buama, babhta ar bhabhta. Is féidir léi
 léarscáil CS2 a athrú ina samhail 3D chun iad a thaispeáint uirthi freisin.
 
@@ -26,8 +26,8 @@ amach (is ainm léarscáile cumtha é `de_x`).
 ![demos: ó chomhaid demo go comhad amháin in aghaidh an chluiche](../assets/img/ga/pipeline.svg)
 
 Níos mine: casann 3DHeat CS2 **demos Counter-Strike 2** ina dtábla léarscáile teasa agus ina
-dhoiciméad cluiche in aghaidh an chluiche, agus **léarscáil CS2** ina gheoiméadracht leibhéil. Déantar na haschuir
-don lucht féachana telemetry [3DHeat](https://holdi601.github.io/3DHeat/)
+cháipéis chluiche in aghaidh an chluiche, agus **léarscáil CS2** ina gheoiméadracht leibhéil. Déantar na haschuir
+don amharcán telemetry [3DHeat](https://holdi601.github.io/3DHeat/)
 ([foinse](https://github.com/Holdi601/3DHeat)), ach is gnáthchomhaid iad - Parquet, JSON agus glTF dénártha - is féidir le haon rud eile
 a léamh freisin.
 
@@ -53,14 +53,14 @@ Ba chóir duit `1 match(es), 1 at a time ...` a fheiceáil agus ansin líne amh�
 
 Scríobhann `demos`, in aghaidh an chluiche, comhad amháin isteach i bhfillteán a ainmnítear i ndiaidh na léarscáile:
 `out/<map>/<match>.3dheat`, [coimeádán `.3dheat`](../output-container.md) - formáid
-comhad-amháin-in-aghaidh-an-chluiche an lucht féachana ([sonraíocht](https://holdi601.github.io/3DHeat/container.html)).
+comhad-amháin-in-aghaidh-an-chluiche an amharcáin ([sonraíocht](https://holdi601.github.io/3DHeat/container.html)).
 Coinníonn sé na baill seo; scríobhann `--loose` mar chomhaid ar leith iad ina ionad:
 
 | Ball | Cad atá ann | Lódáilte i |
 |---|---|---|
 | `<match>.parquet` (ról `table`) | gach imreoir beo ocht n-uaire sa soicind lena staid (sláinte, airgead, splanc, scóipeáilte, crios, fardal, ...), agus gach imeacht san áit inar tharla sé (marú, bás, gortú, lámhaigh, caitheamh, pléascadh grenáidí, dalladh, plandáil, díghalrú, pléascadh, agus deireadh babhta in aghaidh an imreora leis an méid a d'íoc an babhta leo), sraith an ceann | cluaisín Léarscáil teasa |
-| `<match>.match.json` (ról `match`, doiciméad an chluiche) | foirne, scór, gach babhta (buaiteoir, conas, geilleagar, plandáil, maruithe in ord, clutches, marthanóirí) agus líne scórchláir gach imreora | cluaisín Cluiche |
-| `<match>.events/props/strings/packets.parquet` | gach rud eile atá sa demo, iomlán (taobhchomhaid) | coinnithe ar mhaithe le hiomláine |
+| `<match>.match.json` (ról `match`, cáipéis an chluiche) | foirne, scór, gach babhta (buaiteoir, conas, geilleagar, plandáil, maruithe in ord, clutches, marthanóirí) agus líne scórchláir gach imreora | cluaisín Cluiche |
+| `<match>.events/props/strings/packets.parquet` | gach rud eile atá sa demo, iomlán (comhaid chliatháin) | coinnithe ar mhaithe le hiomláine |
 
 Scríobhann `map` `<map>.glb`: mogall imbhuailte na léarscáile - urláir, ballaí, boscaí,
 gan maisiúchán - roinnte ina thalamh agus ina struchtúr, sa fhráma agus sna haonaid chéanna leis na táblaí,
@@ -77,10 +77,10 @@ mar sin luíonn sé go díreach faoin léarscáil teasa (painéal Cúlra / leibh
 | [Cluiche a thógáil](../building-matches.md) | codanna agus slabhraí, clog an chluiche, babhtaí, foirne agus taobhanna, sraitheanna, maruithe, malartuithe, osclaíochtaí, damáiste, splancanna, geilleagar |
 | [Staitisticí](../statistics.md) | an clár scóir: K/D/A, ADR, KAST, HS%, osclaíochtaí, malartuithe, il-mharuithe, clutches, utility, splancanna |
 | [An tábla léarscáile teasa](../output-table.md) | an comhad Parquet: gach colún, a chineál, cé na himeachtaí a líonann é, leideanna footer `heat3d`, na haiseanna |
-| [Doiciméad an chluiche](../output-match-json.md) | an doiciméad `.match.json`, réimse ar réimse |
+| [Cáipéis an chluiche](../output-match-json.md) | an doiciméad `.match.json`, réimse ar réimse |
 | [Comhad amháin in aghaidh an chluiche](../output-container.md) | an coimeádán `.3dheat` a scríobhann `demos` de réir réamhshocraithe, `--loose` |
 | [Onnmhairiú léarscáile](../map-export.md) | conas a onnmhairítear mogall imbhuailte léarscáile, an fráma, ainmniú nód, aonaid |
-| [Úsáid le 3DHeat](../using-with-3dheat.md) | táblaí, doiciméid chluiche agus léarscáileanna a lódáil i gcluaisíní Léarscáil teasa agus Cluiche an lucht féachana |
+| [Úsáid le 3DHeat](../using-with-3dheat.md) | táblaí, cáipéisí cluiche agus léarscáileanna a lódáil i gcluaisíní Léarscáil teasa agus Cluiche an amharcáin |
 | [Teorainneacha](../limits.md) | cad a ghlactar leis, cad nach láimhseáiltear, cad nach bhfuil fíoraithe |
 | [Nuashonruithe](../updates.md) | an seic eisiúna ag tosú agus `python -m heat3d_update` |
 | [Forbairt](../development.md) | leagan amach an chóid, tástálacha, an fheistis demo sintéiseach |
@@ -108,21 +108,21 @@ an uirlis demos ón diosca agus nach bhfaigheann sí aon cheann.
 
 ## Cuid de 3DHeat {#part-of-3dheat}
 
-Tá 3DHeat CS2 ar cheann de na huirlisí saora timpeall ar lucht féachana 3DHeat, stór
+Tá 3DHeat CS2 ar cheann de na huirlisí saora timpeall ar amharcán 3DHeat, stór
 dá chuid féin ag gach ceann lena eisiúintí agus a cheadúnas féin:
 
 | Uirlis | Cad a dhéanann sí | Doiciméid |
 |---|---|---|
-| [3DHeat](https://github.com/Holdi601/3DHeat) | an lucht féachana: léarscáileanna teasa, anailís rása agus athbhreithniú cluiche i 3D | [suíomh](https://holdi601.github.io/3DHeat/) |
+| [3DHeat](https://github.com/Holdi601/3DHeat) | an amharcán: léarscáileanna teasa, anailís rása agus athbhreithniú cluiche i 3D | [suíomh](https://holdi601.github.io/3DHeat/) |
 | [GameFiles](https://github.com/Holdi601/3DHeat-GameFiles) | cúrsaí agus leibhéil as na comhaid a sheolann cluichí, mar shamhlacha 3D | [suíomh](https://holdi601.github.io/3DHeat-GameFiles/) |
 | [GameCapture](https://github.com/Holdi601/3DHeat-GameCapture) | telemetry cuarta ó chluichí rásaíochta; leibhéil atógtha ó fhíseán cluiche | [suíomh](https://holdi601.github.io/3DHeat-GameCapture/) |
 | [Unreal Exporter](https://github.com/Holdi601/3DHeat-UnrealExporter) | breiseán d'Unreal Editor a onnmhairíonn leibhéal mar shamhail 3D amháin | [suíomh](https://holdi601.github.io/3DHeat-UnrealExporter/) |
-| [CS2](https://github.com/Holdi601/3DHeat-CS2) | demos Counter-Strike 2 ina dtáblaí agus ina ndoiciméid chluiche; léarscáileanna ina samhlacha 3D | [suíomh](https://holdi601.github.io/3DHeat-CS2/) |
+| [CS2](https://github.com/Holdi601/3DHeat-CS2) | demos Counter-Strike 2 ina dtáblaí agus ina gcáipéisí cluiche; léarscáileanna ina samhlacha 3D | [suíomh](https://holdi601.github.io/3DHeat-CS2/) |
 | [Watcher](https://github.com/Holdi601/3DHeat-Watcher) | taifeadann sé an méid a fhoilsíonn cluichí faoi d'imirt, sa chúlra | [suíomh](https://holdi601.github.io/3DHeat-Watcher/) |
-| [Ext-WarThunder](https://github.com/Holdi601/3DHeat-Ext-WarThunder) | athsheinmeanna War Thunder ina dtáblaí agus ina ndoiciméid chluiche | [suíomh](https://holdi601.github.io/3DHeat-Ext-WarThunder/) |
-| [Ext-WoT](https://github.com/Holdi601/3DHeat-Ext-WoT) | athsheinmeanna World of Tanks ina dtáblaí agus ina ndoiciméid chluiche | [suíomh](https://holdi601.github.io/3DHeat-Ext-WoT/) |
-| [Ext-WoWs](https://github.com/Holdi601/3DHeat-Ext-WoWs) | athsheinmeanna World of Warships ina dtáblaí agus ina ndoiciméid chluiche | [suíomh](https://holdi601.github.io/3DHeat-Ext-WoWs/) |
-| [Ext-Squad](https://github.com/Holdi601/3DHeat-Ext-Squad) | demos freastalaí Squad ina dtáblaí agus ina ndoiciméid chluiche | [suíomh](https://holdi601.github.io/3DHeat-Ext-Squad/) |
+| [Ext-WarThunder](https://github.com/Holdi601/3DHeat-Ext-WarThunder) | athsheinmeanna War Thunder ina dtáblaí agus ina gcáipéisí cluiche | [suíomh](https://holdi601.github.io/3DHeat-Ext-WarThunder/) |
+| [Ext-WoT](https://github.com/Holdi601/3DHeat-Ext-WoT) | athsheinmeanna World of Tanks ina dtáblaí agus ina gcáipéisí cluiche | [suíomh](https://holdi601.github.io/3DHeat-Ext-WoT/) |
+| [Ext-WoWs](https://github.com/Holdi601/3DHeat-Ext-WoWs) | athsheinmeanna World of Warships ina dtáblaí agus ina gcáipéisí cluiche | [suíomh](https://holdi601.github.io/3DHeat-Ext-WoWs/) |
+| [Ext-Squad](https://github.com/Holdi601/3DHeat-Ext-Squad) | demos freastalaí Squad ina dtáblaí agus ina gcáipéisí cluiche | [suíomh](https://holdi601.github.io/3DHeat-Ext-Squad/) |
 | [Ext-DCS](https://github.com/Holdi601/3DHeat-Ext-DCS) | léarscáileanna DCS World ina samhlacha 3D | [suíomh](https://holdi601.github.io/3DHeat-Ext-DCS/) |
 | [Ext-IL2](https://github.com/Holdi601/3DHeat-Ext-IL2) | léarscáileanna IL-2 Sturmovik ina samhlacha 3D | [suíomh](https://holdi601.github.io/3DHeat-Ext-IL2/) |
 

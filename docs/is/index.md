@@ -3,7 +3,7 @@ title: "Heim"
 nav_order: 1
 lang: is
 source: index.md
-source_hash: "15444e8aae26"
+source_hash: "937e30dc7322"
 nav_exclude: true
 search_exclude: true
 permalink: /is/
@@ -11,7 +11,7 @@ permalink: /is/
 # 3DHeat CS2 {#dheat-cs2}
 
 **Hvað er þetta?** Counter-Strike 2 getur vistað upptöku af leik, kallaða
-*demo*. Þetta tól breytir demo í skrár sem 3DHeat-skoðarinn getur sýnt í 3D:
+*demo*. Þetta verkfæri breytir demo í skrár sem 3DHeat-skoðarinn getur sýnt í 3D:
 hvar allir stóðu, dóu, köstuðu og settu sprengju, lotu fyrir lotu. Það getur líka
 breytt CS2-korti í 3D líkan til að sýna þær á.
 
@@ -25,7 +25,7 @@ aðstoðaði, lifði af eða var „traded“).
 
 ![demos: frá demo-skrám að einni skrá fyrir hvern leik](../assets/img/is/pipeline.svg)
 
-Nánar: 3DHeat CS2 breytir **Counter-Strike 2 demo** í hitakortstöflu og leikskjal
+Nánar: 3DHeat CS2 breytir **Counter-Strike 2 demo** í hitakortstöflu og leikjaskjal
 fyrir hvern leik, og **CS2-korti** í borðarúmfræði. Úttakið er gert
 fyrir [3DHeat](https://holdi601.github.io/3DHeat/) mælingaskoðarann
 ([kóði](https://github.com/Holdi601/3DHeat)), en það eru
@@ -40,7 +40,7 @@ uppsettum leiknum með skipanalínuútgáfu af Source2Viewer
 
 ## Fljótleg byrjun {#quick-start}
 
-Ertu ný/r í skipanalínunni? Lestu fyrst [Áður en þú byrjar](before-you-start.md).
+Hefurðu aldrei notað skipanalínu? Lestu fyrst [Áður en þú byrjar](before-you-start.md).
 
 ```bash
 pip install -r requirements.txt
@@ -60,7 +60,7 @@ Hann geymir þessa hluta; `--loose` skrifar þá sem aðskildar skrár í staði
 | Hluti | Hvað hann geymir | Hlaðið í skoðarann í |
 |---|---|---|
 | `<match>.parquet` (hlutverk `table`) | sérhvern lifandi leikmann átta sinnum á sekúndu með stöðu hans (heilsa, peningar, blinding, scoped, svæði, birgðir, ...), og sérhvern atburð þar sem hann gerðist (kill, death, hurt, shot, throw, sprengingar handsprengna, blind, plant, defuse, explode, og lok lotu fyrir hvern leikmann með því sem lotan gaf honum), ein röð hvert | flipanum Hitakort |
-| `<match>.match.json` (hlutverk `match`, leikskjalið) | lið, stig, hverja lotu (sigurvegara, hvernig, hagkerfi, sprengju, dráp í röð, clutch, eftirlifendur) og stigatöflulínu hvers leikmanns | flipanum Leikur |
+| `<match>.match.json` (hlutverk `match`, leikjaskjalið) | lið, stig, hverja lotu (sigurvegara, hvernig, hagkerfi, sprengju, dráp í röð, clutch, eftirlifendur) og stigatöflulínu hvers leikmanns | flipanum Leikur |
 | `<match>.events/props/strings/packets.parquet` | allt annað sem demo-ið geymir, í heild (hliðarskrár) | geymt fyrir heilleika |
 
 `map` skrifar `<map>.glb`: árekstrarnet kortsins (collision mesh) - gólf, veggir, kassar,
@@ -78,10 +78,10 @@ og töflurnar, svo það liggur nákvæmlega undir hitakortinu (spjaldið Bakgru
 | [Að smíða leik](../building-matches.md) | hlutar og keðjur, leikklukkan, lotur, lið og hliðar, raðir, dráp, trades, opnanir, skaði, blindingar, hagkerfi |
 | [Tölfræði](../statistics.md) | stigataflan: K/D/A, ADR, KAST, HS%, opnanir, trades, margföld dráp, clutch, utility, blindingar |
 | [Hitakortstaflan](../output-table.md) | Parquet-skráin: hver dálkur, gerð hans, hvaða atburðir fylla hann, `heat3d` fótvísbendingarnar, ásarnir |
-| [Leikskjalið](../output-match-json.md) | `.match.json` skjalið, reitur fyrir reit |
+| [Leikjaskjalið](../output-match-json.md) | `.match.json` skjalið, reitur fyrir reit |
 | [Ein skrá fyrir hvern leik](../output-container.md) | `.3dheat` gámurinn sem `demos` skrifar sjálfgefið, `--loose` |
 | [Kortaútflutningur](../map-export.md) | hvernig árekstrarnet korts er flutt út, ramminn, nöfn hnúta, einingar |
-| [Notkun með 3DHeat](../using-with-3dheat.md) | að hlaða töflum, leikskjölum og kortum í flipana Hitakort og Leikur í skoðaranum |
+| [Notkun með 3DHeat](../using-with-3dheat.md) | að hlaða töflum, leikjaskjölum og kortum í flipana Hitakort og Leikur í skoðaranum |
 | [Takmarkanir](../limits.md) | hvað er gert ráð fyrir, hvað er ekki meðhöndlað, hvað er óstaðfest |
 | [Uppfærslur](../updates.md) | útgáfuathugunin við ræsingu og `python -m heat3d_update` |
 | [Þróun](../development.md) | uppbygging kóðans, prófanir, gervidemo-prófunarsafnið (fixture) |
@@ -106,25 +106,25 @@ Demo úr þínum eigin leikjum, demo sem þú sóttir í höndunum af mótsvef, 
 tilheyrir útgefanda hennar og skipuleggjendum: notaðu það sem kemur út til þinnar eigin
 greiningar, og dreifðu ekki demo eða gögnum unnum úr þeim. Vefir sem
 bjóða demo banna oft sjálfvirkt niðurhal í skilmálum sínum, sem er ástæðan fyrir því að
-tólið les demo af diski og sækir engin.
+verkfærið les demo af diski og sækir engin.
 
 ## Hluti af 3DHeat {#part-of-3dheat}
 
-3DHeat CS2 er eitt af ókeypis tólunum í kringum 3DHeat-skoðarann, hvert með sína eigin
+3DHeat CS2 er eitt af ókeypis verkfærunum í kringum 3DHeat-skoðarann, hvert með sína eigin
 geymslu, eigin útgáfur og leyfi:
 
-| Tól | Hvað það gerir | Skjöl |
+| Verkfæri | Hvað það gerir | Skjöl |
 |---|---|---|
 | [3DHeat](https://github.com/Holdi601/3DHeat) | skoðarinn: hitakort, kappakstursgreining og leikjayfirlit í 3D | [vefur](https://holdi601.github.io/3DHeat/) |
 | [GameFiles](https://github.com/Holdi601/3DHeat-GameFiles) | brautir og borð úr skrám sem leikir senda með, sem 3D líkön | [vefur](https://holdi601.github.io/3DHeat-GameFiles/) |
 | [GameCapture](https://github.com/Holdi601/3DHeat-GameCapture) | hringmælingagögn úr kappakstursleikjum; borð endurbyggð úr leikmyndbandi | [vefur](https://holdi601.github.io/3DHeat-GameCapture/) |
 | [Unreal Exporter](https://github.com/Holdi601/3DHeat-UnrealExporter) | viðbót fyrir Unreal Editor sem flytur borð út sem eitt 3D líkan | [vefur](https://holdi601.github.io/3DHeat-UnrealExporter/) |
-| [CS2](https://github.com/Holdi601/3DHeat-CS2) | Counter-Strike 2 demo í töflur og leikskjöl; kort í 3D líkön | [vefur](https://holdi601.github.io/3DHeat-CS2/) |
+| [CS2](https://github.com/Holdi601/3DHeat-CS2) | Counter-Strike 2 demo í töflur og leikjaskjöl; kort í 3D líkön | [vefur](https://holdi601.github.io/3DHeat-CS2/) |
 | [Watcher](https://github.com/Holdi601/3DHeat-Watcher) | skráir í bakgrunni það sem leikir birta um leik þinn | [vefur](https://holdi601.github.io/3DHeat-Watcher/) |
-| [Ext-WarThunder](https://github.com/Holdi601/3DHeat-Ext-WarThunder) | War Thunder upptökur í töflur og leikskjöl | [vefur](https://holdi601.github.io/3DHeat-Ext-WarThunder/) |
-| [Ext-WoT](https://github.com/Holdi601/3DHeat-Ext-WoT) | World of Tanks upptökur í töflur og leikskjöl | [vefur](https://holdi601.github.io/3DHeat-Ext-WoT/) |
-| [Ext-WoWs](https://github.com/Holdi601/3DHeat-Ext-WoWs) | World of Warships upptökur í töflur og leikskjöl | [vefur](https://holdi601.github.io/3DHeat-Ext-WoWs/) |
-| [Ext-Squad](https://github.com/Holdi601/3DHeat-Ext-Squad) | Squad þjónadem í töflur og leikskjöl | [vefur](https://holdi601.github.io/3DHeat-Ext-Squad/) |
+| [Ext-WarThunder](https://github.com/Holdi601/3DHeat-Ext-WarThunder) | War Thunder upptökur í töflur og leikjaskjöl | [vefur](https://holdi601.github.io/3DHeat-Ext-WarThunder/) |
+| [Ext-WoT](https://github.com/Holdi601/3DHeat-Ext-WoT) | World of Tanks upptökur í töflur og leikjaskjöl | [vefur](https://holdi601.github.io/3DHeat-Ext-WoT/) |
+| [Ext-WoWs](https://github.com/Holdi601/3DHeat-Ext-WoWs) | World of Warships upptökur í töflur og leikjaskjöl | [vefur](https://holdi601.github.io/3DHeat-Ext-WoWs/) |
+| [Ext-Squad](https://github.com/Holdi601/3DHeat-Ext-Squad) | Squad þjónsdemo í töflur og leikjaskjöl | [vefur](https://holdi601.github.io/3DHeat-Ext-Squad/) |
 | [Ext-DCS](https://github.com/Holdi601/3DHeat-Ext-DCS) | DCS World kort í 3D líkön | [vefur](https://holdi601.github.io/3DHeat-Ext-DCS/) |
 | [Ext-IL2](https://github.com/Holdi601/3DHeat-Ext-IL2) | IL-2 Sturmovik kort í 3D líkön | [vefur](https://holdi601.github.io/3DHeat-Ext-IL2/) |
 

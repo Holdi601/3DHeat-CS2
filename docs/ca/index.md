@@ -3,7 +3,7 @@ title: Inici
 nav_order: 1
 lang: ca
 source: index.md
-source_hash: "15444e8aae26"
+source_hash: "937e30dc7322"
 nav_exclude: true
 search_exclude: true
 permalink: /ca/
@@ -14,7 +14,7 @@ permalink: /ca/
 demo en fitxers que el visualitzador 3DHeat pot mostrar en 3D: on era cadascú, on va morir, on va llançar
 i on va plantar, ronda a ronda. També pot convertir un mapa de CS2 en un model 3D perquè hi mostri les partides.
 
-**Per a què la faria servir?** Per revisar les vostres pròpies partides, per superposar moltes partides d'un
+**Per a què la faria servir?** Per revisar les teves pròpies partides, per superposar moltes partides d'un
 mateix mapa en un sol mapa de calor, i per a estadístiques de partida com l'ADR (dany mitjà per ronda) i el
 KAST (la proporció de rondes en què un jugador va matar, assistir, sobreviure o ser venjat).
 
@@ -36,7 +36,7 @@ del joc instal·lat amb la versió de línia d'ordres de Source2Viewer
 
 ## Inici ràpid {#quick-start}
 
-Si és nou amb la línia d'ordres, llegeixi primer [Abans de començar](before-you-start.md).
+Si ets nou amb la línia d'ordres, llegeix primer [Abans de començar](before-you-start.md).
 
 ```bash
 pip install -r requirements.txt
@@ -45,8 +45,8 @@ python -m heat3d_cs2 map <mapa> -o out/<mapa>/<mapa>.glb         # el mapa del j
 python -m heat3d_cs2 scoreboard out/<mapa>/<partida>.3dheat      # el marcador d'una partida, com a text
 ```
 
-Hauria de veure `1 match(es), 1 at a time ...` i després una línia per partida
-(vegi [Ordres](../commands.md#what-is-printed)).
+Hauries de veure `1 match(es), 1 at a time ...` i després una línia per partida
+(mira [Ordres](../commands.md#what-is-printed)).
 
 `demos` escriu, per cada partida, un fitxer dins d'una carpeta amb el nom del mapa:
 `out/<mapa>/<partida>.3dheat`, un [contenidor `.3dheat`](../output-container.md), el format d'un fitxer
@@ -56,8 +56,8 @@ Conté aquests membres; `--loose` els escriu com a fitxers separats en lloc d'ai
 | Membre | Què conté | Carregat al |
 |---|---|---|
 | `<partida>.parquet` (rol `table`) | cada jugador viu vuit vegades per segon amb el seu estat (salut, diners, flaix, mira, zona, inventari...), i cada esdeveniment en el moment en què passa (baixa, mort, dany, tret, llançament, detonacions de granada, cegament, plantada, desactivació, explosió, i un final de ronda per jugador amb el que li va pagar la ronda), una fila cadascun | pestanya Mapa de calor |
-| `<partida>.match.json` (rol `match`, el document de la partida) | equips, marcador, cada ronda (guanyador, com, economia, plantada, baixes en ordre, remuntades, supervivents) i la línia del marcador de cada jugador | pestanya Partida |
-| `<partida>.events/props/strings/packets.parquet` | tot el demés que conté la demo, sencer (fitxers auxiliars) | es guarda per ser complet |
+| `<partida>.match.json` (rol `match`, el document de partida) | equips, marcador, cada ronda (guanyador, com, economia, plantada, baixes en ordre, remuntades, supervivents) i la línia del marcador de cada jugador | pestanya Partida |
+| `<partida>.events/props/strings/packets.parquet` | tot el demés que conté la demo, sencer (annexos) | es guarda per ser complet |
 
 `map` escriu `<mapa>.glb`: la malla de col·lisió del mapa (terres, parets, caixes),
 sense decoració, dividida en terreny i estructura, en el mateix marc i unitats que les taules, de manera
@@ -74,7 +74,7 @@ que queda exactament sota el mapa de calor (panell Fons / nivell).
 | [Construir una partida](../building-matches.md) | parts i cadenes, el rellotge de la partida, les rondes, equips i bàndols, files, baixes, intercanvis, obertures, dany, flaixos, economia |
 | [Estadístiques](../statistics.md) | el marcador: K/D/A, ADR, KAST, HS%, obertures, intercanvis, multibaixes, remuntades, utilitats, flaixos |
 | [La taula del mapa de calor](../output-table.md) | el fitxer Parquet: cada columna, el seu tipus, quins esdeveniments l'omplen, les pistes del peu `heat3d`, els eixos |
-| [El document de la partida](../output-match-json.md) | el document `.match.json`, camp per camp |
+| [El document de partida](../output-match-json.md) | el document `.match.json`, camp per camp |
 | [Un fitxer per partida](../output-container.md) | el contenidor `.3dheat` que escriu `demos` per defecte, `--loose` |
 | [Exportació del mapa](../map-export.md) | com s'exporta la malla de col·lisió d'un mapa, el marc, els noms de node, les unitats |
 | [Ús amb 3DHeat](../using-with-3dheat.md) | carregar taules, documents de partida i mapes als visualitzadors de Mapa de calor i de Partida |
@@ -87,18 +87,18 @@ que queda exactament sota el mapa de calor (panell Fons / nivell).
 ## Què s'ha comprovat {#what-it-is-checked-against}
 
 Les demos que hi ha pel món no són un fitxer net per partida. El convertidor gestiona una partida
-partida en diversos fitxers en qualsevol ordre, un servidor reiniciat a mig partida, dues partides
+repartida en diversos fitxers en qualsevol ordre, un servidor reiniciat a mig partida, dues partides
 diferents guardades amb un mateix nom, rondes restaurades d'una còpia de seguretat, una gravació que
-comença tard o acaba aviat, pauses, i entrenadors al bàndol d'un equip; vegi
+comença tard o acaba aviat, pauses, i entrenadors al bàndol d'un equip; mira
 [Construir una partida](../building-matches.md). Comprovat sobre una gran col·lecció de demos de torneigs:
 en cada partida el marcador segueix els guanyadors de les rondes, les baixes de cada bàndol són les
 morts de l'altre, i cada ronda comença amb cinc contra cinc.
 
 ## A què apuntar {#what-to-point-it-at}
 
-Les demos de les vostres pròpies partides, les demos que hàgiu descarregat a mà d'un lloc de torneigs,
-o les demos d'una API a la qual tingueu accés. Una demo és una gravació el contingut de la qual
-pertany al seu editor i als seus organitzadors: useu el que en surti per a la vostra pròpia anàlisi, i no
+Les demos de les teves pròpies partides, les demos que hagis descarregat a mà d'un lloc de torneigs,
+o les demos d'una API a la qual tinguis accés. Una demo és una gravació el contingut de la qual
+pertany al seu editor i als seus organitzadors: fes servir el que en surti per a la teva pròpia anàlisi, i no
 redistribuïu les demos ni les dades que se'n deriven. Els llocs que ofereixen demos sovint prohibeixen
 la descàrrega automàtica a les seves condicions, per això l'eina llegeix les demos del disc i no n'obté cap.
 
@@ -114,7 +114,7 @@ repositori, les seves pròpies versions i la seva llicència:
 | [GameCapture](https://github.com/Holdi601/3DHeat-GameCapture) | telemetria de voltes de jocs de carreres; nivells reconstruïts a partir de vídeo de joc | [lloc](https://holdi601.github.io/3DHeat-GameCapture/) |
 | [Unreal Exporter](https://github.com/Holdi601/3DHeat-UnrealExporter) | un connector per a l'editor d'Unreal que exporta un nivell com un model 3D | [lloc](https://holdi601.github.io/3DHeat-UnrealExporter/) |
 | [CS2](https://github.com/Holdi601/3DHeat-CS2) | demos de Counter-Strike 2 en taules i documents de partida; mapes en models 3D | [lloc](https://holdi601.github.io/3DHeat-CS2/) |
-| [Watcher](https://github.com/Holdi601/3DHeat-Watcher) | registra el que publiquen els jocs sobre la vostra partida, en segon pla | [lloc](https://holdi601.github.io/3DHeat-Watcher/) |
+| [Watcher](https://github.com/Holdi601/3DHeat-Watcher) | registra el que publiquen els jocs sobre la teva partida, en segon pla | [lloc](https://holdi601.github.io/3DHeat-Watcher/) |
 | [Ext-WarThunder](https://github.com/Holdi601/3DHeat-Ext-WarThunder) | repeticions de War Thunder en taules i documents de partida | [lloc](https://holdi601.github.io/3DHeat-Ext-WarThunder/) |
 | [Ext-WoT](https://github.com/Holdi601/3DHeat-Ext-WoT) | repeticions de World of Tanks en taules i documents de partida | [lloc](https://holdi601.github.io/3DHeat-Ext-WoT/) |
 | [Ext-WoWs](https://github.com/Holdi601/3DHeat-Ext-WoWs) | repeticions de World of Warships en taules i documents de partida | [lloc](https://holdi601.github.io/3DHeat-Ext-WoWs/) |
@@ -124,6 +124,6 @@ repositori, les seves pròpies versions i la seva llicència:
 
 ## Llicència {#licence}
 
-MIT: vegi [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE),
+MIT: mira [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE),
 i [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md)
 per als paquets de tercers i el que obliguen els jocs que llegeix.

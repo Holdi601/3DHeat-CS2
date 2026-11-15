@@ -3,7 +3,7 @@ title: "Kryefaqja"
 nav_order: 1
 lang: sq
 source: index.md
-source_hash: "15444e8aae26"
+source_hash: "937e30dc7322"
 nav_exclude: true
 search_exclude: true
 permalink: /sq/
@@ -31,15 +31,15 @@ për shikuesin e telemetrisë [3DHeat](https://holdi601.github.io/3DHeat/)
 ([kodi](https://github.com/Holdi601/3DHeat)), por janë
 skedarë të zakonshëm - Parquet, JSON dhe glTF binar - që mund t'i lexojë edhe çdo gjë tjetër.
 
-Është një paketë e vogël Python, `heat3d_cs2`, e ekzekutuar nga vija e komandës. Lexon
+Është një paketë e vogël Python, `heat3d_cs2`, e ekzekutuar nga rreshti i komandave. Lexon
 demot nga disku (nuk shkarkon asnjë) me
 [demoparser2](https://github.com/LaihoE/demoparser), dhe i eksporton hartat nga loja
-e instaluar me ndërtimin e vijës së komandës të Source2Viewer
+e instaluar me ndërtimin me rresht komandash të Source2Viewer
 ([ValveResourceFormat](https://github.com/ValveResourceFormat/ValveResourceFormat)).
 
-## Fillim i shpejtë {#quick-start}
+## Fillimi i shpejtë {#quick-start}
 
-Je i ri me vijën e komandës? Lexo së pari [Para se të fillosh](before-you-start.md).
+Je i ri me rreshtin e komandave? Lexo së pari [Para se të fillosh](before-you-start.md).
 
 ```bash
 pip install -r requirements.txt
@@ -60,7 +60,7 @@ Mban këta anëtarë; `--loose` i shkruan si skedarë të veçantë në vend të
 |---|---|---|
 | `<match>.parquet` (roli `table`) | çdo lojtar të gjallë tetë herë në sekondë me gjendjen e tij (shëndet, para, verbim, dylbi, zonë, inventar, ...), dhe çdo ngjarje aty ku ndodhi (vrasje, vdekje, lëndim, e shtënë, hedhje, shpërthime granatash, verbim, vendosje bombe, çaktivizim, shpërthim, dhe një fund raundi për lojtar me çfarë i pagoi raundi), nga një rresht secila | Harta e nxehtësisë |
 | `<match>.match.json` (roli `match`, dokumenti i ndeshjes) | skuadrat, rezultati, çdo raund (fituesi, si, ekonomia, bomba, vrasjet me radhë, clutch-et, të mbijetuarit) dhe rreshti i tabelës së rezultateve të çdo lojtari | Ndeshja |
-| `<match>.events/props/strings/packets.parquet` | gjithçka tjetër që mban demo, e plotë (skedarë ndihmës) | ruhen për plotësi |
+| `<match>.events/props/strings/packets.parquet` | gjithçka tjetër që mban demo, e plotë (skedarë anësorë) | ruhen për plotësi |
 
 `map` shkruan `<map>.glb`: rrjetën e kolizionit të hartës - dysheme, mure, kuti,
 pa dekor - të ndarë në tokë dhe strukturë, në të njëjtën kornizë dhe njësi si

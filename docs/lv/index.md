@@ -3,7 +3,7 @@ title: Sākums
 nav_order: 1
 lang: lv
 source: index.md
-source_hash: "15444e8aae26"
+source_hash: "937e30dc7322"
 nav_exclude: true
 search_exclude: true
 permalink: /lv/
@@ -33,7 +33,7 @@ Source2Viewer komandrindas versiju ([ValveResourceFormat](https://github.com/Val
 
 ## Ātrais sākums {#quick-start}
 
-Nekad nav strādāts ar komandrindu? Vispirms izlasi [Pirms sākat](before-you-start.md).
+Nekad neesat strādājis ar komandrindu? Vispirms izlasiet [Pirms sākat](before-you-start.md).
 
 ```bash
 pip install -r requirements.txt
@@ -42,7 +42,7 @@ python -m heat3d_cs2 map <map> -o out/<map>/<map>.glb       # karte no uzstādī
 python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # mača rezultātu tabula kā teksts
 ```
 
-Tev vajadzētu redzēt `1 match(es), 1 at a time ...` un tad pa vienai rindai katram mačam
+Jums vajadzētu redzēt `1 match(es), 1 at a time ...` un tad pa vienai rindai katram mačam
 (skat. [Komandas](../commands.md#what-is-printed)).
 
 `demos` katram mačam raksta vienu failu mapē, kas nosaukta pēc kartes:
@@ -63,7 +63,7 @@ un struktūrā, tajā pašā sistēmā un vienībās kā tabulas, tāpēc tas gu
 
 | Lapa | Ko tā aptver |
 |---|---|
-| [Pirms sākat](before-you-start.md) | Python, terminālis, vietturi, kā izskatās veiksme un biežākās kļūdas |
+| [Pirms sākat](before-you-start.md) | Python, termināls, vietturi, kā izskatās veiksme un biežākās kļūdas |
 | [Uzstādīšana](../installing.md) | Python, pakotnes, Source2Viewer CLI, kur jābūt CS2 |
 | [Komandas](../commands.md) | `demos`, `map`, `scoreboard`: katra iespēja, kas tiek izdrukāts, izejas kodi |
 | [Demo lasīšana](../reading-demos.md) | kas tiek nolasīts no demo faila: izlasītie tiki, spēlētāju īpašības, spēles noteikumi, notikumi |
@@ -90,8 +90,8 @@ rezultāts seko raundu uzvarētājiem, katras puses nogalināšanas ir otras pus
 
 ## Ko tam norādīt {#what-to-point-it-at}
 
-Savu maču demo, demo, ko pats lejupielādēji no turnīru vietnes, vai demo no API, kam tev ir piekļuve. Demo ir ieraksts, kura saturs
-pieder tā izdevējam un organizatoriem: izmanto to, kas iznāk, savai analīzei, un nepārdali demo vai no tiem atvasinātus datus. Vietnes, kas
+Savu maču demo, demo, ko pats lejupielādējāt no turnīru vietnes, vai demo no API, kam jums ir piekļuve. Demo ir ieraksts, kura saturs
+pieder tā izdevējam un organizatoriem: izmanto to, kas iznāk, savai analīzei, un nepārdaliet demo vai no tiem atvasinātus datus. Vietnes, kas
 piedāvā demo, bieži aizliedz automātisku lejupielādi savos noteikumos, tāpēc rīks nolasa demo no diska un nelejupielādē nevienu.
 
 ## Daļa no 3DHeat {#part-of-3dheat}
@@ -105,7 +105,7 @@ piedāvā demo, bieži aizliedz automātisku lejupielādi savos noteikumos, tāp
 | [GameCapture](https://github.com/Holdi601/3DHeat-GameCapture) | braucienu telemetrija no sacensību spēlēm; līmeņi, atjaunoti no spēles video | [vietne](https://holdi601.github.io/3DHeat-GameCapture/) |
 | [Unreal Exporter](https://github.com/Holdi601/3DHeat-UnrealExporter) | Unreal Editor spraudnis, kas eksportē līmeni kā vienu 3D modeli | [vietne](https://holdi601.github.io/3DHeat-UnrealExporter/) |
 | [CS2](https://github.com/Holdi601/3DHeat-CS2) | Counter-Strike 2 demo tabulās un mača dokumentos; kartes 3D modeļos | [vietne](https://holdi601.github.io/3DHeat-CS2/) |
-| [Watcher](https://github.com/Holdi601/3DHeat-Watcher) | ieraksta to, ko spēles publicē par tavu spēli, fona režīmā | [vietne](https://holdi601.github.io/3DHeat-Watcher/) |
+| [Watcher](https://github.com/Holdi601/3DHeat-Watcher) | ieraksta to, ko spēles publicē par jūsu spēli, fona režīmā | [vietne](https://holdi601.github.io/3DHeat-Watcher/) |
 | [Ext-WarThunder](https://github.com/Holdi601/3DHeat-Ext-WarThunder) | War Thunder ieraksti tabulās un mača dokumentos | [vietne](https://holdi601.github.io/3DHeat-Ext-WarThunder/) |
 | [Ext-WoT](https://github.com/Holdi601/3DHeat-Ext-WoT) | World of Tanks ieraksti tabulās un mača dokumentos | [vietne](https://holdi601.github.io/3DHeat-Ext-WoT/) |
 | [Ext-WoWs](https://github.com/Holdi601/3DHeat-Ext-WoWs) | World of Warships ieraksti tabulās un mača dokumentos | [vietne](https://holdi601.github.io/3DHeat-Ext-WoWs/) |

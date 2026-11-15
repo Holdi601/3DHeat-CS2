@@ -1,5 +1,5 @@
 ---
-title: Før du begynner
+title: Før du starter
 nav_order: 2
 lang: no
 source: before-you-start.md
@@ -7,7 +7,7 @@ source_hash: "41a5fe42a33a"
 nav_exclude: true
 search_exclude: true
 ---
-# Før du begynner {#before-you-start}
+# Før du starter {#before-you-start}
 
 Ny til kommandolinjen? Denne siden tar deg fra null til en fungerende
 3DHeat CS2 på omtrent ti minutter. Du skriver kommandoer inn i en *terminal*, et vindu

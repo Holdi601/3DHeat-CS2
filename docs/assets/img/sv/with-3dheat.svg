@@ -12,10 +12,10 @@
 <text x="424.0" y="162.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">3DHeat-visaren</text>
 <text x="424.0" y="181.0" text-anchor="middle" font-size="14" fill="#3c4043">öppna, släpp eller läs in en mapp</text>
 <rect x="588" y="60.0" width="236" height="60" rx="8" fill="#e6f4ea" stroke="#2e8b57" stroke-width="1.5"/>
-<text x="706.0" y="86.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">Värmekarta-fliken</text>
+<text x="706.0" y="86.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">Värmekarta-flik</text>
 <text x="706.0" y="105.0" text-anchor="middle" font-size="14" fill="#3c4043">positioner, dödanden, granater</text>
 <rect x="588" y="136.0" width="236" height="60" rx="8" fill="#e6f4ea" stroke="#2e8b57" stroke-width="1.5"/>
-<text x="706.0" y="162.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">nivåpanelen</text>
+<text x="706.0" y="162.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">Bakgrund / nivå</text>
 <text x="706.0" y="181.0" text-anchor="middle" font-size="14" fill="#3c4043">kartan under värmen</text>
 <rect x="588" y="212.0" width="236" height="60" rx="8" fill="#e6f4ea" stroke="#2e8b57" stroke-width="1.5"/>
 <text x="706.0" y="238.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">Match-fliken</text>

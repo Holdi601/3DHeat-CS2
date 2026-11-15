@@ -3,7 +3,7 @@ title: "Etusivu"
 nav_order: 1
 lang: fi
 source: index.md
-source_hash: "15444e8aae26"
+source_hash: "937e30dc7322"
 nav_exclude: true
 search_exclude: true
 permalink: /fi/
@@ -26,7 +26,7 @@ kostettiin).
 ![demot: demotiedostoista yhteen tiedostoon ottelua kohden](../assets/img/fi/pipeline.svg)
 
 Tarkemmin: 3DHeat CS2 muuttaa **Counter-Strike 2 -demot** lämpökarttataulukoksi ja ottelutiedostoksi
-jokaista ottelua kohden, ja **CS2-kartan** tason geometriaksi. Tulokset on tehty
+jokaista ottelua kohden, ja **CS2-kartan** kentän geometriaksi. Tulokset on tehty
 [3DHeat](https://holdi601.github.io/3DHeat/)-telemetriakatselimelle
 ([lähdekoodi](https://github.com/Holdi601/3DHeat)), mutta ne ovat tavallisia tiedostoja –
 Parquet, JSON ja binäärinen glTF – joita mikä tahansa muu ohjelma voi lukea.
@@ -63,7 +63,7 @@ Se sisältää nämä osat; `--loose` kirjoittaa ne erillisinä tiedostoina:
 
 `map` kirjoittaa `<map>.glb`: kartan törmäysmeshin – lattiat, seinät, laatikot, ilman koristeita –
 jaettuna maahan ja rakenteeseen, samassa koordinaatistossa ja yksiköissä kuin taulukot, joten se
-osuu täsmälleen lämpökartan alle (Taso-paneeli).
+osuu täsmälleen lämpökartan alle (Tausta / kenttä -paneeli).
 
 ## Dokumentaation kartta {#map-of-this-documentation}
 
@@ -72,7 +72,7 @@ osuu täsmälleen lämpökartan alle (Taso-paneeli).
 | [Ennen aloittamista](before-you-start.md) | Python, pääte, paikanpitäjät, miltä onnistuminen ja yleiset virheet näyttävät |
 | [Asennus](../installing.md) | Python, paketit, Source2Viewerin CLI, missä CS2:n on oltava |
 | [Komennot](../commands.md) | `demos`, `map`, `scoreboard`: jokainen asetus, mitä tulostuu, poistumiskoodit |
-| [Demon lukeminen](../reading-demos.md) | mitä demotiedostosta luetaan: näytteistetyt tickit, pelaajan ominaisuudet, peli­säännöt, tapahtumat |
+| [Demon lukeminen](../reading-demos.md) | mitä demotiedostosta luetaan: näytteistetyt tickit, pelaajan ominaisuudet, pelisäännöt, tapahtumat |
 | [Ottelun rakentaminen](../building-matches.md) | osat ja ketjut, ottelukello, kierrokset, joukkueet ja puolet, rivit, tapot, kostot, avaukset, vahinko, välähdykset, talous |
 | [Tilastot](../statistics.md) | tulostaulu: K/D/A, ADR, KAST, HS%, avaukset, kostot, monitapot, clutchit, apuvälineet, välähdykset |
 | [Lämpökarttataulukko](../output-table.md) | Parquet-tiedosto: jokainen sarake, sen tyyppi, mitkä tapahtumat sen täyttävät, `heat3d`-alatunnisteen vihjeet, akselit |
@@ -88,7 +88,7 @@ osuu täsmälleen lämpökartan alle (Taso-paneeli).
 
 ## Mitä sitä vastaan on tarkistettu {#what-it-is-checked-against}
 
-Demot, joita löytyy maailmalta, eivät ole yksi siisti tiedosto per ottelu. Muuntaja käsittelee ottelun,
+Demot, joita löytyy maailmalta, eivät ole yksi siisti tiedosto per ottelu. Muunnin käsittelee ottelun,
 joka on jaettu tiedostoihin missä tahansa järjestyksessä, palvelimen, joka käynnistettiin uudelleen
 kesken ottelun, kaksi eri ottelua samalla nimellä, kierrokset, jotka palautettiin varmuuskopiosta,
 tallenteen, joka alkaa myöhään tai loppuu aikaisin, tauot ja valmentajat joukkueen puolella –
@@ -112,9 +112,9 @@ repositorionsa, julkaisunsa ja lisenssinsä:
 | Työkalu | Mitä se tekee | Dokumentaatio |
 |---|---|---|
 | [3DHeat](https://github.com/Holdi601/3DHeat) | katselin: lämpökartat, kilpa-analyysi ja ottelun tarkastelu 3D:nä | [sivusto](https://holdi601.github.io/3DHeat/) |
-| [GameFiles](https://github.com/Holdi601/3DHeat-GameFiles) | radat ja tasot pelien toimittamista tiedostoista 3D-malleina | [sivusto](https://holdi601.github.io/3DHeat-GameFiles/) |
-| [GameCapture](https://github.com/Holdi601/3DHeat-GameCapture) | kierrosten telemetria kilpailupeleistä; tasot rakennettu pelivideosta | [sivusto](https://holdi601.github.io/3DHeat-GameCapture/) |
-| [Unreal Exporter](https://github.com/Holdi601/3DHeat-UnrealExporter) | Unreal Editor -liitännäinen, joka vie tason yhtenä 3D-mallina | [sivusto](https://holdi601.github.io/3DHeat-UnrealExporter/) |
+| [GameFiles](https://github.com/Holdi601/3DHeat-GameFiles) | radat ja kentät pelien toimittamista tiedostoista 3D-malleina | [sivusto](https://holdi601.github.io/3DHeat-GameFiles/) |
+| [GameCapture](https://github.com/Holdi601/3DHeat-GameCapture) | kierrosten telemetria kilpailupeleistä; kentät rakennettu pelivideosta | [sivusto](https://holdi601.github.io/3DHeat-GameCapture/) |
+| [Unreal Exporter](https://github.com/Holdi601/3DHeat-UnrealExporter) | Unreal Editor -liitännäinen, joka vie kentän yhtenä 3D-mallina | [sivusto](https://holdi601.github.io/3DHeat-UnrealExporter/) |
 | [CS2](https://github.com/Holdi601/3DHeat-CS2) | Counter-Strike 2 -demot taulukoiksi ja ottelutiedostoiksi; kartat 3D-malleiksi | [sivusto](https://holdi601.github.io/3DHeat-CS2/) |
 | [Watcher](https://github.com/Holdi601/3DHeat-Watcher) | tallentaa pelaamisesi taustalla pelien julkaisemasta datasta | [sivusto](https://holdi601.github.io/3DHeat-Watcher/) |
 | [Ext-WarThunder](https://github.com/Holdi601/3DHeat-Ext-WarThunder) | War Thunder -tallenteet taulukoiksi ja ottelutiedostoiksi | [sivusto](https://holdi601.github.io/3DHeat-Ext-WarThunder/) |

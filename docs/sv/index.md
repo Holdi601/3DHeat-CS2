@@ -3,7 +3,7 @@ title: Startsida
 nav_order: 1
 lang: sv
 source: index.md
-source_hash: "15444e8aae26"
+source_hash: "937e30dc7322"
 nav_exclude: true
 search_exclude: true
 permalink: /sv/
@@ -60,7 +60,7 @@ Den innehåller dessa delar; `--loose` skriver dem som separata filer i stället
 | `<match>.match.json` (roll `match`, matchdokumentet) | lag, poäng, varje runda (vinnare, hur, ekonomi, plantering, dödanden i ordning, clutches, överlevare) och varje spelares rad i resultattavlan | fliken Match |
 | `<match>.events/props/strings/packets.parquet` | allt annat demon innehåller, helt (sidofiler) | sparas för fullständighetens skull |
 
-`map` skriver `<map>.glb`: kartans kollisionsmesh - golv, väggar, lådor, utan dekoration - uppdelad i mark och konstruktion, i samma ram och enheter som tabellerna, så att den ligger exakt under värmekartan (nivåpanelen).
+`map` skriver `<map>.glb`: kartans kollisionsmesh - golv, väggar, lådor, utan dekoration - uppdelad i mark och konstruktion, i samma ram och enheter som tabellerna, så att den ligger exakt under värmekartan (panelen Bakgrund / nivå).
 
 ## Dokumentationens karta {#map-of-this-documentation}
 
@@ -102,7 +102,7 @@ förråd, sina egna utgåvor och sin egen licens:
 
 | Verktyg | Vad det gör | Dokumentation |
 |---|---|---|
-| [3DHeat](https://github.com/Holdi601/3DHeat) | visaren: värmekartor, racinganalys och matchgenomgång i 3D | [webbplats](https://holdi601.github.io/3DHeat/) |
+| [3DHeat](https://github.com/Holdi601/3DHeat) | visaren: värmekartor, Racinganalys och matchgenomgång i 3D | [webbplats](https://holdi601.github.io/3DHeat/) |
 | [GameFiles](https://github.com/Holdi601/3DHeat-GameFiles) | banor och nivåer ur de filer spel levererar, som 3D-modeller | [webbplats](https://holdi601.github.io/3DHeat-GameFiles/) |
 | [GameCapture](https://github.com/Holdi601/3DHeat-GameCapture) | varvtelemetri från racingspel; nivåer återskapade från spelvideo | [webbplats](https://holdi601.github.io/3DHeat-GameCapture/) |
 | [Unreal Exporter](https://github.com/Holdi601/3DHeat-UnrealExporter) | ett Unreal Editor-tillägg som exporterar en nivå som en 3D-modell | [webbplats](https://holdi601.github.io/3DHeat-UnrealExporter/) |

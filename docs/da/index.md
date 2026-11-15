@@ -3,7 +3,7 @@ title: Start
 nav_order: 1
 lang: da
 source: index.md
-source_hash: "15444e8aae26"
+source_hash: "937e30dc7322"
 nav_exclude: true
 search_exclude: true
 permalink: /da/
@@ -11,7 +11,7 @@ permalink: /da/
 # 3DHeat CS2 {#dheat-cs2}
 
 **Hvad er det?** Counter-Strike 2 kan gemme en optagelse af en kamp, kaldet en
-*demo*. Dette værktøj laver en demo om til filer, som 3DHeat-fremviseren kan vise i 3D:
+*demo*. Dette værktøj laver en demo om til filer, som 3DHeat-vieweren kan vise i 3D:
 hvor alle stod, døde, kastede og plantede, runde for runde. Det kan også
 lave et CS2-kort om til en 3D-model, at vise dem på.
 
@@ -27,7 +27,7 @@ ud (`de_x` er et opdigtet kortnavn).
 
 Mere detaljeret: 3DHeat CS2 laver **Counter-Strike 2-demoer** om til en varmekortstabel og et kampdokument
 pr. kamp, og et **CS2-kort** til banegeometri. Resultaterne er lavet
-til [3DHeat](https://holdi601.github.io/3DHeat/)-telemetrifremviseren
+til [3DHeat](https://holdi601.github.io/3DHeat/)-telemetrivieweren
 ([kilde](https://github.com/Holdi601/3DHeat)), men de er
 almindelige filer - Parquet, JSON og binær glTF - som alt andet også kan
 læse.
@@ -53,15 +53,15 @@ Du bør se `1 match(es), 1 at a time ...` og derefter en linje pr. kamp
 (se [Kommandoer](../commands.md#what-is-printed)).
 
 `demos` skriver pr. kamp én fil i en mappe, der er opkaldt efter kortet:
-`out/<map>/<match>.3dheat`, en [`.3dheat`-container](../output-container.md) - fremviserens
+`out/<map>/<match>.3dheat`, en [`.3dheat`-container](../output-container.md) - viewerens
 format med én fil pr. kamp ([specifikation](https://holdi601.github.io/3DHeat/container.html)).
 Den holder disse dele; `--loose` skriver dem som separate filer i stedet:
 
-| Del | Hvad den holder | Indlæst i fremviserens |
+| Del | Hvad den holder | Indlæst i viewerens |
 |---|---|---|
 | `<match>.parquet` (rolle `table`) | hver levende spiller otte gange i sekundet med deres tilstand (helbred, penge, blænding, scope, zone, inventar, ...), og hver hændelse, hvor den skete (drab, død, skade, skud, kast, granateksplosioner, blænding, plantning, afmontering, eksplosion, og en rundeafslutning pr. spiller med det, runden gav dem), én række hver | Heatmap-fanen |
 | `<match>.match.json` (rolle `match`, kampdokumentet) | hold, score, hver runde (vinder, hvordan, økonomi, plantning, drab i rækkefølge, clutches, overlevende) og hver spillers scoreboardlinje | Kamp-fanen |
-| `<match>.events/props/strings/packets.parquet` | alt andet, demoen holder, helt (sidefiler) | gemt for fuldstændighedens skyld |
+| `<match>.events/props/strings/packets.parquet` | alt andet, demoen holder, helt (sidecars) | gemt for fuldstændighedens skyld |
 
 `map` skriver `<map>.glb`: kortets kollisionsmesh - gulve, vægge, kasser,
 uden dekoration - delt i jord og konstruktion, i samme ramme og
@@ -81,7 +81,7 @@ enheder som tabellerne, så den ligger præcist under varmekortet (Baggrund / ba
 | [Kampdokumentet](../output-match-json.md) | `.match.json`-dokumentet, felt for felt |
 | [Én fil pr. kamp](../output-container.md) | `.3dheat`-containeren, `demos` skriver som standard, `--loose` |
 | [Kortexport](../map-export.md) | hvordan et korts kollisionsmesh eksporteres, rammen, knudenavngivning, enheder |
-| [Brug det med 3DHeat](../using-with-3dheat.md) | indlæsning af tabeller, kampdokumenter og kort i fremviserens Heatmap- og Kamp-faner |
+| [Brug det med 3DHeat](../using-with-3dheat.md) | indlæsning af tabeller, kampdokumenter og kort i viewerens Heatmap- og Kamp-faner |
 | [Begrænsninger](../limits.md) | hvad der antages, hvad der ikke håndteres, hvad der ikke er kontrolleret |
 | [Opdateringer](../updates.md) | udgivelsestjekket ved opstart og `python -m heat3d_update` |
 | [Udvikling](../development.md) | kodens layout, tests, fixturen med syntetiske demoer |
@@ -109,12 +109,12 @@ læser værktøjet demoer fra disken og henter ingen.
 
 ## Del af 3DHeat {#part-of-3dheat}
 
-3DHeat CS2 er et af de gratis værktøjer omkring 3DHeat-fremviseren, hver med sit eget
+3DHeat CS2 er et af de gratis værktøjer omkring 3DHeat-vieweren, hver med sit eget
 repository med sine egne udgivelser og licens:
 
 | Værktøj | Hvad det gør | Dokumentation |
 |---|---|---|
-| [3DHeat](https://github.com/Holdi601/3DHeat) | fremviseren: varmekort, løbsanalyse og kampgennemgang i 3D | [site](https://holdi601.github.io/3DHeat/) |
+| [3DHeat](https://github.com/Holdi601/3DHeat) | vieweren: varmekort, løbsanalyse og kampgennemgang i 3D | [site](https://holdi601.github.io/3DHeat/) |
 | [GameFiles](https://github.com/Holdi601/3DHeat-GameFiles) | baner og kort ud af de filer, spil leverer, som 3D-modeller | [site](https://holdi601.github.io/3DHeat-GameFiles/) |
 | [GameCapture](https://github.com/Holdi601/3DHeat-GameCapture) | omgangstelemetri fra løbsspil; baner genskabt ud fra spilvideo | [site](https://holdi601.github.io/3DHeat-GameCapture/) |
 | [Unreal Exporter](https://github.com/Holdi601/3DHeat-UnrealExporter) | et Unreal Editor-plugin, der eksporterer en bane som én 3D-model | [site](https://holdi601.github.io/3DHeat-UnrealExporter/) |

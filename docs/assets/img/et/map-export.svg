@@ -12,7 +12,7 @@
 <rect x="588" y="60.0" width="236" height="79" rx="8" fill="#e8f0fe" stroke="#3b6fd8" stroke-width="1.5"/>
 <text x="706.0" y="86.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">kokkupõrkevõrk</text>
 <text x="706.0" y="105.0" text-anchor="middle" font-size="14" fill="#3c4043">lõikeharjad ja taevas</text>
-<text x="706.0" y="124.0" text-anchor="middle" font-size="14" fill="#3c4043">jäetakse välja</text>
+<text x="706.0" y="124.0" text-anchor="middle" font-size="14" fill="#3c4043">välja jäetud</text>
 <line x1="260" y1="99.5" x2="304" y2="99.5" stroke="#5f6368" stroke-width="1.5" marker-end="url(#a)"/>
 <line x1="542" y1="99.5" x2="586" y2="99.5" stroke="#5f6368" stroke-width="1.5" marker-end="url(#a)"/>
 <path d="M706.0,139.0 V162.0 H142.0 V183.0" fill="none" stroke="#5f6368" stroke-width="1.5" marker-end="url(#a)"/>

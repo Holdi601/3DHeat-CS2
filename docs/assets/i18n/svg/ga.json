@@ -1,7 +1,7 @@
 {
  "(--loose: keep the files)": "(--loose: coinnigh na comhaid)",
  "(you install it)": "(suiteálann tú é)",
- "3DHeat viewer": "Lucht féachana 3DHeat",
+ "3DHeat viewer": "Amharcán 3DHeat",
  "<map>.glb": "<map>.glb",
  "<map>.vpk": "<map>.vpk",
  "<map>/<match>.3dheat": "<map>/<match>.3dheat",
@@ -57,7 +57,7 @@
  "rounds, scoreboard, selfCheck": "babhtaí, clár scóir, selfCheck",
  "rounds, teams, kills, trades": "babhtaí, foirne, maruithe, malartuithe",
  "same units as the table": "na haonaid chéanna leis an tábla",
- "sidecars": "taobhchomhaid",
+ "sidecars": "comhaid chliatháin",
  "step": "céim",
  "structure": "struchtúr",
  "suffix -p<n> / _p<n> dropped": "iarmhír -p<n> / _p<n> caillte",

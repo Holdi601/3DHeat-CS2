@@ -3,7 +3,7 @@ title: "Kezdőlap"
 nav_order: 1
 lang: hu
 source: index.md
-source_hash: "15444e8aae26"
+source_hash: "937e30dc7322"
 nav_exclude: true
 search_exclude: true
 permalink: /hu/
@@ -36,7 +36,7 @@ exportálja a Source2Viewer parancssori változatával
 
 ## Gyors kezdés {#quick-start}
 
-Még nem használt parancssort? Előbb olvasd el a [Mielőtt elkezdi](before-you-start.md) oldalt.
+Még nem használt parancssort? Előbb olvasd el a [Mielőtt elkezded](before-you-start.md) oldalt.
 
 ```bash
 pip install -r requirements.txt
@@ -56,7 +56,7 @@ kapcsoló ezeket külön fájlokként írja:
 | Tag | Mit tartalmaz | Hol töltődik be a megjelenítőben |
 |---|---|---|
 | `<match>.parquet` (szerep `table`) | minden élő játékos másodpercenként nyolcszor az állapotával (életerő, pénz, vakítás, célzás, zóna, felszerelés...), és minden esemény, ahol történt (ölés, halál, sebzés, lövés, dobás, gránát-robbanások, vakítás, telepítés, hatástalanítás, robbanás, és fordulóvég játékosonként azzal, mennyit fizetett neki a forduló), soronként egy | Hőtérkép fül |
-| `<match>.match.json` (szerep `match`, a meccs dokumentuma) | csapatok, eredmény, minden forduló (győztes, hogyan, gazdaság, telepítés, ölések sorrendben, clutch-ek, túlélők), és minden játékos eredménytáblasora | Meccs fül |
+| `<match>.match.json` (szerep `match`, a meccsdokumentuma) | csapatok, eredmény, minden forduló (győztes, hogyan, gazdaság, telepítés, ölések sorrendben, clutch-ek, túlélők), és minden játékos eredménytáblasora | Meccs fül |
 | `<match>.events/props/strings/packets.parquet` | minden más, amit a demó tartalmaz, egészben (kísérőfájlok) | a teljesség kedvéért megtartva |
 
 A `map` a `<map>.glb` fájlt írja: a térkép ütközési hálóját – padlókat, falakat, dobozokat, díszítés nélkül –,
@@ -67,7 +67,7 @@ hőtérkép alatt fekszik (Háttér / pálya panel).
 
 | Oldal | Mit tartalmaz |
 |---|---|
-| [Mielőtt elkezdi](before-you-start.md) | Python, egy terminál, helyőrzők, mit jelent a siker és a gyakori hibák |
+| [Mielőtt elkezded](before-you-start.md) | Python, egy terminál, helyőrzők, mit jelent a siker és a gyakori hibák |
 | [Telepítés](../installing.md) | Python, a csomagok, a Source2Viewer CLI, hol kell lennie a CS2-nek |
 | [Parancsok](../commands.md) | `demos`, `map`, `scoreboard`: minden kapcsoló, mit ír ki, kilépési kódok |
 | [Demó olvasása](../reading-demos.md) | mit olvasunk egy demófájlból: mintavett tickek, játékostulajdonságok, játékszabályok, események |
@@ -86,7 +86,7 @@ hőtérkép alatt fekszik (Háttér / pálya panel).
 
 ## Mihez ellenőrizték {#what-it-is-checked-against}
 
-A vadonból származó demók nem egy-fájl-egy-meccs formában érkeznek. Az átalakító kezeli azt, ha egy meccs több
+A vadonból származó demók nem egy-fájl-egy-meccs formában érkeznek. A konverter kezeli azt, ha egy meccs több
 fájlra bomlik, bármilyen sorrendben; ha a szerver a meccs közepén újraindult; ha két különböző meccs egy néven van
 tárolva; ha a fordulók biztonsági mentésből álltak helyre; ha a felvétel későn kezdődik vagy korán végződik;
 szünetekre; és edzőkre egy csapat oldalán – lásd: [Meccs felépítése](../building-matches.md). Egy nagy gyűjtemény
@@ -110,7 +110,7 @@ licence van:
 | [3DHeat](https://github.com/Holdi601/3DHeat) | a megjelenítő: hőtérképek, versenyelemzés és meccsáttekintés 3D-ben | [oldal](https://holdi601.github.io/3DHeat/) |
 | [GameFiles](https://github.com/Holdi601/3DHeat-GameFiles) | pályák és pályaszintek a játékok fájljaiból, 3D-modellként | [oldal](https://holdi601.github.io/3DHeat-GameFiles/) |
 | [GameCapture](https://github.com/Holdi601/3DHeat-GameCapture) | körtelemetria versenyjátékokból; pályák rekonstruálva játékvideóból | [oldal](https://holdi601.github.io/3DHeat-GameCapture/) |
-| [Unreal Exporter](https://github.com/Holdi601/3DHeat-UnrealExporter) | Unreal Editor bővítmény, amely egy pályát egy 3D-modellként exportál | [oldal](https://holdi601.github.io/3DHeat-UnrealExporter/) |
+| [Unreal Exporter](https://github.com/Holdi601/3DHeat-UnrealExporter) | Unreal Editor bővítmény, amely egy pályát 3D-modellként exportál | [oldal](https://holdi601.github.io/3DHeat-UnrealExporter/) |
 | [CS2](https://github.com/Holdi601/3DHeat-CS2) | Counter-Strike 2 demók táblázatokba és meccsdokumentumokba; térképek 3D-modellekbe | [oldal](https://holdi601.github.io/3DHeat-CS2/) |
 | [Watcher](https://github.com/Holdi601/3DHeat-Watcher) | a játékmenetéről rögzíti, amit a játékok közzétesznek, a háttérben | [oldal](https://holdi601.github.io/3DHeat-Watcher/) |
 | [Ext-WarThunder](https://github.com/Holdi601/3DHeat-Ext-WarThunder) | War Thunder visszajátszások táblázatokba és meccsdokumentumokba | [oldal](https://holdi601.github.io/3DHeat-Ext-WarThunder/) |

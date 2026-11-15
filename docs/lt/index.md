@@ -3,7 +3,7 @@ title: "Pradžia"
 nav_order: 1
 lang: lt
 source: index.md
-source_hash: "15444e8aae26"
+source_hash: "937e30dc7322"
 nav_exclude: true
 search_exclude: true
 permalink: /lt/
@@ -11,7 +11,7 @@ permalink: /lt/
 # 3DHeat CS2 {#dheat-cs2}
 
 **Kas tai?** Counter-Strike 2 gali įrašyti rungtynių įrašą, vadinamą *demo*. Šis įrankis paverčia demo failais, kuriuos
-3DHeat žiūrintojas gali rodyti 3D: kur kiekvienas stovėjo, žuvo, metė ir sprogdino, raundas po raundo. Jis taip pat gali
+3DHeat žiūryklė gali rodyti 3D: kur kiekvienas stovėjo, žuvo, metė ir sprogdino, raundas po raundo. Jis taip pat gali
 paversti CS2 žemėlapį 3D modeliu, ant kurio tai parodyti.
 
 **Kam tai naudoti?** Peržiūrėti savo rungtynes, sudėti kelias to paties žemėlapio rungtynes viena ant kitos kaip vieną šilumos žemėlapį
@@ -23,7 +23,7 @@ išgyveno ar buvo keršytas).
 ![demo: nuo demo failų iki vieno failo rungtynėms](../assets/img/lt/pipeline.svg)
 
 Išsamiau: 3DHeat CS2 paverčia **Counter-Strike 2 demo** į šilumos žemėlapio lentelę ir rungtynių dokumentą kiekvienoms rungtynėms, o **CS2 žemėlapį** – į lygio geometriją.
-Išvestys skirtos [3DHeat](https://holdi601.github.io/3DHeat/) telemetrijos žiūrintojui
+Išvestys skirtos [3DHeat](https://holdi601.github.io/3DHeat/) telemetrijos žiūryklei
 ([šaltinis](https://github.com/Holdi601/3DHeat)), bet jos yra įprasti failai – Parquet, JSON ir glTF dvejetainis –
 kuriuos gali skaityti ir kiti įrankiai.
 
@@ -46,14 +46,14 @@ Turėtumėte matyti `1 match(es), 1 at a time ...`, o tada po eilutę kiekvienom
 (žr. [Komandos](../commands.md#what-is-printed)).
 
 `demos` kiekvienoms rungtynėms įrašo po vieną failą į aplanką, pavadintą pagal žemėlapį:
-`out/<map>/<match>.3dheat`, [`.3dheat` konteineris](../output-container.md) – žiūrintojo formatas vienas failas rungtynėms
+`out/<map>/<match>.3dheat`, [`.3dheat` konteineris](../output-container.md) – žiūryklės formatas vienas failas rungtynėms
 ([specifikacija](https://holdi601.github.io/3DHeat/container.html)). Jame yra šie elementai; `--loose` parašo juos kaip atskirus failus:
 
-| Elementas | Ką jis turi | Įkeliamas žiūrintojo |
+| Elementas | Ką jis turi | Įkeliamas žiūryklės |
 |---|---|---|
 | `<match>.parquet` (vaidmuo `table`) | kiekvienas gyvas žaidėjas aštuonis kartus per sekundę su savo būsena (sveikata, pinigai, akinimas, taikymas, zona, inventorius ir t. t.) ir kiekvienas įvykis, kur jis įvyko (žudynė, mirtis, sužeidimas, šūvis, metimas, granatų sprogimai, akinimas, sprogdinimas, nuėmimas, sprogimas, ir raundo pabaiga kiekvienam žaidėjui su tuo, ką raundas jam atnešė), po vieną eilutę | Šilumos žemėlapio skirtukas |
 | `<match>.match.json` (vaidmuo `match`, rungtynių dokumentas) | komandos, rezultatas, kiekvienas raundas (laimėtojas, kaip, ekonomika, sprogdinimas, žudynės eilės tvarka, kliučiai, išgyvenusieji) ir kiekvieno žaidėjo rezultatų eilutė | Rungtynės skirtukas |
-| `<match>.events/props/strings/packets.parquet` | viskas kita, ką turi demo, visa (šalutiniai failai) | saugoma pilnumui |
+| `<match>.events/props/strings/packets.parquet` | viskas kita, ką turi demo, visa (papildomi failai) | saugoma pilnumui |
 
 `map` įrašo `<map>.glb`: žemėlapio susidūrimų tinklą – grindis, sienas, dėžes, be dekoracijų – padalintą į žemę ir statinius, tuo pačiu
 koordinačių rėmu ir vienetais kaip lentelės, todėl jis tiksliai guli po šilumos žemėlapiu (Lygio skydelis).
@@ -72,7 +72,7 @@ koordinačių rėmu ir vienetais kaip lentelės, todėl jis tiksliai guli po ši
 | [Rungtynių dokumentas](../output-match-json.md) | `.match.json` dokumentas, lauką po lauko |
 | [Vienas failas rungtynėms](../output-container.md) | `.3dheat` konteineris, kurį `demos` rašo pagal numatymą; `--loose` |
 | [Žemėlapio eksportas](../map-export.md) | kaip eksportuojamas žemėlapio susidūrimų tinklas, rėmas, mazgų pavadinimai, vienetai |
-| [Naudojimas su 3DHeat](../using-with-3dheat.md) | lentelių, rungtynių dokumentų ir žemėlapių įkėlimas į žiūrintojo Šilumos žemėlapio ir Rungtynės skirtukus |
+| [Naudojimas su 3DHeat](../using-with-3dheat.md) | lentelių, rungtynių dokumentų ir žemėlapių įkėlimas į žiūryklės Šilumos žemėlapio ir Rungtynės skirtukus |
 | [Apribojimai](../limits.md) | kas daroma prielaidų, kas nėra tvarkoma, kas nepatikrinta |
 | [Atnaujinimai](../updates.md) | išleidimo patikra paleidimo metu ir `python -m heat3d_update` |
 | [Kūrimas](../development.md) | kodo struktūra, testai, sintetinio demo pavyzdys |
@@ -95,11 +95,11 @@ Svetainės, siūlančios demo, dažnai savo sąlygose draudžia automatinį atsi
 
 ## Dalis 3DHeat {#part-of-3dheat}
 
-3DHeat CS2 yra vienas iš nemokamų įrankių aplink 3DHeat žiūrintoją; kiekvienas – atskira saugykla su savais išleidimais ir licencija:
+3DHeat CS2 yra vienas iš nemokamų įrankių aplink 3DHeat žiūryklę; kiekvienas – atskira saugykla su savais išleidimais ir licencija:
 
 | Įrankis | Ką daro | Dokumentacija |
 |---|---|---|
-| [3DHeat](https://github.com/Holdi601/3DHeat) | žiūrintojas: šilumos žemėlapiai, lenktynių analizė ir rungtynių apžvalga 3D | [svetainė](https://holdi601.github.io/3DHeat/) |
+| [3DHeat](https://github.com/Holdi601/3DHeat) | žiūryklė: šilumos žemėlapiai, lenktynių analizė ir rungtynių apžvalga 3D | [svetainė](https://holdi601.github.io/3DHeat/) |
 | [GameFiles](https://github.com/Holdi601/3DHeat-GameFiles) | trasos ir lygiai iš žaidimų pristatomų failų kaip 3D modeliai | [svetainė](https://holdi601.github.io/3DHeat-GameFiles/) |
 | [GameCapture](https://github.com/Holdi601/3DHeat-GameCapture) | ratų telemetrija iš lenktynių žaidimų; lygiai, atkurti iš žaidimo vaizdo | [svetainė](https://holdi601.github.io/3DHeat-GameCapture/) |
 | [Unreal Exporter](https://github.com/Holdi601/3DHeat-UnrealExporter) | Unreal Editor papildinys, eksportuojantis lygį kaip vieną 3D modelį | [svetainė](https://holdi601.github.io/3DHeat-UnrealExporter/) |

@@ -3,7 +3,7 @@ title: "Avaleht"
 nav_order: 1
 lang: et
 source: index.md
-source_hash: "15444e8aae26"
+source_hash: "937e30dc7322"
 nav_exclude: true
 search_exclude: true
 permalink: /et/
@@ -37,7 +37,7 @@ kaardid paigaldatud mängust Source2Vieweri käsurearakenduse abil
 
 ## Kiire algus {#quick-start}
 
-Pole sul käsurealt kogemust? Loe enne [Enne alustamist](before-you-start.md).
+Pole sul käsurealt kogemust? Loe esmalt [Enne alustamist](before-you-start.md).
 
 ```bash
 pip install -r requirements.txt
@@ -62,7 +62,7 @@ See sisaldab neid liikmeid; `--loose` kirjutab need hoopis eraldi failidena:
 
 `map` kirjutab `<map>.glb`: kaardi kokkupõrkevõrgu — põrandad, seinad, kastid, ilma kaunistusteta —
 jaotatuna maapinnaks ja struktuuriks, samas raamistikus ja ühikutes nagu tabelid, nii et see asub täpselt
-kuumuskaardi all (Taseme paneel).
+kuumuskaardi all (paneel **Taust / tase**).
 
 ## Selle dokumentatsiooni kaart {#map-of-this-documentation}
 
@@ -85,9 +85,9 @@ kuumuskaardi all (Taseme paneel).
 | [Käsu viide](../cli-reference.md) | iga käsu `--help`, koodist genereeritud |
 | [Nende dokumentide hooldamine](../maintaining.md) | väljalaske kontrollnimekiri nende lehtede jaoks |
 
-## Mida see on kontrollitud {#what-it-is-checked-against}
+## Mille vastu see on kontrollitud {#what-it-is-checked-against}
 
-Demod väljaspool ei ole üks puhas fail mängu kohta. Teisendaja käsitleb mängu, mis on jaotatud mitme
+Demod väljaspool ei ole üks puhas fail mängu kohta. Konverter käsitleb mängu, mis on jaotatud mitme
 faili vahel suvalises järjekorras, serverit, mis taaskäivitati mängu keskel, kahte erinevat mängu, mis on
 salvestatud ühe nime alla, ringe, mis taastati varukoopiast, salvestust, mis algab hilja või lõpeb
 varakult, pause ja treenereid meeskonna poolel — vt [Mängu ehitamine](../building-matches.md).
@@ -114,9 +114,9 @@ sageli automatiseeritud allalaadimise oma tingimustes, mistõttu tööriist loeb
 | [Unreal Exporter](https://github.com/Holdi601/3DHeat-UnrealExporter) | Unreal Editori plugin, mis salvestab taseme ühe 3D-mudelina | [sait](https://holdi601.github.io/3DHeat-UnrealExporter/) |
 | [CS2](https://github.com/Holdi601/3DHeat-CS2) | Counter-Strike 2 demod tabeliteks ja mängu dokumentideks; kaardid 3D-mudeliteks | [sait](https://holdi601.github.io/3DHeat-CS2/) |
 | [Watcher](https://github.com/Holdi601/3DHeat-Watcher) | salvestab sinu mängu taustal sellest, mida mängud avaldavad | [sait](https://holdi601.github.io/3DHeat-Watcher/) |
-| [Ext-WarThunder](https://github.com/Holdi601/3DHeat-Ext-WarThunder) | War Thunderi replayd tabeliteks ja mängu dokumentideks | [sait](https://holdi601.github.io/3DHeat-Ext-WarThunder/) |
-| [Ext-WoT](https://github.com/Holdi601/3DHeat-Ext-WoT) | World of Tanksi replayd tabeliteks ja mängu dokumentideks | [sait](https://holdi601.github.io/3DHeat-Ext-WoT/) |
-| [Ext-WoWs](https://github.com/Holdi601/3DHeat-Ext-WoWs) | World of Warshipsi replayd tabeliteks ja mängu dokumentideks | [sait](https://holdi601.github.io/3DHeat-Ext-WoWs/) |
+| [Ext-WarThunder](https://github.com/Holdi601/3DHeat-Ext-WarThunder) | War Thunderi kordused tabeliteks ja mängu dokumentideks | [sait](https://holdi601.github.io/3DHeat-Ext-WarThunder/) |
+| [Ext-WoT](https://github.com/Holdi601/3DHeat-Ext-WoT) | World of Tanksi kordused tabeliteks ja mängu dokumentideks | [sait](https://holdi601.github.io/3DHeat-Ext-WoT/) |
+| [Ext-WoWs](https://github.com/Holdi601/3DHeat-Ext-WoWs) | World of Warshipsi kordused tabeliteks ja mängu dokumentideks | [sait](https://holdi601.github.io/3DHeat-Ext-WoWs/) |
 | [Ext-Squad](https://github.com/Holdi601/3DHeat-Ext-Squad) | Squadi serverdemod tabeliteks ja mängu dokumentideks | [sait](https://holdi601.github.io/3DHeat-Ext-Squad/) |
 | [Ext-DCS](https://github.com/Holdi601/3DHeat-Ext-DCS) | DCS Worldi kaardid 3D-mudeliteks | [sait](https://holdi601.github.io/3DHeat-Ext-DCS/) |
 | [Ext-IL2](https://github.com/Holdi601/3DHeat-Ext-IL2) | IL-2 Sturmovigi kaardid 3D-mudeliteks | [sait](https://holdi601.github.io/3DHeat-Ext-IL2/) |

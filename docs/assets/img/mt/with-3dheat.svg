@@ -18,7 +18,7 @@
 <text x="706.0" y="162.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">Pannell Sfond / livell</text>
 <text x="706.0" y="181.0" text-anchor="middle" font-size="14" fill="#3c4043">il-mappa taħt il-heat</text>
 <rect x="588" y="212.0" width="236" height="60" rx="8" fill="#e6f4ea" stroke="#2e8b57" stroke-width="1.5"/>
-<text x="706.0" y="238.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">Tab Match</text>
+<text x="706.0" y="238.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">Tab Partita</text>
 <text x="706.0" y="257.0" text-anchor="middle" font-size="14" fill="#3c4043">rawnds, ekonomija, scoreboard</text>
 <line x1="260" y1="128.0" x2="304" y2="166.0" stroke="#5f6368" stroke-width="1.5" marker-end="url(#a)"/>
 <line x1="260" y1="204.0" x2="304" y2="166.0" stroke="#5f6368" stroke-width="1.5" marker-end="url(#a)"/>
