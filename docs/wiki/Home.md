@@ -55,7 +55,7 @@ It holds these members; `--loose` writes them as separate files instead:
 
 `map` writes `<map>.glb`: the map's collision mesh - floors, walls, boxes,
 without decoration - split into ground and structure, in the same frame and
-units as the tables, so it lies exactly under the heatmap (Level panel).
+units as the tables, so it lies exactly under the heatmap (Background / Background / level panel).
 
 ## Map of this documentation
 

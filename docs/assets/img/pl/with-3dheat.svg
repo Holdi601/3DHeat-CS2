@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="848" height="326" viewBox="0 0 848 326" font-family="Segoe UI,Helvetica,Arial,sans-serif" role="img" aria-label="Using it with 3DHeat">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5f6368"/></marker></defs>
+<rect width="848" height="326" rx="10" fill="#ffffff" stroke="#dadce0"/>
+<text x="24" y="36" font-size="18" font-weight="600" fill="#202124">Użycie z 3DHeat</text>
+<rect x="24" y="98.0" width="236" height="60" rx="8" fill="#e8f0fe" stroke="#3b6fd8" stroke-width="1.5"/>
+<text x="142.0" y="124.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">heat3d_cs2 demos</text>
+<text x="142.0" y="143.0" text-anchor="middle" font-size="14" fill="#3c4043">&lt;map&gt;/&lt;match&gt;.3dheat</text>
+<rect x="24" y="174.0" width="236" height="60" rx="8" fill="#e8f0fe" stroke="#3b6fd8" stroke-width="1.5"/>
+<text x="142.0" y="200.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">heat3d_cs2 map</text>
+<text x="142.0" y="219.0" text-anchor="middle" font-size="14" fill="#3c4043">&lt;map&gt;.glb</text>
+<rect x="306" y="136.0" width="236" height="60" rx="8" fill="#f3e8fd" stroke="#8a4fd0" stroke-width="1.5"/>
+<text x="424.0" y="162.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">przeglądarka 3DHeat</text>
+<text x="424.0" y="181.0" text-anchor="middle" font-size="14" fill="#3c4043">otwórz, upuść albo wczytaj folder</text>
+<rect x="588" y="60.0" width="236" height="60" rx="8" fill="#e6f4ea" stroke="#2e8b57" stroke-width="1.5"/>
+<text x="706.0" y="86.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">Mapa cieplna</text>
+<text x="706.0" y="105.0" text-anchor="middle" font-size="14" fill="#3c4043">pozycje, zabójstwa, granaty</text>
+<rect x="588" y="136.0" width="236" height="60" rx="8" fill="#e6f4ea" stroke="#2e8b57" stroke-width="1.5"/>
+<text x="706.0" y="162.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">Panel Poziom</text>
+<text x="706.0" y="181.0" text-anchor="middle" font-size="14" fill="#3c4043">mapa pod ciepłem</text>
+<rect x="588" y="212.0" width="236" height="60" rx="8" fill="#e6f4ea" stroke="#2e8b57" stroke-width="1.5"/>
+<text x="706.0" y="238.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">Mecz</text>
+<text x="706.0" y="257.0" text-anchor="middle" font-size="14" fill="#3c4043">rundy, ekonomia, tablica wyników</text>
+<line x1="260" y1="128.0" x2="304" y2="166.0" stroke="#5f6368" stroke-width="1.5" marker-end="url(#a)"/>
+<line x1="260" y1="204.0" x2="304" y2="166.0" stroke="#5f6368" stroke-width="1.5" marker-end="url(#a)"/>
+<line x1="542" y1="166.0" x2="586" y2="90.0" stroke="#5f6368" stroke-width="1.5" marker-end="url(#a)"/>
+<line x1="542" y1="166.0" x2="586" y2="166.0" stroke="#5f6368" stroke-width="1.5" marker-end="url(#a)"/>
+<line x1="542" y1="166.0" x2="586" y2="242.0" stroke="#5f6368" stroke-width="1.5" marker-end="url(#a)"/>
+<rect x="24" y="292" width="18" height="18" rx="3" fill="#e8f0fe" stroke="#3b6fd8"/>
+<text x="48" y="306" font-size="14" fill="#3c4043">krok</text>
+<rect x="88.0" y="292" width="18" height="18" rx="3" fill="#e6f4ea" stroke="#2e8b57"/>
+<text x="112.0" y="306" font-size="14" fill="#3c4043">zapisane pliki</text>
+<rect x="219.5" y="292" width="18" height="18" rx="3" fill="#f3e8fd" stroke="#8a4fd0"/>
+<text x="243.5" y="306" font-size="14" fill="#3c4043">gdzie to widzisz</text>
+</svg>
