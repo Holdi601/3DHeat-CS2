@@ -1,7 +1,7 @@
 ---
 title: "Ein Demo lesen"
 nav_order: 5
-lang: de
+lang: "de"
 source: reading-demos.md
 source_hash: "9b448a145054"
 nav_exclude: true

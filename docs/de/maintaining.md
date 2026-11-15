@@ -1,7 +1,7 @@
 ---
 title: "Diese Seiten pflegen"
 nav_order: 17
-lang: de
+lang: "de"
 source: maintaining.md
 source_hash: "7d48fc0b1c7e"
 nav_exclude: true

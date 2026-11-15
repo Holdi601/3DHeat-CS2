@@ -1,7 +1,7 @@
 ---
 title: "Ennen aloittamista"
 nav_order: 2
-lang: fi
+lang: "fi"
 source: before-you-start.md
 source_hash: "41a5fe42a33a"
 nav_exclude: true

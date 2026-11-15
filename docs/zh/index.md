@@ -1,7 +1,7 @@
 ---
 title: 首页
 nav_order: 1
-lang: zh
+lang: "zh"
 source: index.md
 source_hash: "937e30dc7322"
 nav_exclude: true

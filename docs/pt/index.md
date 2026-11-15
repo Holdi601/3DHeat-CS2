@@ -1,7 +1,7 @@
 ---
 title: Início
 nav_order: 1
-lang: pt
+lang: "pt"
 source: index.md
 source_hash: "937e30dc7322"
 nav_exclude: true

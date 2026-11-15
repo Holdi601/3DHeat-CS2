@@ -1,7 +1,7 @@
 ---
 title: Перш ніж почати
 nav_order: 2
-lang: uk
+lang: "uk"
 source: before-you-start.md
 source_hash: "41a5fe42a33a"
 nav_exclude: true

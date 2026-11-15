@@ -1,7 +1,7 @@
 ---
 title: "Construire un match"
 nav_order: 6
-lang: fr
+lang: "fr"
 source: building-matches.md
 source_hash: "7e4974705bfb"
 nav_exclude: true

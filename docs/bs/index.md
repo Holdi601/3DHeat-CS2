@@ -1,7 +1,7 @@
 ---
 title: "Početna"
 nav_order: 1
-lang: bs
+lang: "bs"
 source: index.md
 source_hash: "937e30dc7322"
 nav_exclude: true

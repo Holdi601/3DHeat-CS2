@@ -1,7 +1,7 @@
 ---
 title: Inici
 nav_order: 1
-lang: ca
+lang: "ca"
 source: index.md
 source_hash: "937e30dc7322"
 nav_exclude: true

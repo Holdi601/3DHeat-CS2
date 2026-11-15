@@ -1,7 +1,7 @@
 ---
 title: "Áður en þú byrjar"
 nav_order: 2
-lang: is
+lang: "is"
 source: before-you-start.md
 source_hash: "41a5fe42a33a"
 nav_exclude: true

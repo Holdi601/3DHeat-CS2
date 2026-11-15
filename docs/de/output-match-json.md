@@ -1,7 +1,7 @@
 ---
 title: "Das Match-Dokument"
 nav_order: 9
-lang: de
+lang: "de"
 source: output-match-json.md
 source_hash: "9f7c7bd2cbaf"
 nav_exclude: true

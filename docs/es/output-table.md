@@ -1,7 +1,7 @@
 ---
 title: La tabla del mapa de calor
 nav_order: 8
-lang: es
+lang: "es"
 source: output-table.md
 source_hash: "b235ff13fe45"
 nav_exclude: true

@@ -1,7 +1,7 @@
 ---
 title: "Mit 3DHeat verwenden"
 nav_order: 12
-lang: de
+lang: "de"
 source: using-with-3dheat.md
 source_hash: "1db86c25e62b"
 nav_exclude: true

@@ -1,7 +1,7 @@
 ---
 title: "Installation"
 nav_order: 3
-lang: fr
+lang: "fr"
 source: installing.md
 source_hash: "c7089fd9e2a6"
 nav_exclude: true

@@ -1,7 +1,7 @@
 ---
 title: С чего начать
 nav_order: 2
-lang: ru
+lang: "ru"
 source: before-you-start.md
 source_hash: "41a5fe42a33a"
 nav_exclude: true

@@ -1,7 +1,7 @@
 ---
 title: "Export de la carte"
 nav_order: 11
-lang: fr
+lang: "fr"
 source: map-export.md
 source_hash: "88dcb95ecd7a"
 nav_exclude: true

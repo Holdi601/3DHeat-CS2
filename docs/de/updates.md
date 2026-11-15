@@ -1,7 +1,7 @@
 ---
 title: "Updates"
 nav_order: 14
-lang: de
+lang: "de"
 source: updates.md
 source_hash: "de8097a8303d"
 nav_exclude: true

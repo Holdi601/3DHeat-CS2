@@ -1,7 +1,7 @@
 ---
 title: Cómo se arma una partida
 nav_order: 6
-lang: es
+lang: "es"
 source: building-matches.md
 source_hash: "7e4974705bfb"
 nav_exclude: true

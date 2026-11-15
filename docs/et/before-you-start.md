@@ -1,7 +1,7 @@
 ---
 title: "Enne alustamist"
 nav_order: 2
-lang: et
+lang: "et"
 source: before-you-start.md
 source_hash: "41a5fe42a33a"
 nav_exclude: true

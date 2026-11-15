@@ -1,7 +1,7 @@
 ---
 title: "Statistiken"
 nav_order: 7
-lang: de
+lang: "de"
 source: statistics.md
 source_hash: "12da70d07058"
 nav_exclude: true

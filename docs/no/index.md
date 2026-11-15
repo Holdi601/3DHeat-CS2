@@ -1,7 +1,7 @@
 ---
 title: Hjem
 nav_order: 1
-lang: no
+lang: "no"
 source: index.md
 source_hash: "937e30dc7322"
 nav_exclude: true

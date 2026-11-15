@@ -1,7 +1,7 @@
 ---
 title: "La table de carte de chaleur"
 nav_order: 8
-lang: fr
+lang: "fr"
 source: output-table.md
 source_hash: "b235ff13fe45"
 nav_exclude: true

@@ -1,7 +1,7 @@
 ---
 title: Prima di iniziare
 nav_order: 2
-lang: it
+lang: "it"
 source: before-you-start.md
 source_hash: "41a5fe42a33a"
 nav_exclude: true
@@ -10,7 +10,7 @@ search_exclude: true
 # Prima di iniziare {#before-you-start}
 
 Non hai mai usato la riga di comando? Questa pagina ti porta dal nulla a un 3DHeat CS2 funzionante in circa
-dieci minuti. Digiti i comandi in un *terminale*, una finestra in cui scrivi una riga e premi Invio.
+dieci minuti. Digita i comandi in un *terminale*, una finestra in cui scrivi una riga e premi Invio.
 
 ## 1. Installa Python {#install-python}
 
@@ -59,7 +59,7 @@ Dovresti vedere: `usage: heat3d_cs2 [-h] {demos,map,scoreboard} ...`.
   senza le parentesi. `python -m heat3d_cs2 demos <file demo o cartelle> -o out` significa che sostituisci la
   parte tra parentesi.
 - Un percorso con spazi va tra virgolette: `"C:\My Games\my file"`.
-- Le righe che iniziano con `#` negli esempi sono commenti; non le digiti.
+- Le righe che iniziano con `#` negli esempi sono commenti; non digitarle.
 - Il successo appare così: dopo `demos`, una riga `1 match(es), 1 at a time` e poi una riga per partita che
   termina con `lost 0`.
 
@@ -71,4 +71,4 @@ Dovresti vedere: `usage: heat3d_cs2 [-h] {demos,map,scoreboard} ...`.
 | `No module named ...` | il passo 4 è stato saltato oppure eseguito in un'altra cartella: fai `cd` nella cartella dello strumento e ripeti. |
 | `pip is not recognized` | usa `python -m pip ...` invece di `pip ...`. |
 | `No such file or directory` / `can't open file` | il terminale è nella cartella sbagliata, oppure il percorso è scritto male: controllalo, e metti i percorsi con spazi tra virgolette. |
-| testo rosso che termina con una riga `error:` | leggi l'ultima riga: dice cosa manca. La pagina [Comandi](../commands.md) elenca i messaggi. |
+| testo rosso che termina con una riga `error:` | leggi l'ultima riga: dice cosa manca. La pagina [Comandi](commands.md) elenca i messaggi. |

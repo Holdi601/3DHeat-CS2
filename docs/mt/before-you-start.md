@@ -1,7 +1,7 @@
 ---
 title: Qabel ma tibda
 nav_order: 2
-lang: mt
+lang: "mt"
 source: before-you-start.md
 source_hash: "41a5fe42a33a"
 nav_exclude: true

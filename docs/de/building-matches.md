@@ -1,7 +1,7 @@
 ---
 title: "Ein Match aufbauen"
 nav_order: 6
-lang: de
+lang: "de"
 source: building-matches.md
 source_hash: "7e4974705bfb"
 nav_exclude: true

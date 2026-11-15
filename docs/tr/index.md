@@ -1,7 +1,7 @@
 ---
 title: "Ana sayfa"
 nav_order: 1
-lang: tr
+lang: "tr"
 source: index.md
 source_hash: "937e30dc7322"
 nav_exclude: true

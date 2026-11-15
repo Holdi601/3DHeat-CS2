@@ -1,7 +1,7 @@
 ---
 title: 홈
 nav_order: 1
-lang: ko
+lang: "ko"
 source: index.md
 source_hash: "937e30dc7322"
 nav_exclude: true

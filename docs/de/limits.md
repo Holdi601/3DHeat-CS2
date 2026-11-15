@@ -1,7 +1,7 @@
 ---
 title: "Grenzen"
 nav_order: 13
-lang: de
+lang: "de"
 source: limits.md
 source_hash: "f34f8f92a3ea"
 nav_exclude: true

@@ -1,7 +1,7 @@
 ---
 title: "Die Heatmap-Tabelle"
 nav_order: 8
-lang: de
+lang: "de"
 source: output-table.md
 source_hash: "b235ff13fe45"
 nav_exclude: true

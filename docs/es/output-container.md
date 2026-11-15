@@ -1,7 +1,7 @@
 ---
 title: Un archivo por partida
 nav_order: 10
-lang: es
+lang: "es"
 source: output-container.md
 source_hash: "e2690f688075"
 nav_exclude: true

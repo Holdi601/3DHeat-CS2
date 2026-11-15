@@ -1,7 +1,7 @@
 ---
 title: "Para se të fillosh"
 nav_order: 2
-lang: sq
+lang: "sq"
 source: before-you-start.md
 source_hash: "41a5fe42a33a"
 nav_exclude: true
