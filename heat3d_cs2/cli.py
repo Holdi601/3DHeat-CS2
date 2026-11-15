@@ -2,8 +2,8 @@
 Command line.
 
     python -m heat3d_cs2 demos <demo files or folders> -o <folder> [--every 8] [--jobs N] [--no-bulk] [--loose]
-    python -m heat3d_cs2 map <de_mirage | path to its .vpk> -o mirage.glb
-    python -m heat3d_cs2 scoreboard <match.json>
+    python -m heat3d_cs2 map <map name | path to its .vpk> -o <map>.glb
+    python -m heat3d_cs2 scoreboard <match.3dheat | match.json>
 
 `demos` groups a match's parts by name (`...-p1.dem`, `...-p2.dem` are one
 match) and writes `<map>/<match>.parquet` and `<map>/<match>.match.json` for
@@ -134,19 +134,33 @@ def _map(args) -> int:
 def _scoreboard(args) -> int:
     from .stats import scoreboard_text
 
-    print(scoreboard_text(json.loads(Path(args.match).read_text(encoding="utf-8"))))
+    print(scoreboard_text(read_match_document(Path(args.match))))
     return 0
+
+
+def read_match_document(path: Path) -> dict:
+    """The match document of a `.3dheat` container, or of a loose `<match>.match.json`."""
+    if path.suffix.lower() == ".3dheat":
+        import zipfile
+
+        with zipfile.ZipFile(path) as z:
+            roles = json.loads(z.read("manifest.json")).get("roles", {}) if "manifest.json" in z.namelist() else {}
+            names = [roles["match"]] if roles.get("match") else [n for n in z.namelist() if n.endswith(".match.json")]
+            if not names:
+                raise ValueError(f"{path}: no .match.json inside")
+            return json.loads(z.read(names[0]).decode("utf-8"))
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="heat3d_cs2", description="CS2 demos and maps for the 3DHeat viewer")
     sub = parser.add_subparsers(dest="verb", required=True)
-    d = sub.add_parser("demos", help="demos -> one heatmap table and one match summary per match")
+    d = sub.add_parser("demos", help="demos -> one heatmap table and one match document per match")
     d.add_argument("paths", nargs="+", help="demo files or folders")
     d.add_argument("-o", "--out", required=True, help="folder to write into")
     d.add_argument("--every", type=int, default=8, help="sample players every N ticks (64 a second; default 8: 8 a second)")
     d.add_argument("--jobs", type=int, default=0, help="matches converted at once (default: half the cores)")
-    d.add_argument("--map", help="only matches whose name contains this, e.g. mirage")
+    d.add_argument("--map", help="only matches whose file name contains this text")
     d.add_argument("--force", action="store_true", help="rewrite matches already written")
     d.add_argument("--no-bulk", action="store_true",
                    help="leave the entity stream, the players' commands and the animation (over half a demo's size) "
@@ -156,13 +170,13 @@ def main(argv: list[str] | None = None) -> int:
                    help="keep each match as separate files (table, match.json, sidecars), not one .3dheat container")
     d.set_defaults(run=_demos)
     m = sub.add_parser("map", help="a map's collision geometry -> .glb in the demos' frame")
-    m.add_argument("name", help="map name (de_mirage) or the path to its .vpk")
+    m.add_argument("name", help="the map's name (like de_x) or the path to its .vpk")
     m.add_argument("-o", "--out", required=True, help=".glb to write")
     m.add_argument("--game", help="the CS2 install folder, when Steam does not know it")
     m.add_argument("--source2viewer", help="Source2Viewer-CLI executable, when it is not on PATH")
     m.set_defaults(run=_map)
-    s = sub.add_parser("scoreboard", help="print a match summary's scoreboard")
-    s.add_argument("match", help="<match>.match.json")
+    s = sub.add_parser("scoreboard", help="print a match's scoreboard")
+    s.add_argument("match", help="<match>.3dheat, or <match>.match.json from --loose")
     s.set_defaults(run=_scoreboard)
     args = parser.parse_args(argv)
     try:

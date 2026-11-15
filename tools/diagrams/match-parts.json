@@ -1,0 +1,61 @@
+{
+ "title": "Which files are one match: name, parts, chains",
+ "cols": [
+  [
+   {
+    "t": "alpha-vs-bravo-m1-p1.dem",
+    "c": "grey"
+   },
+   {
+    "t": "alpha-vs-bravo-m1-p2.dem",
+    "c": "grey"
+   },
+   {
+    "t": "alpha-vs-bravo-m1_P3.dem",
+    "c": "grey"
+   }
+  ],
+  [
+   {
+    "t": "group by name",
+    "s": "suffix -p<n> / _p<n> dropped"
+   }
+  ],
+  [
+   {
+    "t": "order the parts",
+    "s": "by round count,|then the server's clock"
+   }
+  ],
+  [
+   {
+    "t": "alpha-vs-bravo-m1",
+    "s": "one chain: one match",
+    "c": "green"
+   },
+   {
+    "t": "alpha-vs-bravo-m1-b",
+    "s": "a second chain, if the|rounds overlap",
+    "c": "orange"
+   }
+  ]
+ ],
+ "legend": [
+  [
+   "grey",
+   "input"
+  ],
+  [
+   "blue",
+   "step"
+  ],
+  [
+   "green",
+   "files written"
+  ],
+  [
+   "orange",
+   "one file a match"
+  ]
+ ]
+}

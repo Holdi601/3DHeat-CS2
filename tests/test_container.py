@@ -9,7 +9,7 @@ import zipfile
 import pyarrow as pa
 import pyarrow.parquet as pq
 
-from heat3d_cs2.cli import written
+from heat3d_cs2.cli import read_match_document, written
 from heat3d_cs2.container import members_of, pack
 
 
@@ -43,3 +43,9 @@ def test_loose_files_stay_when_asked(tmp_path):
     _match(tmp_path)
     pack(tmp_path / "m.parquet", {}, delete_loose=False)
     assert (tmp_path / "m.parquet").exists() and (tmp_path / "m.3dheat").exists()
+
+
+def test_the_scoreboard_reads_the_match_document_inside_a_container(tmp_path):
+    _match(tmp_path)
+    out = pack(tmp_path / "m.parquet", {"game": "cs2", "match": "m"})
+    assert read_match_document(out)["match"] == "m"

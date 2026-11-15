@@ -1,4 +1,3 @@
-
 # Updates
 
 3DHeat CS2 keeps itself current from this repository's

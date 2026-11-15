@@ -1,4 +1,3 @@
-
 # Map export (`map`)
 
 `python -m heat3d_cs2 map <map> -o <file.glb>` writes a CS2 map as level
@@ -7,6 +6,8 @@ geometry: the world's **collision mesh**, in the frame and units the
 [`heat3d_cs2/mapexport.py`](https://github.com/Holdi601/3DHeat-CS2/blob/main/heat3d_cs2/mapexport.py),
 [`heat3d_cs2/glb.py`](https://github.com/Holdi601/3DHeat-CS2/blob/main/heat3d_cs2/glb.py).
 Options and messages: [Commands](commands#map---a-maps-geometry-as-glb).
+
+![map export](https://holdi601.github.io/3DHeat-CS2/assets/img/map-export.svg)
 
 ## Why the collision mesh
 

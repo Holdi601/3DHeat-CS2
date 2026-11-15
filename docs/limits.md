@@ -1,6 +1,6 @@
 ---
 title: Limits
-nav_order: 11
+nav_order: 13
 ---
 
 # Limits
@@ -59,7 +59,7 @@ verified. Each point is from the code as it stands.
   tick.
 - **Rows outside a round** (warmup, a pause between the match's start and
   the first freeze time beyond two minutes) are left out of the table; the
-  events about no player are all in the summary's `events`.
+  events about no player are all in the match document's `events`.
 - **Detonation rows** (`smoke`, `flash`, `he`, `molotov`, `decoy`) have no
   `place`: the demo names places for players, not for grenades. The
   thrower's place at that moment is in `throwerPlace`.
@@ -97,6 +97,6 @@ verified. Each point is from the code as it stands.
   match. With many workers and a small `--every`, memory adds up: lower
   `--jobs` if a machine runs short.
 - A match is written only when it is built: the `.parquet` first, then the
-  `.match.json`. A run stopped in between leaves a table without its summary;
+  `.match.json`. A run stopped in between leaves a table without its match document;
   a match counts as written only with both, so the next run converts it
   again. Matches not yet started are simply picked up by the next run.

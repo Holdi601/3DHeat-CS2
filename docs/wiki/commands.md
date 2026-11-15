@@ -1,24 +1,27 @@
-
 # Commands
 
+New to the command line? Read [Before you start](before-you-start) first.
+Type these in a terminal opened in the folder you unpacked or cloned;
+`<...>` are placeholders, and a path with spaces goes in quotes.
+
 ```text
-python -m heat3d_cs2 demos <demo files or folders> -o <folder> [--every 8] [--jobs N] [--map TEXT] [--force]
-python -m heat3d_cs2 map <de_mirage | path to its .vpk> -o <file.glb> [--game FOLDER] [--source2viewer EXE]
-python -m heat3d_cs2 scoreboard <match.json>
+python -m heat3d_cs2 demos <demo files or folders> -o <folder> [--every 8] [--jobs N] [--map TEXT] [--force] [--no-bulk] [--loose]
+python -m heat3d_cs2 map <map name | path to its .vpk> -o <file.glb> [--game FOLDER] [--source2viewer EXE]
+python -m heat3d_cs2 scoreboard <match.3dheat | match.json>
 ```
 
 `python -m heat3d_cs2 --help` and `python -m heat3d_cs2 <verb> --help` list the
-same options. Every start first runs the release check described in
+same options; the [Command reference](cli-reference) shows them all. Every start first runs the release check described in
 [Updates](updates) (off with `HEAT3D_NO_UPDATE=1`).
 
 Code: [`heat3d_cs2/cli.py`](https://github.com/Holdi601/3DHeat-CS2/blob/main/heat3d_cs2/cli.py).
 
-## `demos` - demos into tables and summaries
+## `demos` - demos into tables and match documents
 
-```bash
+```powershell
 python -m heat3d_cs2 demos D:\Demos\event -o out
 python -m heat3d_cs2 demos alpha-vs-bravo-m1-p1.dem alpha-vs-bravo-m1-p2.dem -o out
-python -m heat3d_cs2 demos D:\Demos -o out --map inferno --jobs 4
+python -m heat3d_cs2 demos D:\Demos -o out --map final --jobs 4
 ```
 
 | Argument | Default | Does |
@@ -27,10 +30,17 @@ python -m heat3d_cs2 demos D:\Demos -o out --map inferno --jobs 4
 | `-o`, `--out` | required | the folder to write into; created as needed |
 | `--every N` | `8` | sample every player every *N* ticks. CS2 demos run at 64 ticks a second, so 8 is eight samples a second, 4 is sixteen, 64 is one. Events are always read at their own tick, whatever *N* is. |
 | `--jobs N` | `0` = half the CPU cores | how many matches are converted at once, each in its own process. Never fewer than 1, never more than there are matches to do. |
-| `--map TEXT` | - | only matches whose **name** contains *TEXT*, case-insensitive (`--map mirage`). It filters on the file name, not on the map the demo turns out to hold. |
+| `--map TEXT` | - | only matches whose **name** contains *TEXT*, case-insensitive (`--map final`). It filters on the file name, not on the map the demo turns out to hold. |
 | `--force` | off | convert matches that are already written, overwriting them |
+| `--loose` | off | keep each match as separate files - table, `.match.json`, sidecars - instead of packing them into one `.3dheat` container. See [One file a match](output-container). |
+| `--container` | on | pack each match into one `.3dheat` file; the default, so only there to be explicit |
+| `--no-bulk` | off | leave the entity stream, the players' commands and the animation stream out of the packets sidecar - over half of a demo's size even compressed. The match document's self-check then counts them `lost`, by name. |
+
+![demos --help](https://holdi601.github.io/3DHeat-CS2/assets/img/demos-help.svg)
 
 ### Which files are one match
+
+![which files are one match](https://holdi601.github.io/3DHeat-CS2/assets/img/match-parts.svg)
 
 The match name is the demo file's name without its extension and without a
 part suffix: `-p<digits>` or `_p<digits>` at the end, any case. So
@@ -51,29 +61,37 @@ only, a pause) belongs to no chain. How chains are found is described in
 ### What is written
 
 For each match, into a folder named after the map the demo header names
-(`unknown` when it names none):
+(`unknown` when it names none), one `.3dheat` file:
 
 ```text
 out/
-  de_inferno/
-    alpha-vs-bravo-m1.parquet
-    alpha-vs-bravo-m1.match.json
-    alpha-vs-bravo-m2.parquet
-    alpha-vs-bravo-m2.match.json
-  de_nuke/
+  de_x/
+    alpha-vs-bravo-m1.3dheat
+    alpha-vs-bravo-m2.3dheat
+  de_y/
     ...
 ```
 
+On the synthetic two-round demo of the tests:
+
+![demos on a synthetic demo](https://holdi601.github.io/3DHeat-CS2/assets/img/demos-run.svg)
+
+With `--loose` each match is the table, its match document and four sidecars side by side
+([One file a match](output-container)):
+
+![demos --loose](https://holdi601.github.io/3DHeat-CS2/assets/img/demos-loose.svg)
+
 A heatmap is of one map, so loading one folder in the viewer is loading one
 map's matches. See [The heatmap table](output-table) and
-[The match summary](output-match-json).
+[The match document](output-match-json).
 
 ### What is skipped
 
-Before anything is read, every `*.parquet` anywhere under `--out` that has
-its summary (`<name>.match.json`) beside it is listed, and a match whose name
+Before anything is read, every `*.3dheat` anywhere under `--out` (a container
+is written whole or not at all), and every `*.parquet` that has
+its match document (`<name>.match.json`) beside it, is listed, and a match whose name
 equals one of their file names (without extension) is skipped, unless
-`--force`. A table without its summary - a run stopped between writing the
+`--force`. A table without its match document - a run stopped between writing the
 two - does not count, so that match is converted again. The check is by name
 only: a match converted into
 a different map folder, or with a different `--every`, still counts as done.
@@ -90,15 +108,17 @@ order they finish, not the order of the files):
 
 ```text
 3 match(es), 3 at a time
-alpha-vs-bravo-m1: de_inferno, 21 rounds (Alpha 13 Bravo 8), 412,377 rows
-alpha-vs-bravo-m2: de_nuke, 30 rounds (Bravo 16 Alpha 14), 598,104 rows, 1 incomplete round(s) left out
-alpha-vs-bravo-m3: de_nuke, 18 rounds (Alpha 13 Bravo 5), 330,981 rows, recorded from round 3
+alpha-vs-bravo-m1: de_x, 21 rounds (Alpha 13 Bravo 8), 412,377 rows, lost 0
+alpha-vs-bravo-m2: de_y, 30 rounds (Bravo 16 Alpha 14), 598,104 rows, 1 incomplete round(s) left out, lost 0
+alpha-vs-bravo-m3: de_y, 18 rounds (Alpha 13 Bravo 5), 330,981 rows, recorded from round 3, lost 1,204,331 (svc_PacketEntities, svc_UserCmds, DEM_AnimationData)
 ```
 
 (The numbers are illustrative.) The score is the last round's, team by team
-in the order the summary lists them. *incomplete round(s) left out* counts
+in the order the match document lists them. *incomplete round(s) left out* counts
 rounds a demo cut off before they were decided; *recorded from round N* says
-the recording starts late. A match that yields nothing says why:
+the recording starts late; *lost* is the match document's self-check - how many items
+of the demo went nowhere, and of which kinds (`--no-bulk` makes the bulk lost).
+A match that yields nothing says why:
 
 ```text
 alpha-vs-bravo-m4: no round in 1 file(s) - nothing written
@@ -115,23 +135,30 @@ least one failed.
 
 ### How long it takes
 
-Each match is read and built in a worker process. The README states that a
-folder of a few hundred demos takes minutes with the default `--jobs`. Memory
+Each match is read and built in a worker process. A folder of a few hundred
+demos takes minutes with the default `--jobs`. Memory
 per job grows with the match length and with a smaller `--every`: each worker
 holds every sampled player row of its match (roughly ten players times
 64 / *N* rows per second of recording) before writing.
 
+The sidecars take longer than the table: every property the parser reads is
+read at every tick, a window of ticks at a time (about two minutes for a
+40-minute demo, near 3 GB of memory at most per job), then the demo is
+walked once more for its frames and messages.
+
 ## `map` - a map's geometry as `.glb`
 
-```bash
-python -m heat3d_cs2 map de_mirage -o out/de_mirage/de_mirage.glb
-python -m heat3d_cs2 map de_mirage -o mirage.glb --game "D:\SteamLibrary\steamapps\common\Counter-Strike Global Offensive"
-python -m heat3d_cs2 map "D:\maps\de_mirage.vpk" -o mirage.glb --source2viewer C:\Tools\Source2Viewer-CLI.exe
+![map --help](https://holdi601.github.io/3DHeat-CS2/assets/img/map-help.svg)
+
+```powershell
+python -m heat3d_cs2 map <map> -o out/<map>/<map>.glb
+python -m heat3d_cs2 map <map> -o <map>.glb --game "D:\Games\Steam\steamapps\common\Counter-Strike Global Offensive"
+python -m heat3d_cs2 map "D:\maps\<map>.vpk" -o <map>.glb --source2viewer C:\Tools\Source2Viewer-CLI.exe
 ```
 
 | Argument | Default | Does |
 |---|---|---|
-| `name` | - | the map's name (`de_mirage`), or the path to its `.vpk`. A path ending in `.vpk` that exists is used as it is; anything else is looked up by its file stem in the installed game. |
+| `name` | - | the map's name (like `de_x`), or the path to its `.vpk`. A path ending in `.vpk` that exists is used as it is; anything else is looked up by its file stem in the installed game. |
 | `-o`, `--out` | required | the `.glb` to write; its folder is created as needed |
 | `--game FOLDER` | Steam's libraries | the CS2 install folder (the one containing `game\csgo`), when Steam does not know it. With `--game`, only that folder is searched. |
 | `--source2viewer EXE` | `HEAT3D_SOURCE2VIEWER`, then `PATH` | the Source2Viewer CLI executable |
@@ -139,7 +166,7 @@ python -m heat3d_cs2 map "D:\maps\de_mirage.vpk" -o mirage.glb --source2viewer C
 Printed on success:
 
 ```text
-out/de_mirage/de_mirage.glb: de_mirage, 412,880 triangles (151,204 ground) in 14 parts
+out/de_x/de_x.glb: de_x, 412,880 triangles (151,204 ground) in 14 parts
 ```
 
 (numbers illustrative). Writing the `.glb` next to the map's tables
@@ -155,14 +182,19 @@ Errors, each printed as `error: ...` with exit code `2`:
 | `Source2Viewer did not export de_x's collision mesh:` followed by the tail of its output | it failed, or wrote no `.glb` |
 | `de_x's collision mesh has nothing but clip brushes` | after leaving out clips and sky nothing was left |
 
-## `scoreboard` - a summary as text
+## `scoreboard` - a match as text
 
 ```bash
-python -m heat3d_cs2 scoreboard out/de_inferno/alpha-vs-bravo-m1.match.json
+python -m heat3d_cs2 scoreboard out/de_x/alpha-vs-bravo-m1.3dheat
+python -m heat3d_cs2 scoreboard out/de_x/alpha-vs-bravo-m1.match.json   # after demos --loose
 ```
 
-Prints the match's scoreboard from its [summary](output-match-json),
-without opening the viewer. On the synthetic two-round demo of the tests:
+Prints the match's scoreboard from its [match document](output-match-json),
+without opening the viewer. It reads the document inside a `.3dheat`
+container, or a loose `<match>.match.json`.
+On the synthetic two-round demo of the tests:
+
+![scoreboard](https://holdi601.github.io/3DHeat-CS2/assets/img/scoreboard.svg)
 
 ```text
 alpha-vs-bravo-m1 - de_test  Alpha 2  Bravo 0
@@ -181,8 +213,8 @@ rounds  1:TK 2:TB
 ```
 
 - The first line: match name, map, and the final score per team.
-- A table per team, in the order of the summary's `teams`; players in the
-  summary's order (by kills minus deaths, then kills, best first). Names are
+- A table per team, in the order of the match document's `teams`; players in the
+  match document's order (by kills minus deaths, then kills, best first). Names are
   cut to 19 characters.
 - Columns: **K** kills, **D** deaths, **A** assists *including* flash assists,
   **+/-** kills minus deaths, **ADR**, **KAST** (%), **HS%** (rounded to whole
@@ -193,5 +225,5 @@ rounds  1:TK 2:TB
   else (draw, surrender, other). A draw has no winning side: `<round>:?`.
 
 A file that is not valid JSON, or not found, stops with an error; a JSON
-document without the summary's fields fails with a Python error (it is not
+document without the match document's fields fails with a Python error (it is not
 validated further).

@@ -1,17 +1,18 @@
-
 # Statistics
 
 What each player did in a match, and how each round went: the scoreboard and
-the round list of the [match summary](output-match-json). Code:
+the round list of the [match document](output-match-json). Code:
 [`heat3d_cs2/stats.py`](https://github.com/Holdi601/3DHeat-CS2/blob/main/heat3d_cs2/stats.py).
 Everything is counted from the match built as on
 [Building a match](building-matches): its kill records, its damage (health
 lost, enemies only), its blinds (enemies only) and its rows.
 
+![the text scoreboard of a synthetic match](https://holdi601.github.io/3DHeat-CS2/assets/img/scoreboard.svg)
+
 ## The conventions
 
 Where the game itself does not define a number, these are the definitions.
-They are also written into every summary under `conventions`.
+They are also written into every match document under `conventions`.
 
 | Term | Definition |
 |---|---|
@@ -33,7 +34,7 @@ the match's round count is used instead, so that no division is by zero.
 
 ## The scoreboard line
 
-One entry per player (see [the summary](output-match-json#players) for the
+One entry per player (see [the match document](output-match-json#players) for the
 field names). "Enemy kill" below means a kill with an attacker, not a
 teamkill, and not a suicide (the victim's own).
 
@@ -66,7 +67,7 @@ Notes on the edges:
 - A kill in the after phase - the winners hunting a saving player - counts
   as a kill, a death, for ADR, multi-kills and KAST like any other.
 - Wallbangs are counted per player internally but not written to the
-  summary; each kill in the round list says whether it was one.
+  match document; each kill in the round list says whether it was one.
 - The KAST *traded* part credits the victim of a traded death in that round.
 - Teamkills and suicides add a death to the victim but no kill to anyone; a
   teamkill adds to the killer's `teamkills`, a suicide to nothing else.
@@ -98,11 +99,11 @@ is still a survivor in the round list - but did not *survive* for KAST.
 
 ## The round list
 
-Each round of the summary carries its result, score, sides, economy, plant,
+Each round of the match document carries its result, score, sides, economy, plant,
 survivors, clutches and its kills in order; see
-[The match summary](output-match-json#rounds).
+[The match document](output-match-json#rounds).
 
 ## The text scoreboard
 
 `python -m heat3d_cs2 scoreboard <match.json>` prints these numbers per team;
-see [Commands](commands#scoreboard---a-summary-as-text).
+see [Commands](commands#scoreboard---a-match-as-text).

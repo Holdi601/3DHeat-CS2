@@ -1,6 +1,6 @@
 ---
 title: The heatmap table
-nav_order: 7
+nav_order: 8
 ---
 
 # The heatmap table (`<match>.parquet`)
@@ -32,7 +32,7 @@ string. Numeric columns are null where a row has no value.
 | Column | Type | What |
 |---|---|---|
 | `match` | string | the match name (`alpha-vs-bravo-m1`, or `...-b` for a second chain) |
-| `map` | string | the map, from the demo header (`de_inferno`) |
+| `map` | string | the map, from the demo header (`de_x`) |
 | `round` | int16 | the round number, 1-based |
 | `roundId` | string | `<match> #NN`, the round number in two digits (`alpha-vs-bravo-m1 #07`): unique across matches, the viewer's session |
 | `phase` | string | `freeze` in the round's freeze time (from the previous round's end), `live` until the round is decided, `after` while the winners hunt and the losers save |
@@ -50,7 +50,7 @@ string. Numeric columns are null where a row has no value.
 | `money` | int32 | the player's money; positions only |
 | `equipment` | int32 | the value of what the player carries; positions only |
 | `weapon` | string | the weapon as the game names it (`AK-47`, `M4A1-S`, `Knife` for every knife skin) |
-| `place` | string | the map's own place name at the row's position (`BombsiteA`, `TopofMid`, `CTSpawn`); empty on grenade detonations: the demo names no place for where a grenade went off |
+| `place` | string | the map's own place name at the row's position (`BombsiteA`, `CTSpawn`); empty on grenade detonations: the demo names no place for where a grenade went off |
 | `throwerPlace` | string | the thrower's place name when the grenade went off; grenade detonations only |
 | `other` | string | the other player of a kill, death, hit or flash |
 | `damage` | float32 | health lost; `hurt` only |
@@ -194,7 +194,7 @@ ignores it. To read it yourself:
 import json
 import pyarrow.parquet as pq
 
-table = pq.read_table("out/de_inferno/alpha-vs-bravo-m1.parquet")
+table = pq.read_table("out/de_x/alpha-vs-bravo-m1.parquet")
 hints = json.loads(table.schema.metadata[b"heat3d"])
 rows = table.to_pandas()
 kills = rows[rows["event"] == "kill"]

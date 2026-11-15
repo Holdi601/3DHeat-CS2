@@ -1,0 +1,61 @@
+{
+ "title": "map: a CS2 map's collision mesh into the tables' frame",
+ "cols": [
+  [
+   {
+    "t": "<map>.vpk",
+    "s": "from the installed game",
+    "c": "grey"
+   }
+  ],
+  [
+   {
+    "t": "Source2Viewer CLI",
+    "s": "exports the world|(you install it)"
+   }
+  ],
+  [
+   {
+    "t": "collision mesh",
+    "s": "clip brushes and sky|left out"
+   }
+  ],
+  [
+   {
+    "t": "ground",
+    "s": "facing up, walkable",
+    "c": "green"
+   },
+   {
+    "t": "structure",
+    "s": "walls, boxes",
+    "c": "green"
+   }
+  ],
+  [
+   {
+    "t": "<map>.glb",
+    "s": "Y up, game Y negated,|same units as the table",
+    "c": "orange"
+   }
+  ]
+ ],
+ "legend": [
+  [
+   "grey",
+   "input"
+  ],
+  [
+   "blue",
+   "step"
+  ],
+  [
+   "green",
+   "files written"
+  ],
+  [
+   "orange",
+   "one file a match"
+  ]
+ ]
+}

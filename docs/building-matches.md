@@ -1,6 +1,6 @@
 ---
 title: Building a match
-nav_order: 5
+nav_order: 6
 ---
 
 # Building a match
@@ -119,7 +119,7 @@ was cut off by the end of the file; its number goes into the match's
 | `equipment` | side -> the summed `current_equip_value` of that side's **living** players at the first sample at or after freeze end |
 | `buy` | side -> `pistol`, `eco`, `force` or `full` ([Economy](#economy-and-buy-types)) |
 | `plant` | the first `bomb_planted` after freeze end and up to `end`, or none |
-| `exploded` | match time of the first `bomb_exploded` after that plant and before the next freeze end, if any (not in the summary; it times the `explode` row) |
+| `exploded` | match time of the first `bomb_exploded` after that plant and before the next freeze end, if any (not in the match document; it times the `explode` row) |
 
 `reason`, from the game's `CSRoundEndReason`:
 
@@ -135,7 +135,7 @@ was cut off by the end of the file; its number goes into the match's
 
 When several parts hold the same round (by index), the later part's version
 is kept. The rounds are then listed by index. A match whose first round is
-not round 1 records the missing numbers (`missing` in the summary); the
+not round 1 records the missing numbers (`missing` in the match document); the
 command line says *recorded from round N*.
 
 ### The plant
@@ -239,7 +239,7 @@ Every `player_death` in a round gives one **kill record** (the match's
 | `wallbang` | `penetrated` > 0 |
 | `throughSmoke` | `thrusmoke` |
 | `flashAssist` | `assistedflash` |
-| `noscope`, `attackerBlind` | the event's flags (`noscope`, `attackerblind`); columns of the `kill` and `death` rows, and in the summary's kills |
+| `noscope`, `attackerBlind` | the event's flags (`noscope`, `attackerblind`); columns of the `kill` and `death` rows, and in the match document's kills |
 | `suicide` | attacker and victim the same player: an own grenade, say |
 | `teamkill` | attacker and victim on the same side, with an attacker, and not a suicide |
 | `opening` | the round's first kill of an enemy (below) |
@@ -311,7 +311,7 @@ there were:
 The pistol rounds follow the half the match was played with, not a fixed
 format. The half ends where the sides first swap between two rounds that
 follow each other, both in regulation: its length (`halfLength` in the
-summary) is the round before the swap - 12 in the 24-round format, 15 in
+match document) is the round before the swap - 12 in the 24-round format, 15 in
 the 30-round one. Round 1 and the round after the half are the pistol
 rounds. A round is overtime when the game's overtime count
 (`m_nOvertimePlaying`) is above 0 at its freeze end; where a demo has no

@@ -1,11 +1,11 @@
-
 # Using it with 3DHeat
 
-The three outputs go into three places of the
+The outputs go into these places of the
 [3DHeat viewer](https://holdi601.github.io/3DHeat):
 
 | File | Where | What it gives |
 |---|---|---|
+| `<match>.3dheat` (the default) | **Heatmap** tab, **Source** panel, or the **Match** tab | the table and the match document together, one file a match ([container](https://holdi601.github.io/3DHeat/container.html)) |
 | `<match>.parquet` | **Heatmap** tab, **Source** panel | positions and events as a heatmap, box replay, routes |
 | `<match>.match.json` | **Match** tab, **Load match files…** | the scoreboard, the rounds, the kill feed, statistics across matches, links into the heatmap |
 | `<map>.glb` | **Background / level** panel, **3D model…** | the map under the heatmap |
@@ -17,17 +17,22 @@ The viewer's own documentation describes each tab in full: its
 and [Box replay](https://holdi601.github.io/3DHeat/box-replay.html)
 pages. This page is the CS2 side of it.
 
+![using it with 3DHeat](https://holdi601.github.io/3DHeat-CS2/assets/img/with-3dheat.svg)
+
+The viewer: [github.com/Holdi601/3DHeat](https://github.com/Holdi601/3DHeat),
+documentation [holdi601.github.io/3DHeat](https://holdi601.github.io/3DHeat/).
+
 ## A typical session
 
 ```bash
 python -m heat3d_cs2 demos D:\Demos\event -o out
-python -m heat3d_cs2 map de_inferno -o out/de_inferno/de_inferno.glb
+python -m heat3d_cs2 map <map> -o out/<map>/<map>.glb
 ```
 
-1. **Heatmap tab -> Source:** choose the folder `out/de_inferno` (or drop it).
+1. **Heatmap tab -> Source:** choose the folder `out/<map>` (or drop it).
    Every `.parquet` in it becomes one dataset; the `.json` and `.glb` files in
    the same folder are skipped as "not a csv/parquet file". Load it.
-2. **Background / level -> 3D model…:** pick `out/de_inferno/de_inferno.glb`.
+2. **Background / level -> 3D model…:** pick `out/<map>/<map>.glb`.
    **Save to library** keeps it in the browser for next time.
 3. **Match tab -> Load match files…:** pick the `.match.json` files of the
    same folder (several at once), or drop them on the view while the Match
@@ -81,7 +86,7 @@ units, and the level is not rescaled with the table.
 
 The Match tab accepts a JSON file whose `format` is `heat3d-cs2-match` and
 which has `rounds`, `players` and `teams` arrays
-([The match summary](output-match-json)). It shows the score and halves,
+([The match document](output-match-json)). It shows the score and halves,
 a strip of rounds coloured by the winning side with a mark for how each ended,
 each round's economy, plant, kill feed, clutches and survivors, the scoreboard,
 and statistics across all loaded matches.
@@ -89,12 +94,12 @@ and statistics across all loaded matches.
 Its **Show in the heatmap** links do not load anything: they set filters on
 the table already loaded in the Heatmap tab - `match`, `round` (and the
 round's session `<match> #NN`), `event`, the player, the side. That works
-because the summary and the table carry the same match names, round numbers,
+because the match document and the table carry the same match names, round numbers,
 player names and sides. **Replay round** switches the heatmap to box replay
 and plays the round's session from its start.
 
-So load both: the tables of a map in the Heatmap tab, their summaries in the
-Match tab. A summary without its table still shows the scoreboard and rounds,
+So load both: the tables of a map in the Heatmap tab, their match documents in the
+Match tab. A match document without its table still shows the scoreboard and rounds,
 and the links say that no heatmap data is loaded.
 
 ## Without 3DHeat
@@ -102,7 +107,7 @@ and the links say that no heatmap data is loaded.
 - The table is plain Parquet: pandas, Polars, DuckDB, Spark, R's `arrow` all
   read it, the `heat3d` entry is ignored, and the text columns read as strings
   or categoricals.
-- The summary is plain JSON.
+- The match document is plain JSON.
 - The map is a valid glTF binary, in inches rather than metres: scale by
   0.0254 for tools that assume metres. Its frame is glTF's own (Y up), so to
   overlay the table elsewhere draw each row's (x, y, z) as (x, z, -y), as

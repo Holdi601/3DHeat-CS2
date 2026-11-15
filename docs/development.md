@@ -1,6 +1,6 @@
 ---
 title: Development
-nav_order: 13
+nav_order: 15
 ---
 
 # Development
@@ -13,7 +13,7 @@ nav_order: 13
 | [`heat3d_cs2/cli.py`](https://github.com/Holdi601/3DHeat-CS2/blob/main/heat3d_cs2/cli.py) | the verbs and options; grouping demo files into matches; the worker pool |
 | [`heat3d_cs2/demo.py`](https://github.com/Holdi601/3DHeat-CS2/blob/main/heat3d_cs2/demo.py) | one demo file through demoparser2 into a `RawPart` - [Reading a demo](reading-demos.md) |
 | [`heat3d_cs2/match.py`](https://github.com/Holdi601/3DHeat-CS2/blob/main/heat3d_cs2/match.py) | parts, chains, the clock, rounds, teams, rows, kills, damage, blinds - [Building a match](building-matches.md) |
-| [`heat3d_cs2/stats.py`](https://github.com/Holdi601/3DHeat-CS2/blob/main/heat3d_cs2/stats.py) | round summaries, the scoreboard, the summary document, the text scoreboard - [Statistics](statistics.md) |
+| [`heat3d_cs2/stats.py`](https://github.com/Holdi601/3DHeat-CS2/blob/main/heat3d_cs2/stats.py) | round summaries, the scoreboard, the match document document, the text scoreboard - [Statistics](statistics.md) |
 | [`heat3d_cs2/output.py`](https://github.com/Holdi601/3DHeat-CS2/blob/main/heat3d_cs2/output.py) | the Parquet table with its `heat3d` hints, and the JSON - [The heatmap table](output-table.md) |
 | [`heat3d_cs2/mapexport.py`](https://github.com/Holdi601/3DHeat-CS2/blob/main/heat3d_cs2/mapexport.py) | finding CS2 and Source2Viewer, the collision mesh into the viewer's frame - [Map export](map-export.md) |
 | [`heat3d_cs2/glb.py`](https://github.com/Holdi601/3DHeat-CS2/blob/main/heat3d_cs2/glb.py) | a minimal glTF binary reader and writer (no dependency beyond numpy) |
@@ -82,7 +82,7 @@ an entity number; a draw decided with no winner; the pistol rounds from
 where the sides swap, overtime left out, and only round 1 without a swap;
 teams without clan names (`Started T` / `Started CT`); openings, trades and
 flags; a suicide that is no teamkill, and the opening passed on to the first
-enemy kill; `noscope` and `attackerBlind` in the table and the summary;
+enemy kill; `noscope` and `attackerBlind` in the table and the match document;
 damage as health lost (60, then 40 of a 137 on 40 health); the scoreboard
 numbers and KAST; clutches; the text scoreboard; the events of the table and
 where they are (a detonation with no place of its own, the thrower's in
@@ -94,7 +94,7 @@ one that leads on.
 
 [`tests/test_cli.py`](https://github.com/Holdi601/3DHeat-CS2/blob/main/tests/test_cli.py)
 checks that demos in folders are found whatever the case of `.dem`, and that
-a match counts as written only with both its table and its summary.
+a match counts as written only with both its table and its match document.
 
 [`tests/test_mapexport.py`](https://github.com/Holdi601/3DHeat-CS2/blob/main/tests/test_mapexport.py)
 checks the frame conversions (Source2Viewer's metres to the game's inches,
@@ -117,7 +117,7 @@ them, with a median height above it under 5 units
 ## Conventions of the code
 
 - Times inside `match.py` are match seconds, except a plant's `time`,
-  seconds into its round as the summary writes it; ticks become seconds only
+  seconds into its round as the match document writes it; ticks become seconds only
   through `_Part.at`.
 - Sides are `T` / `CT` strings everywhere outside the raw parser data
   (`team_num` 2 / 3).

@@ -1,12 +1,12 @@
 ---
 title: One file a match
-nav_order: 8.5
+nav_order: 10
 ---
 
 # One file a match (`<match>.3dheat`)
 
 By default `demos` packs each match into one file, `out/<map>/<match>.3dheat`:
-the heatmap table, the match summary and the four sidecars together - one
+the heatmap table, the match document and the four sidecars together - one
 match, one file, to copy, keep or share. It is the 3DHeat viewer's container
 format, specified in the viewer's documentation:
 [One file a match (.3dheat)](https://holdi601.github.io/3DHeat/container.html)
@@ -44,7 +44,7 @@ range a reader can use in place); JSON members are deflated.
 | Role | Member | What |
 |---|---|---|
 | `table` | `<match>.parquet` | [The heatmap table](output-table.md) (schema `heat3d-table`) |
-| `match` | `<match>.match.json` | [The match summary](output-match-json.md) (schema `heat3d-cs2-match`) |
+| `match` | `<match>.match.json` | [The match document](output-match-json.md) (schema `heat3d-cs2-match`) |
 | `events` | `<match>.events.parquet` | every game event the parser reads, whole |
 | `props` | `<match>.props.parquet` | every property change the parser reads |
 | `strings` | `<match>.strings.parquet` | every string table entry |
@@ -97,11 +97,11 @@ import pandas as pd
 with zipfile.ZipFile("out/de_test/alpha-vs-bravo-m1.3dheat") as z:
     manifest = json.loads(z.read("manifest.json"))
     table = pd.read_parquet(io.BytesIO(z.read(manifest["roles"]["table"])))
-    summary = json.loads(z.read(manifest["roles"]["match"]))
+    match_document = json.loads(z.read(manifest["roles"]["match"]))
 ```
 
-`scoreboard` reads a `.match.json` file: take the summary out of the container
-first, or convert with `--loose`.
+`scoreboard` reads the match document straight from the container (or from a
+loose `.match.json`).
 
 ## Skipping and rewriting
 

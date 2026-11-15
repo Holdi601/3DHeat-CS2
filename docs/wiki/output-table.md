@@ -1,4 +1,3 @@
-
 # The heatmap table (`<match>.parquet`)
 
 One Parquet file per match: every live player's position, sampled, and every
@@ -12,21 +11,28 @@ The file is written with Snappy compression in row groups of 256,000 rows.
 Rows are sorted by `time`, then by `event`. Only rows inside a round (from
 the end of its freeze time to the next round's start) are in it.
 
+On the synthetic demo of the tests, the event rows of the first round:
+
+![event rows of the table](https://holdi601.github.io/3DHeat-CS2/assets/img/table-rows.svg)
+
+In a `.3dheat` container the table is the member with role `table`
+([One file a match](output-container)).
+
 ## Columns
 
-35 columns, always in this order. Text columns are dictionary-encoded strings
+The columns, always in this order. Text columns are dictionary-encoded strings
 (`dictionary<int32, string>`) and are never null: "no value" is an empty
 string. Numeric columns are null where a row has no value.
 
 | Column | Type | What |
 |---|---|---|
 | `match` | string | the match name (`alpha-vs-bravo-m1`, or `...-b` for a second chain) |
-| `map` | string | the map, from the demo header (`de_inferno`) |
+| `map` | string | the map, from the demo header (`de_x`) |
 | `round` | int16 | the round number, 1-based |
 | `roundId` | string | `<match> #NN`, the round number in two digits (`alpha-vs-bravo-m1 #07`): unique across matches, the viewer's session |
-| `phase` | string | `live` until the round is decided, `after` while the winners hunt and the losers save |
+| `phase` | string | `freeze` in the round's freeze time (from the previous round's end), `live` until the round is decided, `after` while the winners hunt and the losers save |
 | `time` | float64 | seconds since the match started (the live start of its first file), on one clock across its files |
-| `roundTime` | float32 | seconds since this round's freeze time ended |
+| `roundTime` | float32 | seconds since this round's freeze time ended; negative in freeze time |
 | `event` | string | what the row is - see [Events](#events) |
 | `player` | string | the player's name (for each event, which player is said below) |
 | `steamid` | string | the player's Steam ID (64-bit, as text) |
@@ -34,12 +40,12 @@ string. Numeric columns are null where a row has no value.
 | `team` | string | the player's team name (or `Started T` / `Started CT`); for `explode`, the planting team |
 | `x`, `y`, `z` | float32 | position in the game's own coordinates: inches (game units), **Z up**, right-handed |
 | `dirX`, `dirY`, `dirZ` | float32 | where the player looks, a unit vector in the same frame; positions only |
-| `health` | int16 | 0-100; positions only |
-| `armor` | int16 | 0-100; positions only |
+| `health` | int16 | 0-100; positions, and on `hurt` what was left after the hit |
+| `armor` | int16 | 0-100; positions, and on `hurt` what was left after the hit |
 | `money` | int32 | the player's money; positions only |
 | `equipment` | int32 | the value of what the player carries; positions only |
 | `weapon` | string | the weapon as the game names it (`AK-47`, `M4A1-S`, `Knife` for every knife skin) |
-| `place` | string | the map's own place name at the row's position (`BombsiteA`, `TopofMid`, `CTSpawn`); empty on grenade detonations: the demo names no place for where a grenade went off |
+| `place` | string | the map's own place name at the row's position (`BombsiteA`, `CTSpawn`); empty on grenade detonations: the demo names no place for where a grenade went off |
 | `throwerPlace` | string | the thrower's place name when the grenade went off; grenade detonations only |
 | `other` | string | the other player of a kill, death, hit or flash |
 | `damage` | float32 | health lost; `hurt` only |
@@ -51,26 +57,58 @@ string. Numeric columns are null where a row has no value.
 | `attackerBlind` | int8 | 0/1, the killer was flashed when they killed (the event's `attackerblind`); `kill` and `death` only |
 | `won` | int8 | 0/1, whether this row's side won the round; null when `side` is empty |
 | `buy` | string | this row's side's buy this round: `pistol`, `eco`, `force`, `full` |
+| `detail` | string | every field of the event the other columns do not carry, as a JSON object (the game's own names): a shot's bullets (`fire_bullets`: origin, angles, inaccuracy, spread, recoil index, seed...), a death's `dominated`, `revenge`, `attackerinair`, `wipe`..., an item's `defindex`, a footstep's nothing |
+| `text` | string | a chat line; `chat` only |
+| `entity` | int32 | the grenade's entity: a `throw`'s flight (`grenade` rows), its detonation and the players it blinded share it |
+| `hitgroup` | string | where the bullet struck (`head`, `chest`, ...); `hurt`, `kill`, `death` |
+| `armorDamage` | int16 | armour lost; `hurt` only |
+| `hitLocalX`, `hitLocalY`, `hitLocalZ` | float32 | where on the body the bullet struck, in the victim's frame in metres (x forward, y up from the feet, z right): the shot's ray (`fire_bullets`, else the attacker's eye and view) traced to a body posed as the victim stood and crouched, onto the part `hitgroup` names; `hurt` only |
+| `hitDirX`, `hitDirY`, `hitDirZ` | float32 | the shot's direction in the same frame; `hitMiss` how far (m) the ray passed the named part by (0: through it); `hitFrom` `bullet` or `aim` |
+| `penetrated` | int16 | walls the killing bullet went through; `kill` and `death` |
+| `throughSmoke` | int8 | 0/1, killed through a smoke; `kill` and `death` |
+| `distance` | float32 | the kill's distance as the game counts it (metres); `kill` and `death` |
+| `assister` | string | who assisted; `kill` and `death` |
+| `flash`, `flashAlpha` | float32 | seconds of flash left, and how white; positions |
+| `helmet`, `defuser`, `scoped`, `walking`, `airborne`, `buyZone`, `bombZone`, `defusing`, `spotted` | int8 | 0/1; positions |
+| `zoom`, `duck`, `moveType` | | the scope's zoom level, how far crouched (0-1), the game's movement type; positions |
+| `spottedBy` | string | the Steam IDs of the enemies who see this player, `\|`-separated; positions |
+| `inventory` | string | everything the player carries, `\|`-separated; positions |
+| `ammo`, `ammoReserve`, `shotsFired` | int16 | the held weapon's magazine and reserve; shots in the current burst; positions |
+| `punchPitch`, `punchYaw` | float32 | the recoil's aim punch, degrees; positions |
+| `ping` | int16 | milliseconds; positions |
+| `killsTotal`, `deathsTotal`, `assistsTotal`, `headshotKillsTotal`, `damageTotal`, `utilityDamageTotal`, `enemiesFlashedTotal`, `objectiveTotal`, `aceRoundsTotal`, `threeKillRoundsTotal`, `aliveTimeTotal`, `moneySavedTotal`, `mvps`, `score` | int | the game's own scoreboard counts for the match so far; positions |
+| `cashSpent`, `cashSpentTotal`, `roundStartEquipment` | int32 | money spent this round and in the match; equipment value when the round started; positions |
+| `state_helmet`, `state_defuser`, `state_kevlar`, `state_scoped`, `state_flashed` | int8 | 0/1, the player's state at the row's time, events included: helmet, defuse kit, any armour, scoped (from the player's last position sample up to the row), flashed (inside a `blind` that hit them); every row naming a player |
+| `state_utility` | int16 | grenades carried at the time (from `inventory`); every row naming a player |
+| `state_weapon` | string | the weapon in hand at the time (on a `death`, the victim's own, where `weapon` is the killer's); every row naming a player |
+| `earn_round_cs2` | int16 | what the round paid: on `round_end` the win reward or the loss bonus (with the planting side's bonus), on `plant` and `defuse` the player's 300 |
 
 ## Events
 
 Which player a row names, where it stands, and which columns it fills.
 `match`, `map`, `round`, `roundId`, `phase`, `time`, `roundTime`, `event`,
-`won` and `buy` are filled on every row.
+`won` and `buy` are filled on every row; `inventory`, `money`, `equipment` and
+the `state_*` columns on every row naming a player (events take them from the
+player's last position sample).
 
 | `event` | `player` / `side` / `team` | `x`, `y`, `z` | Also filled |
 |---|---|---|---|
-| `position` | the player | the player (feet) | `dirX`-`dirZ`, `health`, `armor`, `money`, `equipment`, `weapon` (held), `place` |
+| `position` | the player | the player (feet) | `dirX`-`dirZ`, `health`, `armor`, `money`, `equipment`, `weapon` (held), `place`, and the player's whole state (the columns from `flash` on) - in freeze time too |
 | `kill` | the killer | where the killer stood | `other` (victim), `weapon`, `headshot`, `opening`, `traded` (a trade kill), `noscope`, `attackerBlind`, `place` |
 | `death` | the victim | where the victim fell | `other` (killer; empty for the world), `weapon`, `headshot`, `opening`, `traded` (avenged), `noscope`, `attackerBlind`, `place` |
-| `hurt` | the victim | where the victim was hit | `other` (attacker), `damage`, `weapon`, `place` |
-| `shot` | the shooter | where the shot was fired from | `weapon`, `place` |
+| `hurt` | the victim | where the victim was hit | `other` (attacker), `damage`, `health`, `armor`, `armorDamage`, `hitgroup`, `weapon`, `place` - teammates' and the world's hits too |
+| `shot` | the shooter | where the shot was fired from | `weapon`, `place`, `detail` (the game's account of the bullets) |
+| `slash` | the player | where a knife was swung | `weapon` = `Knife` |
+| `grenade` | the thrower | the grenade in flight, at the players' sampling and where it stopped | `weapon` (the grenade), `entity` |
 | `throw` | the thrower | where the grenade was thrown from | `weapon` (the grenade), `place` |
 | `smoke`, `flash`, `he`, `molotov`, `decoy` | the thrower | where it went off | `weapon`, `throwerPlace` (the thrower's place at that moment); `place` stays empty |
-| `blind` | the player flashed | where they stood | `other` (flasher), `duration`, `weapon` = `Flashbang`, `place` |
-| `plant` | the planter | where they planted | `weapon` = `C4 Explosive`, `place` |
-| `defuse` | the defuser | where they defused | `weapon` = `C4 Explosive`, `place` |
+| `blind` | the player flashed | where they stood | `other` (flasher), `duration`, `weapon` = `Flashbang`, `entity`, `place` - teammates flashed too |
+| `plant` | the planter | where they planted | `weapon` = `C4 Explosive`, `place`, `earn_round_cs2` (300) |
+| `defuse` | the defuser | where they defused | `weapon` = `C4 Explosive`, `place`, `earn_round_cs2` (300) |
+| `round_end` | every player who played the round | where the player last stood | `won`, `earn_round_cs2` (what the round paid them: the rise of the side's money to the next freeze time where the rules allow it, else the rules' own), `detail` (`winner`, `reason`, `lossBonus`, `plant`) |
 | `explode` | the planter (with their Steam ID), side `T`, the planting team | the plant's position | `weapon` = `C4 Explosive`, `place` (the planter's at the plant: where the bomb lay); its time is when the bomb went off |
+| `chat` | the sender | where they were | `text` |
+| every other game event about a player, under the game's name: `item_pickup`, `item_equip`, `player_footstep`, `player_jump`, `weapon_reload`, `weapon_zoom`, `player_spawn`, `bomb_beginplant`, `bomb_begindefuse`, `bomb_dropped`, `bomb_pickup`, `bomb_exploded`, `smokegrenade_expired`, `inferno_expire`, `decoy_started`, `player_team`, `player_disconnect`, ... | the player | where they were (a grenade's events: where it was) | `weapon` (an item's), `entity`, `detail` (every field of the event) |
 
 What is in and what is not:
 
@@ -151,7 +189,7 @@ ignores it. To read it yourself:
 import json
 import pyarrow.parquet as pq
 
-table = pq.read_table("out/de_inferno/alpha-vs-bravo-m1.parquet")
+table = pq.read_table("out/de_x/alpha-vs-bravo-m1.parquet")
 hints = json.loads(table.schema.metadata[b"heat3d"])
 rows = table.to_pandas()
 kills = rows[rows["event"] == "kill"]

@@ -1,15 +1,19 @@
-**3DHeat CS2**
+**[Documentation site](https://holdi601.github.io/3DHeat-CS2/)**
 
 - [Home](Home)
+- [Before you start](before-you-start)
 - [Installing](installing)
 - [Commands](commands)
 - [Reading a demo](reading-demos)
 - [Building a match](building-matches)
 - [Statistics](statistics)
 - [The heatmap table](output-table)
-- [The match summary](output-match-json)
+- [The match document](output-match-json)
+- [One file a match](output-container)
 - [Map export](map-export)
 - [Using it with 3DHeat](using-with-3dheat)
 - [Limits](limits)
 - [Updates](updates)
 - [Development](development)
+- [Reference](cli-reference)
+- [Maintaining](maintaining)

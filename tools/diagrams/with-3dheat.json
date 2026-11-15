@@ -1,0 +1,53 @@
+{
+ "title": "Using it with 3DHeat",
+ "cols": [
+  [
+   {
+    "t": "heat3d_cs2 demos",
+    "s": "<map>/<match>.3dheat"
+   },
+   {
+    "t": "heat3d_cs2 map",
+    "s": "<map>.glb"
+   }
+  ],
+  [
+   {
+    "t": "3DHeat viewer",
+    "s": "open, drop or load a folder",
+    "c": "purple"
+   }
+  ],
+  [
+   {
+    "t": "Heatmap tab",
+    "s": "positions, kills, grenades",
+    "c": "green"
+   },
+   {
+    "t": "Level panel",
+    "s": "the map under the heat",
+    "c": "green"
+   },
+   {
+    "t": "Match tab",
+    "s": "rounds, economy, scoreboard",
+    "c": "green"
+   }
+  ]
+ ],
+ "legend": [
+  [
+   "blue",
+   "step"
+  ],
+  [
+   "green",
+   "files written"
+  ],
+  [
+   "purple",
+   "where you see it"
+  ]
+ ]
+}

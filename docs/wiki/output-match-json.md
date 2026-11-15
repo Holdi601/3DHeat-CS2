@@ -1,5 +1,4 @@
-
-# The match summary (`<match>.match.json`)
+# The match document (`<match>.match.json`)
 
 One JSON document per match, next to its table: teams, score, every round
 with its result, economy, plant, kills, clutches and survivors, and every
@@ -17,9 +16,9 @@ decimals for rounds and two for kills and the plant.
 | Field | Type | What |
 |---|---|---|
 | `format` | string | always `heat3d-cs2-match` - how a reader recognises the file |
-| `version` | number | `2`. A version 1 document gives a plant's `time` in match seconds; from 2 it is seconds into the round, as a kill's. |
+| `version` | number | `3`. A version 1 document gives a plant's `time` in match seconds; from 2 it is seconds into the round, as a kill's. 3 adds the fields from `header` on, and freeze time to the table. |
 | `match` | string | the match name, as the files are named |
-| `map` | string | the map (`de_inferno`) |
+| `map` | string | the map (`de_x`) |
 | `demos` | string[] | the demo files it was built from, file names only, in match order |
 | `teams` | string[] | the team names in order of appearance (round 1: the T side first) |
 | `score` | object | team name -> rounds won: the last round's score |
@@ -30,6 +29,14 @@ decimals for rounds and two for kills and the plant.
 | `pistolRounds` | number[] | the pistol rounds the `buy` is counted with: round 1, and the round after the half when `halfLength` is known; never an overtime round |
 | `players` | object[] | the scoreboard - [below](#players) |
 | `conventions` | object | the definitions behind the numbers, [below](#conventions) |
+| `header` | object | the first demo's header as the parser gives it: server name, patch version, demo version, map |
+| `profiles` | object | Steam ID -> what stays the same for a player through the match: `crosshair_code`, `music_kit_id`, `rank`, `comp_wins`, `player_color`, `is_connected` (the last seen) |
+| `playerInfo` | object[] | every player the demos list, coaches and casters too: Steam ID, name, team number |
+| `skins`, `itemDrops` | object[] | weapon skins and item drops, where the demo has them (tournament demos from the broadcast have none) |
+| `chat` | object[] | every chat line in the match: time, round, player, side, text |
+| `events` | object[] | every game event about no player, in time order, with all its fields: round beeps and phases, `round_officially_ended`, `buytime_ended`, `server_message`, `server_cvar` (the server's settings as they changed), the broadcast camera director's chase and fixed shots, `cs_win_panel_match`, ... |
+| `state` | object[] | the game's state where it changed: time, field, value - timeouts (`is_terrorist_timeout`, `num_ct_timeouts`, `is_technical_timeout`, `is_waiting_for_resume`), the bomb (`is_bomb_planted`, `is_bomb_dropped`), `ct_losing_streak` / `t_losing_streak`, `game_phase`, `round_in_progress`, the players alive, the server's `match_start_time` and `round_start_time` |
+| `selfCheck` | object | `completeness`: where everything of the demo went - per event name, property class, network message, frame and string table its `seen`, `decoded`, `partial`, `raw` and `lost` counts, the sidecars written, the total `lost` (0 unless `--no-bulk`), the properties the parser lists but cannot read (`unreadProps`). The convention: [Converters keep everything](https://github.com/Holdi601/3DHeat/blob/main/docs/converters.md); the sidecars: the README's Completeness section |
 
 ## Rounds
 

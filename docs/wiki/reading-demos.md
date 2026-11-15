@@ -1,4 +1,3 @@
-
 # Reading a demo
 
 What is taken out of one `.dem` file, before anything is interpreted. Code:
@@ -12,7 +11,7 @@ result is kept as it comes, in a `RawPart`:
 | Field | Holds |
 |---|---|
 | `path` | the file |
-| `map` | `map_name` from the demo header (`de_mirage`); empty if the header has none |
+| `map` | `map_name` from the demo header (`de_x`); empty if the header has none |
 | `samples` | one row per player per sampled tick: the player and rules fields below, plus `tick`, `steamid`, `name` |
 | `events` | event name -> its rows, with the players' fields prefixed `user_`, `attacker_`, `assister_` as the parser names them |
 
@@ -43,7 +42,7 @@ accurate to one stride (1/8 s by default).
 | `team_clan_name` | the team's name as the server shows it, used to name the teams |
 | `active_weapon_name` | the weapon held, as the game names it (`AK-47`, `Karambit`) |
 | `is_alive` | whether the player is alive - only living players become positions |
-| `last_place_name` | the map's own place name (`BombsiteA`, `TopofMid`) |
+| `last_place_name` | the map's own place name (`BombsiteA`) |
 | `balance` | money |
 | `current_equip_value` | the value of what the player carries |
 

@@ -1,14 +1,22 @@
 # CS2 demos and maps
 
-Counter-Strike 2 demos into heatmap tables and match summaries, and CS2 maps
+**What is it?** Counter-Strike 2 can save a recording of a match, called a
+*demo* (a `.dem` file). This tool turns a demo into files the 3DHeat viewer
+can show in 3D: where everyone stood, died, threw and planted, round by
+round. It can also turn a CS2 map into a 3D model to show them on.
+
+**Why would I use it?** To review your own matches, to lay many matches of
+one map over each other as one heatmap, and for match statistics such as
+ADR (average damage a round) and KAST (the share of rounds a player killed,
+assisted, survived or was traded) without a third-party site.
+
+**Example:** `alpha-vs-bravo-m1.dem` in, `out/de_x/alpha-vs-bravo-m1.3dheat`
+out - one file a match, which the viewer opens as it is.
+
+In more detail: it turns Counter-Strike 2 demos into heatmap tables and match documents, and CS2 maps
 into level geometry, for the [3DHeat viewer](https://github.com/Holdi601/3DHeat)
 ([documentation](https://holdi601.github.io/3DHeat/)) - or anything that reads
 Parquet, JSON and glTF.
-
-Useful for reviewing your own matches in 3D - where players stood, died, threw
-and planted, round by round - for overlaying many matches of one map into one
-heatmap, and for match statistics (ADR, KAST, trades, clutches, economy)
-without a third-party site.
 
 **Documentation: <https://holdi601.github.io/3DHeat-CS2/>** - a page per command
 and output, with examples.
@@ -17,14 +25,24 @@ and output, with examples.
 
 ## Install
 
-A current Python 3 (3.9 or later), then in a clone or a downloaded release:
+New to the command line? Read [Before you start](https://holdi601.github.io/3DHeat-CS2/before-you-start.html) first.
+
+Python 3.10 or later. Download the zip from
+[Releases](https://github.com/Holdi601/3DHeat-CS2/releases) and unpack it (or,
+if you have Git, clone the repository), open a terminal in that folder, then:
 
 ```bash
 pip install -r requirements.txt
-python -m heat3d_cs2 demos <demo files or folders> -o out          # every match in them
-python -m heat3d_cs2 map de_mirage -o out/de_mirage/de_mirage.glb  # the map from the installed game
-python -m heat3d_cs2 scoreboard out/de_mirage/<match>.match.json   # a match's scoreboard as text
+python -m heat3d_cs2 demos <demo files or folders> -o out   # every match in them
+python -m heat3d_cs2 map <map> -o out/<map>/<map>.glb       # the map from the installed game
+python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # a match's scoreboard as text
 ```
+
+Words in `<angle brackets>` are placeholders: type your own file, folder or
+map name instead (`de_x` below is a made-up map). After `demos` you should
+see a line like `1 match(es), 1 at a time ...` and then one line per match;
+matches you download in the game are under `game/csgo/replays` in the CS2
+install folder; demos from a tournament site are wherever you saved them.
 
 `map` needs Source2Viewer's command line build (see [The map](#the-map)).
 
@@ -43,8 +61,8 @@ python -m heat3d_cs2 scoreboard out/de_mirage/<match>.match.json   # a match's s
 | | `--no-bulk` | off | leave the entity stream, players' commands and animation out of the packets sidecar (the self-check counts them lost) |
 | `map <name or .vpk>` | `-o`, `--out` | required | the `.glb` to write |
 | | `--game FOLDER` | from Steam | the CS2 install folder |
-| | `--source2viewer EXE` | `PATH`, `HEAT3D_SOURCE2VIEWER` | the Source2Viewer CLI |
-| `scoreboard <match.json>` | | | print a match summary's scoreboard as text |
+| | `--source2viewer EXE` | `HEAT3D_SOURCE2VIEWER`, then `PATH` | the Source2Viewer CLI (this option first, then the variable, then `PATH`) |
+| `scoreboard <match>` | | | print a match's scoreboard as text, from its `.3dheat` or `.match.json` |
 
 `python -m heat3d_cs2 <command> --help` lists the same. Every option with examples:
 [Commands](https://holdi601.github.io/3DHeat-CS2/commands.html).
@@ -53,7 +71,8 @@ python -m heat3d_cs2 scoreboard out/de_mirage/<match>.match.json   # a match's s
 
 ## Output
 
-Per match, `demos` writes one file into a folder per map (`out/de_mirage/...`),
+Output: one `.3dheat` file a match by default; `--loose` writes the separate
+files instead. Per match, `demos` writes one file into a folder per map (`out/<map>/...`),
 so a map's matches load together: `<match>.3dheat`, a
 [`.3dheat` container](https://holdi601.github.io/3DHeat/container.html) - a ZIP
 with a manifest naming each member's role. The members, or with `--loose` the
@@ -63,7 +82,7 @@ separate files:
   64) with everything the demo says of them, freeze time included, every
   grenade's flight, and every event where it happened, one row each: the
   heatmap's data.
-- `<match>.match.json` - teams, score, every round (winner, how, economy, the
+- `<match>.match.json` (role `match`, the *match document*) - teams, score, every round (winner, how, economy, the
   plant, every kill in order, clutches, survivors), every player's
   scoreboard line, the chat, every event about no player, and the game's
   state as it changed: the match analysis' data. Its `selfCheck` says where
@@ -134,7 +153,7 @@ Where the game does not define them:
 ## Demos as they come
 
 Demos from the wild are not all one clean file per match, and each of these
-was met in a collection of 177 tournament demos:
+was met in a large collection of tournament demos:
 
 - **A match split across files.** Parts are put in order by the round count,
   which carries on across them, then by the server's clock. A part's
@@ -148,23 +167,20 @@ was met in a collection of 177 tournament demos:
   old bodies in the demo beside the new ones for some seconds; each player
   keeps the row that leads on into where they go next.
 - **A demo that starts late** (round 2) or ends during the last round says
-  so (`missing`, `incomplete` in the match summary) rather than guessing.
+  so (`missing`, `incomplete` in the match document) rather than guessing.
 - **The clock.** Within a file, time is counted in ticks: the server's clock
   stands still through a pause while the ticks run on.
 - **Coaches** on a team's side are never alive and are not players.
 
-Checked over all of it: 165 matches, 3,565 rounds; in every match the score
-follows the round winners, each side's kills are the other side's deaths,
+Checked over all of it: in every match the score follows the round winners, each side's kills are the other side's deaths,
 and every round starts five against five.
 
-The rest of the demo, checked on a Dust2 match of it (22 rounds): every
-player's kills and damage counted from the events equal the game's own
-scoreboard counts at the end (`kills_total`, `damage_total`: 10 of 10
-players), deaths 8 of 10 (one apart for the other two); the health a `hurt`
-leaves equals the next sample's for 365 of 395 hits (the rest were hit again
-before it); every smoke, flash, HE and decoy that went off (329) has a
-flight with its entity, ending a median 0 units (95% within 50) from where it
-went off - the fires (103) carry the fire's entity, not the bottle's.
+The rest of the demo, checked on one real match: every player's kills and
+damage counted from the events equal the game's own scoreboard counts at the
+end, deaths within one; the health a `hurt` leaves equals the next sample's
+unless the player was hit again before it; every smoke, flash, HE and decoy
+that went off has a flight with its entity, ending a median 0 units from
+where it went off - the fires carry the fire's entity, not the bottle's.
 
 ## Completeness
 
@@ -187,7 +203,7 @@ collection (below):
 
 - **Console variables** (`net_SetConVar`, `decoded` in `packets`): every name
   and value equals the parser's `server_cvar` (which repeats the start's list
-  once per stretch of the demo it reads apart: 1,770 rows for 59 variables).
+  once per stretch of the demo it reads apart).
 - **Chat lines** (`UM_SayText2`): speaker, text and kind equal the parser's
   `chat_message`, tick for tick.
 - **The server's info** (`svc_ServerInfo`): the map and the game folder equal
@@ -196,8 +212,8 @@ collection (below):
   same as the tables' own snapshot.
 - **Players' entries** (`userinfo` in `strings`): name, steamid, user id, bot
   or SourceTV; every player the parser lists is there with the same steamid
-  (names can differ: the entry is from the start, `BIT` where the scoreboard
-  later says `Coach | BIT`).
+  (names can differ: the entry is from the start, `Player` where the
+  scoreboard later says `Coach | Player`).
 
 ### Kept raw
 
@@ -229,8 +245,8 @@ collection (below):
   the players' commands (`svc_UserCmds`, sub-tick inputs) and the animation
   stream (`DEM_AnimationData`).
 
-The bulk is over half a demo's size even compressed (on a 258 MB demo:
-commands 67 MB, animation 39 MB, entities 35 MB); everything else together
+The bulk is over half a demo's size even compressed (the commands about a
+quarter, the animation and the entities each about a seventh); everything else together
 is about a tenth (props 8%, packets without the bulk 2%, events, strings).
 `--no-bulk` leaves it out, and the self-check then counts it lost, by name.
 
@@ -261,10 +277,9 @@ are left out; each surface is split into ground (facing up, walkable) and
 structure. It is written in the frame the tables are drawn in.
 
 The check that the frame is right is the players standing on it: over a
-match on each of the eight maps of the current pools (Mirage, Nuke, Ancient,
-Inferno, Dust2, Train, Anubis, Overpass), 99.9-100% of player samples have
-ground beneath them, a median of 0.03 to 2.1 units (under 6 cm) below their
-feet. The same maps mirrored leave 36-64% over ground.
+match on each map of the current competitive pool, 99.9-100% of player
+samples have ground beneath them, a few centimetres below their feet. The
+same maps mirrored leave well under two thirds over ground.
 
 ## What to point it at
 
@@ -286,16 +301,23 @@ HEAT3D_CS2_DEMO=<a demo> HEAT3D_SOURCE2VIEWER=<cli> python -m pytest   # also th
 
 ## Part of 3DHeat
 
-3DHeat CS2 is one of the free tools around the [3DHeat](https://github.com/Holdi601/3DHeat) telemetry viewer. Each is its
-own project, with its own releases and licence:
+3DHeat CS2 is one of the free tools around the 3DHeat viewer. Each is its own
+project, with its own releases and licence:
 
-| Tool | What it does |
-|---|---|
-| [3DHeat GameFiles](https://github.com/Holdi601/3DHeat-GameFiles) | courses and levels out of the archives games ship, as glTF |
-| [3DHeat GameCapture](https://github.com/Holdi601/3DHeat-GameCapture) | lap telemetry from racing games' published interfaces; levels reconstructed from gameplay video |
-| [3DHeat Unreal Exporter](https://github.com/Holdi601/3DHeat-UnrealExporter) | an Unreal Editor plugin that exports a level as glTF |
-| [3DHeat CS2](https://github.com/Holdi601/3DHeat-CS2) | Counter-Strike 2 demos into heatmap tables and match summaries; maps into geometry |
-| [3DHeat Watcher](https://github.com/Holdi601/3DHeat-Watcher) | records your play in the background from what games publish, for your own statistics |
+| Tool | What it does | Docs |
+|---|---|---|
+| [3DHeat](https://github.com/Holdi601/3DHeat) | the viewer: heatmaps, race analysis and match review in 3D | [site](https://holdi601.github.io/3DHeat/) |
+| [GameFiles](https://github.com/Holdi601/3DHeat-GameFiles) | courses and levels out of the files games ship, as 3D models | [site](https://holdi601.github.io/3DHeat-GameFiles/) |
+| [GameCapture](https://github.com/Holdi601/3DHeat-GameCapture) | lap telemetry from racing games; levels rebuilt from gameplay video | [site](https://holdi601.github.io/3DHeat-GameCapture/) |
+| [Unreal Exporter](https://github.com/Holdi601/3DHeat-UnrealExporter) | an Unreal Editor plugin that exports a level as one 3D model | [site](https://holdi601.github.io/3DHeat-UnrealExporter/) |
+| [CS2](https://github.com/Holdi601/3DHeat-CS2) | Counter-Strike 2 demos into tables and match documents; maps into 3D models | [site](https://holdi601.github.io/3DHeat-CS2/) |
+| [Watcher](https://github.com/Holdi601/3DHeat-Watcher) | records what games publish about your play, in the background | [site](https://holdi601.github.io/3DHeat-Watcher/) |
+| [Ext-WarThunder](https://github.com/Holdi601/3DHeat-Ext-WarThunder) | War Thunder replays into tables and match documents | [site](https://holdi601.github.io/3DHeat-Ext-WarThunder/) |
+| [Ext-WoT](https://github.com/Holdi601/3DHeat-Ext-WoT) | World of Tanks replays into tables and match documents | [site](https://holdi601.github.io/3DHeat-Ext-WoT/) |
+| [Ext-WoWs](https://github.com/Holdi601/3DHeat-Ext-WoWs) | World of Warships replays into tables and match documents | [site](https://holdi601.github.io/3DHeat-Ext-WoWs/) |
+| [Ext-Squad](https://github.com/Holdi601/3DHeat-Ext-Squad) | Squad server demos into tables and match documents | [site](https://holdi601.github.io/3DHeat-Ext-Squad/) |
+| [Ext-DCS](https://github.com/Holdi601/3DHeat-Ext-DCS) | DCS World maps into 3D models | [site](https://holdi601.github.io/3DHeat-Ext-DCS/) |
+| [Ext-IL2](https://github.com/Holdi601/3DHeat-Ext-IL2) | IL-2 Sturmovik maps into 3D models | [site](https://holdi601.github.io/3DHeat-Ext-IL2/) |
 
 ## Updates
 

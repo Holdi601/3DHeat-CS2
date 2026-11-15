@@ -1,9 +1,9 @@
 ---
-title: The match summary
-nav_order: 8
+title: The match document
+nav_order: 9
 ---
 
-# The match summary (`<match>.match.json`)
+# The match document (`<match>.match.json`)
 
 One JSON document per match, next to its table: teams, score, every round
 with its result, economy, plant, kills, clutches and survivors, and every
@@ -23,7 +23,7 @@ decimals for rounds and two for kills and the plant.
 | `format` | string | always `heat3d-cs2-match` - how a reader recognises the file |
 | `version` | number | `3`. A version 1 document gives a plant's `time` in match seconds; from 2 it is seconds into the round, as a kill's. 3 adds the fields from `header` on, and freeze time to the table. |
 | `match` | string | the match name, as the files are named |
-| `map` | string | the map (`de_inferno`) |
+| `map` | string | the map (`de_x`) |
 | `demos` | string[] | the demo files it was built from, file names only, in match order |
 | `teams` | string[] | the team names in order of appearance (round 1: the T side first) |
 | `score` | object | team name -> rounds won: the last round's score |

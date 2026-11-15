@@ -1,25 +1,27 @@
 ---
 title: Installing
-nav_order: 2
+nav_order: 3
 ---
 
 # Installing
 
+New to the command line? Read [Before you start](before-you-start.md) first.
+
 3DHeat CS2 is a Python package run from its own folder. There is nothing to
-build and no installer; it needs Python, four packages, and - only for the map
+build and no installer; it needs Python, four packages (plus pytest for the tests), and - only for the map
 export - Counter-Strike 2 installed and Source2Viewer's command-line build.
 
 ## Getting the code
 
-Either clone the repository:
+Download a release archive from the
+[releases page](https://github.com/Holdi601/3DHeat-CS2/releases) and unpack it,
+or, if you have Git, clone the repository:
 
 ```bash
 git clone https://github.com/Holdi601/3DHeat-CS2.git
 cd 3DHeat-CS2
 ```
 
-or download a release archive from the
-[releases page](https://github.com/Holdi601/3DHeat-CS2/releases) and unpack it.
 Both kinds of copy can update themselves (see [Updates](updates.md)). The
 installed version is the one line in the file `VERSION`.
 
@@ -29,16 +31,26 @@ because it is in the current directory. The package is not installed into
 
 ## Python and the packages
 
-No minimum Python version is declared. The code uses features of Python 3.9
-and later (`str.removeprefix`, built-in generic types); a current Python 3
-(3.10 or later) is the safe choice. A virtual environment keeps the packages
-apart from anything else:
+Python 3.10 or later. A virtual environment keeps the packages apart from
+anything else. On Windows (PowerShell):
+
+```powershell
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+```
+
+If PowerShell refuses to run the script, run
+`Set-ExecutionPolicy -Scope Process RemoteSigned` first (it lasts only for that
+window). On Linux or macOS:
 
 ```bash
 python -m venv .venv
-.venv\Scripts\activate          # Windows; on Linux/macOS: source .venv/bin/activate
+source .venv/bin/activate
 pip install -r requirements.txt
 ```
+
+It works when `python -m heat3d_cs2 --help` prints `usage: heat3d_cs2 ...`.
 
 `requirements.txt`:
 

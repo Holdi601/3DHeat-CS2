@@ -1,0 +1,82 @@
+{
+ "title": "demos: from demo files to one file a match",
+ "cols": [
+  [
+   {
+    "t": "<match>-p1.dem",
+    "s": "part 1",
+    "c": "grey"
+   },
+   {
+    "t": "<match>-p2.dem",
+    "s": "part 2",
+    "c": "grey"
+   }
+  ],
+  [
+   {
+    "t": "read each part",
+    "s": "demoparser2: ticks, events,|props, string tables, packets"
+   }
+  ],
+  [
+   {
+    "t": "build the match",
+    "s": "parts in order, chains,|rounds, teams, kills, trades"
+   }
+  ],
+  [
+   {
+    "t": "<match>.parquet",
+    "s": "the heatmap table",
+    "c": "green"
+   },
+   {
+    "t": "<match>.match.json",
+    "s": "rounds, scoreboard, selfCheck",
+    "c": "green"
+   },
+   {
+    "t": "sidecars",
+    "s": "events, props, strings, packets",
+    "c": "green"
+   }
+  ],
+  [
+   {
+    "t": "<map>/<match>.3dheat",
+    "s": "one ZIP container|(--loose: keep the files)",
+    "c": "orange"
+   }
+  ],
+  [
+   {
+    "t": "3DHeat viewer",
+    "s": "Heatmap tab, Match tab",
+    "c": "purple"
+   }
+  ]
+ ],
+ "legend": [
+  [
+   "grey",
+   "input"
+  ],
+  [
+   "blue",
+   "step"
+  ],
+  [
+   "green",
+   "files written"
+  ],
+  [
+   "orange",
+   "one file a match"
+  ],
+  [
+   "purple",
+   "where you see it"
+  ]
+ ]
+}
