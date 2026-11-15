@@ -14,12 +14,12 @@ search_exclude: true
 | Путања | Шта је |
 |---|---|
 | [`heat3d_cs2/__main__.py`](https://github.com/Holdi601/3DHeat-CS2/blob/main/heat3d_cs2/__main__.py) | `python -m heat3d_cs2`: провера издања, па командна линија |
-| [`heat3d_cs2/cli.py`](https://github.com/Holdi601/3DHeat-CS2/blob/main/heat3d_cs2/cli.py) | наредбе и опције; груписање демо-датотека у мечеве; скуп радника |
+| [`heat3d_cs2/cli.py`](https://github.com/Holdi601/3DHeat-CS2/blob/main/heat3d_cs2/cli.py) | команде и опције; груписање демо-датотека у мечеве; скуп радника |
 | [`heat3d_cs2/demo.py`](https://github.com/Holdi601/3DHeat-CS2/blob/main/heat3d_cs2/demo.py) | једна демо-датотека кроз demoparser2 у `RawPart` - [Читање демоа](reading-demos.md) |
 | [`heat3d_cs2/match.py`](https://github.com/Holdi601/3DHeat-CS2/blob/main/heat3d_cs2/match.py) | делови, ланци, сат, рунде, тимови, редови, убиства, штета, блицеви - [Како се прави меч](building-matches.md) |
 | [`heat3d_cs2/stats.py`](https://github.com/Holdi601/3DHeat-CS2/blob/main/heat3d_cs2/stats.py) | резимеи рунди, табела резултата, документ меча, текстуална табела резултата - [Статистика](statistics.md) |
 | [`heat3d_cs2/output.py`](https://github.com/Holdi601/3DHeat-CS2/blob/main/heat3d_cs2/output.py) | Parquet табела са својим `heat3d` наговештајима, и JSON - [Табела топлотне мапе](output-table.md) |
-| [`heat3d_cs2/mapexport.py`](https://github.com/Holdi601/3DHeat-CS2/blob/main/heat3d_cs2/mapexport.py) | налажење CS2 и Source2Viewer, колизиона мрежа у оквир приказивача - [Извоз мапе](map-export.md) |
+| [`heat3d_cs2/mapexport.py`](https://github.com/Holdi601/3DHeat-CS2/blob/main/heat3d_cs2/mapexport.py) | налажење CS2 и Source2Viewer, колизиона мрежа у оквир прегледача - [Извоз мапе](map-export.md) |
 | [`heat3d_cs2/glb.py`](https://github.com/Holdi601/3DHeat-CS2/blob/main/heat3d_cs2/glb.py) | мали читач и писач glTF бинарног формата (без зависности осим numpy) |
 | [`heat3d_update/`](https://github.com/Holdi601/3DHeat-CS2/tree/main/heat3d_update) | провера издања и ажурирање - [Ажурирања](updates.md) |
 | [`tests/`](https://github.com/Holdi601/3DHeat-CS2/tree/main/tests) | тестови и синтетички демо |
@@ -71,7 +71,7 @@ python -m pytest
 
 [`tests/test_cli.py`](https://github.com/Holdi601/3DHeat-CS2/blob/main/tests/test_cli.py) проверава да се демои у фолдерима налазе без обзира на величину слова у `.dem`, и да се меч рачуна као написан само кад има и своју табелу и свој документ меча.
 
-[`tests/test_mapexport.py`](https://github.com/Holdi601/3DHeat-CS2/blob/main/tests/test_mapexport.py) проверава претварања оквира (Source2Viewer-ових метара у игрине инче, па даље у оквир приказивача, ротација са детерминантом 1), да су клипови и небо изостављени без обзира на величину слова и на имена површина, поделу на под и конструкцију по нормали, и да се `.glb` напише и поново прочита.
+[`tests/test_mapexport.py`](https://github.com/Holdi601/3DHeat-CS2/blob/main/tests/test_mapexport.py) проверава претварања оквира (Source2Viewer-ових метара у игрине инче, па даље у оквир прегледача, ротација са детерминантом 1), да су клипови и небо изостављени без обзира на величину слова и на имена површина, поделу на под и конструкцију по нормали, и да се `.glb` напише и поново прочита.
 
 ### Провера пода на правој мапи {#the-floor-check-on-a-real-map}
 
@@ -86,7 +86,7 @@ HEAT3D_CS2_DEMO=<a demo> HEAT3D_SOURCE2VIEWER=<the CLI> python -m pytest
 - Времена унутар `match.py` су секунде меча, осим `time` постављања, секунде у његовој рунди, како га документ меча пише; такови постају секунде тек преко `_Part.at`.
 - Стране су стрингови `T` / `CT` свуда ван сирових података парсера (`team_num` 2 / 3).
 - Нова колона табеле иде у `ROW_COLUMNS` (и `NUMERIC` ако је бројчана) у `match.py`; `output.table` бира њен Parquet тип из скупова `INT16`, `INT32`, `FLOAT64` и 0/1 ознака, а float32 у осталим случајевима.
-- Ако желите да приказивач другачије ради са колоном, мења се `HINTS` у `output.py`.
+- Ако желите да прегледач другачије ради са колоном, мења се `HINTS` у `output.py`.
 
 ## Лиценца {#licence}
 

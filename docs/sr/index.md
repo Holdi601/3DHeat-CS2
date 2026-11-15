@@ -11,7 +11,7 @@ permalink: /sr/
 # 3DHeat CS2 {#dheat-cs2}
 
 **Шта је то?** Counter-Strike 2 може да сачува снимак меча, који се зове
-*демо*. Овај алат претвара демо у датотеке које 3DHeat приказивач може да прикаже у 3D:
+*демо*. Овај алат претвара демо у датотеке које 3DHeat прегледач може да прикаже у 3D:
 где је свако стајао, умирао, бацао и постављао, рунду по рунду. Може и да
 претвори CS2 мапу у 3D модел на којем их прикаже.
 
@@ -27,7 +27,7 @@ permalink: /sr/
 
 Детаљније: 3DHeat CS2 претвара **Counter-Strike 2 демое** у табелу топлотне мапе и документ о
 мечу за сваки меч, а **CS2 мапу** у геометрију нивоа. Излази су направљени
-за [3DHeat](https://holdi601.github.io/3DHeat/) телеметријски приказивач
+за [3DHeat](https://holdi601.github.io/3DHeat/) телеметријски прегледач
 ([извор](https://github.com/Holdi601/3DHeat)), али су то обичне датотеке -
 Parquet, JSON и glTF бинарни формат - које и било шта друго може да прочита.
 
@@ -53,7 +53,7 @@ python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # табела ре�
 
 `demos` пише, за сваки меч, по једну датотеку у фасцикли названој по мапи:
 `out/<map>/<match>.3dheat`, [`.3dheat` контејнер](output-container.md) - формат
-приказивача једна датотека по мечу ([спецификација](https://holdi601.github.io/3DHeat/container.html)).
+прегледача једна датотека по мечу ([спецификација](https://holdi601.github.io/3DHeat/container.html)).
 Носи ове чланове; `--loose` их уместо тога пише као засебне датотеке:
 
 | Члан | Шта држи | Учитава се на |
@@ -80,7 +80,7 @@ python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # табела ре�
 | [Документ о мечу](output-match-json.md) | `.match.json` документ, поље по поље |
 | [Једна датотека по мечу](output-container.md) | `.3dheat` контејнер који `demos` пише по основи, `--loose` |
 | [Извоз мапе](map-export.md) | како се извози мрежа судара мапе, оквир, назив чворова, јединице |
-| [Коришћење са 3DHeat-ом](using-with-3dheat.md) | учитавање табела, докумената о мечу и мапа у картице Топлотна мапа и Меч приказивача |
+| [Коришћење са 3DHeat-ом](using-with-3dheat.md) | учитавање табела, докумената о мечу и мапа у картице Топлотна мапа и Меч прегледача |
 | [Ограничења](limits.md) | шта се претпоставља, шта није обрађено, шта није проверено |
 | [Ажурирања](updates.md) | провера издања при покретању и `python -m heat3d_update` |
 | [Развој](development.md) | распоред кода, тестови, синтетички демо |
@@ -108,12 +108,12 @@ python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # табела ре�
 
 ## Део 3DHeat-а {#part-of-3dheat}
 
-3DHeat CS2 је један од бесплатних алата око 3DHeat приказивача, сваки са својим
+3DHeat CS2 је један од бесплатних алата око 3DHeat прегледача, сваки са својим
 репозиторијумом, издањима и лиценцом:
 
 | Алат | Шта ради | Документација |
 |---|---|---|
-| [3DHeat](https://github.com/Holdi601/3DHeat) | приказивач: топлотне мапе, анализа трке и преглед мечева у 3D | [сајт](https://holdi601.github.io/3DHeat/) |
+| [3DHeat](https://github.com/Holdi601/3DHeat) | прегледач: топлотне мапе, анализа трке и преглед мечева у 3D | [сајт](https://holdi601.github.io/3DHeat/) |
 | [GameFiles](https://github.com/Holdi601/3DHeat-GameFiles) | стазе и нивои из датотека које игре испоручују, као 3D модели | [сајт](https://holdi601.github.io/3DHeat-GameFiles/) |
 | [GameCapture](https://github.com/Holdi601/3DHeat-GameCapture) | телеметрија кругова из тркачких игара; нивои реконструисани из снимка игре | [сајт](https://holdi601.github.io/3DHeat-GameCapture/) |
 | [Unreal Exporter](https://github.com/Holdi601/3DHeat-UnrealExporter) | додатак за Unreal Editor који извози ниво као један 3D модел | [сајт](https://holdi601.github.io/3DHeat-UnrealExporter/) |

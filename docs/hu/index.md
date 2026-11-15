@@ -46,10 +46,10 @@ python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # egy meccs eredmén
 ```
 
 Ezt kell látnod: `1 match(es), 1 at a time ...`, majd soronként egy meccset
-(lásd: [Parancsok](../commands.md#what-is-printed)).
+(lásd: [Parancsok](commands.md#what-is-printed)).
 
 A `demos` meccsenként egy fájlt ír egy térkép nevű mappába: `out/<map>/<match>.3dheat`, egy
-[`.3dheat` tároló](../output-container.md) – a megjelenítő egy-fájl-egy-meccs formátuma
+[`.3dheat` tároló](output-container.md) – a megjelenítő egy-fájl-egy-meccs formátuma
 ([leírás](https://holdi601.github.io/3DHeat/container.html)). Ez a következő tagokat tartalmazza; a `--loose`
 kapcsoló ezeket külön fájlokként írja:
 
@@ -68,28 +68,28 @@ hőtérkép alatt fekszik (Háttér / pálya panel).
 | Oldal | Mit tartalmaz |
 |---|---|
 | [Mielőtt elkezded](before-you-start.md) | Python, egy terminál, helyőrzők, mit jelent a siker és a gyakori hibák |
-| [Telepítés](../installing.md) | Python, a csomagok, a Source2Viewer CLI, hol kell lennie a CS2-nek |
-| [Parancsok](../commands.md) | `demos`, `map`, `scoreboard`: minden kapcsoló, mit ír ki, kilépési kódok |
-| [Demó olvasása](../reading-demos.md) | mit olvasunk egy demófájlból: mintavett tickek, játékostulajdonságok, játékszabályok, események |
-| [Meccs felépítése](../building-matches.md) | részek és láncok, a meccsóra, fordulók, csapatok és oldalak, sorok, ölések, hatástalanítások, nyitások, sebzés, vakítások, gazdaság |
-| [Statisztikák](../statistics.md) | az eredménytábla: K/D/A, ADR, KAST, HS%, nyitások, hatástalanítások, többes ölések, clutch-ek, segédeszközök, vakítások |
-| [A hőtérkép-táblázat](../output-table.md) | a Parquet-fájl: minden oszlop, típusa, mely események töltik, a `heat3d` lábléc-tippek, a tengelyek |
-| [A meccsdokumentum](../output-match-json.md) | a `.match.json` dokumentum, mezőnként |
-| [Egy fájl meccsenként](../output-container.md) | a `.3dheat` tároló, amelyet a `demos` alapértelmezésben ír, és a `--loose` |
-| [Térkép exportálása](../map-export.md) | hogyan exportálódik egy térkép ütközési hálója, a keret, a csomópontnevek, a mértékegységek |
-| [Használat a 3DHeat-tel](../using-with-3dheat.md) | táblázatok, meccsdokumentumok és térképek betöltése a megjelenítő Hőtérkép és Meccs fülére |
-| [Korlátok](../limits.md) | mi feltételezett, mi nincs kezelve, mi nincs ellenőrizve |
-| [Frissítések](../updates.md) | a kiadás-ellenőrzés indításkor és a `python -m heat3d_update` |
-| [Fejlesztés](../development.md) | a kód felépítése, tesztek, a szintetikus demó-mintája |
+| [Telepítés](installing.md) | Python, a csomagok, a Source2Viewer CLI, hol kell lennie a CS2-nek |
+| [Parancsok](commands.md) | `demos`, `map`, `scoreboard`: minden kapcsoló, mit ír ki, kilépési kódok |
+| [Demó olvasása](reading-demos.md) | mit olvasunk egy demófájlból: mintavett tickek, játékostulajdonságok, játékszabályok, események |
+| [Meccs felépítése](building-matches.md) | részek és láncok, a meccsóra, fordulók, csapatok és oldalak, sorok, ölések, hatástalanítások, nyitások, sebzés, vakítások, gazdaság |
+| [Statisztikák](statistics.md) | az eredménytábla: K/D/A, ADR, KAST, HS%, nyitások, hatástalanítások, többes ölések, clutch-ek, segédeszközök, vakítások |
+| [A hőtérkép-táblázat](output-table.md) | a Parquet-fájl: minden oszlop, típusa, mely események töltik, a `heat3d` lábléc-tippek, a tengelyek |
+| [A meccsdokumentum](output-match-json.md) | a `.match.json` dokumentum, mezőnként |
+| [Egy fájl meccsenként](output-container.md) | a `.3dheat` tároló, amelyet a `demos` alapértelmezésben ír, és a `--loose` |
+| [Térkép exportálása](map-export.md) | hogyan exportálódik egy térkép ütközési hálója, a keret, a csomópontnevek, a mértékegységek |
+| [Használat a 3DHeat-tel](using-with-3dheat.md) | táblázatok, meccsdokumentumok és térképek betöltése a megjelenítő Hőtérkép és Meccs fülére |
+| [Korlátok](limits.md) | mi feltételezett, mi nincs kezelve, mi nincs ellenőrizve |
+| [Frissítések](updates.md) | a kiadás-ellenőrzés indításkor és a `python -m heat3d_update` |
+| [Fejlesztés](development.md) | a kód felépítése, tesztek, a szintetikus demó-mintája |
 | [Parancsleírás](../cli-reference.md) | minden parancs `--help` kimenete, a kódból generálva |
-| [Karbantartás](../maintaining.md) | ezekhez az oldalakhoz tartozó kiadási ellenőrzőlista |
+| [Karbantartás](maintaining.md) | ezekhez az oldalakhoz tartozó kiadási ellenőrzőlista |
 
 ## Mihez ellenőrizték {#what-it-is-checked-against}
 
 A vadonból származó demók nem egy-fájl-egy-meccs formában érkeznek. A konverter kezeli azt, ha egy meccs több
 fájlra bomlik, bármilyen sorrendben; ha a szerver a meccs közepén újraindult; ha két különböző meccs egy néven van
 tárolva; ha a fordulók biztonsági mentésből álltak helyre; ha a felvétel későn kezdődik vagy korán végződik;
-szünetekre; és edzőkre egy csapat oldalán – lásd: [Meccs felépítése](../building-matches.md). Egy nagy gyűjtemény
+szünetekre; és edzőkre egy csapat oldalán – lásd: [Meccs felépítése](building-matches.md). Egy nagy gyűjtemény
 turnademóján ellenőrizve: minden meccsen a végeredmény követi a fordulók győzteseit, minden oldal ölései a másik
 oldal halálai, és minden forduló öt az öt ellen kezdődik.
 

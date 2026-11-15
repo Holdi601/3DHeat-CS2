@@ -9,7 +9,7 @@ search_exclude: true
 ---
 # Коришћење са 3DHeat-ом {#using-it-with-3dheat}
 
-Излази иду на ова места у [приказивачу 3DHeat](https://holdi601.github.io/3DHeat):
+Излази иду на ова места у [прегледачу 3DHeat](https://holdi601.github.io/3DHeat):
 
 | Фајл | Где | Шта даје |
 |---|---|---|
@@ -18,11 +18,11 @@ search_exclude: true
 | `<match>.match.json` | картица **Меч**, **Учитај датотеке мечева…** | табела резултата, рунде, ток убистава, статистика преко мечева, везе у топлотну мапу |
 | `<map>.glb` | панел **Позадина / ниво**, **3D модел…** | мапа испод топлотне мапе |
 
-Сопствена документација приказивача потпуно описује сваку картицу: њене странице [Анализа меча](https://holdi601.github.io/3DHeat/match-analysis.html), [Учитавање фајлова](https://holdi601.github.io/3DHeat/loading-files.html), [Мапирање колона](https://holdi601.github.io/3DHeat/column-mapping.html) и [Реприза кутијом](https://holdi601.github.io/3DHeat/box-replay.html). Ова страница је CS2 страна тога.
+Сопствена документација прегледача потпуно описује сваку картицу: њене странице [Анализа меча](https://holdi601.github.io/3DHeat/match-analysis.html), [Учитавање фајлова](https://holdi601.github.io/3DHeat/loading-files.html), [Мапирање колона](https://holdi601.github.io/3DHeat/column-mapping.html) и [Реприза кутијом](https://holdi601.github.io/3DHeat/box-replay.html). Ова страница је CS2 страна тога.
 
 ![коришћење са 3DHeat-ом](../assets/img/sr/with-3dheat.svg)
 
-Приказивач: [github.com/Holdi601/3DHeat](https://github.com/Holdi601/3DHeat), документација [holdi601.github.io/3DHeat](https://holdi601.github.io/3DHeat/).
+Прегледач: [github.com/Holdi601/3DHeat](https://github.com/Holdi601/3DHeat), документација [holdi601.github.io/3DHeat](https://holdi601.github.io/3DHeat/).
 
 ## Типична сесија {#a-typical-session}
 
@@ -39,9 +39,9 @@ python -m heat3d_cs2 map <map> -o out/<map>/<map>.glb
 
 ## Табела се отвара без ичега за подешавање {#the-table-opens-with-nothing-to-set}
 
-Приказивач чита `heat3d` унос заглавља прве изабране датотеке ([Табела топлотне мапе](output-table.md#наговештаји-заглавља-heat3d)) и ставља га преко својих претпоставки:
+Прегледач чита `heat3d` унос заглавља прве изабране датотеке ([Табела топлотне мапе](output-table.md#наговештаји-заглавља-heat3d)) и ставља га преко својих претпоставки:
 
-| Подешавање приказивача | Постави на |
+| Подешавање прегледача | Постави на |
 |---|---|
 | Положај | `x`, `y`, `z` |
 | Оса нагоре у извору | Z је нагоре |

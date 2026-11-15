@@ -1,5 +1,5 @@
 ---
-title: "Наредбе"
+title: "Команде"
 nav_order: 4
 lang: "sr"
 source: commands.md
@@ -7,7 +7,7 @@ source_hash: "447d30e5f102"
 nav_exclude: true
 search_exclude: true
 ---
-# Наредбе {#commands}
+# Команде {#commands}
 
 Први пут у командној линији? Прво прочитајте [Пре почетка](before-you-start.md). Ово куцајте у терминалу отвореном у фолдеру у који сте распаковали или клонирали пројекат; `<...>` су места за ваш унос, а путања са размацима иде под наводнике.
 
@@ -17,7 +17,7 @@ python -m heat3d_cs2 map <map name | path to its .vpk> -o <file.glb> [--game FOL
 python -m heat3d_cs2 scoreboard <match.3dheat | match.json>
 ```
 
-`python -m heat3d_cs2 --help` и `python -m heat3d_cs2 <verb> --help` исписују исте опције; [Референца наредби](../cli-reference.md) их све показује. Свако покретање прво проверава издање, како је описано у [Ажурирања](updates.md) (искључује се са `HEAT3D_NO_UPDATE=1`).
+`python -m heat3d_cs2 --help` и `python -m heat3d_cs2 <verb> --help` исписују исте опције; [Референца команди](../cli-reference.md) их све показује. Свако покретање прво проверава издање, како је описано у [Ажурирања](updates.md) (искључује се са `HEAT3D_NO_UPDATE=1`).
 
 Код: [`heat3d_cs2/cli.py`](https://github.com/Holdi601/3DHeat-CS2/blob/main/heat3d_cs2/cli.py).
 
@@ -72,7 +72,7 @@ out/
 
 ![demos --loose](../assets/img/demos-loose.svg)
 
-Топлотна мапа је једне мапе, па учитавање једног фолдера у приказивач значи учитавање мечева једне мапе. Видите [Табела топлотне мапе](output-table.md) и [Документ меча](output-match-json.md).
+Топлотна мапа је једне мапе, па учитавање једног фолдера у прегледач значи учитавање мечева једне мапе. Видите [Табела топлотне мапе](output-table.md) и [Документ меча](output-match-json.md).
 
 ### Шта се прескаче {#what-is-skipped}
 
@@ -153,7 +153,7 @@ python -m heat3d_cs2 scoreboard out/de_x/alpha-vs-bravo-m1.3dheat
 python -m heat3d_cs2 scoreboard out/de_x/alpha-vs-bravo-m1.match.json   # after demos --loose
 ```
 
-Исписује табелу резултата меча из његовог [документа меча](output-match-json.md), без отварања приказивача. Чита документ унутар `.3dheat` контејнера, или самостални `<match>.match.json`. На синтетичком демоу са две рунде из тестова:
+Исписује табелу резултата меча из његовог [документа меча](output-match-json.md), без отварања прегледача. Чита документ унутар `.3dheat` контејнера, или самостални `<match>.match.json`. На синтетичком демоу са две рунде из тестова:
 
 ![scoreboard](../assets/img/scoreboard.svg)
 

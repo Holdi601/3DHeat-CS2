@@ -84,4 +84,4 @@ search_exclude: true
 
 ## Текстуална табела резултата {#the-text-scoreboard}
 
-`python -m heat3d_cs2 scoreboard <match.json>` исписује ове бројеве по тиму; видите [Наредбе](commands.md#scoreboard---меч-као-текст).
+`python -m heat3d_cs2 scoreboard <match.json>` исписује ове бројеве по тиму; видите [Команде](commands.md#scoreboard---меч-као-текст).

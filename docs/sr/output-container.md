@@ -9,7 +9,7 @@ search_exclude: true
 ---
 # Једна датотека по мечу (`<match>.3dheat`) {#one-file-a-match-3dheat}
 
-Подразумевано `demos` пакује сваки меч у једну датотеку, `out/<map>/<match>.3dheat`: табелу топлотне мапе, документ меча и четири пратеће датотеке заједно - један меч, један фајл, за копирање, чување или дељење. То је формат контејнера приказивача 3DHeat, описан у документацији приказивача: [Једна датотека по мечу (.3dheat)](https://holdi601.github.io/3DHeat/container.html) ([извор](https://github.com/Holdi601/3DHeat/blob/main/docs/container.md)). Код: [`heat3d_cs2/container.py`](https://github.com/Holdi601/3DHeat-CS2/blob/main/heat3d_cs2/container.py).
+Подразумевано `demos` пакује сваки меч у једну датотеку, `out/<map>/<match>.3dheat`: табелу топлотне мапе, документ меча и четири пратеће датотеке заједно - један меч, један фајл, за копирање, чување или дељење. То је формат контејнера прегледача 3DHeat, описан у документацији прегледача: [Једна датотека по мечу (.3dheat)](https://holdi601.github.io/3DHeat/container.html) ([извор](https://github.com/Holdi601/3DHeat/blob/main/docs/container.md)). Код: [`heat3d_cs2/container.py`](https://github.com/Holdi601/3DHeat-CS2/blob/main/heat3d_cs2/container.py).
 
 ## Корак по корак {#step-by-step}
 
@@ -23,7 +23,7 @@ search_exclude: true
 
    ![demos над вештачким демом](../assets/img/demos-run.svg)
 
-3. Отворите га у приказивачу (картица Топлотна мапа или картица Меч), или га сами прочитајте: то је обичан ZIP.
+3. Отворите га у прегледачу (картица Топлотна мапа или картица Меч), или га сами прочитајте: то је обичан ZIP.
 
    ![унутрашњост .3dheat контејнера](../assets/img/container-members.svg)
 
@@ -78,7 +78,7 @@ ZIP чији је први члан `manifest.json`, па остали члан�
 }
 ```
 
-## Читање без приказивача {#reading-one-without-the-viewer}
+## Читање без прегледача {#reading-one-without-the-viewer}
 
 ```python
 import io, json, zipfile

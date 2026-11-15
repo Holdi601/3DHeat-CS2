@@ -24,7 +24,7 @@ cd 3DHeat-CS2
 
 Обе врсте копије могу саме да се ажурирају (видите [Ажурирања](updates.md)). Инсталисана верзија је онај један ред у фајлу `VERSION`.
 
-Покрећите сваку наредбу из тог фолдера: `python -m heat3d_cs2` налази пакет јер је у текућем фолдеру. Пакет се не инсталира у `site-packages`.
+Покрећите сваку команду из тог фолдера: `python -m heat3d_cs2` налази пакет јер је у текућем фолдеру. Пакет се не инсталира у `site-packages`.
 
 ## Python и пакети {#python-and-the-packages}
 
@@ -56,7 +56,7 @@ pip install -r requirements.txt
 | `numpy` | 1.24 | рачунање над њима | BSD-3-Clause |
 | `pytest` | 8.0 | само за тестове | MIT |
 
-Наредбе `demos` и `scoreboard` не треба ништа друго.
+Команде `demos` и `scoreboard` не треба ништа друго.
 
 ## За извоз мапе: Counter-Strike 2 и CLI Source2Viewer-а {#for-the-map-export-counter-strike-2-and-source2viewers-cli}
 
@@ -68,7 +68,7 @@ pip install -r requirements.txt
    2. променљива окружења `HEAT3D_SOURCE2VIEWER` са путањом до извршне датотеке;
    3. извршна датотека која се зове `Source2Viewer-CLI` или `Source2Viewer-CLI.exe` на `PATH`-у.
 
-   Кандидат се користи само ако путања постоји. Ако се ниједан не нађе, наредба се зауставља с порукама `Source2Viewer-CLI not found: download the command line build for your system from https://github.com/ValveResourceFormat/ValveResourceFormat/releases, then put it on PATH, set HEAT3D_SOURCE2VIEWER, or pass --source2viewer`.
+   Кандидат се користи само ако путања постоји. Ако се ниједан не нађе, команда се зауставља с порукама `Source2Viewer-CLI not found: download the command line build for your system from https://github.com/ValveResourceFormat/ValveResourceFormat/releases, then put it on PATH, set HEAT3D_SOURCE2VIEWER, or pass --source2viewer`.
 
 Постављање променљиве, на пример:
 
