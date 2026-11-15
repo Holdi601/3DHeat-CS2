@@ -46,10 +46,10 @@ python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # a match's scoreboa
 ```
 
 Ar trebui să vedeți `1 match(es), 1 at a time ...` și apoi câte o linie pentru fiecare meci
-(vezi [Comenzi](../commands.md#what-is-printed)).
+(vezi [Comenzi](commands.md#what-is-printed)).
 
 `demos` scrie, pentru fiecare meci, un fișier într-un dosar care poartă numele hărții:
-`out/<map>/<match>.3dheat`, un [container `.3dheat`](../output-container.md) - formatul vizualizatorului
+`out/<map>/<match>.3dheat`, un [container `.3dheat`](output-container.md) - formatul vizualizatorului
 pentru un fișier pe meci ([specificația](https://holdi601.github.io/3DHeat/container.html)).
 El conține aceste membre; `--loose` le scrie ca fișiere separate:
 
@@ -68,28 +68,28 @@ sol și structură, în același sistem de coordonate și unități ca tabelele,
 | Pagina | Ce acoperă |
 |---|---|
 | [Înainte de a începe](before-you-start.md) | Python, un terminal, locurile rezervate, cum arată succesul și erorile frecvente |
-| [Instalarea](../installing.md) | Python, pachetele, linia de comandă a Source2Viewer, unde trebuie să fie CS2 |
-| [Comenzi](../commands.md) | `demos`, `map`, `scoreboard`: fiecare opțiune, ce se afișează, codurile de ieșire |
-| [Citirea unui demo](../reading-demos.md) | ce se citește dintr-un fișier demo: tick-uri eșantionate, proprietățile jucătorilor, regulile jocului, evenimentele |
-| [Construirea unui meci](../building-matches.md) | părți și lanțuri, ceasul meciului, rundele, echipele și taberele, rândurile, eliminările, schimburile, deschiderile, daunele, orbirile, economia |
-| [Statistici](../statistics.md) | scorul: K/D/A, ADR, KAST, HS%, deschideri, schimburi, multi-eliminări, clutch-uri, utilitare, orbiri |
-| [Tabelul hărții termice](../output-table.md) | fișierul Parquet: fiecare coloană, tipul ei, ce evenimente o umplu, indiciile din subsolul `heat3d`, axele |
-| [Documentul de meci](../output-match-json.md) | documentul `.match.json`, câmp cu câmp |
-| [Un fișier pe meci](../output-container.md) | containerul `.3dheat` pe care îl scrie `demos` implicit, `--loose` |
-| [Exportul hărții](../map-export.md) | cum se exportă plasa de coliziune a unei hărți, sistemul de coordonate, numirea nodurilor, unitățile |
-| [Folosirea cu 3DHeat](../using-with-3dheat.md) | încărcarea tabelelor, a documentelor de meci și a hărților în filele Heatmap și Match ale vizualizatorului |
-| [Limite](../limits.md) | ce se presupune, ce nu este tratat, ce nu este verificat |
-| [Actualizări](../updates.md) | verificarea lansării la pornire și `python -m heat3d_update` |
-| [Dezvoltare](../development.md) | structura codului, teste, fixture-ul de demo sintetic |
+| [Instalarea](installing.md) | Python, pachetele, linia de comandă a Source2Viewer, unde trebuie să fie CS2 |
+| [Comenzi](commands.md) | `demos`, `map`, `scoreboard`: fiecare opțiune, ce se afișează, codurile de ieșire |
+| [Citirea unui demo](reading-demos.md) | ce se citește dintr-un fișier demo: tick-uri eșantionate, proprietățile jucătorilor, regulile jocului, evenimentele |
+| [Construirea unui meci](building-matches.md) | părți și lanțuri, ceasul meciului, rundele, echipele și taberele, rândurile, eliminările, schimburile, deschiderile, daunele, orbirile, economia |
+| [Statistici](statistics.md) | scorul: K/D/A, ADR, KAST, HS%, deschideri, schimburi, multi-eliminări, clutch-uri, utilitare, orbiri |
+| [Tabelul hărții termice](output-table.md) | fișierul Parquet: fiecare coloană, tipul ei, ce evenimente o umplu, indiciile din subsolul `heat3d`, axele |
+| [Documentul de meci](output-match-json.md) | documentul `.match.json`, câmp cu câmp |
+| [Un fișier pe meci](output-container.md) | containerul `.3dheat` pe care îl scrie `demos` implicit, `--loose` |
+| [Exportul hărții](map-export.md) | cum se exportă plasa de coliziune a unei hărți, sistemul de coordonate, numirea nodurilor, unitățile |
+| [Folosirea cu 3DHeat](using-with-3dheat.md) | încărcarea tabelelor, a documentelor de meci și a hărților în filele Heatmap și Match ale vizualizatorului |
+| [Limite](limits.md) | ce se presupune, ce nu este tratat, ce nu este verificat |
+| [Actualizări](updates.md) | verificarea lansării la pornire și `python -m heat3d_update` |
+| [Dezvoltare](development.md) | structura codului, teste, fixture-ul de demo sintetic |
 | [Referința comenzilor](../cli-reference.md) | `--help` al fiecărei comenzi, generat din cod |
-| [Întreținerea](../maintaining.md) | lista de verificare pentru lansarea acestor pagini |
+| [Întreținerea](maintaining.md) | lista de verificare pentru lansarea acestor pagini |
 
 ## Față de ce este verificat {#what-it-is-checked-against}
 
 Demo-urile din natură nu sunt câte un fișier curat pentru fiecare meci. Convertorul tratează un meci
 împărțit în mai multe fișiere, în orice ordine, un server repornit în mijlocul meciului, două meciuri
 diferite salvate sub același nume, runde restaurate dintr-o copie de rezervă, o înregistrare care începe
-târziu sau se termină devreme, pauze și antrenori în tabăra unei echipe - vezi [Construirea unui meci](../building-matches.md).
+târziu sau se termină devreme, pauze și antrenori în tabăra unei echipe - vezi [Construirea unui meci](building-matches.md).
 Verificat pe o colecție mare de demo-uri de turneu: în fiecare meci scorul urmează câștigătorii rundelor,
 eliminările unei tabere sunt morțile celeilalte, iar fiecare rundă începe cinci contra cinci.
 
