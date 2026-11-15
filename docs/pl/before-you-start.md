@@ -73,4 +73,4 @@ Powinieneś zobaczyć: `usage: heat3d_cs2 [-h] {demos,map,scoreboard} ...`.
 | `No module named ...` | krok 4 został pominięty albo wykonano go w innym folderze: wejdź poleceniem `cd` do folderu narzędzia i uruchom go ponownie. |
 | `pip is not recognized` | zamiast `pip ...` użyj `python -m pip ...`. |
 | `No such file or directory` / `can't open file` | terminal jest w złym folderze albo ścieżka ma literówkę: sprawdź ją i ujmij ścieżki ze spacjami w cudzysłowy. |
-| czerwony tekst kończący się linią `error:` | przeczytaj ostatnią linię: mówi, czego brakuje. Strona [Polecenia](../commands.md) wymienia komunikaty. |
+| czerwony tekst kończący się linią `error:` | przeczytaj ostatnią linię: mówi, czego brakuje. Strona [Polecenia](commands.md) wymienia komunikaty. |

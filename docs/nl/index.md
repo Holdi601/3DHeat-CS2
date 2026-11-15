@@ -25,7 +25,7 @@ eruit (`de_x` is een verzonnen kaartnaam).
 
 ![demo's: van demobestanden naar één bestand per wedstrijd](../assets/img/nl/pipeline.svg)
 
-Meer in detail: 3DHeat CS2 zet **Counter-Strike 2-demo's** om in een heatmaptabel en een wedstrijddocument
+Meer in detail: 3DHeat CS2 zet **Counter-Strike 2-demo's** om in een heatmaptabel en een matchdocument
 per wedstrijd, en een **CS2-kaart** in niveaugeometrie. De uitvoer is bedoeld voor de
 [3DHeat](https://holdi601.github.io/3DHeat/)-telemetrieviewer
 ([bron](https://github.com/Holdi601/3DHeat)), maar het zijn gewone bestanden -
@@ -49,17 +49,17 @@ python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # het scorebord van 
 ```
 
 Je ziet `1 match(es), 1 at a time ...` en daarna één regel per wedstrijd
-(zie [Commando's](../commands.md#what-is-printed)).
+(zie [Commando's](commands.md#what-is-printed)).
 
 `demos` schrijft per wedstrijd één bestand in een map die naar de kaart is genoemd:
-`out/<map>/<match>.3dheat`, een [`.3dheat`-container](../output-container.md) - het
+`out/<map>/<match>.3dheat`, een [`.3dheat`-container](output-container.md) - het
 één-bestand-per-wedstrijdformaat van de viewer ([specificatie](https://holdi601.github.io/3DHeat/container.html)).
 Het bevat deze onderdelen; `--loose` schrijft ze als afzonderlijke bestanden:
 
 | Onderdeel | Wat het bevat | Geladen in het tabblad van de viewer |
 |---|---|---|
 | `<match>.parquet` (rol `table`) | elke levende speler acht keer per seconde met zijn status (gezondheid, geld, flits, gescoped, zone, inventaris, ...), en elke gebeurtenis waar die plaatsvond (kill, dood, verwonding, schot, worp, granaatexplosies, verblinding, plant, ontmanteling, explosie, en per speler een rondeeinde met wat de ronde hem opleverde), één rij per stuk | Heatmap-tabblad |
-| `<match>.match.json` (rol `match`, het wedstrijddocument) | teams, score, elke ronde (winnaar, hoe, economie, plant, kills in volgorde, clutches, overlevenden) en de scorebordregel van elke speler | Match-tabblad |
+| `<match>.match.json` (rol `match`, het matchdocument) | teams, score, elke ronde (winnaar, hoe, economie, plant, kills in volgorde, clutches, overlevenden) en de scorebordregel van elke speler | Match-tabblad |
 | `<match>.events/props/strings/packets.parquet` | al het andere dat de demo bevat, volledig (bijbestanden) | bewaard voor de volledigheid |
 
 `map` schrijft `<map>.glb`: het botsingsnetwerk van de kaart - vloeren, muren, dozen,
@@ -71,21 +71,21 @@ als de tabellen, zodat het precies onder de heatmap ligt (paneel Achtergrond / l
 | Pagina | Wat die behandelt |
 |---|---|
 | [Voordat je begint](before-you-start.md) | Python, een terminal, plaatsaanduidingen, hoe succes en de veelvoorkomende fouten eruitzien |
-| [Installeren](../installing.md) | Python, de pakketten, de CLI van Source2Viewer, waar CS2 moet staan |
-| [Commando's](../commands.md) | `demos`, `map`, `scoreboard`: elke optie, wat er wordt afgedrukt, exitcodes |
-| [Een demo lezen](../reading-demos.md) | wat er uit een demobestand wordt gelezen: bemonsterde ticks, spelereigenschappen, spelregels, gebeurtenissen |
-| [Een wedstrijd opbouwen](../building-matches.md) | delen en ketens, de wedstrijdklok, rondes, teams en kanten, rijen, kills, trades, openingen, schade, flitsen, economie |
-| [Statistieken](../statistics.md) | het scorebord: K/D/A, ADR, KAST, HS%, openingen, trades, multi-kills, clutches, utility, flitsen |
-| [De heatmaptabel](../output-table.md) | het Parquet-bestand: elke kolom, het type, welke gebeurtenissen hem vullen, de leesinstructies in de `heat3d`-voettekst, de assen |
-| [Het wedstrijddocument](../output-match-json.md) | het `.match.json`-document, veld voor veld |
-| [Eén bestand per wedstrijd](../output-container.md) | de `.3dheat`-container die `demos` standaard schrijft, `--loose` |
-| [Kaartexport](../map-export.md) | hoe het botsingsnetwerk van een kaart wordt geëxporteerd, het kader, knoopnaamgeving, eenheden |
-| [Gebruik met 3DHeat](../using-with-3dheat.md) | tabellen, wedstrijddocumenten en kaarten laden in de tabbladen Heatmap en Match van de viewer |
-| [Beperkingen](../limits.md) | wat wordt aangenomen, wat niet wordt afgehandeld, wat niet is gecontroleerd |
-| [Updates](../updates.md) | de releasecontrole bij het opstarten en `python -m heat3d_update` |
-| [Ontwikkeling](../development.md) | indeling van de code, tests, de synthetische demofixture |
+| [Installeren](installing.md) | Python, de pakketten, de CLI van Source2Viewer, waar CS2 moet staan |
+| [Commando's](commands.md) | `demos`, `map`, `scoreboard`: elke optie, wat er wordt afgedrukt, exitcodes |
+| [Een demo lezen](reading-demos.md) | wat er uit een demobestand wordt gelezen: bemonsterde ticks, spelereigenschappen, spelregels, gebeurtenissen |
+| [Een wedstrijd opbouwen](building-matches.md) | delen en ketens, de wedstrijdklok, rondes, teams en kanten, rijen, kills, trades, openingen, schade, flitsen, economie |
+| [Statistieken](statistics.md) | het scorebord: K/D/A, ADR, KAST, HS%, openingen, trades, multi-kills, clutches, utility, flitsen |
+| [De heatmaptabel](output-table.md) | het Parquet-bestand: elke kolom, het type, welke gebeurtenissen hem vullen, de leesinstructies in de `heat3d`-voettekst, de assen |
+| [Het matchdocument](output-match-json.md) | het `.match.json`-document, veld voor veld |
+| [Eén bestand per wedstrijd](output-container.md) | de `.3dheat`-container die `demos` standaard schrijft, `--loose` |
+| [Kaartexport](map-export.md) | hoe het botsingsnetwerk van een kaart wordt geëxporteerd, het kader, knoopnaamgeving, eenheden |
+| [Gebruik met 3DHeat](using-with-3dheat.md) | tabellen, matchdocumenten en kaarten laden in de tabbladen Heatmap en Match van de viewer |
+| [Beperkingen](limits.md) | wat wordt aangenomen, wat niet wordt afgehandeld, wat niet is gecontroleerd |
+| [Updates](updates.md) | de releasecontrole bij het opstarten en `python -m heat3d_update` |
+| [Ontwikkeling](development.md) | indeling van de code, tests, de synthetische demofixture |
 | [Commandoreferentie](../cli-reference.md) | de `--help` van elk commando, gegenereerd uit de code |
-| [Onderhoud](../maintaining.md) | de checklist per release voor deze pagina's |
+| [Onderhoud](maintaining.md) | de checklist per release voor deze pagina's |
 
 ## Waarmee het is gecontroleerd {#what-it-is-checked-against}
 
@@ -93,7 +93,7 @@ Demo's uit het wild zijn niet één schone bestand per wedstrijd. De converter k
 over meerdere bestanden is verdeeld, in elke volgorde; een server die midden in de wedstrijd is herstart; twee
 verschillende wedstrijden onder één naam opgeslagen; rondes die uit een back-up zijn hersteld; een
 opname die laat begint of vroeg eindigt; pauzes; en coaches aan de kant van een team -
-zie [Een wedstrijd opbouwen](../building-matches.md). Gecontroleerd over een grote verzameling
+zie [Een wedstrijd opbouwen](building-matches.md). Gecontroleerd over een grote verzameling
 toernooidemo's: in elke wedstrijd volgt de score de winnaars van de rondes, zijn de kills van elke kant
 de doden van de andere kant, en begint elke ronde vijf tegen vijf.
 
@@ -117,12 +117,12 @@ repository, releases en licentie:
 | [GameFiles](https://github.com/Holdi601/3DHeat-GameFiles) | banen en niveaus uit de bestanden die spellen meeleveren, als 3D-modellen | [site](https://holdi601.github.io/3DHeat-GameFiles/) |
 | [GameCapture](https://github.com/Holdi601/3DHeat-GameCapture) | rondetelemetrie uit racespellen; niveaus opnieuw opgebouwd uit gameplayvideo | [site](https://holdi601.github.io/3DHeat-GameCapture/) |
 | [Unreal Exporter](https://github.com/Holdi601/3DHeat-UnrealExporter) | een plug-in voor de Unreal Editor die een niveau als één 3D-model exporteert | [site](https://holdi601.github.io/3DHeat-UnrealExporter/) |
-| [CS2](https://github.com/Holdi601/3DHeat-CS2) | Counter-Strike 2-demo's naar tabellen en wedstrijddocumenten; kaarten naar 3D-modellen | [site](https://holdi601.github.io/3DHeat-CS2/) |
+| [CS2](https://github.com/Holdi601/3DHeat-CS2) | Counter-Strike 2-demo's naar tabellen en matchdocumenten; kaarten naar 3D-modellen | [site](https://holdi601.github.io/3DHeat-CS2/) |
 | [Watcher](https://github.com/Holdi601/3DHeat-Watcher) | legt op de achtergrond vast wat spellen publiceren over je spel | [site](https://holdi601.github.io/3DHeat-Watcher/) |
-| [Ext-WarThunder](https://github.com/Holdi601/3DHeat-Ext-WarThunder) | War Thunder-replays naar tabellen en wedstrijddocumenten | [site](https://holdi601.github.io/3DHeat-Ext-WarThunder/) |
-| [Ext-WoT](https://github.com/Holdi601/3DHeat-Ext-WoT) | World of Tanks-replays naar tabellen en wedstrijddocumenten | [site](https://holdi601.github.io/3DHeat-Ext-WoT/) |
-| [Ext-WoWs](https://github.com/Holdi601/3DHeat-Ext-WoWs) | World of Warships-replays naar tabellen en wedstrijddocumenten | [site](https://holdi601.github.io/3DHeat-Ext-WoWs/) |
-| [Ext-Squad](https://github.com/Holdi601/3DHeat-Ext-Squad) | Squad-serverdemo's naar tabellen en wedstrijddocumenten | [site](https://holdi601.github.io/3DHeat-Ext-Squad/) |
+| [Ext-WarThunder](https://github.com/Holdi601/3DHeat-Ext-WarThunder) | War Thunder-replays naar tabellen en matchdocumenten | [site](https://holdi601.github.io/3DHeat-Ext-WarThunder/) |
+| [Ext-WoT](https://github.com/Holdi601/3DHeat-Ext-WoT) | World of Tanks-replays naar tabellen en matchdocumenten | [site](https://holdi601.github.io/3DHeat-Ext-WoT/) |
+| [Ext-WoWs](https://github.com/Holdi601/3DHeat-Ext-WoWs) | World of Warships-replays naar tabellen en matchdocumenten | [site](https://holdi601.github.io/3DHeat-Ext-WoWs/) |
+| [Ext-Squad](https://github.com/Holdi601/3DHeat-Ext-Squad) | Squad-serverdemo's naar tabellen en matchdocumenten | [site](https://holdi601.github.io/3DHeat-Ext-Squad/) |
 | [Ext-DCS](https://github.com/Holdi601/3DHeat-Ext-DCS) | DCS World-kaarten naar 3D-modellen | [site](https://holdi601.github.io/3DHeat-Ext-DCS/) |
 | [Ext-IL2](https://github.com/Holdi601/3DHeat-Ext-IL2) | IL-2 Sturmovik-kaarten naar 3D-modellen | [site](https://holdi601.github.io/3DHeat-Ext-IL2/) |
 

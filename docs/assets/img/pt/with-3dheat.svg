@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="848" height="326" viewBox="0 0 848 326" font-family="Segoe UI,Helvetica,Arial,sans-serif" role="img" aria-label="Using it with 3DHeat">
 <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5f6368"/></marker></defs>
 <rect width="848" height="326" rx="10" fill="#ffffff" stroke="#dadce0"/>
-<text x="24" y="36" font-size="18" font-weight="600" fill="#202124">Usando com o 3DHeat</text>
+<text x="24" y="36" font-size="18" font-weight="600" fill="#202124">Usar com o 3DHeat</text>
 <rect x="24" y="98.0" width="236" height="60" rx="8" fill="#e8f0fe" stroke="#3b6fd8" stroke-width="1.5"/>
 <text x="142.0" y="124.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">heat3d_cs2 demos</text>
 <text x="142.0" y="143.0" text-anchor="middle" font-size="14" fill="#3c4043">&lt;mapa&gt;/&lt;partida&gt;.3dheat</text>
@@ -10,15 +10,15 @@
 <text x="142.0" y="219.0" text-anchor="middle" font-size="14" fill="#3c4043">&lt;mapa&gt;.glb</text>
 <rect x="306" y="136.0" width="236" height="60" rx="8" fill="#f3e8fd" stroke="#8a4fd0" stroke-width="1.5"/>
 <text x="424.0" y="162.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">visualizador 3DHeat</text>
-<text x="424.0" y="181.0" text-anchor="middle" font-size="14" fill="#3c4043">abra, solte ou carregue uma pasta</text>
+<text x="424.0" y="181.0" text-anchor="middle" font-size="14" fill="#3c4043">abra, largue ou carregue uma pasta</text>
 <rect x="588" y="60.0" width="236" height="60" rx="8" fill="#e6f4ea" stroke="#2e8b57" stroke-width="1.5"/>
-<text x="706.0" y="86.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">Mapa de calor</text>
+<text x="706.0" y="86.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">separador Mapa de calor</text>
 <text x="706.0" y="105.0" text-anchor="middle" font-size="14" fill="#3c4043">posições, abates, granadas</text>
 <rect x="588" y="136.0" width="236" height="60" rx="8" fill="#e6f4ea" stroke="#2e8b57" stroke-width="1.5"/>
-<text x="706.0" y="162.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">painel Nível</text>
-<text x="706.0" y="181.0" text-anchor="middle" font-size="14" fill="#3c4043">o mapa sob o calor</text>
+<text x="706.0" y="162.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">painel Fundo / nível</text>
+<text x="706.0" y="181.0" text-anchor="middle" font-size="14" fill="#3c4043">o mapa por baixo do calor</text>
 <rect x="588" y="212.0" width="236" height="60" rx="8" fill="#e6f4ea" stroke="#2e8b57" stroke-width="1.5"/>
-<text x="706.0" y="238.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">aba Partida</text>
+<text x="706.0" y="238.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">separador Partida</text>
 <text x="706.0" y="257.0" text-anchor="middle" font-size="14" fill="#3c4043">rounds, economia, placar</text>
 <line x1="260" y1="128.0" x2="304" y2="166.0" stroke="#5f6368" stroke-width="1.5" marker-end="url(#a)"/>
 <line x1="260" y1="204.0" x2="304" y2="166.0" stroke="#5f6368" stroke-width="1.5" marker-end="url(#a)"/>
@@ -28,7 +28,7 @@
 <rect x="24" y="292" width="18" height="18" rx="3" fill="#e8f0fe" stroke="#3b6fd8"/>
 <text x="48" y="306" font-size="14" fill="#3c4043">passo</text>
 <rect x="88.0" y="292" width="18" height="18" rx="3" fill="#e6f4ea" stroke="#2e8b57"/>
-<text x="112.0" y="306" font-size="14" fill="#3c4043">arquivos gravados</text>
+<text x="112.0" y="306" font-size="14" fill="#3c4043">ficheiros escritos</text>
 <rect x="219.5" y="292" width="18" height="18" rx="3" fill="#f3e8fd" stroke="#8a4fd0"/>
-<text x="243.5" y="306" font-size="14" fill="#3c4043">onde você a vê</text>
+<text x="243.5" y="306" font-size="14" fill="#3c4043">onde a vê</text>
 </svg>

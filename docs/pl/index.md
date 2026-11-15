@@ -47,10 +47,10 @@ python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # tablica wyników m
 ```
 
 Powinieneś zobaczyć `1 match(es), 1 at a time ...`, a potem jedną linię na mecz
-(zobacz [Polecenia](../commands.md#what-is-printed)).
+(zobacz [Polecenia](commands.md#what-is-printed)).
 
 `demos` zapisuje dla każdego meczu jeden plik w folderze nazwanym od mapy:
-`out/<map>/<match>.3dheat`, [kontener `.3dheat`](../output-container.md) - format przeglądarki
+`out/<map>/<match>.3dheat`, [kontener `.3dheat`](output-container.md) - format przeglądarki
 na jeden plik na mecz ([specyfikacja](https://holdi601.github.io/3DHeat/container.html)).
 Zawiera te elementy; `--loose` zapisuje je jako osobne pliki:
 
@@ -58,7 +58,7 @@ Zawiera te elementy; `--loose` zapisuje je jako osobne pliki:
 |---|---|---|
 | `<match>.parquet` (rola `table`) | każdego żywego gracza osiem razy na sekundę wraz z jego stanem (zdrowie, pieniądze, oślepienie, celowanie, strefa, ekwipunek...) oraz każde zdarzenie w miejscu, w którym się zdarzyło (zabójstwo, zgon, obrażenia, strzał, rzut, wybuch granatu, oślepienie, podłożenie, rozbrojenie, wybuch, a na gracza koniec rundy z tym, ile runda mu dała), po jednym wierszu każde | zakładka Mapa cieplna |
 | `<match>.match.json` (rola `match`, dokument meczu) | drużyny, wynik, każda runda (zwycięzca, jak, ekonomia, podłożenie, zabójstwa po kolei, clutche, ocaleni) i wiersz tablicy wyników każdego gracza | zakładka Mecz |
-| `<match>.events/props/strings/packets.parquet` | wszystko inne, co zawiera demo, w całości (pliki towarzyszące) | zachowane dla kompletności |
+| `<match>.events/props/strings/packets.parquet` | wszystko inne, co zawiera demo, w całości (pliki pomocnicze) | zachowane dla kompletności |
 
 `map` zapisuje `<map>.glb`: siatkę kolizji mapy - podłogi, ściany, pudła, bez dekoracji - podzieloną na
 teren i konstrukcję, w tym samym układzie i jednostkach co tabele, więc leży dokładnie pod mapą cieplną
@@ -69,35 +69,35 @@ teren i konstrukcję, w tym samym układzie i jednostkach co tabele, więc leży
 | Strona | Czego dotyczy |
 |---|---|
 | [Zanim zaczniesz](before-you-start.md) | Python, terminal, symbole zastępcze, jak wyglądają sukces i typowe błędy |
-| [Instalacja](../installing.md) | Python, pakiety, CLI Source2Viewer, gdzie musi być CS2 |
-| [Polecenia](../commands.md) | `demos`, `map`, `scoreboard`: każda opcja, co jest wypisywane, kody wyjścia |
-| [Czytanie dema](../reading-demos.md) | co jest odczytywane z pliku dema: próbkowane ticki, właściwości graczy, zasady gry, zdarzenia |
-| [Budowanie meczu](../building-matches.md) | części i łańcuchy, zegar meczu, rundy, drużyny i strony, wiersze, zabójstwa, odegrania, otwarcia, obrażenia, oślepienia, ekonomia |
-| [Statystyki](../statistics.md) | tablica wyników: K/D/A, ADR, KAST, HS%, otwarcia, odegrania, multi-killi, clutche, użycie granatów, oślepienia |
-| [Tabela mapy cieplnej](../output-table.md) | plik Parquet: każda kolumna, jej typ, które zdarzenia ją wypełniają, wskazówki stopki `heat3d`, osie |
-| [Dokument meczu](../output-match-json.md) | dokument `.match.json`, pole po polu |
-| [Jeden plik na mecz](../output-container.md) | kontener `.3dheat`, który domyślnie zapisuje `demos`; `--loose` |
-| [Eksport mapy](../map-export.md) | jak eksportowana jest siatka kolizji mapy, układ, nazewnictwo węzłów, jednostki |
-| [Użycie z 3DHeat](../using-with-3dheat.md) | wczytywanie tabel, dokumentów meczów i map do zakładek Mapa cieplna i Mecz przeglądarki |
-| [Ograniczenia](../limits.md) | co jest zakładane, czego nie obsługuje, co nie zostało sprawdzone |
-| [Aktualizacje](../updates.md) | sprawdzenie wydania przy starcie i `python -m heat3d_update` |
-| [Rozwój](../development.md) | układ kodu, testy, syntetyczny przykład dema |
+| [Instalacja](installing.md) | Python, pakiety, CLI Source2Viewer, gdzie musi być CS2 |
+| [Polecenia](commands.md) | `demos`, `map`, `scoreboard`: każda opcja, co jest wypisywane, kody wyjścia |
+| [Czytanie dema](reading-demos.md) | co jest odczytywane z pliku dema: próbkowane ticki, właściwości graczy, zasady gry, zdarzenia |
+| [Budowanie meczu](building-matches.md) | części i łańcuchy, zegar meczu, rundy, drużyny i strony, wiersze, zabójstwa, odegrania, otwarcia, obrażenia, oślepienia, ekonomia |
+| [Statystyki](statistics.md) | tablica wyników: K/D/A, ADR, KAST, HS%, otwarcia, odegrania, multi-killi, clutche, użycie granatów, oślepienia |
+| [Tabela mapy cieplnej](output-table.md) | plik Parquet: każda kolumna, jej typ, które zdarzenia ją wypełniają, wskazówki stopki `heat3d`, osie |
+| [Dokument meczu](output-match-json.md) | dokument `.match.json`, pole po polu |
+| [Jeden plik na mecz](output-container.md) | kontener `.3dheat`, który domyślnie zapisuje `demos`; `--loose` |
+| [Eksport mapy](map-export.md) | jak eksportowana jest siatka kolizji mapy, układ, nazewnictwo węzłów, jednostki |
+| [Użycie z 3DHeat](using-with-3dheat.md) | wczytywanie tabel, dokumentów meczów i map do zakładek Mapa cieplna i Mecz przeglądarki |
+| [Ograniczenia](limits.md) | co jest zakładane, czego nie obsługuje, co nie zostało sprawdzone |
+| [Aktualizacje](updates.md) | sprawdzenie wydania przy starcie i `python -m heat3d_update` |
+| [Rozwój](development.md) | układ kodu, testy, syntetyczny przykład dema |
 | [Opis poleceń](../cli-reference.md) | `--help` każdego polecenia, generowane z kodu |
-| [Utrzymanie](../maintaining.md) | lista kontrolna wydania dla tych stron |
+| [Utrzymanie](maintaining.md) | lista kontrolna wydania dla tych stron |
 
 ## Wobec czego to sprawdzono {#what-it-is-checked-against}
 
 Dema z natury nie są jednym czystym plikiem na mecz. Konwerter radzi sobie z meczem rozbitym na pliki
 w dowolnej kolejności, serwerem zrestartowanym w trakcie meczu, dwoma różnymi meczami zapisanymi pod
 jedną nazwą, rundami przywróconymi z kopii zapasowej, nagraniem, które zaczyna się późno albo kończy
-wcześnie, pauzami i trenerami po stronie drużyny - zobacz [Budowanie meczu](../building-matches.md).
+wcześnie, pauzami i trenerami po stronie drużyny - zobacz [Budowanie meczu](building-matches.md).
 Sprawdzono na dużym zbiorze dem z turniejów: w każdym meczu wynik podąża za zwycięzcami rund,
 zabójstwa jednej strony są zgonami drugiej, a każda runda zaczyna się w składzie pięć na pięć.
 
 ## Na co to kierować {#what-to-point-it-at}
 
 Na dema twoich własnych meczów, dema, które pobrałeś ręcznie ze strony turniejowej, albo dema z API,
-do którego masz dostęp. Dema to nagrania, których treść należy do wydawcy i organizatorów: wynik użyj
+do którego masz dostęp. Dema to nagrania, których treść należy do wydawcy i organizatorów: wyniki używaj
 do własnej analizy i nie rozpowszechniaj ani dem, ani danych z nich pochodzących. Strony, które
 oferują dema, często zabraniają w regulaminie automatycznego pobierania, dlatego narzędzie czyta dema
 z dysku i nic nie pobiera.

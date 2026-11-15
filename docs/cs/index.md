@@ -46,10 +46,10 @@ python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # a match's scoreboa
 ```
 
 Měli byste vidět `1 match(es), 1 at a time ...` a pak jeden řádek na každý zápas
-(viz [Příkazy](../commands.md#what-is-printed)).
+(viz [Příkazy](commands.md#what-is-printed)).
 
 `demos` zapíše pro každý zápas jeden soubor do složky pojmenované podle mapy:
-`out/<map>/<match>.3dheat`, [kontejner `.3dheat`](../output-container.md) – formát prohlížeče
+`out/<map>/<match>.3dheat`, [kontejner `.3dheat`](output-container.md) – formát prohlížeče
 pro jeden soubor na zápas ([specifikace](https://holdi601.github.io/3DHeat/container.html)).
 Obsahuje tyto části; `--loose` je zapíše jako samostatné soubory:
 
@@ -57,7 +57,7 @@ Obsahuje tyto části; `--loose` je zapíše jako samostatné soubory:
 |---|---|---|
 | `<match>.parquet` (role `table`) | každý živý hráč osmkrát za sekundu se svým stavem (zdraví, peníze, oslepení, zaměření, zóna, inventář, ...) a každá událost, kde se stala (zabití, smrt, zranění, výstřel, hod, výbuchy granátů, oslepení, založení, odminování, výbuch, a konec kola pro každého hráče s tím, co mu kolo vyneslo), jeden řádek na každou | záložka Teplotní mapa |
 | `<match>.match.json` (role `match`, dokument zápasu) | týmy, skóre, každé kolo (vítěz, jak, ekonomika, založení, zabití v pořadí, clutche, přeživší) a řádek tabulky výsledků každého hráče | záložka Zápas |
-| `<match>.events/props/strings/packets.parquet` | všechno ostatní, co dema obsahuje, celé (doplňková data) | uchováno kvůli úplnosti |
+| `<match>.events/props/strings/packets.parquet` | všechno ostatní, co dema obsahuje, celé (pomocné soubory) | uchováno kvůli úplnosti |
 
 `map` zapíše `<map>.glb`: kolizní síť mapy – podlahy, zdi, krabice, bez dekorací – rozdělenou na terén
 a stavbu, ve stejném rámci a jednotkách jako tabulky, takže přesně leží pod teplotní mapou
@@ -68,28 +68,28 @@ a stavbu, ve stejném rámci a jednotkách jako tabulky, takže přesně leží 
 | Stránka | Co obsahuje |
 |---|---|
 | [Než začnete](before-you-start.md) | Python, terminál, zástupné texty, jak vypadá úspěch a časté chyby |
-| [Instalace](../installing.md) | Python, balíčky, příkazový řádek Source2Viewer, kde musí být CS2 |
-| [Příkazy](../commands.md) | `demos`, `map`, `scoreboard`: každá možnost, co se vypisuje, stavové kódy |
-| [Čtení dema](../reading-demos.md) | co se z demo souboru čte: vzorkované ticky, vlastnosti hráčů, herní pravidla, události |
-| [Sestavení zápasu](../building-matches.md) | části a řetězy, herní hodiny zápasu, kola, týmy a strany, řádky, zabití, výměny, otevření, poškození, záblesky, ekonomika |
-| [Statistiky](../statistics.md) | tabulka výsledků: K/D/A, ADR, KAST, HS %, otevření, výměny, multi-killy, clutche, utility, záblesky |
-| [Tabulka teplotní mapy](../output-table.md) | soubor Parquet: každý sloupec, jeho typ, které události ho plní, nápovědy v patičce `heat3d`, osy |
-| [Dokument zápasu](../output-match-json.md) | dokument `.match.json`, pole po poli |
-| [Jeden soubor na zápas](../output-container.md) | kontejner `.3dheat`, který `demos` zapisuje ve výchozím stavu, `--loose` |
-| [Export mapy](../map-export.md) | jak se exportuje kolizní síť mapy, rámec, pojmenování uzlů, jednotky |
-| [Použití s 3DHeat](../using-with-3dheat.md) | načtení tabulek, dokumentů zápasů a map do záložek Teplotní mapa a Zápas prohlížeče |
-| [Omezení](../limits.md) | co se předpokládá, co se nezpracovává, co není ověřeno |
-| [Aktualizace](../updates.md) | kontrola vydání při startu a `python -m heat3d_update` |
-| [Vývoj](../development.md) | uspořádání kódu, testy, syntetický testovací demo soubor |
+| [Instalace](installing.md) | Python, balíčky, příkazový řádek Source2Viewer, kde musí být CS2 |
+| [Příkazy](commands.md) | `demos`, `map`, `scoreboard`: každá možnost, co se vypisuje, stavové kódy |
+| [Čtení dema](reading-demos.md) | co se z demo souboru čte: vzorkované ticky, vlastnosti hráčů, herní pravidla, události |
+| [Sestavení zápasu](building-matches.md) | části a řetězy, herní hodiny zápasu, kola, týmy a strany, řádky, zabití, výměny, otevření, poškození, záblesky, ekonomika |
+| [Statistiky](statistics.md) | tabulka výsledků: K/D/A, ADR, KAST, HS %, otevření, výměny, multi-killy, clutche, utility, záblesky |
+| [Tabulka teplotní mapy](output-table.md) | soubor Parquet: každý sloupec, jeho typ, které události ho plní, nápovědy v patičce `heat3d`, osy |
+| [Dokument zápasu](output-match-json.md) | dokument `.match.json`, pole po poli |
+| [Jeden soubor na zápas](output-container.md) | kontejner `.3dheat`, který `demos` zapisuje ve výchozím stavu, `--loose` |
+| [Export mapy](map-export.md) | jak se exportuje kolizní síť mapy, rámec, pojmenování uzlů, jednotky |
+| [Použití s 3DHeat](using-with-3dheat.md) | načtení tabulek, dokumentů zápasů a map do záložek Teplotní mapa a Zápas prohlížeče |
+| [Omezení](limits.md) | co se předpokládá, co se nezpracovává, co není ověřeno |
+| [Aktualizace](updates.md) | kontrola vydání při startu a `python -m heat3d_update` |
+| [Vývoj](development.md) | uspořádání kódu, testy, syntetický testovací demo soubor |
 | [Přehled příkazů](../cli-reference.md) | `--help` každého příkazu, vygenerováno z kódu |
-| [Údržba](../maintaining.md) | kontrolní seznam vydání pro tyto stránky |
+| [Údržba](maintaining.md) | kontrolní seznam vydání pro tyto stránky |
 
 ## Proti čemu se ověřuje {#what-it-is-checked-against}
 
 Dema z volné přírody nejsou jeden čistý soubor na zápas. Převodník zvládne zápas rozdělený do souborů
 v libovolném pořadí, server restartovaný uprostřed zápasu, dva různé zápasy uložené pod jedním
 názvem, kola obnovená ze zálohy, záznam, který začíná pozdě nebo končí brzy, pauzy a trenéry
-na straně týmu – viz [Sestavení zápasu](../building-matches.md). Ověřeno na velkém souboru
+na straně týmu – viz [Sestavení zápasu](building-matches.md). Ověřeno na velkém souboru
 turnajových dem: v každém zápase skóre
 sleduje vítěze kol, zabití každé strany jsou smrti té druhé a každé kolo začíná pěti proti pěti.
 

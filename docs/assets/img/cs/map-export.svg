@@ -11,16 +11,16 @@
 <text x="424.0" y="124.0" text-anchor="middle" font-size="14" fill="#3c4043">(nainstalujete ho sami)</text>
 <rect x="588" y="60.0" width="236" height="79" rx="8" fill="#e8f0fe" stroke="#3b6fd8" stroke-width="1.5"/>
 <text x="706.0" y="86.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">kolizní síť</text>
-<text x="706.0" y="105.0" text-anchor="middle" font-size="14" fill="#3c4043">ořezat štětce a oblohu</text>
+<text x="706.0" y="105.0" text-anchor="middle" font-size="14" fill="#3c4043">clipy a obloha</text>
 <text x="706.0" y="124.0" text-anchor="middle" font-size="14" fill="#3c4043">vynecháno</text>
 <line x1="260" y1="99.5" x2="304" y2="99.5" stroke="#5f6368" stroke-width="1.5" marker-end="url(#a)"/>
 <line x1="542" y1="99.5" x2="586" y2="99.5" stroke="#5f6368" stroke-width="1.5" marker-end="url(#a)"/>
 <path d="M706.0,139.0 V162.0 H142.0 V183.0" fill="none" stroke="#5f6368" stroke-width="1.5" marker-end="url(#a)"/>
 <rect x="24" y="185.0" width="236" height="60" rx="8" fill="#e6f4ea" stroke="#2e8b57" stroke-width="1.5"/>
-<text x="142.0" y="211.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">terén</text>
+<text x="142.0" y="211.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">zem</text>
 <text x="142.0" y="230.0" text-anchor="middle" font-size="14" fill="#3c4043">směřující nahoru, schůdné</text>
 <rect x="24" y="261.0" width="236" height="60" rx="8" fill="#e6f4ea" stroke="#2e8b57" stroke-width="1.5"/>
-<text x="142.0" y="287.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">stavba</text>
+<text x="142.0" y="287.0" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">konstrukce</text>
 <text x="142.0" y="306.0" text-anchor="middle" font-size="14" fill="#3c4043">zdi, krabice</text>
 <rect x="306" y="213.5" width="236" height="79" rx="8" fill="#fff1e0" stroke="#d9822b" stroke-width="1.5"/>
 <text x="424.0" y="239.5" text-anchor="middle" font-weight="600" font-size="16" fill="#202124">&lt;map&gt;.glb</text>
