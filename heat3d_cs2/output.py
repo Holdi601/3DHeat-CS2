@@ -44,7 +44,7 @@ HINTS = {
         "dirX": "dirX",
         "dirY": "dirY",
         "dirZ": "dirZ",
-        "extra": ["event", "match", "round", "roundTime", "phase", "weapon", "place", "won", "buy", "opening", "team",
+        "extra": ["event", "match", "round", "roundTime", "phase", "weapon", "place", "won", "matchWon", "roundEndReason", "buy", "opening", "team",
                   "other", "damage", "health", "armor", "money", "text", "detail", "hitgroup", "armorDamage",
                   "hitLocalX", "hitLocalY", "hitLocalZ", "hitDirX", "hitDirY", "hitDirZ", "hitMiss", "hitFrom"],
     },
@@ -58,7 +58,7 @@ INT32 = {"money", "equipment", "entity", "damageTotal", "utilityDamageTotal", "a
          "cashSpent", "cashSpentTotal", "roundStartEquipment"}
 FLOAT64 = {"time"}
 #: 0/1 flags, stored as int8.
-FLAGS = {"headshot", "opening", "traded", "noscope", "attackerBlind", "won", "throughSmoke", "helmet", "defuser",
+FLAGS = {"headshot", "opening", "traded", "noscope", "attackerBlind", "won", "matchWon", "throughSmoke", "helmet", "defuser",
          "scoped", "walking", "airborne", "buyZone", "bombZone", "defusing", "spotted", "state_helmet", "state_defuser",
          "state_kevlar", "state_scoped", "state_flashed"}
 

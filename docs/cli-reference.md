@@ -121,6 +121,8 @@ Read from a conversion of the tests' synthetic demo. What each column means:
 | `noscope` | int8 |
 | `attackerBlind` | int8 |
 | `won` | int8 |
+| `matchWon` | int8 |
+| `roundEndReason` | dictionary<values=string, indices=int32, ordered=0> |
 | `buy` | dictionary<values=string, indices=int32, ordered=0> |
 | `detail` | dictionary<values=string, indices=int32, ordered=0> |
 | `hitgroup` | dictionary<values=string, indices=int32, ordered=0> |
@@ -247,4 +249,4 @@ Read from a conversion of the tests' synthetic demo. What each column means:
 
 ### `<match>.match.json` (role `match`)
 
-Top-level keys: `format`, `version`, `match`, `map`, `demos`, `teams`, `score`, `rounds`, `incomplete`, `missing`, `halfLength`, `pistolRounds`, `players`, `header`, `profiles`, `playerInfo`, `skins`, `itemDrops`, `chat`, `events`, `state`, `conventions`, `selfCheck`. Field by field: [The match document](output-match-json.md).
+Top-level keys: `format`, `version`, `match`, `map`, `demos`, `teams`, `score`, `winner`, `winnerSource`, `rounds`, `incomplete`, `missing`, `halfLength`, `pistolRounds`, `players`, `header`, `profiles`, `playerInfo`, `skins`, `itemDrops`, `chat`, `events`, `state`, `conventions`, `selfCheck`. Field by field: [The match document](output-match-json.md).

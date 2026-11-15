@@ -27,6 +27,8 @@ decimals for rounds and two for kills and the plant.
 | `demos` | string[] | the demo files it was built from, file names only, in match order |
 | `teams` | string[] | the team names in order of appearance (round 1: the T side first) |
 | `score` | object | team name -> rounds won: the last round's score |
+| `winner` | string or null | the team that won the match, where the recording shows the end; null for a recording that stops early, an overtime without the win panel, or a tie |
+| `winnerSource` | string or null | how `winner` is known: `winPanel` (the game's match win panel), `surrender`, `regulation` (more than half of the regulation rounds) |
 | `rounds` | object[] | every complete round, in order - [below](#rounds) |
 | `incomplete` | number[] | round numbers cut off by the end of a demo and left out |
 | `missing` | number[] | round numbers before the first one the demos hold: `[1, 2]` when the recording starts at round 3 |

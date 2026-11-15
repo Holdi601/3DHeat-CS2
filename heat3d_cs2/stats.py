@@ -199,6 +199,9 @@ def summary(match: Match) -> dict:
         "demos": [p.replace("\\", "/").rsplit("/", 1)[-1] for p in match.parts],
         "teams": match.teams,
         "score": final_score(match),
+        # The match's winner where the recording shows the end, and how that is known (`match._match_winner`).
+        "winner": match.winner or None,
+        "winnerSource": match.winner_source,
         "rounds": rounds,
         "incomplete": match.incomplete,
         # Rounds before the first the demo has: the recording started late.

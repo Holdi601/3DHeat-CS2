@@ -13,7 +13,7 @@ import pandas as pd
 import pyarrow.parquet as pq
 import pytest
 
-from heat3d_cs2.match import _plant_sites, build_match, chains
+from heat3d_cs2.match import Round, _match_winner, _plant_sites, build_match, chains
 from heat3d_cs2.output import HINTS, write
 from heat3d_cs2.stats import player_stats, round_summaries, scoreboard_text, summary
 
@@ -82,6 +82,40 @@ class TestRounds:
         r2 = summary(m)["rounds"][1]
         assert (r2["winner"], r2["winnerTeam"]) == ("", "")
         assert set(m.rows.loc[m.rows["round"] == 2, "won"].dropna()) == {0.0}
+
+    def test_every_row_says_the_round_end_reason_and_the_match_outcome(self, match):
+        pos = match.rows[match.rows["event"] == "position"]
+        assert dict(pos.groupby("round")["roundEndReason"].first()) == {1: "elimination", 2: "bomb"}
+        # No win panel and no regulation win in two rounds: the match's outcome is not known.
+        assert match.winner == "" and pos["matchWon"].isna().all()
+        doc = summary(match)
+        assert (doc["winner"], doc["winnerSource"]) == (None, None)
+
+    def test_the_match_win_panel_names_the_winner_on_every_row(self):
+        raw = two_rounds()
+        raw.events["cs_win_panel_match"] = pd.DataFrame({"tick": [4900]})
+        m = build_match([raw], "x")
+        assert (m.winner, m.winner_source) == ("Alpha", "winPanel")
+        rows = m.rows[m.rows["team"] != ""]
+        assert set(rows.loc[rows["team"] == "Alpha", "matchWon"]) == {1.0}
+        assert set(rows.loc[rows["team"] == "Bravo", "matchWon"]) == {0.0}
+        # The round's outcome stays the round's: Bravo's rows lost both rounds, Alpha's won both.
+        assert set(rows.loc[rows["team"] == "Bravo", "won"].dropna()) == {0.0}
+        assert summary(m)["winner"] == "Alpha"
+
+    def test_the_match_winner_from_a_regulation_win_a_surrender_or_not_at_all(self):
+        def rounds(a, b, reason="elimination"):
+            return [Round(number=a + b, start=0, end=1, until=2, winner="T", reason=reason, score={"A": a, "B": b}, sides={})]
+
+        assert _match_winner(rounds(13, 9), 12, False) == ("A", "regulation")
+        # Level after regulation: overtime, which only the win panel closes.
+        assert _match_winner(rounds(13, 12), 12, False) == ("", None)
+        assert _match_winner(rounds(16, 13), 12, True) == ("A", "winPanel")
+        assert _match_winner(rounds(7, 3, "surrender"), 12, False) == ("A", "surrender")
+        # A recording that stops halfway, a tie, no half known.
+        assert _match_winner(rounds(9, 5), 12, False) == ("", None)
+        assert _match_winner(rounds(6, 6), 12, True) == ("", None)
+        assert _match_winner(rounds(13, 2), None, False) == ("", None)
 
     def test_pistol_rounds_from_where_the_sides_swap(self):
         # Halves of three, then an overtime whose own halves swap too.

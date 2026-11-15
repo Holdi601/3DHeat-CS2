@@ -213,6 +213,9 @@ class Match:
     events: list[dict] = field(default_factory=list)
     #: The game's state where it changed: time, field, value.
     state: list[dict] = field(default_factory=list)
+    #: The team that won the match, and how that is known (`_match_winner`); empty and None where it is not.
+    winner: str = ""
+    winner_source: str | None = None
     #: steamid -> what stays the same through the match (crosshair, music kit, rank, colour).
     profiles: dict[str, dict] = field(default_factory=dict)
     #: The first part's header; every part's players as the demo lists them, skins and item drops.
@@ -580,6 +583,8 @@ ROW_COLUMNS = [
     "noscope",
     "attackerBlind",
     "won",
+    "matchWon",
+    "roundEndReason",
     "buy",
 ]
 # Everything else the demo says about a row: see `events`.
@@ -670,6 +675,7 @@ NUMERIC = {
     "noscope",
     "attackerBlind",
     "won",
+    "matchWon",
     "earn_round_cs2",
 }
 NUMERIC |= set(STATE_COLUMNS) - {"state_weapon"}
@@ -987,7 +993,8 @@ def build_match(raws: list[RawPart], name: str) -> Match:
     rows = pd.concat([rows, _round_ends(rows, rounds)], ignore_index=True)
     missing = rows["team"].fillna("") == ""
     rows.loc[missing, "team"] = rows.loc[missing, "steamid"].map(team_of).fillna("")
-    rows = _states(_label(rows, rounds, name, map_name))
+    winner, winner_source = _match_winner(rounds, half, any("cs_win_panel_match" in p.raw.events for p in parts))
+    rows = _states(_label(rows, rounds, name, map_name, winner))
     first = parts[0].raw
     return Match(
         name=name,
@@ -1005,6 +1012,8 @@ def build_match(raws: list[RawPart], name: str) -> Match:
         pistol=pistol,
         events=sorted(other_events, key=lambda e: e["time"]),
         state=state,
+        winner=winner,
+        winner_source=winner_source,
         profiles={k: v for p in parts for k, v in more.profiles(p.raw.samples).items()},
         header=dict(first.header),
         player_info=[r for p in parts for r in more.table_records(p.raw.player_info)],
@@ -1152,8 +1161,38 @@ def _texts(df: pd.DataFrame, column: str) -> np.ndarray:
     return df[column].fillna("").astype(str).to_numpy() if column in df else np.full(len(df), "", dtype=object)
 
 
-def _label(rows: pd.DataFrame, rounds: list[Round], name: str, map_name: str) -> pd.DataFrame:
-    """Round, phase, round time, won and buy for every row; rows outside a round and its freeze time are dropped."""
+def _match_winner(rounds: list[Round], half: int | None, win_panel: bool) -> tuple[str, str | None]:
+    """
+    The team that won the match, where the recording shows the end: the game's
+    match win panel (`cs_win_panel_match`), a surrender, or a regulation win -
+    more than half of the regulation rounds, which the other team can no
+    longer reach. Then the team with the most rounds after the last one. A
+    recording that stops before the end, an overtime without the panel, or a
+    tie leaves it empty.
+    """
+    if not rounds:
+        return "", None
+    score = rounds[-1].score
+    if len(score) != 2:
+        return "", None
+    (a, sa), (b, sb) = sorted(score.items(), key=lambda kv: -kv[1])
+    if sa == sb:
+        return "", None
+    if win_panel:
+        return a, "winPanel"
+    if rounds[-1].reason == "surrender":
+        return a, "surrender"
+    if half is not None and sa > half and sa + sb <= 2 * half:
+        return a, "regulation"
+    return "", None
+
+
+def _label(rows: pd.DataFrame, rounds: list[Round], name: str, map_name: str, winner: str = "") -> pd.DataFrame:
+    """
+    Round, phase, round time, won, the match's outcome and the round's end
+    reason, and buy for every row; rows outside a round and its freeze time
+    are dropped.
+    """
     which, phase = _assign_phases(rows["time"].to_numpy(dtype=float), rounds)
     keep = which >= 0
     rows = rows[keep].copy()
@@ -1169,6 +1208,10 @@ def _label(rows: pd.DataFrame, rounds: list[Round], name: str, map_name: str) ->
     rows["roundTime"] = rows["time"].to_numpy(dtype=float) - starts[which]
     sides = rows["side"].to_numpy()
     rows["won"] = np.where(sides == "", np.nan, (winners[which] == sides).astype(float))
+    reasons = np.array([r.reason for r in rounds], dtype=object)
+    rows["roundEndReason"] = reasons[which]
+    teams = rows["team"].fillna("").astype(str).to_numpy()
+    rows["matchWon"] = np.where((teams == "") | (winner == ""), np.nan, (teams == winner).astype(float))
     rows["buy"] = [rounds[k].buy.get(s, "") for k, s in zip(which, sides)]
     return rows.sort_values(["time", "event"], kind="stable").reset_index(drop=True)
 

@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- The table says the outcome on every row, as the viewer's outcome contract has it: `matchWon` (0/1, the row's
+  team won the match, where the recording shows the end) and `roundEndReason` (`elimination`, `bomb`, `defuse`,
+  `time`, `surrender`, `draw`); the match document names the match's `winner` and how it is known.
 - `scoreboard` reads the match document straight from a `.3dheat` container, as well as from a loose
   `.match.json`.
 - Documentation: a "Before you start" page for newcomers, a generated command and column reference

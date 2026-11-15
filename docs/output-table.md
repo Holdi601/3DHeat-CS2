@@ -61,6 +61,8 @@ string. Numeric columns are null where a row has no value.
 | `noscope` | int8 | 0/1, the kill was with a scoped weapon fired unscoped (the event's `noscope`); `kill` and `death` only |
 | `attackerBlind` | int8 | 0/1, the killer was flashed when they killed (the event's `attackerblind`); `kill` and `death` only |
 | `won` | int8 | 0/1, whether this row's side won the round; null when `side` is empty |
+| `matchWon` | int8 | 0/1, whether this row's team won the match; null when `team` is empty or the recording does not show the end (see the match document's `winner`) |
+| `roundEndReason` | string | how the row's round ended: `elimination`, `bomb` (the bomb exploded), `defuse`, `time`, `surrender`, `draw`, `other` |
 | `buy` | string | this row's side's buy this round: `pistol`, `eco`, `force`, `full` |
 | `detail` | string | every field of the event the other columns do not carry, as a JSON object (the game's own names): a shot's bullets (`fire_bullets`: origin, angles, inaccuracy, spread, recoil index, seed...), a death's `dominated`, `revenge`, `attackerinair`, `wipe`..., an item's `defindex`, a footstep's nothing |
 | `text` | string | a chat line; `chat` only |
@@ -92,7 +94,7 @@ string. Numeric columns are null where a row has no value.
 
 Which player a row names, where it stands, and which columns it fills.
 `match`, `map`, `round`, `roundId`, `phase`, `time`, `roundTime`, `event`,
-`won` and `buy` are filled on every row; `inventory`, `money`, `equipment` and
+`won`, `roundEndReason` and `buy` are filled on every row (`matchWon` where the match's winner is known); `inventory`, `money`, `equipment` and
 the `state_*` columns on every row naming a player (events take them from the
 player's last position sample).
 
@@ -167,7 +169,7 @@ instructions under the key **`heat3d`**, a JSON object:
     "teamId": "side",
     "sessionId": "roundId",
     "lookMode": "vector", "dirX": "dirX", "dirY": "dirY", "dirZ": "dirZ",
-    "extra": ["event", "match", "round", "roundTime", "phase", "weapon", "place", "won", "buy", "opening", "team"]
+    "extra": ["event", "match", "round", "roundTime", "phase", "weapon", "place", "won", "matchWon", "roundEndReason", "buy", "opening", "team", ...]
   }
 }
 ```
