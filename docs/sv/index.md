@@ -47,10 +47,10 @@ python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # en matchs resultat
 ```
 
 Du bör se `1 match(es), 1 at a time ...` och sedan en rad per match
-(se [Kommandon](../commands.md#what-is-printed)).
+(se [Kommandon](commands.md#what-is-printed)).
 
 `demos` skriver, per match, en fil i en mapp uppkallad efter kartan:
-`out/<map>/<match>.3dheat`, en [`.3dheat`-behållare](../output-container.md) - visarens
+`out/<map>/<match>.3dheat`, en [`.3dheat`-behållare](output-container.md) - visarens
 format med en fil per match ([specifikation](https://holdi601.github.io/3DHeat/container.html)).
 Den innehåller dessa delar; `--loose` skriver dem som separata filer i stället:
 
@@ -67,28 +67,28 @@ Den innehåller dessa delar; `--loose` skriver dem som separata filer i stället
 | Sida | Vad den täcker |
 |---|---|
 | [Innan du börjar](before-you-start.md) | Python, en terminal, platshållare, hur lyckat och de vanliga felen ser ut |
-| [Installera](../installing.md) | Python, paketen, Source2Viewers CLI, var CS2 måste ligga |
-| [Kommandon](../commands.md) | `demos`, `map`, `scoreboard`: varje alternativ, vad som skrivs ut, avslutskoder |
-| [Läsa en demo](../reading-demos.md) | vad som läses från en demofil: samplade tickar, spelaregenskaper, spelregler, händelser |
-| [Bygga en match](../building-matches.md) | delar och kedjor, matchklockan, rundor, lag och sidor, rader, dödanden, trades, öppningar, skada, bländningar, ekonomi |
-| [Statistik](../statistics.md) | resultattavlan: K/D/A, ADR, KAST, HS%, öppningar, trades, multikills, clutches, utility, bländningar |
-| [Värmekarttabellen](../output-table.md) | Parquet-filen: varje kolumn, dess typ, vilka händelser som fyller den, `heat3d`-sidfotens tips, axlarna |
-| [Matchdokumentet](../output-match-json.md) | `.match.json`-dokumentet, fält för fält |
-| [En fil per match](../output-container.md) | `.3dheat`-behållaren `demos` skriver som standard, `--loose` |
-| [Kartexport](../map-export.md) | hur en kartas kollisionsmesh exporteras, ramen, nodnamngivning, enheter |
-| [Användning med 3DHeat](../using-with-3dheat.md) | läsa in tabeller, matchdokument och kartor i visarens flikar Värmekarta och Match |
-| [Begränsningar](../limits.md) | vad som antas, vad som inte hanteras, vad som inte är verifierat |
-| [Uppdateringar](../updates.md) | utgivningskontrollen vid start och `python -m heat3d_update` |
-| [Utveckling](../development.md) | kodens layout, tester, den syntetiska demofixturen |
+| [Installera](installing.md) | Python, paketen, Source2Viewers CLI, var CS2 måste ligga |
+| [Kommandon](commands.md) | `demos`, `map`, `scoreboard`: varje alternativ, vad som skrivs ut, avslutskoder |
+| [Läsa en demo](reading-demos.md) | vad som läses från en demofil: samplade tickar, spelaregenskaper, spelregler, händelser |
+| [Bygga en match](building-matches.md) | delar och kedjor, matchklockan, rundor, lag och sidor, rader, dödanden, trades, öppningar, skada, bländningar, ekonomi |
+| [Statistik](statistics.md) | resultattavlan: K/D/A, ADR, KAST, HS%, öppningar, trades, multikills, clutches, utility, bländningar |
+| [Värmekarttabellen](output-table.md) | Parquet-filen: varje kolumn, dess typ, vilka händelser som fyller den, `heat3d`-sidfotens tips, axlarna |
+| [Matchdokumentet](output-match-json.md) | `.match.json`-dokumentet, fält för fält |
+| [En fil per match](output-container.md) | `.3dheat`-behållaren `demos` skriver som standard, `--loose` |
+| [Kartexport](map-export.md) | hur en kartas kollisionsmesh exporteras, ramen, nodnamngivning, enheter |
+| [Användning med 3DHeat](using-with-3dheat.md) | läsa in tabeller, matchdokument och kartor i visarens flikar Värmekarta och Match |
+| [Begränsningar](limits.md) | vad som antas, vad som inte hanteras, vad som inte är verifierat |
+| [Uppdateringar](updates.md) | utgivningskontrollen vid start och `python -m heat3d_update` |
+| [Utveckling](development.md) | kodens layout, tester, den syntetiska demofixturen |
 | [Kommandoreferens](../cli-reference.md) | varje kommandos `--help`, genererat från koden |
-| [Underhålla](../maintaining.md) | utgivningschecklistan för de här sidorna |
+| [Underhålla](maintaining.md) | utgivningschecklistan för de här sidorna |
 
 ## Vad det kontrolleras mot {#what-it-is-checked-against}
 
 Demos från verkligheten är inte en ren fil per match. Konverteraren hanterar en match
 delad över filer i valfri ordning, en server som startats om mitt i matchen, två olika matcher
 lagrade under samma namn, rundor återställda från en säkerhetskopia, en inspelning som startar sent eller slutar tidigt, pauser och tränare på ett lags sida -
-se [Bygga en match](../building-matches.md). Kontrollerat över en stor samling turneringsdemos: i varje match
+se [Bygga en match](building-matches.md). Kontrollerat över en stor samling turneringsdemos: i varje match
 följer poängen rundvinnarna, varje sidas dödanden är den andra sidans dödsfall, och varje runda startar fem mot fem.
 
 ## Vad du ska peka den på {#what-to-point-it-at}

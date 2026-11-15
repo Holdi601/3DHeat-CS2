@@ -3,7 +3,7 @@ title: "Etusivu"
 nav_order: 1
 lang: "fi"
 source: index.md
-source_hash: "937e30dc7322"
+source_hash: "251966f8d45d"
 nav_exclude: true
 search_exclude: true
 permalink: /fi/
@@ -48,10 +48,10 @@ python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # ottelun tulostaulu
 ```
 
 Pitäisi näkyä `1 match(es), 1 at a time ...` ja sitten yksi rivi ottelua kohden
-(katso [Komennot](../commands.md#what-is-printed)).
+(katso [Komennot](commands.md#what-is-printed)).
 
 `demos` kirjoittaa kutakin ottelua kohden yhden tiedoston kansioon, joka on nimetty kartan mukaan:
-`out/<map>/<match>.3dheat`, [`.3dheat`-säiliö](../output-container.md) – katselimen yhden ottelun
+`out/<map>/<match>.3dheat`, [`.3dheat`-säiliö](output-container.md) – katselimen yhden ottelun
 yhden tiedoston muoto ([määritys](https://holdi601.github.io/3DHeat/container.html)).
 Se sisältää nämä osat; `--loose` kirjoittaa ne erillisinä tiedostoina:
 
@@ -70,21 +70,21 @@ osuu täsmälleen lämpökartan alle (Tausta / kenttä -paneeli).
 | Sivu | Mitä se kattaa |
 |---|---|
 | [Ennen aloittamista](before-you-start.md) | Python, pääte, paikanpitäjät, miltä onnistuminen ja yleiset virheet näyttävät |
-| [Asennus](../installing.md) | Python, paketit, Source2Viewerin CLI, missä CS2:n on oltava |
-| [Komennot](../commands.md) | `demos`, `map`, `scoreboard`: jokainen asetus, mitä tulostuu, poistumiskoodit |
-| [Demon lukeminen](../reading-demos.md) | mitä demotiedostosta luetaan: näytteistetyt tickit, pelaajan ominaisuudet, pelisäännöt, tapahtumat |
-| [Ottelun rakentaminen](../building-matches.md) | osat ja ketjut, ottelukello, kierrokset, joukkueet ja puolet, rivit, tapot, kostot, avaukset, vahinko, välähdykset, talous |
-| [Tilastot](../statistics.md) | tulostaulu: K/D/A, ADR, KAST, HS%, avaukset, kostot, monitapot, clutchit, apuvälineet, välähdykset |
-| [Lämpökarttataulukko](../output-table.md) | Parquet-tiedosto: jokainen sarake, sen tyyppi, mitkä tapahtumat sen täyttävät, `heat3d`-alatunnisteen vihjeet, akselit |
-| [Ottelun asiakirja](../output-match-json.md) | `.match.json`-asiakirja kenttä kerrallaan |
-| [Yksi tiedosto ottelua kohden](../output-container.md) | `.3dheat`-säiliö, jonka `demos` kirjoittaa oletuksena, `--loose` |
-| [Karttavienti](../map-export.md) | miten kartan törmäysmesh viedään, kehys, solmujen nimeäminen, yksiköt |
-| [Käyttö 3DHeatin kanssa](../using-with-3dheat.md) | taulukoiden, ottelun asiakirjojen ja karttojen lataaminen katselimen Lämpökartta- ja Ottelu-välilehdille |
-| [Rajoitukset](../limits.md) | mitä oletetaan, mitä ei käsitellä, mitä ei ole tarkistettu |
-| [Päivitykset](../updates.md) | julkaisutarkistus käynnistyksessä ja `python -m heat3d_update` |
-| [Kehitys](../development.md) | koodin rakenne, testit, synteettinen demokiinnitys |
+| [Asennus](installing.md) | Python, paketit, Source2Viewerin CLI, missä CS2:n on oltava |
+| [Komennot](commands.md) | `demos`, `map`, `scoreboard`: jokainen asetus, mitä tulostuu, poistumiskoodit |
+| [Demon lukeminen](reading-demos.md) | mitä demotiedostosta luetaan: näytteistetyt tickit, pelaajan ominaisuudet, pelisäännöt, tapahtumat |
+| [Ottelun rakentaminen](building-matches.md) | osat ja ketjut, ottelukello, kierrokset, joukkueet ja puolet, rivit, tapot, kostot, avaukset, vahinko, välähdykset, talous |
+| [Tilastot](statistics.md) | tulostaulu: K/D/A, ADR, KAST, HS%, avaukset, kostot, monitapot, clutchit, apuvälineet, välähdykset |
+| [Lämpökarttataulukko](output-table.md) | Parquet-tiedosto: jokainen sarake, sen tyyppi, mitkä tapahtumat sen täyttävät, `heat3d`-alatunnisteen vihjeet, akselit |
+| [Ottelun asiakirja](output-match-json.md) | `.match.json`-asiakirja kenttä kerrallaan |
+| [Yksi tiedosto ottelua kohden](output-container.md) | `.3dheat`-säiliö, jonka `demos` kirjoittaa oletuksena, `--loose` |
+| [Karttavienti](map-export.md) | miten kartan törmäysmesh viedään, kehys, solmujen nimeäminen, yksiköt |
+| [Käyttö 3DHeatin kanssa](using-with-3dheat.md) | taulukoiden, ottelun asiakirjojen ja karttojen lataaminen katselimen Lämpökartta- ja Ottelu-välilehdille |
+| [Rajoitukset](limits.md) | mitä oletetaan, mitä ei käsitellä, mitä ei ole tarkistettu |
+| [Päivitykset](updates.md) | julkaisutarkistus käynnistyksessä ja `python -m heat3d_update` |
+| [Kehitys](development.md) | koodin rakenne, testit, synteettinen demokiinnitys |
 | [Komentoviite](../cli-reference.md) | jokaisen komennon `--help`, luotu koodista |
-| [Ylläpito](../maintaining.md) | julkaisun tarkistuslista näille sivuille |
+| [Ylläpito](maintaining.md) | julkaisun tarkistuslista näille sivuille |
 
 ## Mitä sitä vastaan on tarkistettu {#what-it-is-checked-against}
 
@@ -92,7 +92,7 @@ Demot, joita löytyy maailmalta, eivät ole yksi siisti tiedosto per ottelu. Muu
 joka on jaettu tiedostoihin missä tahansa järjestyksessä, palvelimen, joka käynnistettiin uudelleen
 kesken ottelun, kaksi eri ottelua samalla nimellä, kierrokset, jotka palautettiin varmuuskopiosta,
 tallenteen, joka alkaa myöhään tai loppuu aikaisin, tauot ja valmentajat joukkueen puolella –
-katso [Ottelun rakentaminen](../building-matches.md). Suuren turnausdemokokoelman yli tarkistettuna:
+katso [Ottelun rakentaminen](building-matches.md). Suuren turnausdemokokoelman yli tarkistettuna:
 jokaisessa ottelussa tulos seuraa kierrosten voittajia, kunkin puolen tapot ovat toisen puolen kuolemia,
 ja jokainen kierros alkaa viidellä viitä vastaan.
 
@@ -123,6 +123,15 @@ repositorionsa, julkaisunsa ja lisenssinsä:
 | [Ext-Squad](https://github.com/Holdi601/3DHeat-Ext-Squad) | Squad-palvelindemot taulukoiksi ja ottelutiedostoiksi | [sivusto](https://holdi601.github.io/3DHeat-Ext-Squad/) |
 | [Ext-DCS](https://github.com/Holdi601/3DHeat-Ext-DCS) | DCS World -kartat 3D-malleiksi | [sivusto](https://holdi601.github.io/3DHeat-Ext-DCS/) |
 | [Ext-IL2](https://github.com/Holdi601/3DHeat-Ext-IL2) | IL-2 Sturmovik -kartat 3D-malleiksi | [sivusto](https://holdi601.github.io/3DHeat-Ext-IL2/) |
+| [Ext-Dota](https://github.com/Holdi601/3DHeat-Ext-Dota) | Dota 2 -kartta omasta asennuksestasi 3D-kenttänä | [sivusto](https://holdi601.github.io/3DHeat-Ext-Dota/) |
+| [Ext-DotaReplay](https://github.com/Holdi601/3DHeat-Ext-DotaReplay) | Dota 2 -tallenteet | [sivusto](https://holdi601.github.io/3DHeat-Ext-DotaReplay/) |
+| [Ext-Riot](https://github.com/Holdi601/3DHeat-Ext-Riot) | League of Legends- ja VALORANT-tallenteet (mitä ne sisältävät salaamattomana) | [sivusto](https://holdi601.github.io/3DHeat-Ext-Riot/) |
+| [Ext-Forza](https://github.com/Holdi601/3DHeat-Ext-Forza) | Forza-radat, kisat ja autot omasta asennuksestasi | [sivusto](https://holdi601.github.io/3DHeat-Ext-Forza/) |
+| [Ext-Battlefield](https://github.com/Holdi601/3DHeat-Ext-Battlefield) | Battlefield-kentät (Frostbite) 3D-kenttinä | [sivusto](https://holdi601.github.io/3DHeat-Ext-Battlefield/) |
+| [Ext-BeamNG](https://github.com/Holdi601/3DHeat-Ext-BeamNG) | BeamNG.drive -radat | [sivusto](https://holdi601.github.io/3DHeat-Ext-BeamNG/) |
+| [Ext-ACRally](https://github.com/Holdi601/3DHeat-Ext-ACRally) | Assetto Corsa Rally -osuudet radoiksi | [sivusto](https://holdi601.github.io/3DHeat-Ext-ACRally/) |
+| [Ext-Reforger](https://github.com/Holdi601/3DHeat-Ext-Reforger) | Arma Reforger -maailmat (Enfusion) 3D-kenttinä | [sivusto](https://holdi601.github.io/3DHeat-Ext-Reforger/) |
+| [Ext-R6](https://github.com/Holdi601/3DHeat-Ext-R6) | Rainbow Six Siege -ottelutallenteet | [sivusto](https://holdi601.github.io/3DHeat-Ext-R6/) |
 
 ## Lisenssi {#licence}
 
