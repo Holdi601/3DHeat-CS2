@@ -3,7 +3,7 @@ title: "Das Match-Dokument"
 nav_order: 9
 lang: "de"
 source: output-match-json.md
-source_hash: "9f7c7bd2cbaf"
+source_hash: "8f8b6aee7aff"
 nav_exclude: true
 search_exclude: true
 ---
@@ -30,6 +30,8 @@ Bombenlegung.
 | `demos` | string[] | die Demo-Dateien, aus denen es gebaut wurde, nur Dateinamen, in Match-Reihenfolge |
 | `teams` | string[] | die Teamnamen in der Reihenfolge des ersten Auftretens (Runde 1: zuerst die T-Seite) |
 | `score` | object | Teamname -> gewonnene Runden: der Stand der letzten Runde |
+| `winner` | string oder null | das Team, das das Match gewonnen hat, wo die Aufnahme das Ende zeigt; null für eine Aufnahme, die früh abbricht, eine Verlängerung ohne Siegfenster oder ein Unentschieden |
+| `winnerSource` | string oder null | woher `winner` bekannt ist: `winPanel` (das Siegfenster des Spiels am Matchende), `surrender`, `regulation` (mehr als die Hälfte der regulären Runden) |
 | `rounds` | object[] | jede vollständige Runde, in Reihenfolge - [unten](#rounds) |
 | `incomplete` | number[] | Rundennummern, die am Ende eines Demos abgeschnitten und weggelassen wurden |
 | `missing` | number[] | Rundennummern vor der ersten, die die Demos enthalten: `[1, 2]`, wenn die Aufnahme mit Runde 3 beginnt |
@@ -44,7 +46,7 @@ Bombenlegung.
 | `chat` | object[] | jede Chatzeile des Matches: Zeit, Runde, Spieler, Seite, Text |
 | `events` | object[] | jedes Spielereignis ohne Spieler, in Zeitfolge, mit allen seinen Feldern: Rundentöne und Phasen, `round_officially_ended`, `buytime_ended`, `server_message`, `server_cvar` (die Einstellungen des Servers, wie sie sich änderten), die Chase- und Fixed-Kameraeinstellungen des Übertragungsregisseurs, `cs_win_panel_match`, ... |
 | `state` | object[] | der Spielzustand, wo er sich änderte: Zeit, Feld, Wert - Auszeiten (`is_terrorist_timeout`, `num_ct_timeouts`, `is_technical_timeout`, `is_waiting_for_resume`), die Bombe (`is_bomb_planted`, `is_bomb_dropped`), `ct_losing_streak` / `t_losing_streak`, `game_phase`, `round_in_progress`, die lebenden Spieler, die `match_start_time` und `round_start_time` des Servers |
-| `selfCheck` | object | `completeness`: wohin alles aus dem Demo ging - je Ereignisname, Eigenschaftsklasse, Netzwerknachricht, Frame und Stringtabelle die Zählungen `seen`, `decoded`, `partial`, `raw` und `lost`, die geschriebenen Beiwerk-Dateien, das gesamte `lost` (0, außer bei `--no-bulk`), die Eigenschaften, die der Parser auflistet, aber nicht lesen kann (`unreadProps`). Die Konvention: [Konverter behalten alles](https://github.com/Holdi601/3DHeat/blob/main/docs/converters.md); die Beiwerk-Dateien: der Abschnitt Vollständigkeit der README |
+| `selfCheck` | object | `completeness`: wohin alles aus dem Demo ging - je Ereignisname, Eigenschaftsklasse, Netzwerknachricht, Frame und Stringtabelle die Zählungen `seen`, `decoded`, `partial`, `raw` und `lost`, die geschriebenen Begleitdateien, das gesamte `lost` (0, außer bei `--no-bulk`), die Eigenschaften, die der Parser auflistet, aber nicht lesen kann (`unreadProps`). Die Konvention: [Konverter behalten alles](https://github.com/Holdi601/3DHeat/blob/main/docs/converters.md); die Begleitdateien: der Abschnitt Vollständigkeit der README |
 
 ## Runden {#rounds}
 

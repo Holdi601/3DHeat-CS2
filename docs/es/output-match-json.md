@@ -3,7 +3,7 @@ title: El documento de la partida
 nav_order: 9
 lang: "es"
 source: output-match-json.md
-source_hash: "9f7c7bd2cbaf"
+source_hash: "8f8b6aee7aff"
 nav_exclude: true
 search_exclude: true
 ---
@@ -31,6 +31,8 @@ dos para las eliminaciones y la colocación.
 | `demos` | cadena[] | los archivos de demo de los que se construyó, solo nombres de archivo, en orden de partida |
 | `teams` | cadena[] | los nombres de equipo por orden de aparición (ronda 1: primero el bando T) |
 | `score` | objeto | nombre de equipo -> rondas ganadas: el marcador de la última ronda |
+| `winner` | cadena o null | el equipo que ganó la partida, cuando la grabación muestra el final; null para una grabación que se corta antes, una prórroga sin el panel de victoria, o un empate |
+| `winnerSource` | cadena o null | cómo se sabe `winner`: `winPanel` (el panel de victoria de la partida del juego), `surrender`, `regulation` (más de la mitad de las rondas reglamentarias) |
 | `rounds` | objeto[] | cada ronda completa, en orden - [abajo](#rounds) |
 | `incomplete` | número[] | números de ronda cortados por el final de una demo y dejados fuera |
 | `missing` | número[] | números de ronda anteriores a la primera que tienen las demos: `[1, 2]` cuando la grabación empieza en la ronda 3 |

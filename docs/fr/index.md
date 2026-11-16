@@ -3,7 +3,7 @@ title: "Accueil"
 nav_order: 1
 lang: "fr"
 source: index.md
-source_hash: "937e30dc7322"
+source_hash: "251966f8d45d"
 nav_exclude: true
 search_exclude: true
 permalink: /fr/
@@ -11,7 +11,7 @@ permalink: /fr/
 # 3DHeat CS2 {#dheat-cs2}
 
 **Qu'est-ce que c'est ?** Counter-Strike 2 peut enregistrer un match, appelé une
-*démo*. Cet outil transforme une démo en fichiers que la visionneuse 3DHeat peut afficher en 3D :
+*démo*. Cet outil transforme une démo en fichiers que le visualiseur 3DHeat peut afficher en 3D :
 où chacun se tenait, est mort, a lancé et posé, manche par manche. Il peut aussi
 transformer une carte de CS2 en modèle 3D pour les y montrer.
 
@@ -26,7 +26,7 @@ en sortie (`de_x` est un nom de carte inventé).
 
 En détail : 3DHeat CS2 transforme les **démos de Counter-Strike 2** en une table de carte de chaleur et un
 document de match par match, et une **carte CS2** en géométrie de niveau. Les sorties sont conçues
-pour la visionneuse de télémétrie [3DHeat](https://holdi601.github.io/3DHeat/)
+pour le visualiseur de télémétrie [3DHeat](https://holdi601.github.io/3DHeat/)
 ([source](https://github.com/Holdi601/3DHeat)), mais ce sont des fichiers ordinaires - Parquet,
 JSON et glTF binaire - que n'importe quel autre outil peut lire.
 
@@ -52,7 +52,7 @@ Vous devez voir `1 match(es), 1 at a time ...` puis une ligne par partie
 
 `demos` écrit, pour chaque partie, un fichier dans un dossier portant le nom de la carte :
 `out/<carte>/<match>.3dheat`, un [conteneur `.3dheat`](output-container.md) - le format
-d'un fichier par partie de la visionneuse ([spécification](https://holdi601.github.io/3DHeat/container.html)).
+d'un fichier par partie du visualiseur ([spécification](https://holdi601.github.io/3DHeat/container.html)).
 Il contient ces éléments ; `--loose` les écrit à la place sous forme de fichiers séparés :
 
 | Élément | Ce qu'il contient | Chargé dans |
@@ -79,7 +79,7 @@ poser exactement sous la carte de chaleur (panneau Arrière-plan / niveau).
 | [Le document de partie](output-match-json.md) | le document `.match.json`, champ par champ |
 | [Un fichier par match](output-container.md) | le conteneur `.3dheat` que `demos` écrit par défaut, `--loose` |
 | [Export de carte](map-export.md) | comment le maillage de collision d'une carte est exporté, le repère, le nommage des nœuds, les unités |
-| [Utilisation avec 3DHeat](using-with-3dheat.md) | charger les tables, les documents de match et les cartes dans les onglets Carte de chaleur et Match de la visionneuse |
+| [Utilisation avec 3DHeat](using-with-3dheat.md) | charger les tables, les documents de match et les cartes dans les onglets Carte de chaleur et Match du visualiseur |
 | [Limites](limits.md) | ce qui est supposé, ce qui n'est pas géré, ce qui n'est pas vérifié |
 | [Mises à jour](updates.md) | la vérification de version au démarrage et `python -m heat3d_update` |
 | [Développement](development.md) | organisation du code, tests, la démo synthétique de test |
@@ -107,12 +107,12 @@ l'outil lit les démos depuis le disque et n'en télécharge aucune.
 
 ## Partie de 3DHeat {#part-of-3dheat}
 
-3DHeat CS2 est l'un des outils gratuits qui entourent la visionneuse 3DHeat, chacun avec son propre
+3DHeat CS2 est l'un des outils gratuits qui entourent le visualiseur 3DHeat, chacun avec son propre
 dépôt, ses versions et sa licence :
 
 | Outil | Ce qu'il fait | Documentation |
 |---|---|---|
-| [3DHeat](https://github.com/Holdi601/3DHeat) | la visionneuse : cartes de chaleur, analyse de course et revue de match en 3D | [site](https://holdi601.github.io/3DHeat/) |
+| [3DHeat](https://github.com/Holdi601/3DHeat) | le visualiseur : cartes de chaleur, analyse de course et revue de match en 3D | [site](https://holdi601.github.io/3DHeat/) |
 | [GameFiles](https://github.com/Holdi601/3DHeat-GameFiles) | circuits et niveaux tirés des fichiers livrés par les jeux, en modèles 3D | [site](https://holdi601.github.io/3DHeat-GameFiles/) |
 | [GameCapture](https://github.com/Holdi601/3DHeat-GameCapture) | télémétrie de tour des jeux de course ; niveaux reconstruits à partir de vidéos de jeu | [site](https://holdi601.github.io/3DHeat-GameCapture/) |
 | [Unreal Exporter](https://github.com/Holdi601/3DHeat-UnrealExporter) | un plugin de l'éditeur Unreal qui exporte un niveau en un modèle 3D | [site](https://holdi601.github.io/3DHeat-UnrealExporter/) |
@@ -124,6 +124,15 @@ dépôt, ses versions et sa licence :
 | [Ext-Squad](https://github.com/Holdi601/3DHeat-Ext-Squad) | démos de serveurs Squad en tables et documents de match | [site](https://holdi601.github.io/3DHeat-Ext-Squad/) |
 | [Ext-DCS](https://github.com/Holdi601/3DHeat-Ext-DCS) | cartes de DCS World en modèles 3D | [site](https://holdi601.github.io/3DHeat-Ext-DCS/) |
 | [Ext-IL2](https://github.com/Holdi601/3DHeat-Ext-IL2) | cartes d'IL-2 Sturmovik en modèles 3D | [site](https://holdi601.github.io/3DHeat-Ext-IL2/) |
+| [Ext-Dota](https://github.com/Holdi601/3DHeat-Ext-Dota) | la carte de Dota 2 de votre propre installation, en niveau 3D | [site](https://holdi601.github.io/3DHeat-Ext-Dota/) |
+| [Ext-DotaReplay](https://github.com/Holdi601/3DHeat-Ext-DotaReplay) | replays de Dota 2 | [site](https://holdi601.github.io/3DHeat-Ext-DotaReplay/) |
+| [Ext-Riot](https://github.com/Holdi601/3DHeat-Ext-Riot) | replays de League of Legends et VALORANT (ce qu'ils contiennent en clair) | [site](https://holdi601.github.io/3DHeat-Ext-Riot/) |
+| [Ext-Forza](https://github.com/Holdi601/3DHeat-Ext-Forza) | circuits, courses et voitures de Forza depuis votre propre installation | [site](https://holdi601.github.io/3DHeat-Ext-Forza/) |
+| [Ext-Battlefield](https://github.com/Holdi601/3DHeat-Ext-Battlefield) | niveaux de Battlefield (Frostbite) en niveaux 3D | [site](https://holdi601.github.io/3DHeat-Ext-Battlefield/) |
+| [Ext-BeamNG](https://github.com/Holdi601/3DHeat-Ext-BeamNG) | circuits de BeamNG.drive | [site](https://holdi601.github.io/3DHeat-Ext-BeamNG/) |
+| [Ext-ACRally](https://github.com/Holdi601/3DHeat-Ext-ACRally) | étapes d'Assetto Corsa Rally en circuits | [site](https://holdi601.github.io/3DHeat-Ext-ACRally/) |
+| [Ext-Reforger](https://github.com/Holdi601/3DHeat-Ext-Reforger) | mondes d'Arma Reforger (Enfusion) en niveaux 3D | [site](https://holdi601.github.io/3DHeat-Ext-Reforger/) |
+| [Ext-R6](https://github.com/Holdi601/3DHeat-Ext-R6) | replays de matchs de Rainbow Six Siege | [site](https://holdi601.github.io/3DHeat-Ext-R6/) |
 
 ## Licence {#licence}
 

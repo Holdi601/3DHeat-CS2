@@ -80,5 +80,5 @@ Chaque événement ci-dessous est lu quand la démo le déclare (`list_game_even
 
 ## Deux faits sur les démos qui décident de leur lecture {#two-facts-about-demos-that-decide-how-they-are-read}
 
-- **Un match peut être découpé en plusieurs fichiers**, et les noms des fichiers ne disent pas leur ordre. Le compte des rounds (`total_rounds_played`) se poursuit à travers eux, et en général l'horloge du serveur aussi : les parties peuvent donc être mises en ordre d'après leur contenu.
+- **Un match peut être découpé en plusieurs fichiers**, et les noms des fichiers ne disent pas leur ordre. Le compte des rounds (`total_rounds_played`) se poursuit à travers eux, et en général l'horloge du serveur aussi : les fichiers peuvent donc être remis en ordre d'après leur contenu.
 - **Un enregistrement peut commencer avant le match** : échauffement, redémarrage, round de couteau. Le match commence au **dernier** `round_announce_match_start` d'un fichier ; avant lui, tout est laissé de côté, et l'échauffement est laissé de côté partout.

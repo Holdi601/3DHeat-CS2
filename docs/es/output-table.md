@@ -3,7 +3,7 @@ title: La tabla del mapa de calor
 nav_order: 8
 lang: "es"
 source: output-table.md
-source_hash: "b235ff13fe45"
+source_hash: "7f6d90bac0d2"
 nav_exclude: true
 search_exclude: true
 ---
@@ -65,8 +65,10 @@ son nulas donde una fila no tiene valor.
 | `noscope` | int8 | 0/1, la eliminación fue con un arma con mira disparada sin mira (el `noscope` del evento); solo `kill` y `death` |
 | `attackerBlind` | int8 | 0/1, el asesino estaba cegado cuando mató (el `attackerblind` del evento); solo `kill` y `death` |
 | `won` | int8 | 0/1, si el bando de esta fila ganó la ronda; null cuando `side` está vacío |
+| `matchWon` | int8 | 0/1, si el equipo de esta fila ganó la partida; null cuando `team` está vacío o la grabación no muestra el final (ver `winner` del documento de la partida) |
+| `roundEndReason` | cadena | cómo terminó la ronda de la fila: `elimination`, `bomb` (la bomba explotó), `defuse`, `time`, `surrender`, `draw`, `other` |
 | `buy` | cadena | la compra del bando de esta fila en esta ronda: `pistol`, `eco`, `force`, `full` |
-| `detail` | cadena | cada campo del evento que no llevan las otras columnas, como objeto JSON (los nombres propios del juego): los disparos de una bala (`fire_bullets`: origen, ángulos, imprecisión, dispersión, índice de retroceso, semilla...), `dominated`, `revenge`, `attackerinair`, `wipe`... de una muerte, `defindex` de un objeto, nada en un paso |
+| `detail` | cadena | cada campo del evento que no llevan las otras columnas, como objeto JSON (los nombres propios del juego): los disparos de una bala (`fire_bullets`: origen, ángulos, imprecisión, dispersión, índice de retroceso, semilla...), `dominated`, `revenge`, `attackerinair`, `wipe`... de una muerte, `defindex` de un objeto, un paso no lleva ninguno |
 | `text` | cadena | una línea de chat; solo `chat` |
 | `entity` | int32 | la entidad de la granada: el vuelo de un `throw` (filas `grenade`), su detonación y los jugadores que cegó comparten la misma |
 | `hitgroup` | cadena | dónde impactó la bala (`head`, `chest`, ...); `hurt`, `kill`, `death` |
@@ -95,8 +97,8 @@ son nulas donde una fila no tiene valor.
 ## Eventos {#events}
 
 Qué jugador nombra una fila, dónde está y qué columnas rellena.
-`match`, `map`, `round`, `roundId`, `phase`, `time`, `roundTime`, `event`, `won` y `buy` se rellenan en
-cada fila; `inventory`, `money`, `equipment` y las columnas `state_*` en cada fila que nombra a un
+`match`, `map`, `round`, `roundId`, `phase`, `time`, `roundTime`, `event`, `won`, `roundEndReason` y `buy` se rellenan en
+cada fila (`matchWon` cuando se conoce el ganador de la partida); `inventory`, `money`, `equipment` y las columnas `state_*` en cada fila que nombra a un
 jugador (los eventos las toman de la última muestra de posición del jugador).
 
 | `event` | `player` / `side` / `team` | `x`, `y`, `z` | También rellena |
@@ -169,7 +171,7 @@ clave **`heat3d`**, un objeto JSON:
     "teamId": "side",
     "sessionId": "roundId",
     "lookMode": "vector", "dirX": "dirX", "dirY": "dirY", "dirZ": "dirZ",
-    "extra": ["event", "match", "round", "roundTime", "phase", "weapon", "place", "won", "buy", "opening", "team"]
+    "extra": ["event", "match", "round", "roundTime", "phase", "weapon", "place", "won", "matchWon", "roundEndReason", "buy", "opening", "team", ...]
   }
 }
 ```

@@ -3,7 +3,7 @@ title: "Die Heatmap-Tabelle"
 nav_order: 8
 lang: "de"
 source: output-table.md
-source_hash: "b235ff13fe45"
+source_hash: "7f6d90bac0d2"
 nav_exclude: true
 search_exclude: true
 ---
@@ -65,6 +65,8 @@ Zeile keinen Wert hat.
 | `noscope` | int8 | 0/1, der Kill geschah mit einer Zielfernrohr-Waffe, die ohne Zielfernrohr schoss (das `noscope` des Ereignisses); nur `kill` und `death` |
 | `attackerBlind` | int8 | 0/1, der Killer war geblendet, als er tötete (das `attackerblind` des Ereignisses); nur `kill` und `death` |
 | `won` | int8 | 0/1, ob die Seite dieser Zeile die Runde gewonnen hat; null, wenn `side` leer ist |
+| `matchWon` | int8 | 0/1, ob das Team dieser Zeile das Match gewonnen hat; null, wenn `team` leer ist oder die Aufnahme das Ende nicht zeigt (siehe `winner` im Match-Dokument) |
+| `roundEndReason` | string | wie die Runde der Zeile endete: `elimination`, `bomb` (die Bombe explodierte), `defuse`, `time`, `surrender`, `draw`, `other` |
 | `buy` | string | der Buy der Seite dieser Zeile in dieser Runde: `pistol`, `eco`, `force`, `full` |
 | `detail` | string | jedes Feld des Ereignisses, das die anderen Spalten nicht tragen, als JSON-Objekt (die eigenen Namen des Spiels): die Kugeln eines Schusses (`fire_bullets`: Ursprung, Winkel, Ungenauigkeit, Streuung, Rückstoß-Index, Seed ...), `dominated`, `revenge`, `attackerinair`, `wipe` ... eines Todes, `defindex` eines Items; ein Schritt hat nichts |
 | `text` | string | eine Chatzeile; nur `chat` |
@@ -95,7 +97,8 @@ Zeile keinen Wert hat.
 ## Ereignisse {#events}
 
 Welchen Spieler eine Zeile nennt, wo er steht und welche Spalten sie füllt. `match`, `map`, `round`, `roundId`,
-`phase`, `time`, `roundTime`, `event`, `won` und `buy` sind in jeder Zeile gefüllt; `inventory`, `money`,
+`phase`, `time`, `roundTime`, `event`, `won`, `roundEndReason` und `buy` sind in jeder Zeile gefüllt (`matchWon`, wo der
+Gewinner des Matches bekannt ist); `inventory`, `money`,
 `equipment` und die `state_*`-Spalten in jeder Zeile, die einen Spieler nennt (Ereignisse nehmen sie von der letzten
 Positionsabtastung des Spielers).
 
@@ -166,7 +169,7 @@ Der Parquet-Footer der Datei (Schema-Metadaten) trägt Leseanweisungen unter dem
     "teamId": "side",
     "sessionId": "roundId",
     "lookMode": "vector", "dirX": "dirX", "dirY": "dirY", "dirZ": "dirZ",
-    "extra": ["event", "match", "round", "roundTime", "phase", "weapon", "place", "won", "buy", "opening", "team"]
+    "extra": ["event", "match", "round", "roundTime", "phase", "weapon", "place", "won", "matchWon", "roundEndReason", "buy", "opening", "team", ...]
   }
 }
 ```
@@ -181,7 +184,7 @@ Der Parquet-Footer der Datei (Schema-Metadaten) trägt Leseanweisungen unter dem
 | `columns.x` / `y` / `z` | die Positionsspalten |
 | `columns.time`, `timeUnit` | `time`, in Sekunden |
 | `columns.personId` | der Spieler ist die Person |
-| `columns.teamId` | die Seite ist die Gruppe (also färben T und CT, nicht die Teamnamen, die Gruppen) |
+| `columns.teamId` | die Seite ist die Gruppe (so färben T und CT die Gruppen, nicht die Teamnamen) |
 | `columns.sessionId` | jede Runde (`roundId`) ist eine Session |
 | `columns.lookMode` und `dirX`-`dirZ` | die Blickrichtung ist ein Vektor in diesen Spalten |
 | `columns.extra` | die Spalten, die als Filter bleiben, nach Nützlichkeit geordnet |

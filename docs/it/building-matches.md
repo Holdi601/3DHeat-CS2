@@ -19,7 +19,7 @@ Il tabellone calcolato da qui si trova in [Statistiche](statistics.md).
 
 ## Panoramica {#overview}
 
-1. Viene letto ogni file del nome di una partita ([Leggere un demo](reading-demos.md)).
+1. Viene letto ogni file con il nome di una partita ([Leggere un demo](reading-demos.md)).
 2. Le righe giocatore duplicate di ogni file (round ripristinati) vengono risolte.
 3. I file vengono ordinati in **catene** - partite - e ogni catena viene messa in ordine.
 4. Ogni parte viene collocata sul **cronometro della partita**.
@@ -116,7 +116,7 @@ che un'altra parte abbia il round completo).
 | `equipment` | lato -> somma di `current_equip_value` dei giocatori **vivi** di quel lato al primo campione alla fine del freeze time o dopo |
 | `buy` | lato -> `pistol`, `eco`, `force` o `full` ([Economia](#economy-and-buy-types)) |
 | `plant` | il primo `bomb_planted` dopo la fine del freeze time e fino a `end`, oppure nessuno |
-| `exploded` | tempo della partita del primo `bomb_exploded` dopo quel piazzamento e prima del successivo freeze end, se c'è (non nel documento della partita; serve a datare la riga `explode`) |
+| `exploded` | tempo della partita del primo `bomb_exploded` dopo quel piazzamento e prima del successivo freeze end, se c'è (non nel documento partita; serve a datare la riga `explode`) |
 
 `reason`, dal `CSRoundEndReason` del gioco:
 
@@ -132,7 +132,7 @@ che un'altra parte abbia il round completo).
 
 Quando più parti contengono lo stesso round (per indice), viene tenuta la versione della parte successiva. I
 round vengono poi elencati per indice. Una partita il cui primo round non è il round 1 registra i numeri
-mancanti (`missing` nel documento della partita); la riga di comando dice *registrata dal round N*.
+mancanti (`missing` nel documento partita); la riga di comando dice *registrata dal round N*.
 
 ### Il piazzamento {#the-plant}
 
@@ -226,7 +226,7 @@ Ogni `player_death` in un round dà un **record di uccisione** (la tabella `kill
 | `wallbang` | `penetrated` > 0 |
 | `throughSmoke` | `thrusmoke` |
 | `flashAssist` | `assistedflash` |
-| `noscope`, `attackerBlind` | i flag dell'evento (`noscope`, `attackerblind`); colonne delle righe `kill` e `death`, e nelle uccisioni del documento della partita |
+| `noscope`, `attackerBlind` | i flag dell'evento (`noscope`, `attackerblind`); colonne delle righe `kill` e `death`, e nelle uccisioni del documento partita |
 | `suicide` | attaccante e vittima sono lo stesso giocatore: una granata propria, per esempio |
 | `teamkill` | attaccante e vittima sullo stesso lato, con un attaccante, e non un suicidio |
 | `opening` | la prima uccisione di un nemico nel round (sotto) |
@@ -287,11 +287,11 @@ primo campione da quel momento in poi, e diviso per il loro numero:
 
 I round pistola seguono la metà con cui la partita è stata giocata, non un formato fisso. La metà finisce dove i
 lati si scambiano per la prima volta tra due round consecutivi, entrambi in regolamentare: la sua durata
-(`halfLength` nel documento della partita) è il round prima dello scambio - 12 nel formato a 24 round, 15 in quello a
+(`halfLength` nel documento partita) è il round prima dello scambio - 12 nel formato a 24 round, 15 in quello a
 30. Il round 1 e il round dopo la metà sono i round pistola. Un round è di overtime quando il conteggio degli
 overtime del gioco (`m_nOvertimePlaying`) è sopra 0 al suo freeze end; dove un demo non ha tale conteggio, lo è ogni
 round dopo due metà. Le metà di overtime iniziano con il denaro che imposta il server e non hanno un round pistola,
-anche se anche in esse i lati si scambiano. Una registrazione che non mostra mai lo scambio a metà partita - inizia
+anche se pure in esse i lati si scambiano. Una registrazione che non mostra mai lo scambio a metà partita - inizia
 dopo o finisce prima - lascia la metà sconosciuta, e solo il round 1 è un round pistola.
 
 ## Etichette e ordine {#labelling-and-order}

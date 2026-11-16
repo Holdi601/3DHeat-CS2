@@ -26,7 +26,7 @@ Dove il gioco stesso non definisce un numero, queste sono le definizioni. Sono a
 |---|---|
 | **Scambio** | Una morte è *scambiata* quando il suo assassino viene ucciso da un compagno della vittima entro **5 s**; quella uccisione è un'*uccisione di scambio*. |
 | **Apertura** | La prima uccisione di un nemico nel round mentre è live. Un compagno ucciso, un suicidio o una morte causata dal mondo prima di essa vengono saltati. |
-| **KAST** | La quota di round in cui un giocatore ha fatto una **K**illing (uccisione), una **A**ssistenza (conta anche l'assistenza a un flash), è **S**opravvissuto, o è stato **T**raded (scambiato). |
+| **KAST** | La quota di round in cui un giocatore ha fatto una **K**ill (uccisione), una **A**ssistenza (conta anche l'assistenza a un flash), è **S**opravvissuto, o è stato **T**raded (scambiato). |
 | **Danno** | Salute realmente persa, solo nemici: un colpo alla testa da 137 danni su un giocatore con 40 di salute vale 40. |
 | **Clutch** | Essere l'ultimo giocatore vivo di un lato con ancora nemici in piedi; vinto quando il lato vince il round. |
 | **Buy** | Per lato, dal valore medio dell'equipaggiamento a fine freeze time: il primo round di ogni metà regolamentare è un round pistola (il round 1, e il round dopo la metà, purché la partita li abbia giocati), l'overtime non ne ha; poi sotto $1.500 eco, sotto $4.000 force, altrimenti full. |

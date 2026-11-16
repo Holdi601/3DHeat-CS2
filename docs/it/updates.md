@@ -38,7 +38,7 @@ Update now? [Y/n]
 - In un terminale (sia l'input sia il flusso degli errori sono terminali) chiede. Invio, `y`, `yes`, `j` o `ja` aggiornano; qualunque
   altra risposta prosegue senza modifiche. Dopo un aggiornamento **lo stesso comando viene rieseguito**, sul codice nuovo.
 - Senza terminale - un'esecuzione pianificata, una pipe - si limita a stampare dove aggiornare e prosegue:
-  `Run python -m heat3d_update in <cartella> to update.`
+  `Run python -m heat3d_update in <folder> to update.`
 
 `HEAT3D_NO_UPDATE=1` disattiva il controllo. Qualunque valore diverso da vuoto, `0`, `false` o `no` significa attivo.
 
@@ -49,8 +49,8 @@ python -m heat3d_update            # aggiorna alla release più recente
 python -m heat3d_update --check    # dice solo se ce n'è una
 ```
 
-Questo chiede sempre a GitHub (la cache non viene usata). Stampa `Up to date: <versione>.`,
-`No release found (this is <versione>); offline, or nothing published yet.`, oppure `<nuova> is out (this is <attuale>): <url>` e
+Questo chiede sempre a GitHub (la cache non viene usata). Stampa `Up to date: <version>.`,
+`No release found (this is <version>); offline, or nothing published yet.`, oppure `<new> is out (this is <current>): <url>` e
 poi aggiorna (salvo `--check`). Codice di uscita `1` quando un aggiornamento è stato tentato e non è riuscito, `0` altrimenti.
 
 ## Come viene applicato un aggiornamento {#how-an-update-is-applied}

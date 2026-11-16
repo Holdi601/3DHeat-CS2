@@ -36,7 +36,7 @@ Le maillage de collision est ce sur quoi les joueurs marchent et derrière quoi 
 6. **Nommer la surface.** Les groupes de physique sont nommés d'après leur surface ; le nom en minuscules, sans le préfixe `physics`, `physics_group` ou `physics_passbullets` (et le tiret bas qui suit), est la surface : `physics_group_concrete` donne `concrete`, `physics_passbullets_chainlink` donne `chainlink`, et un `physics_group` seul donne `world`. Les surfaces que les balles traversent sont gardées.
 7. **Revenir au repère du jeu.** Source2Viewer écrit du glTF en mètres avec Y vers le haut : le (Y, Z, X) du jeu multiplié par 0,0254. On l'annule - chaque point devient le (X, Y, Z) du jeu, en pouces.
 8. **Séparer le sol de la structure**, triangle par triangle : une face dont la normale pointe vers le haut d'au moins 0,7 (sa composante Z, normalisée) - pentes jusqu'à environ 45 degrés, à peu près la pente la plus raide qu'un joueur de CS2 puisse marcher - est du **sol** ; tout le reste, murs et plafonds compris, est de la **structure**.
-9. **Dans le repère de la visionneuse.** Chaque point est écrit sous la forme (X, Z, -Y) : Y vers le haut, Y du jeu inversé - le repère dans lequel la visionneuse dessine les tables, quand elle suit leurs indications `heat3d`. C'est une rotation, pas un miroir.
+9. **Dans le repère du visualiseur.** Chaque point est écrit sous la forme (X, Z, -Y) : Y vers le haut, Y du jeu inversé - le repère dans lequel le visualiseur dessine les tables, quand il suit leurs indications `heat3d`. C'est une rotation, pas un miroir.
 10. **Écrire le `.glb`.** Si rien ne reste (seulement des clips), la commande s'arrête avec une erreur. Sinon elle affiche le fichier, la carte, le nombre de triangles, combien sont du sol, et le nombre de parties.
 
 Rien ici ne lit autre chose que le `.vpk` propre à la carte, et rien de Source2Viewer n'est fourni ni copié.
@@ -55,7 +55,7 @@ Un binaire glTF 2.0 (`.glb`), un seul tampon, écrit par `heat3d_cs2` (le `asset
 | Unités | unités du jeu (**pouces**), pas des mètres - contrairement à ce que suppose glTF |
 | Repère | (X, Z, -Y) du jeu : le Y de glTF est la hauteur du jeu, le Z de glTF est le -Y du jeu |
 
-Le préfixe `ground:` / `structure:` est la convention de tous les exporteurs de niveaux 3DHeat : la visionneuse prend au mot une partie nommée ainsi au lieu de deviner depuis la géométrie, donc les sols reçoivent l'ombrage de sol et les murs le dessin de structure, sans étape de classement.
+Le préfixe `ground:` / `structure:` est la convention de tous les exporteurs de niveaux 3DHeat : le visualiseur prend au mot une partie nommée ainsi au lieu de deviner depuis la géométrie, donc les sols reçoivent l'ombrage de sol et les murs le dessin de structure, sans étape de classement.
 
 Comme les unités sont des pouces, un autre visualiseur glTF affiche la carte environ 39 fois trop grande (il lit les unités comme des mètres) ; multipliez par 0,0254 là si c'est important. Dans 3DHeat, elle se place exactement sous la table, qui est dans les mêmes unités avec une échelle de 1.
 
@@ -67,5 +67,5 @@ Le test `test_players_stand_on_the_exported_floor` (lancé seulement quand une d
 
 - Pas de géométrie de rendu, ni de textures ou de décoration - voir *pourquoi* plus haut.
 - Seul ce qui se trouve dans le modèle `world_physics` de la carte est exporté. La présence des parties mobiles (portes) ou des éléments destructibles dans ce modèle n'a pas été vérifiée.
-- Pas de simplification : la visionneuse 3DHeat simplifie à l'import avec son réglage **Cible de simplification**.
+- Pas de simplification : le visualiseur 3DHeat simplifie à l'import avec son réglage **Cible de simplification**.
 - Les cartes absentes du jeu installé (cartes d'atelier ailleurs sur le disque) fonctionnent quand leur `.vpk` est passé comme chemin et contient `maps/<nom>/world_physics.vmdl_c` ; non vérifié.

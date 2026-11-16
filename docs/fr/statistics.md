@@ -17,7 +17,7 @@ Tout est compté à partir du match construit comme dans [Construire un match](b
 
 ## Les conventions {#the-conventions}
 
-Quand le jeu lui-même ne définit pas un chiffre, voici les définitions. Elles sont aussi écrites dans chaque document de match, sous `conventions`.
+Quand le jeu lui-même ne définit pas un chiffre, voici les définitions. Elles sont aussi écrites dans chaque document du match, sous `conventions`.
 
 | Terme | Définition |
 |---|---|
@@ -61,7 +61,7 @@ Les joueurs sont listés par nom d'équipe (ordre alphabétique), et dans une é
 
 Remarques sur les cas limites :
 
-- Un kill pendant la phase après - les gagnants chassant un joueur qui économise - compte comme un kill, une mort, pour l'ADR, les multi-kills et le KAST, comme n'importe quel autre.
+- Un kill pendant la phase après - les gagnants chassant un joueur qui économise - compte comme un kill et une mort pour l'ADR, les multi-kills et le KAST, comme n'importe quel autre.
 - Les wallbangs sont comptés par joueur en interne, mais ne sont pas écrits dans le document du match ; chaque kill de la liste des rounds indique s'il en était un.
 - La partie *échangé* du KAST crédite la victime d'une mort échangée dans ce round.
 - Les teamkills et les suicides ajoutent une mort à la victime mais aucun kill à personne ; un teamkill ajoute à `teamkills` du tueur, un suicide n'ajoute rien d'autre.

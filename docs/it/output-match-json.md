@@ -3,7 +3,7 @@ title: "Il documento partita"
 nav_order: 9
 lang: "it"
 source: output-match-json.md
-source_hash: "9f7c7bd2cbaf"
+source_hash: "8f8b6aee7aff"
 nav_exclude: true
 search_exclude: true
 ---
@@ -29,6 +29,8 @@ tempi sono secondi, arrotondati a tre decimali per i round e a due per le uccisi
 | `demos` | stringa[] | i file demo da cui è stata costruita, solo i nomi dei file, nell'ordine della partita |
 | `teams` | stringa[] | i nomi delle squadre in ordine di comparsa (round 1: prima il lato T) |
 | `score` | oggetto | nome della squadra -> round vinti: il punteggio dell'ultimo round |
+| `winner` | stringa o null | la squadra che ha vinto la partita, dove la registrazione mostra la fine; null per una registrazione che si interrompe presto, un overtime senza il pannello di vittoria, o un pareggio |
+| `winnerSource` | stringa o null | come si sa `winner`: `winPanel` (il pannello di vittoria della partita del gioco), `surrender`, `regulation` (più della metà dei round regolamentari) |
 | `rounds` | oggetto[] | ogni round completo, in ordine - [sotto](#rounds) |
 | `incomplete` | numero[] | numeri di round interrotti dalla fine di un demo ed esclusi |
 | `missing` | numero[] | numeri di round prima del primo che i demo contengono: `[1, 2]` quando la registrazione inizia dal round 3 |

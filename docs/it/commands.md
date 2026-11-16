@@ -102,7 +102,7 @@ convertita in una cartella di mappa diversa, o con un `--every` diverso, conta c
 da fare:
 
 ```text
-niente da fare: nessun demo trovato, o tutte le partite già scritte (--force le rifà)
+nothing to do: no demos found, or every match already written (--force redoes them)
 ```
 
 ### Cosa viene stampato {#what-is-printed}
@@ -111,21 +111,21 @@ Prima la quantità di lavoro, poi una riga per partita man mano che ciascuna fin
 nell'ordine dei file):
 
 ```text
-3 partita/e, 3 alla volta
-alpha-vs-bravo-m1: de_x, 21 round (Alpha 13 Bravo 8), 412.377 righe, lost 0
-alpha-vs-bravo-m2: de_y, 30 round (Bravo 16 Alpha 14), 598.104 righe, 1 round incompleto/i escluso/i, lost 0
-alpha-vs-bravo-m3: de_y, 18 round (Alpha 13 Bravo 5), 330.981 righe, registrata dal round 3, lost 1.204.331 (svc_PacketEntities, svc_UserCmds, DEM_AnimationData)
+3 match(es), 3 at a time
+alpha-vs-bravo-m1: de_x, 21 rounds (Alpha 13 Bravo 8), 412,377 rows, lost 0
+alpha-vs-bravo-m2: de_y, 30 rounds (Bravo 16 Alpha 14), 598,104 rows, 1 incomplete round(s) left out, lost 0
+alpha-vs-bravo-m3: de_y, 18 rounds (Alpha 13 Bravo 5), 330,981 rows, recorded from round 3, lost 1,204,331 (svc_PacketEntities, svc_UserCmds, DEM_AnimationData)
 ```
 
 (I numeri sono indicativi.) Il punteggio è quello dell'ultimo round, squadra per squadra nell'ordine in cui il documento
-partita le elenca. *round incompleto/i esclusi* conta i round che il demo ha interrotto prima che fossero decisi;
-*registrata dal round N* dice che la registrazione inizia tardi; *lost* è l'autocontrollo del documento partita - quanti
+partita le elenca. *incomplete round(s) left out* conta i round che il demo ha interrotto prima che fossero decisi;
+*recorded from round N* dice che la registrazione inizia tardi; *lost* è l'autocontrollo del documento partita - quanti
 elementi del demo non sono finiti da nessuna parte, e di quali tipi (`--no-bulk` rende lost i dati bulk). Una partita che
 non produce nulla lo spiega:
 
 ```text
-alpha-vs-bravo-m4: nessun round in 1 file - non scritto nulla
-alpha-vs-bravo-m4-b: nessun round completo in 1 file - non scritto nulla
+alpha-vs-bravo-m4: no round in 1 file(s) - nothing written
+alpha-vs-bravo-m4-b: no complete round in 1 file(s) - nothing written
 ```
 
 Un errore in una partita non ferma le altre; viene stampato come `<nome>: failed - <errore>`.
@@ -165,7 +165,7 @@ python -m heat3d_cs2 map "D:\maps\<mappa>.vpk" -o <mappa>.glb --source2viewer C:
 Stampato in caso di successo:
 
 ```text
-out/de_x/de_x.glb: de_x, 412.880 triangoli (151.204 di terreno) in 14 parti
+out/de_x/de_x.glb: de_x, 412,880 triangles (151,204 ground) in 14 parts
 ```
 
 (numeri indicativi). Scrivere il `.glb` accanto alle tabelle della mappa (`out/<mappa>/<mappa>.glb`) tiene i dati e la
@@ -197,12 +197,12 @@ Sul demo sintetico di due round dei test:
 alpha-vs-bravo-m1 - de_test  Alpha 2  Bravo 0
 
 Alpha
-giocatore              K   D   A  +/-    ADR   KAST   HS%  OK-OD  clutch
+player                 K   D   A  +/-    ADR   KAST   HS%  OK-OD  clutch
 ash                    1   0   0   +1   50.0 100.0%    0%   0-0     1/1
 ace                    1   1   0   +0   50.0 100.0%  100%   1-0     0/0
 
 Bravo
-giocatore              K   D   A  +/-    ADR   KAST   HS%  OK-OD  clutch
+player                 K   D   A  +/-    ADR   KAST   HS%  OK-OD  clutch
 ben                    1   1   0   +0   50.0 100.0%    0%   0-0     0/1
 bob                    0   1   0   -1    0.0 100.0%    0%   0-1     0/0
 

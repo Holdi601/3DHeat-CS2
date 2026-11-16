@@ -37,8 +37,8 @@ python -m heat3d_cs2 map <mappa> -o out/<mappa>/<mappa>.glb
 ```
 
 1. **Mappa di calore -> Sorgente:** scegli la cartella `out/<mappa>` (oppure trascinala lì).
-   Ogni `.parquet` al suo interno diventa un dataset; i file `.json` e `.glb` nella stessa cartella vengono saltati come "not a
-   csv/parquet file". Caricala.
+   Ogni `.parquet` al suo interno diventa un dataset; i file `.json` e `.glb` nella stessa cartella vengono saltati come
+   "non è un file CSV/Parquet". Caricala.
 2. **Sfondo / livello -> Modello 3D…:** scegli `out/<mappa>/<mappa>.glb`.
    **Salva nella libreria** lo conserva nel browser per la prossima volta.
 3. **Partita -> Carica file partita…:** scegli i file `.match.json` della stessa cartella (più di uno alla volta), oppure trascinali
@@ -59,9 +59,9 @@ Il visualizzatore legge la voce `heat3d` del footer del primo file selezionato
 | Inverti Y | attivo - così la mappa è dal verso giusto, non specchiata |
 | Scala delle unità | 1 - distanze in unità di gioco (indicate in "m"; 1 unità = 1 pollice) |
 | Tempo | `time`, secondi |
-| Persona | `player` |
-| Gruppo | `side` (T / CT) |
-| Sessione | `roundId` - ogni round è una sessione, `<partita> #NN` |
+| ID persona | `player` |
+| Squadra / gruppo | `side` (T / CT) |
+| Sessione / partita | `roundId` - ogni round è una sessione, `<partita> #NN` |
 | Direzione dello sguardo | vettore, `dirX` / `dirY` / `dirZ` |
 | Colonne filtro | `event`, `match`, `round`, `roundTime`, `phase`, `weapon`, `place`, `won`, `buy`, `opening`, `team` |
 | Dimensione entità | 32 - il replay a scatola disegna un giocatore largo 32 unità, con un raggio di sguardo di 4 x 32 |

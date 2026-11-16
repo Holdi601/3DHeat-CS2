@@ -3,7 +3,7 @@ title: Inicio
 nav_order: 1
 lang: "es"
 source: index.md
-source_hash: "937e30dc7322"
+source_hash: "251966f8d45d"
 nav_exclude: true
 search_exclude: true
 permalink: /es/
@@ -12,7 +12,7 @@ permalink: /es/
 
 **¿Qué es?** Counter-Strike 2 puede guardar una grabación de una partida, llamada *demo*. Esta
 herramienta convierte una demo en archivos que el visor 3DHeat puede mostrar en 3D: dónde estaba cada
-uno, quién murió, lanzó y plantó, ronda a ronda. También puede convertir un mapa de CS2 en un modelo 3D
+uno, dónde murió, lanzó y plantó, ronda a ronda. También puede convertir un mapa de CS2 en un modelo 3D
 sobre el que mostrarlo.
 
 **¿Para qué lo usaría?** Para revisar tus propias partidas, para superponer muchas partidas de un mismo
@@ -57,7 +57,7 @@ miembros; `--loose` los escribe como archivos separados:
 | Miembro | Qué contiene | Se carga en la pestaña del visor |
 |---|---|---|
 | `<match>.parquet` (función `table`) | cada jugador vivo ocho veces por segundo con su estado (salud, dinero, destello, mirilla, zona, inventario, ...), y cada evento donde ocurrió (baja, muerte, daño, disparo, lanzamiento, detonaciones de granadas, cegado, plantado, desactivado, explosión, y un fin de ronda por jugador con lo que la ronda le pagó), una fila cada uno | pestaña Mapa de calor |
-| `<match>.match.json` (función `match`, el documento de la partida) | equipos, marcador, cada ronda (ganador, cómo, economía, plantado, bajas en orden, remontadas, supervivientes) y la línea del marcador de cada jugador | pestaña Partida |
+| `<match>.match.json` (función `match`, el documento de la partida) | equipos, marcador, cada ronda (ganador, cómo, economía, plantado, bajas en orden, clutches, supervivientes) y la línea del marcador de cada jugador | pestaña Partida |
 | `<match>.events/props/strings/packets.parquet` | todo lo demás que contiene la demo, completo (auxiliares) | se guarda para tener todo |
 
 `map` escribe `<map>.glb`: la malla de colisión del mapa - suelos, muros, cajas, sin decoración -
@@ -68,12 +68,12 @@ queda exactamente bajo el mapa de calor (panel Fondo / nivel).
 
 | Página | Qué cubre |
 |---|---|
-| [Antes de empezar](before-you-start.md) | Python, una terminal, marcadores, cómo se ven el éxito y los errores habituales |
+| [Antes de empezar](before-you-start.md) | Python, una línea de comandos, marcadores, cómo se ven el éxito y los errores habituales |
 | [Instalación](installing.md) | Python, los paquetes, la CLI de Source2Viewer, dónde debe estar CS2 |
 | [Comandos](commands.md) | `demos`, `map`, `scoreboard`: cada opción, lo que se imprime, códigos de salida |
 | [Leer una demo](reading-demos.md) | qué se lee de un archivo de demo: ticks muestreados, propiedades de jugador, reglas de partida, eventos |
-| [Construir una partida](building-matches.md) | partes y cadenas, el reloj de partida, rondas, equipos y lados, filas, bajas, remontadas, aperturas, daño, destellos, economía |
-| [Estadísticas](statistics.md) | el marcador: K/D/A, ADR, KAST, HS%, aperturas, remontadas, multibajas, remontadas en solitario, utilidad, destellos |
+| [Construir una partida](building-matches.md) | partes y cadenas, el reloj de partida, rondas, equipos y lados, filas, bajas, venganzas, aperturas, daño, destellos, economía |
+| [Estadísticas](statistics.md) | el marcador: K/D/A, ADR, KAST, HS%, aperturas, venganzas, multibajas, clutches, utilidad, destellos |
 | [La tabla del mapa de calor](output-table.md) | el archivo Parquet: cada columna, su tipo, qué eventos la llenan, las pistas del pie `heat3d`, los ejes |
 | [El documento de la partida](output-match-json.md) | el documento `.match.json`, campo por campo |
 | [Un archivo por partida](output-container.md) | el contenedor `.3dheat` que escribe `demos` por defecto, `--loose` |
@@ -122,6 +122,15 @@ repositorio, sus versiones y su licencia:
 | [Ext-Squad](https://github.com/Holdi601/3DHeat-Ext-Squad) | demos de servidores de Squad en tablas y documentos de partida | [sitio](https://holdi601.github.io/3DHeat-Ext-Squad/) |
 | [Ext-DCS](https://github.com/Holdi601/3DHeat-Ext-DCS) | mapas de DCS World en modelos 3D | [sitio](https://holdi601.github.io/3DHeat-Ext-DCS/) |
 | [Ext-IL2](https://github.com/Holdi601/3DHeat-Ext-IL2) | mapas de IL-2 Sturmovik en modelos 3D | [sitio](https://holdi601.github.io/3DHeat-Ext-IL2/) |
+| [Ext-Dota](https://github.com/Holdi601/3DHeat-Ext-Dota) | el mapa de Dota 2 de tu propia instalación como un nivel 3D | [sitio](https://holdi601.github.io/3DHeat-Ext-Dota/) |
+| [Ext-DotaReplay](https://github.com/Holdi601/3DHeat-Ext-DotaReplay) | repeticiones de Dota 2 | [sitio](https://holdi601.github.io/3DHeat-Ext-DotaReplay/) |
+| [Ext-Riot](https://github.com/Holdi601/3DHeat-Ext-Riot) | repeticiones de League of Legends y VALORANT (lo que contienen sin cifrar) | [sitio](https://holdi601.github.io/3DHeat-Ext-Riot/) |
+| [Ext-Forza](https://github.com/Holdi601/3DHeat-Ext-Forza) | circuitos, carreras y coches de tu propia instalación de Forza | [sitio](https://holdi601.github.io/3DHeat-Ext-Forza/) |
+| [Ext-Battlefield](https://github.com/Holdi601/3DHeat-Ext-Battlefield) | niveles de Battlefield (Frostbite) como niveles 3D | [sitio](https://holdi601.github.io/3DHeat-Ext-Battlefield/) |
+| [Ext-BeamNG](https://github.com/Holdi601/3DHeat-Ext-BeamNG) | circuitos de BeamNG.drive | [sitio](https://holdi601.github.io/3DHeat-Ext-BeamNG/) |
+| [Ext-ACRally](https://github.com/Holdi601/3DHeat-Ext-ACRally) | etapas de Assetto Corsa Rally como circuitos | [sitio](https://holdi601.github.io/3DHeat-Ext-ACRally/) |
+| [Ext-Reforger](https://github.com/Holdi601/3DHeat-Ext-Reforger) | mundos de Arma Reforger (Enfusion) como niveles 3D | [sitio](https://holdi601.github.io/3DHeat-Ext-Reforger/) |
+| [Ext-R6](https://github.com/Holdi601/3DHeat-Ext-R6) | repeticiones de partidas de Rainbow Six Siege | [sitio](https://holdi601.github.io/3DHeat-Ext-R6/) |
 
 ## Licencia {#licence}
 

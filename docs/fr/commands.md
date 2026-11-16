@@ -39,7 +39,7 @@ python -m heat3d_cs2 demos D:\Demos -o out --map final --jobs 4
 | `--force` | désactivé | convertit même les matchs déjà écrits, en les remplaçant |
 | `--loose` | désactivé | garde chaque match sous forme de fichiers séparés - table, `.match.json`, fichiers annexes - au lieu de les regrouper dans un seul fichier `.3dheat`. Voir [Un fichier par match](output-container.md). |
 | `--container` | activé | regroupe chaque match dans un seul fichier `.3dheat` ; c'est la valeur par défaut, l'option n'existe que pour être explicite |
-| `--no-bulk` | désactivé | laisse de côté le flux des entités, les commandes des joueurs et le flux d'animation des fichiers annexes de paquets - plus de la moitié de la taille d'une démo, même compressée. L'auto-contrôle du document du match les compte alors comme `lost`, par nom. |
+| `--no-bulk` | désactivé | laisse de côté, dans l'annexe des paquets, le flux des entités, les commandes des joueurs et le flux d'animation - plus de la moitié de la taille d'une démo, même compressée. L'auto-contrôle du document de match les compte alors comme `lost`, par nom. |
 
 ![demos --help](../assets/img/demos-help.svg)
 
@@ -49,7 +49,7 @@ python -m heat3d_cs2 demos D:\Demos -o out --map final --jobs 4
 
 Le nom du match est le nom du fichier de démo sans son extension ni son suffixe de partie : `-p<chiffres>` ou `_p<chiffres>` à la fin, quelle que soit la casse. Ainsi `alpha-vs-bravo-m1-p1.dem`, `alpha-vs-bravo-m1-p2.dem` et `alpha-vs-bravo-m1_P3.dem` sont les parties d'un même match, `alpha-vs-bravo-m1`. Les fichiers sont regroupés par ce nom seul : deux fichiers de même nom dans des dossiers différents sont regroupés aussi.
 
-Le suffixe ne dit rien de l'ordre : un `-p2` peut être la première moitié. Les parties sont mises en ordre d'après le nombre de rounds qu'elles contiennent, puis d'après l'horloge du serveur ; un groupe qui s'avère contenir deux matchs différents (les mêmes équipes sur la même carte lors de deux événements, par exemple) est découpé en **chaînes** : la chaîne qui a le plus de rounds est écrite sous le nom lui-même, la suivante sous `<nom>-b`, puis `<nom>-c`, et ainsi de suite. Un fichier sans aucun round (échauffement seul, une pause) n'appartient à aucune chaîne. La manière dont les chaînes sont trouvées est décrite dans [Construire un match](building-matches.md#parts-and-chains).
+Le suffixe ne dit rien de l'ordre : un `-p2` peut être la première moitié. Les parties sont mises en ordre d'après le nombre de manches qu'elles contiennent, puis d'après l'horloge du serveur ; un groupe qui s'avère contenir deux matchs différents (les mêmes équipes sur la même carte lors de deux événements, par exemple) est découpé en **chaînes** : la chaîne qui a le plus de manches est écrite sous le nom lui-même, la suivante sous `<nom>-b`, puis `<nom>-c`, et ainsi de suite. Un fichier sans aucune manche (échauffement seul, une pause) n'appartient à aucune chaîne. La manière dont les chaînes sont trouvées est décrite dans [Construire un match](building-matches.md#parts-and-chains).
 
 ### Ce qui est écrit {#what-is-written}
 
@@ -64,7 +64,7 @@ out/
     ...
 ```
 
-Sur la démo synthétique de deux rounds des tests :
+Sur la démo synthétique de deux manches des tests :
 
 ![demos sur une démo synthétique](../assets/img/demos-run.svg)
 
@@ -72,7 +72,7 @@ Avec `--loose`, chaque match est la table, son document de match et quatre fichi
 
 ![demos --loose](../assets/img/demos-loose.svg)
 
-Une carte de chaleur porte sur une seule carte : charger un dossier dans la visionneuse revient à charger les matchs d'une seule carte. Voir [La table de carte de chaleur](output-table.md) et [Le document du match](output-match-json.md).
+Une carte de chaleur porte sur une seule carte : charger un dossier dans le visualiseur revient à charger les matchs d'une seule carte. Voir [La table de carte de chaleur](output-table.md) et [Le document de match](output-match-json.md).
 
 ### Ce qui est ignoré {#what-is-skipped}
 
@@ -93,7 +93,7 @@ alpha-vs-bravo-m2: de_y, 30 rounds (Bravo 16 Alpha 14), 598,104 rows, 1 incomple
 alpha-vs-bravo-m3: de_y, 18 rounds (Alpha 13 Bravo 5), 330,981 rows, recorded from round 3, lost 1,204,331 (svc_PacketEntities, svc_UserCmds, DEM_AnimationData)
 ```
 
-(Les chiffres sont illustratifs.) Le score est celui du dernier round, équipe par équipe dans l'ordre où le document du match les liste. *incomplete round(s) left out* compte les rounds qu'une démo a coupés avant qu'ils ne soient décidés ; *recorded from round N* indique que l'enregistrement commence tard ; *lost* est l'auto-contrôle du document du match - combien d'éléments de la démo n'ont mené nulle part, et de quels types (`--no-bulk` rend le bulk perdu). Un match qui ne donne rien l'explique :
+(Les chiffres sont illustratifs.) Le score est celui de la dernière manche, équipe par équipe dans l'ordre où le document de match les liste. *incomplete round(s) left out* compte les manches qu'une démo a coupées avant qu'elles ne soient décidées ; *recorded from round N* indique que l'enregistrement commence tard ; *lost* est l'auto-contrôle du document de match - combien d'éléments de la démo n'ont mené nulle part, et de quels types (`--no-bulk` rend le bulk perdu). Un match qui ne donne rien l'explique :
 
 ```text
 alpha-vs-bravo-m4: no round in 1 file(s) - nothing written
@@ -153,8 +153,8 @@ python -m heat3d_cs2 scoreboard out/de_x/alpha-vs-bravo-m1.3dheat
 python -m heat3d_cs2 scoreboard out/de_x/alpha-vs-bravo-m1.match.json   # après demos --loose
 ```
 
-Affiche le tableau des scores du match à partir de son [document de match](output-match-json.md), sans ouvrir la visionneuse. Il lit le document à l'intérieur d'un conteneur `.3dheat`, ou un `<match>.match.json` séparé.
-Sur la démo synthétique de deux rounds des tests :
+Affiche le tableau des scores du match à partir de son [document de match](output-match-json.md), sans ouvrir le visualiseur. Il lit le document à l'intérieur d'un conteneur `.3dheat`, ou un `<match>.match.json` séparé.
+Sur la démo synthétique de deux manches des tests :
 
 ![tableau des scores](../assets/img/scoreboard.svg)
 
@@ -175,8 +175,8 @@ rounds  1:TK 2:TB
 ```
 
 - La première ligne : nom du match, carte, et score final par équipe.
-- Un tableau par équipe, dans l'ordre des `teams` du document de match ; les joueurs dans l'ordre du document (par kills moins morts, puis kills, du meilleur au moins bon). Les noms sont coupés à 19 caractères.
-- Colonnes : **K** kills, **D** morts, **A** assistances *y compris* les assistances au flash, **+/-** kills moins morts, **ADR**, **KAST** (%), **HS%** (arrondi au pour-cent), **OK-OD** ouvertures gagnées - ouvertures perdues, **clutch** clutchs gagnés / clutchs joués. Définitions : [Statistiques](statistics.md).
-- La bande des rounds : `<round>:<camp gagnant><comment>`, avec **B** bombe explosée, **D** désamorcée, **K** élimination, **T** temps écoulé, et **?** pour tout le reste (égalité, reddition, autre). Une égalité n'a pas de camp gagnant : `<round>:?`.
+- Un tableau par équipe, dans l'ordre des `teams` du document de match ; les joueurs dans l'ordre du document (par éliminations moins morts, puis éliminations, du meilleur au moins bon). Les noms sont coupés à 19 caractères.
+- Colonnes : **K** éliminations, **D** morts, **A** assistances *y compris* les assistances au flash, **+/-** éliminations moins morts, **ADR**, **KAST** (%), **HS%** (arrondi au pour-cent), **OK-OD** ouvertures gagnées - ouvertures perdues, **clutch** clutchs gagnés / clutchs joués. Définitions : [Statistiques](statistics.md).
+- La bande des manches : `<round>:<camp gagnant><comment>`, avec **B** bombe explosée, **D** désamorcée, **K** élimination, **T** temps écoulé, et **?** pour tout le reste (égalité, reddition, autre). Une égalité n'a pas de camp gagnant : `<round>:?`.
 
 Un fichier qui n'est pas du JSON valide, ou introuvable, arrête la commande avec une erreur ; un document JSON sans les champs du document de match échoue avec une erreur Python (il n'est pas validé davantage).

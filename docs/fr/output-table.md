@@ -3,13 +3,13 @@ title: "La table de carte de chaleur"
 nav_order: 8
 lang: "fr"
 source: output-table.md
-source_hash: "b235ff13fe45"
+source_hash: "7f6d90bac0d2"
 nav_exclude: true
 search_exclude: true
 ---
 # La table de carte de chaleur (`<match>.parquet`) {#the-heatmap-table-parquet}
 
-Un fichier Parquet par match : la position échantillonnée de chaque joueur vivant, et chaque événement à l'endroit où il s'est produit, une ligne chacun - une longue table que la visionneuse 3DHeat lit comme une carte de chaleur, et que tout autre outil lit comme une table ordinaire. Code :
+Un fichier Parquet par match : la position échantillonnée de chaque joueur vivant, et chaque événement à l'endroit où il s'est produit, une ligne chacun - une longue table que le visualiseur 3DHeat lit comme une carte de chaleur, et que tout autre outil lit comme une table ordinaire. Code :
 [`heat3d_cs2/output.py`](https://github.com/Holdi601/3DHeat-CS2/blob/main/heat3d_cs2/output.py)
 (le fichier), [`heat3d_cs2/match.py`](https://github.com/Holdi601/3DHeat-CS2/blob/main/heat3d_cs2/match.py)
 (les lignes ; voir [Construire un match](building-matches.md)).
@@ -31,7 +31,7 @@ Les colonnes, toujours dans cet ordre. Les colonnes de texte sont des chaînes �
 | `match` | chaîne | le nom du match (`alpha-vs-bravo-m1`, ou `...-b` pour une deuxième chaîne) |
 | `map` | chaîne | la carte, d'après l'en-tête de la démo (`de_x`) |
 | `round` | int16 | le numéro du round, à partir de 1 |
-| `roundId` | chaîne | `<match> #NN`, le numéro du round sur deux chiffres (`alpha-vs-bravo-m1 #07`) : unique entre matchs, la session de la visionneuse |
+| `roundId` | chaîne | `<match> #NN`, le numéro du round sur deux chiffres (`alpha-vs-bravo-m1 #07`) : unique entre matchs, la session du visualiseur |
 | `phase` | chaîne | `freeze` pendant le temps de gel du round (depuis la fin du round précédent), `live` jusqu'à ce que le round soit décidé, `after` pendant que les gagnants chassent et que les perdants économisent |
 | `time` | float64 | secondes depuis le début du match (le début en direct de son premier fichier), sur une horloge unique pour tous ses fichiers |
 | `roundTime` | float32 | secondes depuis la fin du temps de gel de ce round ; négatif pendant le temps de gel |
@@ -58,6 +58,8 @@ Les colonnes, toujours dans cet ordre. Les colonnes de texte sont des chaînes �
 | `noscope` | int8 | 0/1, le kill a été fait avec une arme à lunette tirée sans lunette (le `noscope` de l'événement) ; `kill` et `death` seulement |
 | `attackerBlind` | int8 | 0/1, le tueur était aveuglé quand il a tué (le `attackerblind` de l'événement) ; `kill` et `death` seulement |
 | `won` | int8 | 0/1, si le camp de cette ligne a gagné le round ; nul quand `side` est vide |
+| `matchWon` | int8 | 0/1, si l'équipe de cette ligne a gagné le match ; nul quand `team` est vide ou que l'enregistrement ne montre pas la fin (voir `winner` du document du match) |
+| `roundEndReason` | chaîne | comment le round de la ligne s'est terminé : `elimination`, `bomb` (la bombe a explosé), `defuse`, `time`, `surrender`, `draw`, `other` |
 | `buy` | chaîne | l'achat du camp de cette ligne pour ce round : `pistol`, `eco`, `force`, `full` |
 | `detail` | chaîne | chaque champ de l'événement que les autres colonnes ne portent pas, sous forme d'objet JSON (noms propres au jeu) : les balles d'un tir (`fire_bullets` : origine, angles, imprécision, dispersion, indice de recul, graine...), `dominated`, `revenge`, `attackerinair`, `wipe`... d'une mort, `defindex` d'un objet, rien pour un pas |
 | `text` | chaîne | une ligne de chat ; `chat` seulement |
@@ -89,7 +91,7 @@ Les colonnes, toujours dans cet ordre. Les colonnes de texte sont des chaînes �
 
 Quel joueur une ligne nomme, où elle se situe, et quelles colonnes elle remplit.
 `match`, `map`, `round`, `roundId`, `phase`, `time`, `roundTime`, `event`,
-`won` et `buy` sont remplies sur chaque ligne ; `inventory`, `money`, `equipment` et
+`won`, `roundEndReason` et `buy` sont remplies sur chaque ligne (`matchWon` là où le vainqueur du match est connu) ; `inventory`, `money`, `equipment` et
 les colonnes `state_*` sur chaque ligne qui nomme un joueur (les événements les prennent
 au dernier échantillon de position du joueur).
 
@@ -154,7 +156,7 @@ Le pied du fichier Parquet (métadonnées de schéma clé/valeur) porte des cons
     "teamId": "side",
     "sessionId": "roundId",
     "lookMode": "vector", "dirX": "dirX", "dirY": "dirY", "dirZ": "dirZ",
-    "extra": ["event", "match", "round", "roundTime", "phase", "weapon", "place", "won", "buy", "opening", "team"]
+    "extra": ["event", "match", "round", "roundTime", "phase", "weapon", "place", "won", "matchWon", "roundEndReason", "buy", "opening", "team", ...]
   }
 }
 ```
@@ -174,7 +176,7 @@ Le pied du fichier Parquet (métadonnées de schéma clé/valeur) porte des cons
 | `columns.lookMode` et `dirX`-`dirZ` | la direction du regard est un vecteur dans ces colonnes |
 | `columns.extra` | les colonnes à garder comme filtres, par ordre d'utilité |
 
-Une visionneuse qui connaît la clé ouvre le fichier sans rien régler. Les autres l'ignorent. Pour la lire vous-même :
+Un visualiseur qui connaît la clé ouvre le fichier sans rien régler. Les autres l'ignorent. Pour la lire vous-même :
 
 ```python
 import json
@@ -190,9 +192,9 @@ kills = rows[rows["event"] == "kill"]
 
 Les coordonnées sont celles du jeu : **pouces** (une unité du jeu ; un joueur mesure 72 unités debout et 32 de large), **Z vers le haut**, et repère droitier.
 
-Une visionneuse dont le monde a Y vers le haut doit dessiner le (x, y, z) du jeu sous la forme **(x, z, -y)** - Z devient la hauteur et Y est inversé. C'est une rotation, pas un miroir. Dessinée comme un monde gaucher à Z vers le haut, sous la forme (x, z, y), chaque carte sort en miroir, le site A du mauvais côté ; `flipY: true` est ce que les indications demandent pour l'éviter. L'[export de la carte](map-export.md) écrit sa géométrie déjà dans le repère (x, z, -y), dans les mêmes unités, donc elle se place sous la table sans aucun réglage.
+Un visualiseur dont le monde a Y vers le haut doit dessiner le (x, y, z) du jeu sous la forme **(x, z, -y)** - Z devient la hauteur et Y est inversé. C'est une rotation, pas un miroir. Dessinée comme un monde gaucher à Z vers le haut, sous la forme (x, z, y), chaque carte sort en miroir, le site A du mauvais côté ; `flipY: true` est ce que les indications demandent pour l'éviter. L'[export de la carte](map-export.md) écrit sa géométrie déjà dans le repère (x, z, -y), dans les mêmes unités, donc elle se place sous la table sans aucun réglage.
 
-Les distances dans la visionneuse sont affichées en mètres ; avec une échelle de 1, ce sont des unités du jeu. Multipliez par 0,0254 pour obtenir des mètres.
+Les distances dans le visualiseur sont affichées en mètres ; avec une échelle de 1, ce sont des unités du jeu. Multipliez par 0,0254 pour obtenir des mètres.
 
 ## Taille {#size}
 

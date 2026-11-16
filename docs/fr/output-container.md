@@ -9,7 +9,7 @@ search_exclude: true
 ---
 # Un fichier par match (`<match>.3dheat`) {#one-file-a-match-3dheat}
 
-Par défaut, `demos` regroupe chaque match dans un seul fichier, `out/<carte>/<match>.3dheat` : la table de carte de chaleur, le document de match et les quatre fichiers annexes ensemble - un match, un fichier, à copier, garder ou partager. C'est le format de conteneur de la visionneuse 3DHeat, décrit dans sa documentation :
+Par défaut, `demos` regroupe chaque match dans un seul fichier, `out/<carte>/<match>.3dheat` : la table de carte de chaleur, le document de match et les quatre fichiers annexes ensemble - un match, un fichier, à copier, garder ou partager. C'est le format de conteneur du visualiseur 3DHeat, décrit dans sa documentation :
 [Un fichier par match (.3dheat)](https://holdi601.github.io/3DHeat/container.html)
 ([source](https://github.com/Holdi601/3DHeat/blob/main/docs/container.md)).
 Code : [`heat3d_cs2/container.py`](https://github.com/Holdi601/3DHeat-CS2/blob/main/heat3d_cs2/container.py).
@@ -26,7 +26,7 @@ Code : [`heat3d_cs2/container.py`](https://github.com/Holdi601/3DHeat-CS2/blob/m
 
    ![demos sur une démo synthétique](../assets/img/demos-run.svg)
 
-3. Ouvrez-le dans la visionneuse (onglet Carte de chaleur ou onglet Match), ou lisez-le vous-même : c'est un ZIP ordinaire.
+3. Ouvrez-le dans le visualiseur (onglet Carte de chaleur ou onglet Match), ou lisez-le vous-même : c'est un ZIP ordinaire.
 
    ![à l'intérieur d'un conteneur .3dheat](../assets/img/container-members.svg)
 
@@ -41,7 +41,7 @@ Un ZIP dont le premier élément est `manifest.json`, suivi des éléments. Les 
 | Rôle | Élément | Contenu |
 |---|---|---|
 | `table` | `<match>.parquet` | [La table de carte de chaleur](output-table.md) (schéma `heat3d-table`) |
-| `match` | `<match>.match.json` | [Le document du match](output-match-json.md) (schéma `heat3d-cs2-match`) |
+| `match` | `<match>.match.json` | [Le document de match](output-match-json.md) (schéma `heat3d-cs2-match`) |
 | `events` | `<match>.events.parquet` | chaque événement de jeu lu par l'analyseur, en entier |
 | `props` | `<match>.props.parquet` | chaque changement de propriété lu par l'analyseur |
 | `strings` | `<match>.strings.parquet` | chaque entrée de table de chaînes |
@@ -81,7 +81,7 @@ Le manifeste indique le format et sa version, le jeu (`cs2`), la source (`demo`)
 }
 ```
 
-## Lire un conteneur sans la visionneuse {#reading-one-without-the-viewer}
+## Lire un conteneur sans le visualiseur {#reading-one-without-the-viewer}
 
 ```python
 import io, json, zipfile

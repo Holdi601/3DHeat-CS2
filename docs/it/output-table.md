@@ -3,7 +3,7 @@ title: "La tabella della mappa di calore"
 nav_order: 8
 lang: "it"
 source: output-table.md
-source_hash: "b235ff13fe45"
+source_hash: "7f6d90bac0d2"
 nav_exclude: true
 search_exclude: true
 ---
@@ -62,6 +62,8 @@ mai nulle: "nessun valore" è una stringa vuota. Le colonne numeriche sono nulle
 | `noscope` | int8 | 0/1, l'uccisione è avvenuta con un'arma con mirino sparata senza mirare (il flag `noscope` dell'evento); solo `kill` e `death` |
 | `attackerBlind` | int8 | 0/1, l'assassino era stato accecato quando ha ucciso (il flag `attackerblind` dell'evento); solo `kill` e `death` |
 | `won` | int8 | 0/1, se il lato di questa riga ha vinto il round; nullo quando `side` è vuoto |
+| `matchWon` | int8 | 0/1, se la squadra di questa riga ha vinto la partita; nullo quando `team` è vuoto o la registrazione non mostra la fine (vedi `winner` nel documento partita) |
+| `roundEndReason` | stringa | come è finito il round della riga: `elimination`, `bomb` (la bomba è esplosa), `defuse`, `time`, `surrender`, `draw`, `other` |
 | `buy` | stringa | il buy del lato di questa riga in questo round: `pistol`, `eco`, `force`, `full` |
 | `detail` | stringa | ogni campo dell'evento che le altre colonne non portano, come oggetto JSON (i nomi propri del gioco): i proiettili di un colpo (`fire_bullets`: origine, angoli, inaccuratezza, dispersione, indice di rinculo, seme...), `dominated`, `revenge`, `attackerinair`, `wipe`... di una morte, `defindex` di un oggetto, un passo non ha nulla |
 | `text` | stringa | una riga di chat; solo `chat` |
@@ -92,7 +94,7 @@ mai nulle: "nessun valore" è una stringa vuota. Le colonne numeriche sono nulle
 ## Eventi {#events}
 
 Quale giocatore nomina una riga, dove si trova, e quali colonne riempie.
-`match`, `map`, `round`, `roundId`, `phase`, `time`, `roundTime`, `event`, `won` e `buy` sono riempite in ogni riga;
+`match`, `map`, `round`, `roundId`, `phase`, `time`, `roundTime`, `event`, `won`, `roundEndReason` e `buy` sono riempite in ogni riga (`matchWon` dove è noto il vincitore della partita);
 `inventory`, `money`, `equipment` e le colonne `state_*` in ogni riga che nomina un giocatore (gli eventi le prendono dall'ultimo
 campione di posizione del giocatore).
 
@@ -164,7 +166,7 @@ un oggetto JSON:
     "teamId": "side",
     "sessionId": "roundId",
     "lookMode": "vector", "dirX": "dirX", "dirY": "dirY", "dirZ": "dirZ",
-    "extra": ["event", "match", "round", "roundTime", "phase", "weapon", "place", "won", "buy", "opening", "team"]
+    "extra": ["event", "match", "round", "roundTime", "phase", "weapon", "place", "won", "matchWon", "roundEndReason", "buy", "opening", "team", ...]
   }
 }
 ```
