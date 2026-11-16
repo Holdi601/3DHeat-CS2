@@ -3,7 +3,7 @@ title: "Þróun"
 nav_order: 15
 lang: "is"
 source: development.md
-source_hash: "bcc524eebb27"
+source_hash: "b51f038901ee"
 nav_exclude: true
 search_exclude: true
 ---
@@ -133,7 +133,7 @@ sér, með miðgildi hæðar fyrir ofan hana undir 5 einingum
 
 ## Leyfi {#licence}
 
-MIT. Pakkar frá þriðja aðila og það sem leikirnir skylda þig til:
+MIT. Pakkar frá þriðja aðila:
 [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md).
 Demo-skrár og kort eru aldrei hluti af hugbúnaðarsafninu; `.gitignore` þess heldur
 `*.dem`, `*.parquet`, `*.match.json`, `*.glb` og þess háttar úti eftir gerð.

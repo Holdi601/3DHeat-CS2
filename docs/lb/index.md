@@ -102,11 +102,15 @@ a all Ronn fänkt fënnef géint fënnef un.
 ## Op wat et ze riichten ass {#what-to-point-it-at}
 
 Op d'Demoe vun Äre eegene Matcher, Demoen, déi Dir vun Hand vun enger Tournoi-Säit erofgelueden hutt,
-oder Demoen aus enger API, op déi Dir Zougrëff hutt. Eng Demo ass eng Opnam, a säin Inhalt
-gehéiert hirem Verleeër an hiren Organisateure: benotzt, wat erauskënnt, fir Är eege
-Analys, a verdeelt keng Demoen an Daten, déi doraus ofgeleet sinn, weider. Säiten, déi
-Demoen uginn, verbidden an hire Bedingungen dacks automatiséierten Download, dofir
-liest d'Tool Demoen vun der Plack a lued keng erof.
+oder Demoen aus enger API, op déi Dir Zougrëff hutt. Eng Demo ass eng Opnam, a säin Inhalt gehéiert
+hirem Verleeër an hiren Organisateure: benotzt, wat erauskënnt, fir Är eege Analys, a verdeelt keng
+Demoen an Daten, déi doraus ofgeleet sinn, weider. D'Tool liest Demoe vun der Festplack a luet keng
+erof, an näischt aus dem Spill gëtt matgeliwwert: keng Spilldateien, kee Spillcode, keng DLLen.
+
+3DHeat CS2 ass net mat Valve verbonnen a gëtt net vu Valve ënnerstëtzt. Counter-Strike 2 an déi dozou
+gehéierend Nimm a Marken gehéieren hiren Eegentümer. Rechteinhaber: maacht w.e.g. en Issue op
+[github.com/Holdi601/3DHeat-CS2/issues](https://github.com/Holdi601/3DHeat-CS2/issues) op - mir
+äntweren séier an huelen op Ufro alles erof.
 
 ## Deel vun 3DHeat {#part-of-3dheat}
 
@@ -130,6 +134,6 @@ Repository mat eegene Releases a Lizenz:
 
 ## Lizenz {#licence}
 
-MIT - kuckt [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE),
+MIT - kuckt [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE)
 an [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md)
-fir d'Drëtt-Packagen a wat d'Spiller, déi et liest, verpflichten.
+fir d'Drëtt-Packagen.

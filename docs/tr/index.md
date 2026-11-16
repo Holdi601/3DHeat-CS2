@@ -72,7 +72,9 @@ Dışarıdan gelen demolar, maç başına tek temiz bir dosya değildir. Dönü�
 
 ## Neye yönlendirilir {#what-to-point-it-at}
 
-Kendi maçlarınızın demoları, bir turnuva sitesinden elle indirdiğiniz demolar ya da erişiminiz olan bir API'nin demoları. Bir demo, içeriği yayımcısına ve düzenleyicilerine ait bir kayıttır: çıkan şeyi kendi analiziniz için kullanın; demoları ya da onlardan türetilmiş verileri yeniden dağıtmayın. Demo sunan siteler çoğunlukla şartlarında otomatik indirmeyi yasaklar; bu yüzden araç demoları diskten okur ve hiçbirini getirmez.
+Kendi maçlarınızın demoları, bir turnuva sitesinden elle indirdiğiniz demolar ya da erişiminiz olan bir API'nin demoları. Bir demo, içeriği yayımcısına ve düzenleyicilerine ait bir kayıttır: çıkan şeyi kendi analiziniz için kullanın; demoları ya da onlardan türetilmiş verileri yeniden dağıtmayın. Araç demoları diskten okur ve hiçbirini indirmez; oyundan hiçbir şey onunla birlikte dağıtılmaz: oyun dosyası yok, oyun kodu yok, DLL yok.
+
+3DHeat CS2, Valve ile bağlantılı değildir ve Valve tarafından onaylanmamıştır. Counter-Strike 2 ve ilgili adlar ve ticari markalar sahiplerine aittir. Hak sahipleri: [github.com/Holdi601/3DHeat-CS2/issues](https://github.com/Holdi601/3DHeat-CS2/issues) adresinde bir issue açın - hızlı yanıt veririz ve istek üzerine her şeyi kaldırırız.
 
 ## 3DHeat'in parçası {#part-of-3dheat}
 
@@ -95,4 +97,4 @@ Kendi maçlarınızın demoları, bir turnuva sitesinden elle indirdiğiniz demo
 
 ## Lisans {#licence}
 
-MIT: bkz. [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE). Üçüncü taraf paketlerin lisansları ve okudukları oyunların gerektirdikleri için bkz. [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md).
+MIT - üçüncü taraf paketler için [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE) ve [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md) dosyalarına bakın.

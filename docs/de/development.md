@@ -3,7 +3,7 @@ title: "Entwicklung"
 nav_order: 15
 lang: "de"
 source: development.md
-source_hash: "bcc524eebb27"
+source_hash: "b51f038901ee"
 nav_exclude: true
 search_exclude: true
 ---
@@ -124,7 +124,7 @@ zufälligen Positionsproben Boden unter sich haben, bei einem Median der Höhe d
 
 ## Lizenz {#licence}
 
-MIT. Fremde Pakete und was die Spiele verlangen:
+MIT. Fremde Pakete:
 [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md).
 Demos und Karten sind nie Teil des Repositorys; seine `.gitignore` hält `*.dem`, `*.parquet`,
 `*.match.json`, `*.glb` und ähnliche Dateien nach Typ fern.

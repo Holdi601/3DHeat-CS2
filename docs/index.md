@@ -96,12 +96,18 @@ and every round starts five against five.
 
 ## What to point it at
 
-Your own matches' demos, demos you downloaded by hand from a tournament site,
-or demos from an API you have access to. A demo is a recording whose content
+Your own matches' demos, demos you downloaded by hand from a tournament site, or
+demos from an API you have access to. A demo is a recording whose content
 belongs to its publisher and organisers: use what comes out for your own
-analysis, and do not redistribute demos or data derived from them. Sites that
-offer demos often forbid automated downloading in their terms, which is why
-the tool reads demos from disk and fetches none.
+analysis, and do not redistribute demos or data derived from them. The tool
+reads demos from disk and downloads none, and nothing from the game ships with
+it: no game files, no game code, no DLLs.
+
+3DHeat CS2 is not affiliated with or endorsed by Valve. Counter-Strike 2 and
+related names and trademarks belong to their owners. Rights holders: open an
+issue at
+[github.com/Holdi601/3DHeat-CS2/issues](https://github.com/Holdi601/3DHeat-CS2/issues) -
+we respond quickly and remove anything on request.
 
 ## Part of 3DHeat
 
@@ -136,4 +142,4 @@ repository with its own releases and licence:
 
 MIT - see [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE),
 and [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md)
-for the third-party packages and what the games it reads oblige.
+for the third-party packages.

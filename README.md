@@ -286,9 +286,14 @@ same maps mirrored leave well under two thirds over ground.
 Your own matches' demos, demos you downloaded from a tournament site by hand,
 demos from an API you have access to. A demo is a recording of a match whose
 content belongs to its publisher and organisers; use what comes out for your
-own analysis, and do not redistribute demos or data derived from them -
-Valve has had a dataset built from professional demos taken down. Sites that
-offer demos often forbid automated downloading in their terms.
+own analysis, and do not redistribute demos or data derived from them. The tool
+reads demos from disk and downloads none, and nothing from the game ships with
+it: no game files, no game code, no DLLs.
+
+3DHeat CS2 is not affiliated with or endorsed by Valve. Counter-Strike 2 and
+related names and trademarks belong to their owners. Rights holders: open an
+issue at <https://github.com/Holdi601/3DHeat-CS2/issues> - we respond quickly and remove
+anything on request.
 
 ## Tests
 
@@ -341,7 +346,7 @@ settings, exports - are never touched. To update on request: `python -m heat3d_u
 ## Licence
 
 MIT - see [`LICENSE`](LICENSE), and [`LICENSES.md`](LICENSES.md) for the
-third-party packages it uses and what the games it reads oblige.
+third-party packages it uses.
 
 Documentation: <https://holdi601.github.io/3DHeat-CS2/> (the source pages are in
 [`docs/`](docs/)). The viewer: <https://github.com/Holdi601/3DHeat>,

@@ -3,7 +3,7 @@ title: Ontwikkeling
 nav_order: 15
 lang: "nl"
 source: development.md
-source_hash: "bcc524eebb27"
+source_hash: "b51f038901ee"
 nav_exclude: true
 search_exclude: true
 ---
@@ -90,4 +90,4 @@ Met beide variabelen gezet, draait ook `test_players_stand_on_the_exported_floor
 
 ## Licentie {#licence}
 
-MIT. Pakketten van derden en wat de spellen verplichten: [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md). Demo's en kaarten maken nooit deel uit van de repository; de `.gitignore` houdt `*.dem`, `*.parquet`, `*.match.json`, `*.glb` en dergelijke op soort buiten de deur.
+MIT. Pakketten van derden: [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md). Demo's en kaarten maken nooit deel uit van de repository; de `.gitignore` houdt `*.dem`, `*.parquet`, `*.match.json`, `*.glb` en dergelijke op soort buiten de deur.

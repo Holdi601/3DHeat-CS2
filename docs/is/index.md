@@ -3,7 +3,7 @@ title: "Heim"
 nav_order: 1
 lang: "is"
 source: index.md
-source_hash: "251966f8d45d"
+source_hash: "a4f2cda08a58"
 nav_exclude: true
 search_exclude: true
 permalink: /is/
@@ -103,10 +103,16 @@ og hver lota byrjar fimm gegn fimm.
 
 Demo-skrár eigin leikja, demo-skrár sem þú sóttir sjálf(ur) af móts­vef, eða
 demo-skrár úr API sem þú hefur aðgang að. Demo er upptaka sem efni hennar
-tilheyrir útgefanda hennar og skipuleggjendum: notaðu það sem kemur út til
-eigin greiningar og dreifðu ekki demo-skrám né gögnum unnum úr þeim. Vefir sem
-bjóða demo-skrár banna oft sjálfvirkt niðurhal í skilmálum sínum, og þess vegna
-les verkfærið demo-skrár af diski og sækir engar.
+tilheyrir útgefanda hennar og skipuleggjendum: notaðu það sem kemur út til eigin
+greiningar og dreifðu ekki demo-skrám né gögnum unnum úr þeim. Verkfærið les
+demó af diski og sækir engin, og ekkert úr leiknum fylgir með: engar
+leikjaskrár, enginn leikjakóði, engin DLL-söfn.
+
+3DHeat CS2 tengist ekki Valve og nýtur ekki stuðnings Valve. Counter-Strike 2 og
+tengd nöfn og vörumerki tilheyra eigendum sínum. Rétthafar: stofnið verkbeiðni
+(issue) á
+[github.com/Holdi601/3DHeat-CS2/issues](https://github.com/Holdi601/3DHeat-CS2/issues) -
+við svörum fljótt og fjarlægjum hvað sem er sé þess óskað.
 
 ## Hluti af 3DHeat {#part-of-3dheat}
 
@@ -139,6 +145,6 @@ eigin hugbúnaðarsafn, eigin útgáfur og eigið leyfi:
 
 ## Leyfi {#licence}
 
-MIT - sjá [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE),
+MIT - sjá [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE)
 og [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md)
-fyrir pakka frá þriðja aðila og það sem leikirnir sem það les skylda þig til.
+fyrir pakka frá þriðja aðila.

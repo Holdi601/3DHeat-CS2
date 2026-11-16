@@ -3,7 +3,7 @@ title: Dezvoltare
 nav_order: 15
 lang: "ro"
 source: development.md
-source_hash: "bcc524eebb27"
+source_hash: "b51f038901ee"
 nav_exclude: true
 search_exclude: true
 ---
@@ -131,6 +131,6 @@ eșantioane aleatoare de poziție au sol dedesubt, cu o înălțime mediană dea
 
 ## Licență {#licence}
 
-MIT. Pachetele terțe și ce cer jocurile: [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md).
+MIT. Pachetele terțe: [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md).
 Demo-urile și hărțile nu fac niciodată parte din depozit; `.gitignore` ține afară
 `*.dem`, `*.parquet`, `*.match.json`, `*.glb` și asemenea după tip.

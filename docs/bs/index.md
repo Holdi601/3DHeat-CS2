@@ -102,11 +102,17 @@ a svaka runda počinje pet protiv pet.
 ## Na šta ga usmjeriti {#what-to-point-it-at}
 
 Demoi vaših vlastitih mečeva, demoi koje ste ručno preuzeli sa stranice turnira
-ili demoi iz API-ja kojem imate pristup. Demo je snimak čiji sadržaj
-pripada njegovom izdavaču i organizatorima: koristite ono što izađe za vlastitu
-analizu i ne redistribuirajte demoe ni podatke izvedene iz njih. Stranice koje
-nude demoe često u svojim uvjetima zabranjuju automatsko preuzimanje, zbog čega
-alat čita demoe s diska i nijedan ne preuzima.
+ili demoi iz API-ja kojem imate pristup. Demo je snimak čiji sadržaj pripada
+njegovom izdavaču i organizatorima: koristite ono što izađe za vlastitu analizu
+i ne redistribuirajte demoe ni podatke izvedene iz njih. Alat čita demo snimke s
+diska i ne preuzima nijedan, a ništa iz igre ne isporučuje se s njim: nikakve
+datoteke igre, nikakav kod igre, nikakvi DLL-ovi.
+
+3DHeat CS2 nije povezan sa Valveom niti ga Valve podržava. Counter-Strike 2 i
+povezani nazivi i žigovi pripadaju svojim vlasnicima. Nosioci prava: otvorite
+issue na
+[github.com/Holdi601/3DHeat-CS2/issues](https://github.com/Holdi601/3DHeat-CS2/issues) -
+brzo odgovaramo i na zahtjev uklanjamo bilo šta.
 
 ## Dio 3DHeat-a {#part-of-3dheat}
 
@@ -130,6 +136,6 @@ vlastitim repozitorijem, izdanjima i licencom:
 
 ## Licenca {#licence}
 
-MIT - pogledajte [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE),
-i [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md)
-za pakete trećih strana i ono na šta obavezuju igre koje čita.
+MIT - pogledajte [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE)
+i [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md) za
+pakete trećih strana.

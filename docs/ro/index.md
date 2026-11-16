@@ -98,8 +98,13 @@ eliminările unei tabere sunt morțile celeilalte, iar fiecare rundă începe ci
 Demo-urile meciurilor dumneavoastră, demo-uri descărcate manual de pe un site de turneu sau demo-uri
 dintr-un API la care aveți acces. Un demo este o înregistrare al cărui conținut aparține editorului și
 organizatorilor săi: folosiți ce iese pentru propria analiză și nu redistribuiți demo-urile sau datele
-derivate din ele. Site-urile care oferă demo-uri interzic adesea în termenii lor descărcarea automată,
-motiv pentru care instrumentul citește demo-urile de pe disc și nu descarcă niciunul.
+derivate din ele. Instrumentul citește demo-urile de pe disc și nu descarcă niciunul, iar nimic din
+joc nu este livrat cu el: niciun fișier al jocului, niciun cod al jocului, niciun DLL.
+
+3DHeat CS2 nu este afiliat Valve și nu este aprobat de Valve. Counter-Strike 2 și numele și mărcile
+asociate aparțin proprietarilor lor. Deținătorii de drepturi: deschideți un issue la
+[github.com/Holdi601/3DHeat-CS2/issues](https://github.com/Holdi601/3DHeat-CS2/issues) - răspundem
+repede și eliminăm orice la cerere.
 
 ## Parte din 3DHeat {#part-of-3dheat}
 
@@ -123,6 +128,6 @@ depozit, propriile lansări și propria licență:
 
 ## Licență {#licence}
 
-MIT - vezi [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE),
+MIT - vezi [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE)
 și [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md)
-pentru pachetele terțe și pentru ce obligă jocurile pe care le citește.
+pentru pachetele terțe.

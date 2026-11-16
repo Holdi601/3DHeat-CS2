@@ -99,12 +99,18 @@ agus tosaíonn gach babhta cúigear in aghaidh cúigir.
 
 ## Cad ar a dtugann tú é {#what-to-point-it-at}
 
-Demos de do chluichí féin, demos a d'íoslódáil tú de láimh ó shuíomh comórtais,
-nó demos ó API a bhfuil rochtain agat air. Baineann ábhar demo lena fhoilsitheoir
+Demos de do chluichí féin, demos a d'íoslódáil tú de láimh ó shuíomh comórtais, nó
+demos ó API a bhfuil rochtain agat air. Baineann ábhar demo lena fhoilsitheoir
 agus a eagraithe: úsáid an méid a thagann amach le haghaidh d'anailíse féin, agus
-ná hathdháil demos ná sonraí díorthaithe astu. Is minic a thoirmisceann suíomhanna
-a thairgeann demos íoslódáil uathoibrithe ina dtéarmaí, agus sin an fáth go léann
-an uirlis demos ón diosca agus nach bhfaigheann sí aon cheann.
+ná hathdháil demos ná sonraí díorthaithe astu. Léann an uirlis na taifeadtaí ón
+diosca agus ní íoslódálann sí ceann ar bith, agus ní sheoltar aon rud ón gcluiche
+léi: gan comhaid an chluiche, gan cód an chluiche, gan DLLanna.
+
+Níl baint ag 3DHeat CS2 le Valve agus níl sé formhuinithe ag Valve. Is lena
+n-úinéirí Counter-Strike 2 agus na hainmneacha agus na trádmharcanna gaolmhara.
+Sealbhóirí cearta: oscail saincheist ag
+[github.com/Holdi601/3DHeat-CS2/issues](https://github.com/Holdi601/3DHeat-CS2/issues) -
+freagraímid go tapa agus bainimid aon rud ar iarratas.
 
 ## Cuid de 3DHeat {#part-of-3dheat}
 
@@ -128,6 +134,6 @@ dá chuid féin ag gach ceann lena eisiúintí agus a cheadúnas féin:
 
 ## Ceadúnas {#licence}
 
-MIT - féach [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE),
+MIT - féach [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE)
 agus [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md)
-do na pacáistí tríú páirtí agus an méid a éilíonn na cluichí a léann sí.
+do na pacáistí tríú páirtí.

@@ -3,7 +3,7 @@ title: "Разработка"
 nav_order: 15
 lang: "bg"
 source: development.md
-source_hash: "bcc524eebb27"
+source_hash: "b51f038901ee"
 nav_exclude: true
 search_exclude: true
 ---
@@ -90,5 +90,5 @@ HEAT3D_CS2_DEMO=<a demo> HEAT3D_SOURCE2VIEWER=<the CLI> python -m pytest
 
 ## Лиценз {#licence}
 
-MIT. Сторонни пакети и какво налагат игрите: [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md).
+MIT. Сторонни пакети: [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md).
 Демата и картите никога не са част от хранилището; неговият `.gitignore` пази `*.dem`, `*.parquet`, `*.match.json`, `*.glb` и подобни по тип извън него.

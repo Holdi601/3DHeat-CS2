@@ -96,11 +96,16 @@ zabójstwa jednej strony są zgonami drugiej, a każda runda zaczyna się w skł
 
 ## Na co to kierować {#what-to-point-it-at}
 
-Na dema twoich własnych meczów, dema, które pobrałeś ręcznie ze strony turniejowej, albo dema z API,
-do którego masz dostęp. Dema to nagrania, których treść należy do wydawcy i organizatorów: wyniki używaj
-do własnej analizy i nie rozpowszechniaj ani dem, ani danych z nich pochodzących. Strony, które
-oferują dema, często zabraniają w regulaminie automatycznego pobierania, dlatego narzędzie czyta dema
-z dysku i nic nie pobiera.
+Na dema twoich własnych meczów, dema, które pobrałeś ręcznie ze strony turniejowej, albo dema z API, do
+którego masz dostęp. Dema to nagrania, których treść należy do wydawcy i organizatorów: wyniki używaj do
+własnej analizy i nie rozpowszechniaj ani dem, ani danych z nich pochodzących. Narzędzie czyta dema z
+dysku i żadnych nie pobiera, a nic z gry nie jest do niego dołączane: żadne pliki gry, żaden kod gry,
+żadne biblioteki DLL.
+
+3DHeat CS2 nie jest powiązany z Valve ani przez Valve popierany. Counter-Strike 2 oraz związane z nim
+nazwy i znaki towarowe należą do ich właścicieli. Właściciele praw: otwórzcie zgłoszenie na
+[github.com/Holdi601/3DHeat-CS2/issues](https://github.com/Holdi601/3DHeat-CS2/issues) - odpowiadamy
+szybko i usuwamy wszystko na żądanie.
 
 ## Część 3DHeat {#part-of-3dheat}
 
@@ -124,6 +129,6 @@ z własnymi wydaniami i licencją:
 
 ## Licencja {#licence}
 
-MIT - zob. [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE),
+MIT - zob. [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE)
 oraz [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md)
-dla pakietów stron trzecich i tego, do czego zobowiązują gry, które czyta.
+dla pakietów stron trzecich.

@@ -97,10 +97,14 @@ iga poole tapmised on teise poole surmad ja iga ring algab viie vastu viie.
 ## Mille kallal seda kasutada {#what-to-point-it-at}
 
 Oma mängude demod, turniirisaidilt käsitsi alla laaditud demod või API demod, millele sul on juurdepääs.
-Demo on salvestus, mille sisu kuulub selle avaldajale ja korraldajatele: kasuta väljundit oma
-analüüsiks ja ära jaga demosid ega nendest tuletatud andmeid edasi. Saidid, mis pakuvad demosid, keelavad
-sageli automatiseeritud allalaadimise oma tingimustes, mistõttu tööriist loeb demosid kettalt ega laadi
-ühtegi alla.
+Demo on salvestus, mille sisu kuulub selle avaldajale ja korraldajatele: kasuta väljundit oma analüüsiks
+ja ära jaga demosid ega nendest tuletatud andmeid edasi. Tööriist loeb demosid kettalt ega laadi ühtegi
+alla, ja mängust ei tarnita sellega midagi: ei mängufaile, ei mängukoodi, ei DLL-e.
+
+3DHeat CS2 ei ole seotud Valve'iga ega Valve'i heaks kiidetud. Counter-Strike 2 ning sellega seotud nimed
+ja kaubamärgid kuuluvad nende omanikele. Õiguste omanikud: avage issue aadressil
+[github.com/Holdi601/3DHeat-CS2/issues](https://github.com/Holdi601/3DHeat-CS2/issues) - vastame kiiresti
+ja eemaldame soovi korral mida tahes.
 
 ## Osa 3DHeatist {#part-of-3dheat}
 
@@ -123,6 +127,6 @@ sageli automatiseeritud allalaadimise oma tingimustes, mistõttu tööriist loeb
 
 ## Litsents {#licence}
 
-MIT — vaata [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE),
+MIT — vaata [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE)
 ja [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md)
-kolmanda osapoole pakettide ja selle kohta, mida loetavad mängud nõuavad.
+kolmanda osapoole pakettide kohta.

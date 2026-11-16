@@ -99,12 +99,16 @@ de doden van de andere kant, en begint elke ronde vijf tegen vijf.
 
 ## Waarvoor je het gebruikt {#what-to-point-it-at}
 
-Demo's van je eigen wedstrijden, demo's die je met de hand van een toernooisite hebt gedownload,
-of demo's uit een API waar je toegang toe hebt. Een demo is een opname waarvan de inhoud
-toebehoort aan de uitgever en de organisatoren: gebruik wat eruit komt voor je eigen
-analyse, en geef demo's of gegevens die ervan zijn afgeleid niet door. Sites die demo's aanbieden,
-verbieden vaak geautomatiseerd downloaden in hun voorwaarden; daarom leest het hulpmiddel demo's van schijf
-en haalt het er geen op.
+Demo's van je eigen wedstrijden, demo's die je met de hand van een toernooisite hebt gedownload, of demo's
+uit een API waar je toegang toe hebt. Een demo is een opname waarvan de inhoud toebehoort aan de uitgever
+en de organisatoren: gebruik wat eruit komt voor je eigen analyse, en geef demo's of gegevens die ervan
+zijn afgeleid niet door. De tool leest demo's van schijf en downloadt er geen, en er wordt niets van het
+spel meegeleverd: geen spelbestanden, geen spelcode, geen DLL's.
+
+3DHeat CS2 is niet verbonden aan of goedgekeurd door Valve. Counter-Strike 2 en bijbehorende namen en
+merken zijn van hun eigenaars. Rechthebbenden: open een issue op
+[github.com/Holdi601/3DHeat-CS2/issues](https://github.com/Holdi601/3DHeat-CS2/issues) - we reageren snel
+en verwijderen alles op verzoek.
 
 ## Onderdeel van 3DHeat {#part-of-3dheat}
 
@@ -128,6 +132,6 @@ repository, releases en licentie:
 
 ## Licentie {#licence}
 
-MIT - zie [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE),
+MIT - zie [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE)
 en [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md)
-voor de pakketten van derden en wat de spellen die het leest vereisen.
+voor de pakketten van derden.

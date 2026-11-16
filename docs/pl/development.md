@@ -3,7 +3,7 @@ title: Rozwój
 nav_order: 15
 lang: "pl"
 source: development.md
-source_hash: "bcc524eebb27"
+source_hash: "b51f038901ee"
 nav_exclude: true
 search_exclude: true
 ---
@@ -95,6 +95,6 @@ Gdy obie zmienne są ustawione, uruchamia się także `test_players_stand_on_the
 
 ## Licencja {#licence}
 
-MIT. Pakiety zewnętrzne i to, czego wymagają gry:
+MIT. Pakiety zewnętrzne:
 [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md).
 Dema i mapy nigdy nie są częścią repozytorium; jego `.gitignore` wyklucza po typie `*.dem`, `*.parquet`, `*.match.json`, `*.glb` i podobne.

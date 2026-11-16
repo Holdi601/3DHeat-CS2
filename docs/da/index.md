@@ -100,12 +100,18 @@ scoren rundevinderne, hver sides drab er den andens dødsfald, og hver runde sta
 
 ## Hvad du peger den mod {#what-to-point-it-at}
 
-Dine egne kampes demoer, demoer du har hentet selv fra en turneringsside,
-eller demoer fra en API, du har adgang til. En demo er en optagelse, hvis indhold
+Dine egne kampes demoer, demoer du har hentet selv fra en turneringsside, eller
+demoer fra en API, du har adgang til. En demo er en optagelse, hvis indhold
 tilhører udgiveren og arrangørerne: brug det, der kommer ud, til din egen
-analyse, og videredistribuer ikke demoer eller data afledt af dem. Sider, der
-tilbyder demoer, forbyder ofte automatisk download i deres vilkår, og derfor
-læser værktøjet demoer fra disken og henter ingen.
+analyse, og videredistribuer ikke demoer eller data afledt af dem. Værktøjet
+læser demoer fra disken og henter ingen, og intet fra spillet følger med: ingen
+spilfiler, ingen spilkode, ingen DLL'er.
+
+3DHeat CS2 er ikke tilknyttet eller godkendt af Valve. Counter-Strike 2 og
+tilhørende navne og varemærker tilhører deres ejere. Rettighedshavere: opret et
+issue på
+[github.com/Holdi601/3DHeat-CS2/issues](https://github.com/Holdi601/3DHeat-CS2/issues) -
+vi svarer hurtigt og fjerner hvad som helst efter anmodning.
 
 ## Del af 3DHeat {#part-of-3dheat}
 
@@ -129,6 +135,6 @@ repository med sine egne udgivelser og licens:
 
 ## Licens {#licence}
 
-MIT - se [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE),
+MIT - se [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE)
 og [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md)
-for tredjepartspakkerne, og hvad de spil, det læser, forpligter til.
+for tredjepartspakkerne.

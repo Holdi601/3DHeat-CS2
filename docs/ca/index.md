@@ -96,11 +96,16 @@ morts de l'altre, i cada ronda comença amb cinc contra cinc.
 
 ## A què apuntar {#what-to-point-it-at}
 
-Les demos de les teves pròpies partides, les demos que hagis descarregat a mà d'un lloc de torneigs,
-o les demos d'una API a la qual tinguis accés. Una demo és una gravació el contingut de la qual
-pertany al seu editor i als seus organitzadors: fes servir el que en surti per a la teva pròpia anàlisi, i no
-redistribuïu les demos ni les dades que se'n deriven. Els llocs que ofereixen demos sovint prohibeixen
-la descàrrega automàtica a les seves condicions, per això l'eina llegeix les demos del disc i no n'obté cap.
+Les demos de les teves pròpies partides, les demos que hagis descarregat a mà d'un lloc de torneigs, o les
+demos d'una API a la qual tinguis accés. Una demo és una gravació el contingut de la qual pertany al seu
+editor i als seus organitzadors: fes servir el que en surti per a la teva pròpia anàlisi, i no redistribuïu
+les demos ni les dades que se'n deriven. L'eina llegeix les demos del disc i no en baixa cap, i no inclou res
+del joc: cap fitxer del joc, cap codi del joc, cap DLL.
+
+3DHeat CS2 no està afiliat a Valve ni compta amb el seu suport. Counter-Strike 2 i els noms i marques
+relacionats pertanyen als seus propietaris. Titulars de drets: obriu una incidència a
+[github.com/Holdi601/3DHeat-CS2/issues](https://github.com/Holdi601/3DHeat-CS2/issues) - responem ràpidament
+i retirem el que se'ns demani.
 
 ## Part de 3DHeat {#part-of-3dheat}
 
@@ -124,6 +129,6 @@ repositori, les seves pròpies versions i la seva llicència:
 
 ## Llicència {#licence}
 
-MIT: mira [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE),
+MIT: mira [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE)
 i [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md)
-per als paquets de tercers i el que obliguen els jocs que llegeix.
+per als paquets de tercers.

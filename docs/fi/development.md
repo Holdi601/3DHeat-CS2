@@ -3,7 +3,7 @@ title: "Kehitys"
 nav_order: 15
 lang: "fi"
 source: development.md
-source_hash: "bcc524eebb27"
+source_hash: "b51f038901ee"
 nav_exclude: true
 search_exclude: true
 ---
@@ -134,7 +134,7 @@ keskimääräinen korkeus maan yläpuolella on alle 5 yksikköä
 
 ## Lisenssi {#licence}
 
-MIT. Kolmannen osapuolen paketit ja se, mitä pelit edellyttävät:
+MIT. Kolmannen osapuolen paketit:
 [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md).
 Demot ja kartat eivät ole koskaan osa repositoriota; sen `.gitignore` pitää
 `*.dem`, `*.parquet`, `*.match.json`, `*.glb` ja vastaavat poissa tyypin perusteella.

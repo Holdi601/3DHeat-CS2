@@ -3,7 +3,7 @@ title: Razvoj
 nav_order: 15
 lang: "bs"
 source: development.md
-source_hash: "bcc524eebb27"
+source_hash: "b51f038901ee"
 nav_exclude: true
 search_exclude: true
 ---
@@ -133,7 +133,7 @@ a da je medijan visine iznad njega ispod 5 jedinica
 
 ## Licenca {#licence}
 
-MIT. Paketi trećih strana i ono na šta igre obavezuju:
+MIT. Paketi trećih strana:
 [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md).
 Demoi i mape nikad nisu dio repozitorija; njegov `.gitignore` drži
 `*.dem`, `*.parquet`, `*.match.json`, `*.glb` i slično vani po tipu.

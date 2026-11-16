@@ -3,7 +3,7 @@ title: "Fejlesztés"
 nav_order: 15
 lang: "hu"
 source: development.md
-source_hash: "bcc524eebb27"
+source_hash: "b51f038901ee"
 nav_exclude: true
 search_exclude: true
 ---
@@ -117,7 +117,7 @@ alattuk, a talajtól mért medián magasság pedig 5 egység alatt van ([Pályae
 
 ## Licenc {#licence}
 
-MIT. A harmadik féltől származó csomagok és amit a játékok előírnak:
+MIT. A harmadik féltől származó csomagok:
 [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md).
 A demók és a pályák sosem részei a tárolónak; a `.gitignore` a típusuk szerint kizárja a `*.dem`, `*.parquet`,
 `*.match.json`, `*.glb` és hasonló fájlokat.

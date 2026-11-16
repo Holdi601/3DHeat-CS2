@@ -95,10 +95,15 @@ oldal halálai, és minden forduló öt az öt ellen kezdődik.
 
 ## Mire irányítsd {#what-to-point-it-at}
 
-A saját meccseid demóira, arra a demóra, amelyet kézzel töltöttél le egy torna oldaláról, vagy egy olyan API
-demóira, amelyhez hozzáférésed van. A demó olyan felvétel, amelynek tartalma a kiadójáé és a szervezőké: a belőle
-készült kimenetet a saját elemzésedre használd, a demókat és a belőlük származó adatokat ne terjeszd tovább.
-Sok demókínáló oldal a feltételeiben tiltja az automatikus letöltést, ezért az eszköz a lemezről olvas, és nem tölt le semmit.
+A saját meccseid demóira, arra a demóra, amelyet kézzel töltöttél le egy torna oldaláról, vagy egy olyan API demóira, amelyhez
+hozzáférésed van. A demó olyan felvétel, amelynek tartalma a kiadójáé és a szervezőké: a belőle készült kimenetet a saját
+elemzésedre használd, a demókat és a belőlük származó adatokat ne terjeszd tovább. Az eszköz a lemezről olvassa a demókat, és
+egyet sem tölt le, és semmi sem kerül vele terjesztésre a játékból: sem játékfájl, sem játékkód, sem DLL.
+
+A 3DHeat CS2 nem áll kapcsolatban a Valve-val, és a Valve nem támogatja. A Counter-Strike 2 és a kapcsolódó nevek és védjegyek
+a tulajdonosaikéi. Jogtulajdonosok: nyissanak egy issue-t itt:
+[github.com/Holdi601/3DHeat-CS2/issues](https://github.com/Holdi601/3DHeat-CS2/issues) - gyorsan válaszolunk, és kérésre
+bármit eltávolítunk.
 
 ## A 3DHeat része {#part-of-3dheat}
 
@@ -122,6 +127,6 @@ licence van:
 
 ## Licenc {#licence}
 
-MIT – lásd a [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE) fájlt,
-és a [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md) fájlt a harmadik féltől
-származó csomagokról, és arról, mit írnak elő az általa olvasott játékok.
+MIT – lásd a [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE) és a
+[`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md) fájlt a harmadik féltől
+származó csomagokról.

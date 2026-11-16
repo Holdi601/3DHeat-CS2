@@ -72,7 +72,9 @@ python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # 試合のスコア
 
 ## 何に向けて使うか {#what-to-point-it-at}
 
-自分の試合のデモ、トーナメントのサイトから手で取得したデモ、アクセス権のあるAPIのデモ。デモは、その内容が発行元と主催者に属する録画です。出てきたものは自分の分析に使い、デモや、そこから導いたデータを再配布しないでください。デモを提供するサイトは、自動ダウンロードを利用規約で禁じていることが多いため、このツールはディスクからデモを読み、何も取得しません。
+自分の試合のデモ、トーナメントのサイトから手で取得したデモ、アクセス権のあるAPIのデモ。デモは、その内容が発行元と主催者に属する録画です。出てきたものは自分の分析に使い、デモや、そこから導いたデータを再配布しないでください。このツールはデモをディスクから読み込み、ダウンロードは一切しません。また、ゲームのものは何も同梱していません。ゲームのファイルも、ゲームのコードも、DLLも含みません。
+
+3DHeat CS2 は Valve と提携しておらず、Valve の承認も受けていません。Counter-Strike 2 および関連する名称と商標は、それぞれの所有者に帰属します。権利者の方へ: [github.com/Holdi601/3DHeat-CS2/issues](https://github.com/Holdi601/3DHeat-CS2/issues) で issue を作成してください。すぐに対応し、ご依頼があれば何でも削除します。
 
 ## 3DHeatの一部 {#part-of-3dheat}
 
@@ -95,4 +97,4 @@ python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # 試合のスコア
 
 ## ライセンス {#licence}
 
-MIT。[`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE) を参照してください。サードパーティのパッケージと、読み取るゲームが求めることについては、[`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md) を参照してください。
+MIT。[`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE) を参照してください。サードパーティのパッケージについては [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md) を参照してください。

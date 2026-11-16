@@ -93,7 +93,9 @@ följer poängen rundvinnarna, varje sidas dödanden är den andra sidans dödsf
 
 ## Vad du ska peka den på {#what-to-point-it-at}
 
-Dina egna matchers demos, demos du laddat ner för hand från en turneringssida, eller demos från ett API du har åtkomst till. En demo är en inspelning vars innehåll tillhör dess utgivare och arrangörer: använd det som kommer ut för din egen analys, och sprid inte demos eller data som härletts från dem vidare. Sidor som erbjuder demos förbjuder ofta automatisk nedladdning i sina villkor, vilket är varför verktyget läser demos från disken och inte hämtar några.
+Dina egna matchers demos, demos du laddat ner för hand från en turneringssida, eller demos från ett API du har åtkomst till. En demo är en inspelning vars innehåll tillhör dess utgivare och arrangörer: använd det som kommer ut för din egen analys, och sprid inte demos eller data som härletts från dem vidare. Verktyget läser demos från disken och laddar inte ned några, och inget från spelet följer med: inga spelfiler, ingen spelkod, inga DLL-filer.
+
+3DHeat CS2 är inte knutet till eller godkänt av Valve. Counter-Strike 2 och tillhörande namn och varumärken tillhör sina ägare. Rättighetshavare: öppna ett ärende på [github.com/Holdi601/3DHeat-CS2/issues](https://github.com/Holdi601/3DHeat-CS2/issues) - vi svarar snabbt och tar bort vad som helst på begäran.
 
 ## En del av 3DHeat {#part-of-3dheat}
 
@@ -117,6 +119,6 @@ förråd, sina egna utgåvor och sin egen licens:
 
 ## Licens {#licence}
 
-MIT - se [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE),
+MIT - se [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE)
 och [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md)
-för tredjepartspaketen och vad spelen den läser kräver.
+för tredjepartspaketen.

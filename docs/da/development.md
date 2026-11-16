@@ -3,7 +3,7 @@ title: "Udvikling"
 nav_order: 15
 lang: "da"
 source: development.md
-source_hash: "bcc524eebb27"
+source_hash: "b51f038901ee"
 nav_exclude: true
 search_exclude: true
 ---
@@ -130,7 +130,7 @@ median højde over det under 5 enheder ([Kortudtræk](map-export.md#the-check-th
 
 ## Licens {#licence}
 
-MIT. Tredjepartspakker og hvad spillene kræver:
+MIT. Tredjepartspakker:
 [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md).
 Demoer og kort er aldrig en del af repositoriet; dets `.gitignore` holder
 `*.dem`, `*.parquet`, `*.match.json`, `*.glb` og lignende ude efter type.

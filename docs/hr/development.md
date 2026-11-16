@@ -3,7 +3,7 @@ title: "Razvoj"
 nav_order: 15
 lang: "hr"
 source: development.md
-source_hash: "bcc524eebb27"
+source_hash: "b51f038901ee"
 nav_exclude: true
 search_exclude: true
 ---
@@ -95,5 +95,5 @@ Kad su obje varijable postavljene, pokreće se i `test_players_stand_on_the_expo
 
 ## Licenca {#licence}
 
-MIT. Paketi trećih strana i što igre zahtijevaju: [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md).
+MIT. Paketi trećih strana: [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md).
 Demo snimke i karte nikad nisu dio repozitorija; njegov `.gitignore` po vrsti drži `*.dem`, `*.parquet`, `*.match.json`, `*.glb` i slične datoteke van.

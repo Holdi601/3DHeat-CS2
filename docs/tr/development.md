@@ -3,7 +3,7 @@ title: Geliştirme
 nav_order: 15
 lang: "tr"
 source: development.md
-source_hash: "bcc524eebb27"
+source_hash: "b51f038901ee"
 nav_exclude: true
 search_exclude: true
 ---
@@ -122,7 +122,7 @@ yüklü oyundan dışa aktarır ve rastgele 300 konum örneğinin en az %98'inin
 
 ## Lisans {#licence}
 
-MIT. Üçüncü taraf paketler ve oyunların gerektirdikleri:
+MIT. Üçüncü taraf paketler:
 [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md).
 Demolar ve haritalar deponun parçası değildir; `.gitignore` dosyası `*.dem`, `*.parquet`, `*.match.json`,
 `*.glb` ve benzerlerini türüne göre dışarıda tutar.

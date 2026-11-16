@@ -3,7 +3,7 @@ title: "Etusivu"
 nav_order: 1
 lang: "fi"
 source: index.md
-source_hash: "251966f8d45d"
+source_hash: "a4f2cda08a58"
 nav_exclude: true
 search_exclude: true
 permalink: /fi/
@@ -100,9 +100,14 @@ ja jokainen kierros alkaa viidellä viitä vastaan.
 
 Omien otteluidesi demot, demot, jotka latasit käsin turnaussivustolta, tai demot API:sta, johon sinulla
 on pääsy. Demo on tallenne, jonka sisältö kuuluu sen julkaisijalle ja järjestäjille: käytä tulosta omaan
-analyysiisi, äläkä jaa demoja tai niistä johdettua dataa edelleen. Sivustot, jotka tarjoavat demoja,
-kieltävät usein automaattisen lataamisen ehdoissaan, minkä vuoksi työkalu lukee demot levyltä eikä hae
-yhtään.
+analyysiisi, äläkä jaa demoja tai niistä johdettua dataa edelleen. Työkalu lukee demot levyltä eikä
+lataa yhtään, eikä mitään pelistä toimiteta sen mukana: ei pelin tiedostoja, ei pelin koodia, ei
+DLL-tiedostoja.
+
+3DHeat CS2 ei ole sidoksissa Valveen eikä Valven hyväksymä. Counter-Strike 2 sekä siihen liittyvät nimet
+ja tavaramerkit kuuluvat omistajilleen. Oikeudenhaltijat: avatkaa issue osoitteessa
+[github.com/Holdi601/3DHeat-CS2/issues](https://github.com/Holdi601/3DHeat-CS2/issues) - vastaamme
+nopeasti ja poistamme pyynnöstä mitä tahansa.
 
 ## Osa 3DHeatia {#part-of-3dheat}
 
@@ -135,6 +140,6 @@ repositorionsa, julkaisunsa ja lisenssinsä:
 
 ## Lisenssi {#licence}
 
-MIT – katso [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE),
+MIT - katso [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE)
 ja [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md)
-kolmansien osapuolten paketeista ja siitä, mitä luettavat pelit edellyttävät.
+kolmansien osapuolten paketeista.

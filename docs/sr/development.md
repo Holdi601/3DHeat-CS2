@@ -3,7 +3,7 @@ title: "Развој"
 nav_order: 15
 lang: "sr"
 source: development.md
-source_hash: "bcc524eebb27"
+source_hash: "b51f038901ee"
 nav_exclude: true
 search_exclude: true
 ---
@@ -90,4 +90,4 @@ HEAT3D_CS2_DEMO=<a demo> HEAT3D_SOURCE2VIEWER=<the CLI> python -m pytest
 
 ## Лиценца {#licence}
 
-MIT. Пакети трећих страна и шта игре захтевају: [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md). Демои и мапе никад нису део репозиторијума; његов `.gitignore` по врсти држи `*.dem`, `*.parquet`, `*.match.json`, `*.glb` и сличне ван њега.
+MIT. Пакети трећих страна: [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md). Демои и мапе никад нису део репозиторијума; његов `.gitignore` по врсти држи `*.dem`, `*.parquet`, `*.match.json`, `*.glb` и сличне ван њега.

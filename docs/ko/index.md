@@ -72,7 +72,9 @@ python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # 매치의 점수�
 
 ## 어떤 데모를 가리키면 되나 {#what-to-point-it-at}
 
-여러분 자신의 매치 데모, 토너먼트 사이트에서 손으로 내려받은 데모, 또는 여러분이 접근할 수 있는 API의 데모입니다. 데모는 그 내용이 게시자와 주최자에게 속한 기록입니다. 나온 결과는 여러분 자신의 분석에만 쓰고, 데모나 그로부터 얻은 데이터를 재배포하지 마세요. 데모를 제공하는 사이트 중에는 약관으로 자동 내려받기를 금지하는 곳이 많습니다. 그래서 이 도구는 디스크에서 데모를 읽을 뿐, 어떤 것도 내려받지 않습니다.
+여러분 자신의 매치 데모, 토너먼트 사이트에서 손으로 내려받은 데모, 또는 여러분이 접근할 수 있는 API의 데모입니다. 데모는 그 내용이 게시자와 주최자에게 속한 기록입니다. 나온 결과는 여러분 자신의 분석에만 쓰고, 데모나 그로부터 얻은 데이터를 재배포하지 마세요. 이 도구는 디스크에서 데모를 읽을 뿐 아무것도 내려받지 않으며, 게임의 어떤 것도 함께 배포하지 않습니다. 게임 파일도, 게임 코드도, DLL도 포함하지 않습니다.
+
+3DHeat CS2는 Valve와 제휴하지 않았으며 Valve의 승인을 받지 않았습니다. Counter-Strike 2 및 관련 이름과 상표는 각 소유자에게 있습니다. 권리자께서는 [github.com/Holdi601/3DHeat-CS2/issues](https://github.com/Holdi601/3DHeat-CS2/issues) 에 이슈를 열어 주세요. 빠르게 답하고 요청하시면 무엇이든 삭제합니다.
 
 ## 3DHeat의 일부 {#part-of-3dheat}
 
@@ -95,4 +97,4 @@ python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # 매치의 점수�
 
 ## 라이선스 {#licence}
 
-MIT입니다. [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE)를 보세요. 제3자 패키지와, 이 도구가 읽는 게임들이 요구하는 것은 [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md)에 있습니다.
+MIT입니다. [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE)를 보세요. 제3자 패키지는 [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md)에 있습니다.

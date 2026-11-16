@@ -74,7 +74,9 @@ python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # 一场对局的记
 
 ## 适合用于哪些录像 {#what-to-point-it-at}
 
-你自己对局的录像，你从锦标赛网站手动下载的录像，或者你有权访问的 API 中的录像。录像的内容属于其发布者和主办方：请仅将输出用于你自己的分析，不要再分发录像或由其衍生的数据。提供录像的网站通常在其条款中禁止自动下载，这正是本工具从磁盘读取录像、从不下载任何东西的原因。
+你自己对局的录像，你从锦标赛网站手动下载的录像，或者你有权访问的 API 中的录像。录像的内容属于其发布者和主办方：请仅将输出用于你自己的分析，不要再分发录像或由其衍生的数据。该工具从磁盘读取录像，从不下载任何录像；也不随附游戏的任何内容：没有游戏文件、没有游戏代码、没有 DLL。
+
+3DHeat CS2 与 Valve 没有关联，也未获得 Valve 认可。Counter-Strike 2 及相关名称和商标归其各自所有者所有。权利人：请在 [github.com/Holdi601/3DHeat-CS2/issues](https://github.com/Holdi601/3DHeat-CS2/issues) 提交 issue——我们会迅速回复，并按要求删除任何内容。
 
 ## 属于 3DHeat 的一部分 {#part-of-3dheat}
 
@@ -97,5 +99,5 @@ python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # 一场对局的记
 
 ## 许可证 {#licence}
 
-MIT：参见 [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE)，
-以及 [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md)，其中列出了第三方软件包，以及它所读取的游戏所要求的内容。
+MIT——见 [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE)；第三方软件包见
+[`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md)。

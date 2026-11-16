@@ -3,7 +3,7 @@ title: "Razvoj"
 nav_order: 15
 lang: "sl"
 source: development.md
-source_hash: "bcc524eebb27"
+source_hash: "b51f038901ee"
 nav_exclude: true
 search_exclude: true
 ---
@@ -114,7 +114,7 @@ višino nad njimi pod 5 enotami ([Izvoz karte](map-export.md#the-check-that-the-
 
 ## Licenca {#licence}
 
-MIT. Paketi tretjih oseb in kaj zahtevajo igre:
+MIT. Paketi tretjih oseb:
 [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md).
 Demoji in karte nikoli niso del repozitorija; njegov `.gitignore` z vrsto izključi `*.dem`, `*.parquet`,
 `*.match.json`, `*.glb` in podobne datoteke.

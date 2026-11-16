@@ -95,8 +95,13 @@ petim.
 
 Demoje svojih tekem, demoje, ki ste jih ročno prenesli s turnirskega spletnega mesta, ali demoje iz API-ja, do
 katerega imate dostop. Demo je posnetek, katerega vsebina pripada njegovemu izdajatelju in organizatorjem: rezultate
-uporabi za svojo analizo in demojev ali podatkov iz njih ne deli naprej. Mesta, ki ponujajo demoje, pogosto v svojih
-pogojih prepovedujejo samodejno prenašanje, zato orodje bere demoje z diska in ne prenaša nobenega.
+uporabi za svojo analizo in demojev ali podatkov iz njih ne deli naprej. Orodje bere posnetke z diska in nobenega ne
+prenaša, iz igre pa ni priloženo nič: nobena datoteka igre, nobena koda igre, noben DLL.
+
+3DHeat CS2 ni povezan z družbo Valve in ga Valve ne podpira. Counter-Strike 2 ter povezana imena in blagovne znamke
+pripadajo svojim lastnikom. Imetniki pravic: odprite issue na
+[github.com/Holdi601/3DHeat-CS2/issues](https://github.com/Holdi601/3DHeat-CS2/issues) - hitro odgovorimo in na
+zahtevo odstranimo karkoli.
 
 ## Del 3DHeat {#part-of-3dheat}
 
@@ -121,5 +126,4 @@ licenco:
 ## Licenca {#licence}
 
 MIT - glejte [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE) in
-[`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md) za pakete tretjih oseb in to, kar
-zahtevajo igre, ki jih bere.
+[`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md) za pakete tretjih oseb.

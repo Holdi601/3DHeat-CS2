@@ -3,7 +3,7 @@ title: "Utvikling"
 nav_order: 15
 lang: "no"
 source: development.md
-source_hash: "bcc524eebb27"
+source_hash: "b51f038901ee"
 nav_exclude: true
 search_exclude: true
 ---
@@ -124,7 +124,7 @@ enheter ([Eksport av kart](map-export.md#the-check-that-the-frame-is-right)).
 
 ## Lisens {#licence}
 
-MIT. Tredjepartspakker og hva spillene krever:
+MIT. Tredjepartspakker:
 [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md).
 Demoer og kart er aldri en del av repositoriet; dets `.gitignore` holder `*.dem`,
 `*.parquet`, `*.match.json`, `*.glb` og lignende ute etter type.

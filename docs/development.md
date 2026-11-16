@@ -129,7 +129,7 @@ them, with a median height above it under 5 units
 
 ## Licence
 
-MIT. Third-party packages and what the games oblige:
+MIT. Third-party packages:
 [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md).
 Demos and maps are never part of the repository; its `.gitignore` keeps
 `*.dem`, `*.parquet`, `*.match.json`, `*.glb` and the like out by type.

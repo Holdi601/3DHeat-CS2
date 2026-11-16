@@ -3,7 +3,7 @@ title: "Ανάπτυξη"
 nav_order: 15
 lang: "el"
 source: development.md
-source_hash: "bcc524eebb27"
+source_hash: "b51f038901ee"
 nav_exclude: true
 search_exclude: true
 ---
@@ -119,6 +119,6 @@ HEAT3D_CS2_DEMO=<a demo> HEAT3D_SOURCE2VIEWER=<the CLI> python -m pytest
 
 ## Άδεια χρήσης {#licence}
 
-MIT. Τα πακέτα τρίτων και όσα επιβάλλουν τα παιχνίδια: [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md).
+MIT. Τα πακέτα τρίτων: [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md).
 Τα demo και οι χάρτες δεν είναι ποτέ μέρος του αποθετηρίου· το `.gitignore` του κρατά έξω τα `*.dem`, `*.parquet`,
 `*.match.json`, `*.glb` και παρόμοια, ανά τύπο.

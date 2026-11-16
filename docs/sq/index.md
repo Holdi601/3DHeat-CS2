@@ -100,12 +100,18 @@ dhe çdo raund nis pesë kundër pesë.
 
 ## Mbi çfarë ta drejto {#what-to-point-it-at}
 
-Demot e ndeshjeve të tua, demo që i ke shkarkuar me dorë nga një faqe turnirësh,
-ose demo nga një API që ke akses. Një demo është një regjistrim përmbajtja e të cilit
-i përket botuesit dhe organizatorëve të saj: përdor çfarë del për analizën tënde,
-dhe mos i ripërhap demot ose të dhënat e nxjerra prej tyre. Faqet që
-ofrojnë demo shpesh e ndalojnë shkarkimin automatik në kushtet e tyre, prandaj
-mjeti i lexon demot nga disku dhe nuk shkarkon asnjë.
+Demot e ndeshjeve të tua, demo që i ke shkarkuar me dorë nga një faqe turnirësh, ose
+demo nga një API që ke akses. Një demo është një regjistrim përmbajtja e të cilit i
+përket botuesit dhe organizatorëve të saj: përdor çfarë del për analizën tënde, dhe
+mos i ripërhap demot ose të dhënat e nxjerra prej tyre. Mjeti i lexon demot nga disku
+dhe nuk shkarkon asnjë, dhe asgjë nga loja nuk shpërndahet me të: asnjë skedar i
+lojës, asnjë kod i lojës, asnjë DLL.
+
+3DHeat CS2 nuk është i lidhur me Valve dhe nuk miratohet prej saj. Counter-Strike 2
+dhe emrat e markat tregtare përkatëse u përkasin pronarëve të tyre. Mbajtësit e të
+drejtave: hapni një issue te
+[github.com/Holdi601/3DHeat-CS2/issues](https://github.com/Holdi601/3DHeat-CS2/issues) -
+përgjigjemi shpejt dhe heqim gjithçka me kërkesë.
 
 ## Pjesë e 3DHeat {#part-of-3dheat}
 
@@ -129,6 +135,6 @@ e vet, botimet dhe licencën e vet:
 
 ## Licenca {#licence}
 
-MIT - shih [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE),
+MIT - shih [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE)
 dhe [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md)
-për paketat e palëve të treta dhe çfarë detyrojnë lojërat që lexon.
+për paketat e palëve të treta.

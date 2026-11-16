@@ -3,7 +3,7 @@ title: Inicio
 nav_order: 1
 lang: "es"
 source: index.md
-source_hash: "251966f8d45d"
+source_hash: "a4f2cda08a58"
 nav_exclude: true
 search_exclude: true
 permalink: /es/
@@ -100,8 +100,13 @@ otro, y cada ronda empieza con cinco contra cinco.
 Las demos de tus propias partidas, demos que descargaste a mano de un sitio de torneos, o demos de una API
 a la que tengas acceso. Una demo es una grabación cuyo contenido pertenece a su editor y a los
 organizadores: usa lo que salga para tu propio análisis, y no redistribuyas demos ni datos derivados de
-ellas. Los sitios que ofrecen demos suelen prohibir en sus condiciones la descarga automatizada, por lo
-que la herramienta lee las demos del disco y no descarga ninguna.
+ellas. La herramienta lee las demos del disco y no descarga ninguna, y no incluye nada del juego: ni
+archivos del juego, ni código del juego, ni DLL.
+
+3DHeat CS2 no está afiliado a Valve ni cuenta con su respaldo. Counter-Strike 2 y los nombres y marcas
+relacionados pertenecen a sus propietarios. Titulares de derechos: abran una incidencia en
+[github.com/Holdi601/3DHeat-CS2/issues](https://github.com/Holdi601/3DHeat-CS2/issues) - respondemos
+rápido y retiramos lo que se nos pida.
 
 ## Parte de 3DHeat {#part-of-3dheat}
 
@@ -134,6 +139,6 @@ repositorio, sus versiones y su licencia:
 
 ## Licencia {#licence}
 
-MIT - ver [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE),
+MIT - ver [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE)
 y [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md)
-para los paquetes de terceros y lo que exigen los juegos que lee.
+para los paquetes de terceros.

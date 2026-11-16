@@ -95,11 +95,16 @@ sleduje vítěze kol, zabití každé strany jsou smrti té druhé a každé kol
 
 ## Na co to použít {#what-to-point-it-at}
 
-Dema vašich vlastních zápasů, dema, která jste ručně stáhli z turnajového webu, nebo dema z API,
-ke kterému máte přístup. Dema jsou záznamy, jejichž obsah patří vydavateli a pořadatelům: výstupy
-používejte pro svou vlastní analýzu a dema ani data z nich odvozená dál nešiřte. Weby, které dema
-nabízejí, bývají ve svých podmínkách zakazovat automatické stahování, proto nástroj čte dema z disku
-a žádná nestahuje.
+Dema vašich vlastních zápasů, dema, která jste ručně stáhli z turnajového webu, nebo dema z API, ke
+kterému máte přístup. Dema jsou záznamy, jejichž obsah patří vydavateli a pořadatelům: výstupy
+používejte pro svou vlastní analýzu a dema ani data z nich odvozená dál nešiřte. Nástroj čte dema z
+disku a žádná nestahuje a nic ze hry se s ním nedodává: žádné herní soubory, žádný herní kód, žádné
+DLL.
+
+3DHeat CS2 není spojen se společností Valve ani jí schválen. Counter-Strike 2 a související názvy a
+ochranné známky patří jejich vlastníkům. Držitelé práv: založte issue na
+[github.com/Holdi601/3DHeat-CS2/issues](https://github.com/Holdi601/3DHeat-CS2/issues) - odpovídáme
+rychle a na požádání cokoli odstraníme.
 
 ## Součást 3DHeat {#part-of-3dheat}
 
@@ -123,6 +128,6 @@ repozitář, vydání a licenci:
 
 ## Licence {#licence}
 
-MIT – viz [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE),
+MIT – viz [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE)
 a [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md)
-pro balíčky třetích stran a to, k čemu zavazují hry, které nástroj čte.
+pro balíčky třetích stran.

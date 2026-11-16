@@ -100,8 +100,13 @@ do outro, e cada round começa com cinco contra cinco.
 Demos das suas próprias partidas, demos que transferiu manualmente de um site de torneios, ou demos de uma
 API à qual se tem acesso. Uma demo é uma gravação cujo conteúdo pertence à sua editora e aos
 organizadores: use o que sai para a sua própria análise, e não redistribua demos nem dados derivados
-delas. Sites que oferecem demos costumam proibir a transferência automatizada nos seus termos, por isso a
-ferramenta lê as demos do disco e não transfere nenhuma.
+delas. A ferramenta lê as demos do disco e não descarrega nenhuma, e nada do jogo é distribuído com ela:
+nenhum ficheiro do jogo, nenhum código do jogo, nenhuma DLL.
+
+O 3DHeat CS2 não é afiliado à Valve nem aprovado por ela. Counter-Strike 2 e os nomes e marcas
+relacionados pertencem aos seus titulares. Titulares de direitos: abram uma issue em
+[github.com/Holdi601/3DHeat-CS2/issues](https://github.com/Holdi601/3DHeat-CS2/issues) - respondemos
+depressa e removemos o que for pedido.
 
 ## Parte do 3DHeat {#part-of-3dheat}
 
@@ -125,6 +130,6 @@ próprio repositório, lançamentos e licença:
 
 ## Licença {#licence}
 
-MIT - veja [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE),
+MIT - veja [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE)
 e [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md)
-para os pacotes de terceiros e o que os jogos que ela lê exigem.
+para os pacotes de terceiros.

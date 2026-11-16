@@ -4,9 +4,8 @@ Everything in this repository that was written for it is under the MIT licence i
 ship it, commercially or not.
 
 What the MIT licence cannot cover is what the tool is used with: the Python
-packages it imports, the program the map export runs, and the game whose demos
-and maps it reads. Those carry their own terms, and they are listed here because
-they decide what may be done with the output.
+packages it imports and the program the map export runs. Those carry their own
+licences, listed here.
 
 Every licence below was read off the package metadata in September 2026, not
 recalled. Where a component's terms changed after that, the source is what
@@ -32,34 +31,27 @@ of it is copied here.
 
 A demo is the server's recording of a match; the map is part of the game. The
 tool reads files the user has - their own matches, demos they downloaded, the
-installed game - and what comes out is for their own analysis. Demos and
-data derived from them are not this project's to redistribute, and not the
-user's either: Valve has had a dataset built from professional demos taken
-down. Sites that offer demos commonly forbid automated downloading in their
-terms of use, which is why the tool reads demos from disk and fetches none.
+installed game - and what comes out is for their own analysis. Demos and data
+derived from them are not for redistribution. The tool reads demos from disk
+and downloads none.
 
 ## The map's geometry
 
 The map export reads the map's own `.vpk` from the installed game. Those
-archives are not encrypted: reading them is ordinary parsing, and nothing is
-circumvented - no keys, no injection into the game, nothing read from its
-memory. What is taken is the world's collision mesh, for spatial context
-under a heatmap, which is also the least of what the archive holds; it is
-written to the user's disk and never shipped with this repository.
+archives are not encrypted: reading them is ordinary parsing - no keys, no
+injection into the game, nothing read from its memory. What is taken is the
+world's collision mesh, for spatial context under a heatmap, which is also the
+least of what the archive holds; it is written to the user's disk and never
+shipped with this repository. Nothing from the game ships with the tool: no
+game files, no game code, no DLLs.
 
-What remains the user's responsibility is the game's EULA. Such agreements
-commonly prohibit reverse engineering and are enforceable contracts; that
-obligation sits with whoever runs the tool, and no design choice here
-discharges it.
+3DHeat CS2 is not affiliated with or endorsed by Valve. Counter-Strike 2 and
+related names and trademarks belong to their owners. Rights holders: open an
+issue at <https://github.com/Holdi601/3DHeat-CS2/issues> - we respond quickly and remove
+anything on request.
 
 ---
 
 ## Sources
 
 - [ValveResourceFormat](https://github.com/ValveResourceFormat/ValveResourceFormat) — Source2Viewer, MIT
-- [Reverse engineering and the law](https://ipwatchdog.com/2021/03/27/reverse-engineering-law-understand-restrictions-minimize-risks/) — EULA and DMCA position
-- [DMCA §1201 anti-circumvention](https://copyrightalliance.org/education/copyright-law-explained/the-digital-millennium-copyright-act-dmca/section-1201-technology-protection/) — the tools provisions reach technologies, not only acts
-
-This document is a record of what the licences say. It is not legal advice, and
-the commercial question for any particular use is one for whoever is answerable
-for that use.

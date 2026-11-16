@@ -3,7 +3,7 @@ title: "Développement"
 nav_order: 15
 lang: "fr"
 source: development.md
-source_hash: "bcc524eebb27"
+source_hash: "b51f038901ee"
 nav_exclude: true
 search_exclude: true
 ---
@@ -90,5 +90,5 @@ Quand les deux variables sont définies, `test_players_stand_on_the_exported_flo
 
 ## Licence {#licence}
 
-MIT. Paquets tiers et obligations imposées par les jeux : [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md).
+MIT. Paquets tiers: [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md).
 Les démos et les cartes ne font jamais partie du dépôt ; son `.gitignore` exclut `*.dem`, `*.parquet`, `*.match.json`, `*.glb` et les fichiers semblables par type.

@@ -89,9 +89,14 @@ rezultatas seka raundų laimėtojus, kiekvienos pusės žudynės yra kitos pusė
 
 ## Ką nurodyti {#what-to-point-it-at}
 
-Jūsų pačių rungtynių demo, demo, kuriuos parsisiuntėte rankiniu būdu iš turnyrų svetainės, arba demo iš API, prie kurios turite prieigą.
-Demo turinys priklauso jo leidėjui ir organizatoriams: naudokite gautus rezultatus savo analizei ir neplatinkite demo ar iš jų išvestų duomenų.
-Svetainės, siūlančios demo, dažnai savo sąlygose draudžia automatinį atsisiuntimą, todėl įrankis skaito demo iš disko ir nieko neatsisiunčia.
+Jūsų pačių rungtynių demo, demo, kuriuos parsisiuntėte rankiniu būdu iš turnyrų svetainės, arba demo iš API, prie kurios turite prieigą. Demo
+turinys priklauso jo leidėjui ir organizatoriams: naudokite gautus rezultatus savo analizei ir neplatinkite demo ar iš jų išvestų duomenų.
+Įrankis skaito demonstracinius įrašus iš disko ir nieko neatsisiunčia, o kartu su juo neplatinama nieko iš žaidimo: jokių žaidimo failų, jokio
+žaidimo kodo, jokių DLL.
+
+3DHeat CS2 nėra susijęs su Valve ir nėra jos patvirtintas. Counter-Strike 2 ir susiję pavadinimai bei prekių ženklai priklauso jų savininkams.
+Teisių turėtojai: atidarykite issue adresu [github.com/Holdi601/3DHeat-CS2/issues](https://github.com/Holdi601/3DHeat-CS2/issues) - atsakome
+greitai ir paprašius pašaliname bet ką.
 
 ## Dalis 3DHeat {#part-of-3dheat}
 
@@ -114,6 +119,6 @@ Svetainės, siūlančios demo, dažnai savo sąlygose draudžia automatinį atsi
 
 ## Licencija {#licence}
 
-MIT – žr. [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE),
+MIT – žr. [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE)
 ir [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md)
-dėl trečiųjų šalių paketų ir to, ko reikalauja žaidimai, kuriuos jis skaito.
+dėl trečiųjų šalių paketų.

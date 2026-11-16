@@ -90,9 +90,14 @@ rezultāts seko raundu uzvarētājiem, katras puses nogalināšanas ir otras pus
 
 ## Ko tam norādīt {#what-to-point-it-at}
 
-Savu maču demo, demo, ko pats lejupielādējāt no turnīru vietnes, vai demo no API, kam jums ir piekļuve. Demo ir ieraksts, kura saturs
-pieder tā izdevējam un organizatoriem: izmanto to, kas iznāk, savai analīzei, un nepārdaliet demo vai no tiem atvasinātus datus. Vietnes, kas
-piedāvā demo, bieži aizliedz automātisku lejupielādi savos noteikumos, tāpēc rīks nolasa demo no diska un nelejupielādē nevienu.
+Savu maču demo, demo, ko pats lejupielādējāt no turnīru vietnes, vai demo no API, kam jums ir piekļuve. Demo ir ieraksts, kura saturs pieder
+tā izdevējam un organizatoriem: izmanto to, kas iznāk, savai analīzei, un nepārdaliet demo vai no tiem atvasinātus datus. Rīks nolasa demo
+ierakstus no diska un neko nelejupielādē, un nekas no spēles netiek izplatīts kopā ar to: nekādi spēles faili, nekāds spēles kods, nekādi
+DLL.
+
+3DHeat CS2 nav saistīts ar Valve un nav Valve apstiprināts. Counter-Strike 2 un saistītie nosaukumi un preču zīmes pieder to īpašniekiem.
+Tiesību īpašnieki: atveriet issue vietnē [github.com/Holdi601/3DHeat-CS2/issues](https://github.com/Holdi601/3DHeat-CS2/issues) - mēs
+atbildam ātri un pēc pieprasījuma noņemam jebko.
 
 ## Daļa no 3DHeat {#part-of-3dheat}
 
@@ -115,6 +120,6 @@ piedāvā demo, bieži aizliedz automātisku lejupielādi savos noteikumos, tāp
 
 ## Licence {#licence}
 
-MIT - skat. [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE),
+MIT - skat. [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE)
 un [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md)
-trešo pušu pakotnēm un to, ko prasa spēles, ko tas nolasa.
+par trešo pušu pakotnēm.

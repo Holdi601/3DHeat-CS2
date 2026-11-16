@@ -3,7 +3,7 @@ title: "Accueil"
 nav_order: 1
 lang: "fr"
 source: index.md
-source_hash: "251966f8d45d"
+source_hash: "a4f2cda08a58"
 nav_exclude: true
 search_exclude: true
 permalink: /fr/
@@ -99,11 +99,15 @@ de chaque camp sont les morts de l'autre, et chaque manche commence à cinq cont
 ## À quoi le diriger {#what-to-point-it-at}
 
 Les démos de vos propres parties, les démos que vous avez téléchargées à la main depuis un site de tournoi,
-ou les démos d'une API à laquelle vous avez accès. Une démo est un enregistrement dont le contenu
-appartient à son éditeur et à ses organisateurs : utilisez ce qui en sort pour votre propre
-analyse, et ne redistribuez ni les démos ni les données qui en sont tirées. Les sites qui
-proposent des démos interdisent souvent, dans leurs conditions, le téléchargement automatisé ; c'est pourquoi
-l'outil lit les démos depuis le disque et n'en télécharge aucune.
+ou les démos d'une API à laquelle vous avez accès. Une démo est un enregistrement dont le contenu appartient
+à son éditeur et à ses organisateurs : utilisez ce qui en sort pour votre propre analyse, et ne redistribuez
+ni les démos ni les données qui en sont tirées. L'outil lit les démos depuis le disque et n'en télécharge
+aucune, et rien du jeu n'est livré avec lui : aucun fichier du jeu, aucun code du jeu, aucune DLL.
+
+3DHeat CS2 n'est ni affilié à Valve ni approuvé par Valve. Counter-Strike 2 ainsi que les noms et marques
+associés appartiennent à leurs propriétaires. Ayants droit : ouvrez un ticket sur
+[github.com/Holdi601/3DHeat-CS2/issues](https://github.com/Holdi601/3DHeat-CS2/issues) - nous répondons
+rapidement et retirons tout élément sur demande.
 
 ## Partie de 3DHeat {#part-of-3dheat}
 
@@ -136,6 +140,6 @@ dépôt, ses versions et sa licence :
 
 ## Licence {#licence}
 
-MIT - voir [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE),
+MIT - voir [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE)
 et [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md)
-pour les paquets tiers et ce qu'imposent les jeux qu'il lit.
+pour les paquets tiers.

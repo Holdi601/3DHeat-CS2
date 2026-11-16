@@ -3,7 +3,7 @@ title: Desenvolvimento
 nav_order: 15
 lang: "pt"
 source: development.md
-source_hash: "bcc524eebb27"
+source_hash: "b51f038901ee"
 nav_exclude: true
 search_exclude: true
 ---
@@ -126,7 +126,7 @@ de posição têm chão por baixo, com uma altura mediana acima dele inferior a 
 
 ## Licença {#licence}
 
-MIT. Pacotes de terceiros e o que os jogos exigem:
+MIT. Pacotes de terceiros:
 [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md).
 As demos e os mapas nunca fazem parte do repositório; o seu `.gitignore` mantém fora, pelo tipo,
 `*.dem`, `*.parquet`, `*.match.json`, `*.glb` e similares.

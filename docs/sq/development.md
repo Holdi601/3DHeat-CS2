@@ -3,7 +3,7 @@ title: "Zhvillimi"
 nav_order: 15
 lang: "sq"
 source: development.md
-source_hash: "bcc524eebb27"
+source_hash: "b51f038901ee"
 nav_exclude: true
 search_exclude: true
 ---
@@ -133,7 +133,7 @@ vete, me një lartësi mediane mbi të nën 5 njësi
 
 ## Licenca {#licence}
 
-MIT. Paketat e palëve të treta dhe çfarë kërkojnë lojërat:
+MIT. Paketat e palëve të treta:
 [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md).
 Demot dhe hartat nuk janë kurrë pjesë e depos; `.gitignore` i saj mban jashtë
 `*.dem`, `*.parquet`, `*.match.json`, `*.glb` e të ngjashme sipas llojit.

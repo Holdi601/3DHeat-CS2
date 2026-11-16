@@ -3,7 +3,7 @@ title: "Sviluppo"
 nav_order: 15
 lang: "it"
 source: development.md
-source_hash: "bcc524eebb27"
+source_hash: "b51f038901ee"
 nav_exclude: true
 search_exclude: true
 ---
@@ -116,7 +116,7 @@ sotto di sé, con un'altezza mediana sopra di esso inferiore a 5 unità ([Esport
 
 ## Licenza {#licence}
 
-MIT. Pacchetti di terze parti e ciò che i giochi richiedono:
+MIT. Pacchetti di terze parti:
 [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md).
 I demo e le mappe non fanno mai parte del repository; il suo `.gitignore` tiene fuori per tipo `*.dem`, `*.parquet`,
 `*.match.json`, `*.glb` e simili.

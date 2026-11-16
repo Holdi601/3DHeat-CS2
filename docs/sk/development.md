@@ -3,7 +3,7 @@ title: Vývoj
 nav_order: 15
 lang: "sk"
 source: development.md
-source_hash: "bcc524eebb27"
+source_hash: "b51f038901ee"
 nav_exclude: true
 search_exclude: true
 ---
@@ -131,7 +131,7 @@ menším ako 5 jednotiek ([Export mapy](map-export.md#the-check-that-the-frame-i
 
 ## Licencia {#licence}
 
-MIT. Balíky tretích strán a to, čo vyžadujú hry:
+MIT. Balíky tretích strán:
 [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md).
 Dema a mapy nikdy nie sú súčasťou repozitára; jeho `.gitignore` ich podľa typu
 vynechá: `*.dem`, `*.parquet`, `*.match.json`, `*.glb` a podobné.

@@ -100,12 +100,18 @@ u kull rawnd jibda ħamsa kontra ħamsa.
 
 ## Lejn xiex tindirizzah {#what-to-point-it-at}
 
-Id-demos tal-partiti tiegħek stess, demos li niżżilt b'idejk minn sit ta' tournament,
-jew demos minn API li għandek aċċess għalih. Demo hija reġistrazzjoni li l-kontenut tagħha
-jappartjeni lill-pubblikatur u lill-organizzaturi tagħha: uża dak li joħroġ għall-
-analiżi tiegħek stess, u tiddistribwixxix demos jew dejta derivata minnhom. Siti li
-joffru demos spiss jipprojbixxu t-tniżżil awtomatiku fit-termini tagħhom, u huwa għalhekk li
-l-għodda taqra demos mid-disk u ma tniżżel xejn.
+Id-demos tal-partiti tiegħek stess, demos li niżżilt b'idejk minn sit ta' tournament, jew
+demos minn API li għandek aċċess għalih. Demo hija reġistrazzjoni li l-kontenut tagħha
+jappartjeni lill-pubblikatur u lill-organizzaturi tagħha: uża dak li joħroġ għall- analiżi
+tiegħek stess, u tiddistribwixxix demos jew dejta derivata minnhom. L-għodda taqra d-demos
+mid-diska u ma tniżżel l-ebda waħda, u xejn mil-logħba ma jitqassam magħha: l-ebda fajl
+tal-logħba, l-ebda kodiċi tal-logħba, l-ebda DLL.
+
+3DHeat CS2 mhuwiex affiljat ma' Valve u mhuwiex approvat minn Valve. Counter-Strike 2 u
+l-ismijiet u t-trademarks relatati jappartjenu lis-sidien tagħhom. Detenturi tad-drittijiet:
+iftħu issue fuq
+[github.com/Holdi601/3DHeat-CS2/issues](https://github.com/Holdi601/3DHeat-CS2/issues) -
+nwieġbu malajr u nneħħu kull ħaġa fuq talba.
 
 ## Parti minn 3DHeat {#part-of-3dheat}
 
@@ -129,6 +135,6 @@ repożitorju tagħha bir-rilaxxi u l-liċenzja tagħha:
 
 ## Liċenzja {#licence}
 
-MIT - ara [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE),
+MIT - ara [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE)
 u [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md)
-għall-pakketti ta' terzi u dak li l-logħob li jaqra jobbligaw.
+għall-pakketti ta' terzi.

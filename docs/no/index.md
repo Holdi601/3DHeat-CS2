@@ -3,7 +3,7 @@ title: Hjem
 nav_order: 1
 lang: "no"
 source: index.md
-source_hash: "251966f8d45d"
+source_hash: "a4f2cda08a58"
 nav_exclude: true
 search_exclude: true
 permalink: /no/
@@ -98,9 +98,14 @@ fem mot fem.
 
 Dine egne kampers demoer, demoer du lastet ned for hånd fra en turneringsside, eller demoer fra et API du har
 tilgang til. En demo er en opptak hvis innhold tilhører utgiveren og arrangørene: bruk det som kommer ut til
-din egen analyse, og ikke videredistribuer demoer eller data avledet fra dem. Sider som tilbyr demoer forbyr
-ofte automatisk nedlasting i vilkårene sine, og det er grunnen til at verktøyet leser demoer fra disken og
-ikke henter noen.
+din egen analyse, og ikke videredistribuer demoer eller data avledet fra dem. Verktøyet leser demoer fra
+disken og laster ikke ned noen, og ingenting fra spillet følger med: ingen spillfiler, ingen spillkode, ingen
+DLL-er.
+
+3DHeat CS2 er ikke tilknyttet eller godkjent av Valve. Counter-Strike 2 og tilhørende navn og varemerker
+tilhører sine eiere. Rettighetshavere: opprett en sak på
+[github.com/Holdi601/3DHeat-CS2/issues](https://github.com/Holdi601/3DHeat-CS2/issues) - vi svarer raskt og
+fjerner hva som helst på forespørsel.
 
 ## Del av 3DHeat {#part-of-3dheat}
 
@@ -133,6 +138,6 @@ egne utgivelser og egen lisens:
 
 ## Lisens {#licence}
 
-MIT - se [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE),
+MIT - se [`LICENSE`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSE)
 og [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md)
-for tredjepartspakkene og hva spillene det leser krever.
+for tredjepartspakkene.

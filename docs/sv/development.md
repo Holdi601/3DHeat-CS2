@@ -3,7 +3,7 @@ title: "Utveckling"
 nav_order: 15
 lang: "sv"
 source: development.md
-source_hash: "bcc524eebb27"
+source_hash: "b51f038901ee"
 nav_exclude: true
 search_exclude: true
 ---
@@ -124,6 +124,6 @@ under 5 enheter ([Kartexport](map-export.md#the-check-that-the-frame-is-right)).
 
 ## Licens {#licence}
 
-MIT. Tredjepartspaket och vad spelen kräver: [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md).
+MIT. Tredjepartspaket: [`LICENSES.md`](https://github.com/Holdi601/3DHeat-CS2/blob/main/LICENSES.md).
 Demos och kartor ingår aldrig i arkivet; dess `.gitignore` håller `*.dem`, `*.parquet`,
 `*.match.json`, `*.glb` och liknande borta, efter typ.
