@@ -35,17 +35,31 @@ installed game with the command-line build of Source2Viewer
 
 ## Quick start
 
+You need Windows, Python 3.10 or later ("Add python.exe to PATH" ticked in its
+installer) and CS2 demos (`.dem`; matches you download in the game land in
+`game\csgo\replays` in the CS2 install folder); for the map also Counter-Strike 2
+installed and Source2Viewer's command line build; no Git.
 New to the command line? Read [Before you start](before-you-start.md) first.
 
+Download the release, <https://github.com/Holdi601/3DHeat-CS2/archive/refs/tags/v1.0.3.zip>,
+unpack it and open PowerShell in the unpacked folder (`3DHeat-CS2-1.0.3`); run
+every command from there:
+
 ```bash
-pip install -r requirements.txt
-python -m heat3d_cs2 demos <demo files or folders> -o out   # every match in them
-python -m heat3d_cs2 map <map> -o out/<map>/<map>.glb       # the map from the installed game
-python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # a match's scoreboard as text
+python -m pip install -r requirements.txt
+python -m heat3d_cs2 demos "C:\Program Files (x86)\Steam\steamapps\common\Counter-Strike Global Offensive\game\csgo\replays" -o out
+python -m heat3d_cs2 map <map> -o out\<map>\<map>.glb      # the map from the installed game
+python -m heat3d_cs2 scoreboard out\<map>\<match>.3dheat   # a match's scoreboard as text
 ```
 
-You should see `1 match(es), 1 at a time ...` and then one line per match
-(see [Commands](commands.md#what-is-printed)).
+For `map`, download the **CLI** build from the
+[ValveResourceFormat releases](https://github.com/ValveResourceFormat/ValveResourceFormat/releases),
+unpack it anywhere and add `--source2viewer "<folder>\Source2Viewer-CLI.exe"`
+(or put it on `PATH`; see [Installing](installing.md)).
+
+You should see `<n> match(es), <n> at a time` and then one line per match
+(see [Commands](commands.md#what-is-printed)). A folder of a few hundred demos
+takes minutes; matches already written are skipped.
 
 `demos` writes, per match, one file into a folder named after the map:
 `out/<map>/<match>.3dheat`, a [`.3dheat` container](output-container.md) - the
@@ -60,7 +74,18 @@ It holds these members; `--loose` writes them as separate files instead:
 
 `map` writes `<map>.glb`: the map's collision mesh - floors, walls, boxes,
 without decoration - split into ground and structure, in the same frame and
-units as the tables, so it lies exactly under the heatmap (Background / level panel).
+units as the tables, so it lies exactly under the heatmap.
+
+Then open the files in the [3DHeat viewer](https://github.com/Holdi601/3DHeat#quick-start):
+download it (**Code -> Download ZIP**, unpack), double-click `start.bat` (it
+offers to install Node.js when it is missing and opens `http://127.0.0.1:5273`),
+then **Source -> Files...** and pick the `.3dheat` files of one map (or drop them
+on the Source panel) for the heatmap; for rounds, kills and the scoreboard, the
+**Match** tab's **Load match files...** and the same files. The map goes in with
+**Background / level -> 3D model...**. Everything stays on your machine.
+
+When a new release is out, the tool says so when it starts and offers to
+update the folder from the release.
 
 ## Map of this documentation
 

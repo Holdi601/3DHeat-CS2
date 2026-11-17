@@ -3,7 +3,7 @@ title: "Startseite"
 nav_order: 1
 lang: "de"
 source: index.md
-source_hash: "a4f2cda08a58"
+source_hash: "8c6d2b9b45a9"
 nav_exclude: true
 search_exclude: true
 permalink: /de/
@@ -37,17 +37,32 @@ Karten aus dem installierten Spiel mit der Kommandozeilen-Version von Source2Vie
 
 ## Schnellstart {#quick-start}
 
+Du brauchst Windows, Python 3.10 oder neuer (im Installer "Add python.exe to PATH"
+ankreuzen) und CS2-Demos (`.dem`; Matches, die du im Spiel herunterlädst, landen in
+`game\csgo\replays` im Installationsordner von CS2); für die Karte außerdem das
+installierte Counter-Strike 2 und die Kommandozeilen-Version von Source2Viewer; Git ist
+nicht nötig.
 Neu in der Kommandozeile? Lies zuerst [Bevor du anfängst](before-you-start.md).
 
+Lade das Release herunter, <https://github.com/Holdi601/3DHeat-CS2/archive/refs/tags/v1.0.3.zip>,
+entpacke es und öffne PowerShell im entpackten Ordner (`3DHeat-CS2-1.0.3`); führe jeden
+Befehl von dort aus:
+
 ```bash
-pip install -r requirements.txt
-python -m heat3d_cs2 demos <demo files or folders> -o out   # every match in them
-python -m heat3d_cs2 map <map> -o out/<map>/<map>.glb       # the map from the installed game
-python -m heat3d_cs2 scoreboard out/<map>/<match>.3dheat    # a match's scoreboard as text
+python -m pip install -r requirements.txt
+python -m heat3d_cs2 demos "C:\Program Files (x86)\Steam\steamapps\common\Counter-Strike Global Offensive\game\csgo\replays" -o out
+python -m heat3d_cs2 map <map> -o out\<map>\<map>.glb      # die Karte aus dem installierten Spiel
+python -m heat3d_cs2 scoreboard out\<map>\<match>.3dheat   # das Scoreboard eines Matches als Text
 ```
 
-Du solltest `1 match(es), 1 at a time ...` sehen und dann eine Zeile pro Match
-(siehe [Befehle](commands.md#what-is-printed)).
+Für `map` lade die **CLI**-Version aus den
+[ValveResourceFormat-Releases](https://github.com/ValveResourceFormat/ValveResourceFormat/releases)
+herunter, entpacke sie irgendwohin und hänge `--source2viewer "<Ordner>\Source2Viewer-CLI.exe"`
+an (oder lege sie auf den `PATH`; siehe [Installation](installing.md)).
+
+Du solltest `<n> match(es), <n> at a time` sehen und dann eine Zeile pro Match
+(siehe [Befehle](commands.md#what-is-printed)). Ein Ordner mit ein paar hundert Demos
+dauert Minuten; schon geschriebene Matches werden übersprungen.
 
 `demos` schreibt pro Match eine Datei in einen Ordner, der nach der Karte benannt ist:
 `out/<map>/<match>.3dheat`, ein [`.3dheat`-Container](output-container.md) - das Ein-Datei-pro-Match-Format
@@ -62,7 +77,18 @@ Er enthält diese Teile; `--loose` schreibt sie stattdessen als einzelne Dateien
 
 `map` schreibt `<map>.glb`: das Kollisionsnetz der Karte - Böden, Wände, Kisten, ohne Dekoration - aufgeteilt
 in Boden und Bauwerk, im selben Rahmen und in denselben Einheiten wie die Tabellen, sodass es genau unter der
-Heatmap liegt (Panel „Hintergrund / Level“).
+Heatmap liegt.
+
+Dann öffne die Dateien im [3DHeat-Viewer](https://github.com/Holdi601/3DHeat#quick-start):
+herunterladen (**Code -> Download ZIP**, entpacken), `start.bat` doppelklicken (es bietet
+an, Node.js zu installieren, wenn es fehlt, und öffnet `http://127.0.0.1:5273`), dann
+**Quelle -> Dateien...** und die `.3dheat`-Dateien einer Karte wählen (oder sie auf das
+Quelle-Panel ziehen) für die Heatmap; für Runden, Kills und das Scoreboard im **Match**-Tab
+**Match-Dateien laden...** und dieselben Dateien. Die Karte kommt über
+**Hintergrund / Level -> 3D-Modell...** hinein. Alles bleibt auf deinem Rechner.
+
+Wenn ein neues Release erscheint, sagt das Werkzeug es beim Start und bietet an, den
+Ordner aus dem Release zu aktualisieren.
 
 ## Karte dieser Dokumentation {#map-of-this-documentation}
 

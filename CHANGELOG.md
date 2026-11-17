@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.0.3
 
 - The table says the outcome on every row, as the viewer's outcome contract has it: `matchWon` (0/1, the row's
   team won the match, where the recording shows the end) and `roundEndReason` (`elimination`, `bomb`, `defuse`,
@@ -10,6 +10,7 @@
 - Documentation: a "Before you start" page for newcomers, a generated command and column reference
   (`tools/gen_docs_reference.py`), the release checklist (`docs/maintaining.md`), and made-up names in
   every example.
+- README: a quick start for new users.
 
 ## Docs
 

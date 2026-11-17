@@ -23,6 +23,50 @@ and output, with examples.
 
 ![demos: from demo files to one file a match](docs/assets/img/pipeline.svg)
 
+## Quick start for new users
+
+You need: Windows, [Python](https://www.python.org/downloads/) 3.10 or later
+("Add python.exe to PATH" ticked in its installer) and CS2 demos (`.dem`):
+matches you download in the game land in `game\csgo\replays` in the CS2
+install folder. Only for the map: Counter-Strike 2 installed and
+Source2Viewer's command line build (below). No Git is needed.
+
+1. Download the release,
+   <https://github.com/Holdi601/3DHeat-CS2/archive/refs/tags/v1.0.3.zip>, and
+   unpack it. Open PowerShell in the unpacked folder (`3DHeat-CS2-1.0.3`) and
+   install what it needs; run every command from that folder:
+
+   ```bash
+   python -m pip install -r requirements.txt
+   ```
+
+2. Convert the demos (files or folders), and if you like the map:
+
+   ```bash
+   python -m heat3d_cs2 demos "C:\Program Files (x86)\Steam\steamapps\common\Counter-Strike Global Offensive\game\csgo\replays" -o out
+   python -m heat3d_cs2 map <map> -o out\<map>\<map>.glb
+   ```
+
+   For `map`, download the **CLI** build from the
+   [ValveResourceFormat releases](https://github.com/ValveResourceFormat/ValveResourceFormat/releases),
+   unpack it anywhere and add `--source2viewer "<folder>\Source2Viewer-CLI.exe"`
+   (or put it on `PATH`).
+3. It prints `<n> match(es), <n> at a time` and then one line per match. The output is one `out\<map>\<match>.3dheat` per match (table,
+   match document and everything else of the demo in one file), and
+   `<map>.glb` for a map. A folder of a few hundred demos takes minutes;
+   matches already written are skipped.
+4. Open it in the [3DHeat viewer](https://github.com/Holdi601/3DHeat#quick-start):
+   download the viewer (**Code -> Download ZIP**, unpack) and double-click
+   `start.bat`; it offers to install [Node.js](https://nodejs.org/) when it is
+   missing and opens Chrome or Edge at `http://127.0.0.1:5273`. There,
+   **Source -> Files...** and pick the `.3dheat` files of one map (or drop them
+   on the Source panel) for the heatmap; for rounds, kills and the scoreboard,
+   the **Match** tab's **Load match files...** and the same files. The map
+   goes in with **Background / level -> 3D model...**.
+
+When a new release is out, the tool says so when it starts and offers to
+update the folder from the release (`python -m heat3d_update` does the same).
+
 ## Install
 
 New to the command line? Read [Before you start](https://holdi601.github.io/3DHeat-CS2/before-you-start.html) first.
