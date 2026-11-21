@@ -23,6 +23,17 @@ and output, with examples.
 
 ![demos: from demo files to one file a match](docs/assets/img/pipeline.svg)
 
+## The standalone program
+
+No Python needed: download the file for your system (Windows, Linux incl. Steam Deck) from the
+[latest release](https://github.com/Holdi601/3DHeat-CS2/releases/latest), check it against `SHA256SUMS`,
+unpack it and start `heat3d-cs2`. Its window finds your CS2 install, says what is missing (the game,
+Source2Viewer-CLI for maps, disk space), lists the maps that are new or changed since the last export and
+exports the ones you pick into the 3DHeat levels folder, converts demos, writes the catalogue and the model
+pack, and asks before it updates itself. `heat3d-cs2 --help` lists its commands; `heat3d-cs2 demos ...`
+runs the commands below without Python. The 3DHeat app's Extractors panel can install and update it for you.
+See [Installing](https://holdi601.github.io/3DHeat-CS2/installing.html).
+
 ## Quick start for new users
 
 You need: Windows, [Python](https://www.python.org/downloads/) 3.10 or later

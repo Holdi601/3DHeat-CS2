@@ -101,3 +101,7 @@ __pycache__/
 *.log
 .DS_Store
 Thumbs.db
+
+# Standalone builds.
+build/
+dist-standalone/

@@ -16,12 +16,12 @@ Every `python -m heat3d_cs2 ...` first asks whether a newer release is out,
 before it even reads its arguments:
 
 1. The installed version is the file `VERSION` in the repository's root
-   (`0` if it cannot be read).
+   (in a pip install, the package's own version).
 2. The newest release is asked of
    `https://api.github.com/repos/Holdi601/3DHeat-CS2/releases/latest`, with a
    **5 second** timeout. The answer is cached for **6 hours** in
-   `%LOCALAPPDATA%\3DHeat\update-check-3DHeat-CS2.json` (on systems without
-   `LOCALAPPDATA`: `~/.cache/3DHeat/update-check-3DHeat-CS2.json`), so the
+   `%LOCALAPPDATA%\3DHeat\update-check\3DHeat-CS2.json` (elsewhere
+   `~/.local/share/3dheat/update-check/3DHeat-CS2.json`), so the
    request is made at most every six hours. "Nothing released yet" (HTTP 404)
    is cached like an answer. Offline, rate-limited, behind a proxy - any other
    failure - the tool carries on with the version it has, and nothing is
@@ -32,15 +32,24 @@ before it even reads its arguments:
 When a newer release is out, it says so on the error stream:
 
 ```text
-[heat3d_cs2] 3DHeat CS2 1.1.0 is out (this is 1.0.1). https://github.com/Holdi601/3DHeat-CS2/releases/tag/v1.1.0
-Update now? [Y/n]
+[heat3d-cs2] 3DHeat CS2 1.2.0 is out (this is 1.1.0). https://github.com/Holdi601/3DHeat-CS2/releases/tag/v1.2.0
+  <the release's notes>
+[U]pdate now, [L]ater, [S]kip this version? [u/L/s]
 ```
 
 - At a terminal (both the input and the error stream are terminals) it asks.
-  Enter, `y`, `yes`, `j` or `ja` updates; anything else carries on unchanged.
-  After an update **the same command runs again**, on the new code.
-- Without a terminal - a scheduled run, a pipe - it only prints where to
-  update and carries on: `Run python -m heat3d_update in <folder> to update.`
+  `u` updates, Enter or `l` carries on unchanged, `s` skips this version (the
+  next newer one is announced again). After an update **the same command runs
+  again**, on the new code.
+- Without a terminal - a scheduled run, a pipe - it only says so and carries on.
+- It updates without asking only when you chose that: `--auto-update` on the
+  standalone program, *Update automatically* in its window, or
+  `HEAT3D_AUTO_UPDATE=1`. The choice and a skipped version are kept in
+  `%LOCALAPPDATA%\3DHeat\extractors\settings\heat3d-cs2.json`
+  (`~/.local/share/3dheat/extractors/settings/heat3d-cs2.json` elsewhere).
+- The standalone program updates itself from the release's archive for its
+  system, after checking it against `SHA256SUMS`; `heat3d-cs2 --update` does it
+  now.
 
 `HEAT3D_NO_UPDATE=1` switches the check off. Any value other than empty,
 `0`, `false` or `no` counts as on.

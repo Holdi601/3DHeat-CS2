@@ -7,6 +7,37 @@ nav_order: 3
 
 New to the command line? Read [Before you start](before-you-start.md) first.
 
+## The standalone program (no Python needed)
+
+Each [release](https://github.com/Holdi601/3DHeat-CS2/releases/latest) has a
+ready-to-run program for Windows (`heat3d-cs2-<version>-windows-x64.zip`) and
+Linux (`...-linux-x64.tar.gz`, also for Steam Deck), with a `SHA256SUMS` file
+to check the download. Unpack it anywhere and start `heat3d-cs2`.
+
+Started without arguments it opens a window that:
+
+- finds your Counter-Strike 2 install (Steam on Windows and Linux, also
+  flatpak and Steam Deck), or lets you choose its folder;
+- says what is missing: the game, Source2Viewer-CLI (maps, the catalogue and
+  the model pack need it, demos do not; see [Map export](map-export.md)),
+  free disk space;
+- lists the install's maps as new, changed by a game update, exported by an
+  older version, or up to date, and exports the ones you pick, one at a time,
+  into the 3DHeat levels folder (`HEAT3D_LEVELS`, by default
+  `%LOCALAPPDATA%\3DHeat\levels` on Windows and `~/.local/share/3dheat/levels`
+  elsewhere), as `cs2/<map>.glb` with `cs2/<map>.layouts.json` beside it;
+- converts a folder of demos, and writes the catalogue and the model pack;
+- checks for updates and asks before installing one, unless you tick
+  *Update automatically*.
+
+The same program runs every command below: `heat3d-cs2 demos <demos> -o <folder>`,
+`heat3d-cs2 map <map> -o <map>.glb`. For scripts: `heat3d-cs2 status --json`
+reports the maps' state, `heat3d-cs2 extract --new` exports only the new and
+`heat3d-cs2 --check --json` what is found and missing.
+The 3DHeat app's Extractors panel installs, updates and starts it for you.
+
+## From the source (Python)
+
 3DHeat CS2 is a Python package run from its own folder. There is nothing to
 build and no installer; it needs Python, four packages (plus pytest for the tests), and - only for the map
 export - Counter-Strike 2 installed and Source2Viewer's command-line build.

@@ -41,7 +41,10 @@ SOURCE2VIEWER_URL = "https://github.com/ValveResourceFormat/ValveResourceFormat/
 
 
 def steam_libraries() -> list[Path]:
-    roots: list[Path] = []
+    from .app import paths
+
+    # Every Steam this user has (registry, flatpak, Steam Deck, macOS), then the usual folders.
+    roots: list[Path] = list(paths.steam_libraries())
     for base in STEAM_DEFAULTS:
         base = Path(base).expanduser()
         config = base / "config" / "libraryfolders.vdf"

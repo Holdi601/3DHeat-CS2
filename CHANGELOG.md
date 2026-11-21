@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.1.0
+
+- A standalone program for Windows and Linux (no Python needed), built by CI with a `SHA256SUMS` file. Without
+  arguments it opens a window: what is found and what is missing (install, Source2Viewer-CLI, disk space), the
+  levels folder, the install's maps as new / changed by a game update / exported by an older version / up to date,
+  export of the picked ones one at a time (`cs2/<map>.glb` and its layouts), demo conversion, the catalogue, the
+  model pack, and updates.
+- Each exported map is recorded in `<levels>/cs2/.heat3d-extract.json` (extractor version, game build, size and
+  SHA-256 of its `.vpk`), so maps a game update adds are found and only those exported: `status --json`,
+  `extract --new` / `--changed` / `--outdated` / `<map>...`, `--progress-json`.
+- Updates ask first (update now / later / skip this version) unless automatic updates were chosen
+  (`--auto-update`, the window's checkbox, or `HEAT3D_AUTO_UPDATE=1`).
+- The install is also found in Steam libraries on Linux (native, flatpak, Steam Deck) and through the registry on
+  Windows. A `pyproject.toml` makes `pip install .` possible.
+
 ## 1.0.7
 
 - `models`: the knives, grenades and health shot lie like the guns, long side along x and the business end (blade

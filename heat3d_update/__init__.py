@@ -63,6 +63,13 @@ def installed_version() -> str:
     try:
         return (ROOT / "VERSION").read_text(encoding="utf-8").strip()
     except OSError:
+        pass
+    # A pip install has no VERSION file; the package's own version stands in.
+    try:
+        from heat3d_cs2 import __version__
+
+        return str(__version__)
+    except ImportError:
         return "0"
 
 
@@ -229,39 +236,32 @@ def _sync(src: Path, dst: Path) -> None:
 # --------------------------------------------------------------------- startup
 
 
+#: The standalone app's id (heat3d_cs2/app/spec.py); its settings file holds "auto_update" and "skip_version".
+TOOL_ID = "heat3d-cs2"
+
+
+def target():
+    ensure_importable()
+    from heat3d_cs2.app import update as app_update
+
+    return app_update.Target(REPO, TOOL_ID, "3DHeat CS2", installed_version(), apply_source=apply)
+
+
 def startup(tool: str, *, ask: bool | None = None) -> None:
     """
-    Check for a newer release when a tool starts; say so, and offer to update.
+    Check for a newer release when a tool starts; say so with its notes, and
+    ask: update now, later, or skip this version. Updates without asking only
+    when the user chose automatic updates (`--auto-update`, the window's
+    checkbox, or HEAT3D_AUTO_UPDATE=1); see heat3d_cs2/app/update.py.
 
     `ask` defaults to whether there is someone at a terminal to answer. When
     there is not - a scheduled run, a pipe - the notice is printed and the tool
     carries on unchanged. After an update the same command is started again, so
     what was asked for runs on the new version.
     """
-    release = available()
-    if release is None:
-        return
-    print(
-        f"[{tool}] 3DHeat CS2 {release.version} is out (this is {installed_version()}). {release.url}",
-        file=sys.stderr,
-    )
-    if ask is None:
-        ask = sys.stdin.isatty() and sys.stderr.isatty()
-    if not ask:
-        print(f"[{tool}] Run `python -m heat3d_update` in {ROOT} to update.", file=sys.stderr)
-        return
-    try:
-        answer = input("Update now? [Y/n] ").strip().lower()
-    except EOFError:
-        return
-    if answer not in ("", "y", "yes", "j", "ja"):
-        return
-    try:
-        print(apply(release), file=sys.stderr)
-    except RuntimeError as e:
-        print(f"[{tool}] Update not applied: {e}", file=sys.stderr)
-        return
-    restart()
+    from heat3d_cs2.app import update as app_update
+
+    app_update.startup(target(), ask=ask)
 
 
 def restart() -> None:
