@@ -197,8 +197,9 @@ def build_catalog(csgo: Path, tool: Path, vdata_text: str | None = None) -> tupl
         try:
             vdata_text = _s2v_text(tool, pak, "scripts/weapons.vdata_c")
         except RuntimeError:
-            print("note: this Source2Viewer cannot read the game's weapons.vdata (update Source2Viewer, or pass --vdata "
-                  "<decompiled weapons.vdata>); the catalogue is written without prices, damage and the other numbers")
+            print("note: this Source2Viewer cannot read the game's weapons.vdata (Source2Viewer 21.1 or newer reads it, "
+                  "or pass --vdata <decompiled weapons.vdata>); written without prices, damage and the other numbers, "
+                  "and without the knives', grenades' and kit's models")
             vdata_text = ""
     vdata = weapons_vdata(vdata_text)
     name_of = lambda tok: loc.get(str(tok or "").lstrip("#").lower(), "")  # noqa: E731
@@ -370,8 +371,11 @@ def unit_parts(kind: str, meshes: list) -> dict:
     if kind == "person":
         keep = [(v, f) for n, v, f in meshes if not _SKIP_AGENT.search(n.rsplit(".", 1)[-1])]
     else:
-        # A weapon's world model: everything; the viewer's frame puts the barrel along x.
-        keep = [(v, f) for _, v, f in meshes]
+        # A weapon's world model: everything, but one body where it has two of the same shape (`body_legacy` and
+        # `body_hd`; the legacy one is nearer the triangle budget); the viewer's frame puts the barrel along x.
+        groups = {n.rsplit(".", 1)[-1] for n, _, _ in meshes}
+        drop = "body_hd" if {"body_hd", "body_legacy"} <= groups else None
+        keep = [(v, f) for n, v, f in meshes if n.rsplit(".", 1)[-1] != drop]
     v, f = merge(keep)
     if not len(f):
         return {}
@@ -407,7 +411,8 @@ def run_catalog(game: str | None, out: str | None, s2v: str | None, vdata: str |
 def run_models(game: str | None, out: str | None, s2v: str | None, only: list[str] | None, force: bool) -> int:
     csgo = find_game(game)
     tool = find_source2viewer(s2v)
-    items, models = build_catalog(csgo, tool, "")
+    # weapons.vdata names the world model of the knives, grenades and kit too (items_game.txt only the guns').
+    items, models = build_catalog(csgo, tool)
     folder = Path(out) if out else (levels_dir() / "model-packs" / "cs2" if levels_dir() else None)
     if folder is None:
         raise ValueError("no output folder: pass --out or set HEAT3D_LEVELS")

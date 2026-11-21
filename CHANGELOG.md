@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.6
+
+- `catalog` and `models` read the installed game's `weapons.vdata` through Source2Viewer 21.1; `--vdata` stays as an
+  override for older builds.
+- `models`: the AUG, C4 and R8 Revolver, and the knives, grenades and kit (armour, defuser, health shot), whose
+  world models only `weapons.vdata` names: 211 models in all. A weapon's world model is read from one of its two
+  bodies, not both on top of each other.
+
 ## 1.0.5
 
 - `catalog`: every weapon, item and agent of the installed game as `catalog.json` (class, side, numbers; the

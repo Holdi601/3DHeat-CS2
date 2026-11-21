@@ -1,6 +1,6 @@
 import numpy as np
 
-from heat3d_cs2.gear import _resolved, _side, hit_regions, parse_kv, to_frame, weapons_vdata
+from heat3d_cs2.gear import _resolved, _side, hit_regions, parse_kv, to_frame, unit_parts, weapons_vdata
 from heat3d_cs2.modelpack import lods_of, norm_key
 
 
@@ -49,3 +49,10 @@ def test_levels_of_detail_within_budget():
     lods = lods_of({"hull": (v, f)}, "item")
     assert [sum(len(x[1]) for x in lod.values()) <= b for lod, b in zip(lods, (3000, 800, 200))] == [True] * 3
     assert norm_key("T-72B3") == "t72b3"
+
+
+def test_weapon_keeps_one_of_two_bodies():
+    tri = (np.array([[0.0, 0, 0], [0, 1, 0], [0, 0, 1]]), np.array([[0, 1, 2]]))
+    meshes = [("w.body_legacy", *tri), ("w.body_legacy", *tri), ("w.body_hd", *tri)]
+    assert len(unit_parts("weapon", meshes)["hull"][1]) == 2
+    assert len(unit_parts("weapon", [("w.body_hd", *tri)])["hull"][1]) == 1

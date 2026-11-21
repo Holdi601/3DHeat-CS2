@@ -109,8 +109,8 @@ install folder; demos from a tournament site are wherever you saved them.
 | `layouts <names>\|all` | `-o`, `--out` | required | the folder beside the maps' `.glb` (or a `.json` for one map); `all`: every map with a `.glb` there |
 | | `--game`, `--source2viewer` | as `map` | |
 | `catalog` | `-o`, `--out` | `$HEAT3D_LEVELS/cs2` | every weapon, item and agent of the install as `catalog.json` |
-| | `--vdata FILE` | | a decompiled `weapons.vdata`, when the Source2Viewer build cannot read the game's |
-| `models` | `-o`, `--out` | `$HEAT3D_LEVELS/model-packs/cs2` | the agents' and weapons' models as a local model pack |
+| | `--vdata FILE` | | a decompiled `weapons.vdata` to read instead of the game's (for an older Source2Viewer) |
+| `models` | `-o`, `--out` | `$HEAT3D_LEVELS/model-packs/cs2` | the agents', weapons', knives', grenades' and kit's models as a local model pack |
 | | `--only WORD...`, `--force` | | only some units; rewrite units already written |
 | | `--game`, `--source2viewer` | as `map` | (both commands) |
 | `scoreboard <match>` | | | print a match's scoreboard as text, from its `.3dheat` or `.match.json` |
@@ -364,6 +364,11 @@ through Source2Viewer, simplified to three levels of detail, one `.glb` each,
 with `model-pack.json`; an agent's hit capsules are grouped into the game's hit
 groups (head, chest, stomach, arms, legs). The viewer draws them in place of
 its built-in figures.
+
+Both need a Source2Viewer build that reads the installed game's
+`weapons.vdata` (21.1 reads the current one). With an older build, `catalog`
+leaves out the weapons' numbers and `models` the knives, grenades and kit; give
+`catalog --vdata <decompiled weapons.vdata>` instead, or update Source2Viewer.
 
 ```bash
 python -m heat3d_cs2 catalog
