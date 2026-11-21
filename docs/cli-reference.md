@@ -11,14 +11,16 @@ command step by step; this one lists everything exactly as the program has it.
 ## `python -m heat3d_cs2`
 
 ```text
-usage: heat3d_cs2 [-h] {demos,map,scoreboard} ...
+usage: heat3d_cs2 [-h] {demos,map,layouts,scoreboard} ...
 
 CS2 demos and maps for the 3DHeat viewer
 
 positional arguments:
-  {demos,map,scoreboard}
+  {demos,map,layouts,scoreboard}
     demos               demos -> one heatmap table and one match document per match
     map                 a map's collision geometry -> .glb in the demos' frame
+    layouts             a map's bomb sites, buy zones, hostage spots and spawns ->
+                        <map>.layouts.json
     scoreboard          print a match's scoreboard
 
 options:
@@ -61,6 +63,25 @@ positional arguments:
 options:
   -h, --help            show this help message and exit
   -o, --out OUT         .glb to write
+  --game GAME           the CS2 install folder, when Steam does not know it
+  --source2viewer SOURCE2VIEWER
+                        Source2Viewer-CLI executable, when it is not on PATH
+```
+
+## `layouts`
+
+```text
+usage: heat3d_cs2 layouts [-h] -o OUT [--game GAME] [--source2viewer SOURCE2VIEWER]
+                          names [names ...]
+
+positional arguments:
+  names                 maps by name (like de_x) or .vpk path; `all` for every map
+                        with a .glb in the output folder
+
+options:
+  -h, --help            show this help message and exit
+  -o, --out OUT         the folder to write into (beside the maps' .glb), or a .json
+                        for one map
   --game GAME           the CS2 install folder, when Steam does not know it
   --source2viewer SOURCE2VIEWER
                         Source2Viewer-CLI executable, when it is not on PATH

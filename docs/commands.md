@@ -187,6 +187,28 @@ Errors, each printed as `error: ...` with exit code `2`:
 | `Source2Viewer did not export de_x's collision mesh:` followed by the tail of its output | it failed, or wrote no `.glb` |
 | `de_x's collision mesh has nothing but clip brushes` | after leaving out clips and sky nothing was left |
 
+
+## `layouts` - bomb sites, buy zones and spawns
+
+```powershell
+python -m heat3d_cs2 layouts <map> -o out/<map>
+python -m heat3d_cs2 layouts all -o levels/cs2
+```
+
+| Argument | Default | Does |
+|---|---|---|
+| `names` | - | maps by name (like `de_x`) or `.vpk` path; `all` for every map with a `.glb` in the output folder |
+| `-o`, `--out` | required | the folder to write `<map>.layouts.json` into (beside the map's `.glb`), or a `.json` for one map |
+| `--game FOLDER`, `--source2viewer EXE` | as for `map` | |
+
+Each bomb site and buy zone is its outline seen from above, with its floor and height; hostage spots and rescue
+zones on a hostage map; every T (team 1) and CT (team 2) spawn with its heading. Layouts: `competitive`, and
+`wingman` where the map has spawns of its own for it. Printed on success:
+
+```text
+out/de_x/de_x.layouts.json: competitive 4 objectives 30 spawns
+```
+
 ## `scoreboard` - a match as text
 
 ```bash

@@ -106,6 +106,8 @@ install folder; demos from a tournament site are wherever you saved them.
 | `map <name or .vpk>` | `-o`, `--out` | required | the `.glb` to write |
 | | `--game FOLDER` | from Steam | the CS2 install folder |
 | | `--source2viewer EXE` | `HEAT3D_SOURCE2VIEWER`, then `PATH` | the Source2Viewer CLI (this option first, then the variable, then `PATH`) |
+| `layouts <names>\|all` | `-o`, `--out` | required | the folder beside the maps' `.glb` (or a `.json` for one map); `all`: every map with a `.glb` there |
+| | `--game`, `--source2viewer` | as `map` | |
 | `scoreboard <match>` | | | print a match's scoreboard as text, from its `.3dheat` or `.match.json` |
 
 `python -m heat3d_cs2 <command> --help` lists the same. Every option with examples:
@@ -324,6 +326,25 @@ The check that the frame is right is the players standing on it: over a
 match on each map of the current competitive pool, 99.9-100% of player
 samples have ground beneath them, a few centimetres below their feet. The
 same maps mirrored leave well under two thirds over ground.
+
+## Bomb sites, buy zones and spawns
+
+`layouts` reads a map's entities from its `.vpk` the same way and writes
+`<map>.layouts.json` beside its `.glb`: each bomb site and buy zone as its
+outline seen from above with its floor and height (the brush's own shape),
+hostage spots and rescue zones on a hostage map, and every T and CT spawn
+point with its heading. A layout for `competitive`, and for `wingman` where
+the map has spawns of its own for it. Teams are 1 (T) and 2 (CT), in the frame
+the tables and the map are drawn in. The viewer draws them on the map in its
+**Objectives** panel.
+
+```bash
+python -m heat3d_cs2 layouts <map> -o out/<map>
+python -m heat3d_cs2 layouts all -o levels/cs2
+```
+
+A map whose entity file is newer than the Source2Viewer build can read says so
+and is skipped; a newer Source2Viewer reads it.
 
 ## What to point it at
 

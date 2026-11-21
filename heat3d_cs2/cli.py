@@ -131,6 +131,31 @@ def _map(args) -> int:
     return 0
 
 
+def _layouts(args) -> int:
+    from .layouts import build_layouts, write_layouts
+    from .mapexport import find_vpk
+
+    out = Path(args.out)
+    names = list(args.names)
+    if names == ["all"]:
+        # Every map that has a level in the output folder already.
+        names = sorted(p.stem for p in out.glob("*.glb"))
+    failed = 0
+    for name in names:
+        try:
+            find_vpk(name, args.game)
+            doc = build_layouts(name, game=args.game, source2viewer=args.source2viewer, version=_version() or "")
+        except (FileNotFoundError, RuntimeError) as exc:
+            print(f"{name}: {exc}", file=sys.stderr)
+            failed += 1
+            continue
+        target = out if out.suffix.lower() == ".json" and len(names) == 1 else out / f"{doc['level']}.layouts.json"
+        write_layouts(doc, target)
+        counts = ", ".join(f"{l['id']} {len(l['objectives'])} objectives {len(l['spawns'])} spawns" for l in doc["layouts"])
+        print(f"{target}: {counts}")
+    return 1 if names and failed == len(names) else 0
+
+
 def _scoreboard(args) -> int:
     from .stats import scoreboard_text
 
@@ -175,6 +200,12 @@ def main(argv: list[str] | None = None) -> int:
     m.add_argument("--game", help="the CS2 install folder, when Steam does not know it")
     m.add_argument("--source2viewer", help="Source2Viewer-CLI executable, when it is not on PATH")
     m.set_defaults(run=_map)
+    y = sub.add_parser("layouts", help="a map's bomb sites, buy zones, hostage spots and spawns -> <map>.layouts.json")
+    y.add_argument("names", nargs="+", help="maps by name (like de_x) or .vpk path; `all` for every map with a .glb in the output folder")
+    y.add_argument("-o", "--out", required=True, help="the folder to write into (beside the maps' .glb), or a .json for one map")
+    y.add_argument("--game", help="the CS2 install folder, when Steam does not know it")
+    y.add_argument("--source2viewer", help="Source2Viewer-CLI executable, when it is not on PATH")
+    y.set_defaults(run=_layouts)
     s = sub.add_parser("scoreboard", help="print a match's scoreboard")
     s.add_argument("match", help="<match>.3dheat, or <match>.match.json from --loose")
     s.set_defaults(run=_scoreboard)

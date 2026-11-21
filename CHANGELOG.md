@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.4
+
+- `layouts <map>|all -o <folder>`: a map's bomb sites and buy zones (their outlines and heights), hostage spots
+  and rescue zones, and the T and CT spawns, from the map's own entities, as `<map>.layouts.json` beside its
+  `.glb`; `competitive`, and `wingman` where the map has its own spawns for it. The viewer draws them on the map.
+
 ## 1.0.3
 
 - The table says the outcome on every row, as the viewer's outcome contract has it: `matchWon` (0/1, the row's
