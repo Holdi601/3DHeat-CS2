@@ -362,8 +362,9 @@ The viewer names and sorts what a demo holds with it.
 `models` exports each agent's third-person body and each weapon's world model
 through Source2Viewer, simplified to three levels of detail, one `.glb` each,
 with `model-pack.json`; an agent's hit capsules are grouped into the game's hit
-groups (head, chest, stomach, arms, legs). The viewer draws them in place of
-its built-in figures.
+groups (head, chest, stomach, arms, legs). Every weapon and item lies like
+the guns: long side forward, business end (muzzle, blade tip, needle) in
+front, top up. The viewer draws them in place of its built-in figures.
 
 Both need a Source2Viewer build that reads the installed game's
 `weapons.vdata` (21.1 reads the current one). With an older build, `catalog`

@@ -1,6 +1,6 @@
 import numpy as np
 
-from heat3d_cs2.gear import _resolved, _side, hit_regions, parse_kv, to_frame, unit_parts, weapons_vdata
+from heat3d_cs2.gear import _resolved, _side, hit_regions, item_turn, parse_kv, to_frame, unit_parts, weapons_vdata
 from heat3d_cs2.modelpack import lods_of, norm_key
 
 
@@ -56,3 +56,35 @@ def test_weapon_keeps_one_of_two_bodies():
     meshes = [("w.body_legacy", *tri), ("w.body_legacy", *tri), ("w.body_hd", *tri)]
     assert len(unit_parts("weapon", meshes)["hull"][1]) == 2
     assert len(unit_parts("weapon", [("w.body_hd", *tri)])["hull"][1]) == 1
+
+
+def _blade(tip_axis: int, tip: float, edge_axis: int, edge: float):
+    """A thin blade in the glTF frame: grip at the origin, tip at `tip` along one axis, edge toward the other."""
+    v = np.zeros((4, 3))
+    v[1, tip_axis] = tip
+    v[2, edge_axis] = edge
+    v[3, edge_axis] = -edge / 4  # the spine, thicker and shorter than the edge's reach
+    return [("k.body_legacy", v, np.array([[0, 1, 2], [0, 3, 1]]))]
+
+
+def test_items_lie_like_the_guns():
+    # A knife's world model stands along the fist (glTF y), edge toward the hand's forward (glTF z): it comes out
+    # tip toward +x, edge down, still flat in x-y.
+    v, _ = unit_parts("weapon", _blade(1, 0.25, 2, 0.04), "knife", "weapons/models/knife/k/weapon_knife_k.vmdl_c")["hull"]
+    assert np.allclose(v[1], [0.25, 0, 0]) and np.allclose(v[2], [0, -0.04, 0]) and np.allclose(v[:, 2], 0)
+    # A gun already lies barrel forward (glTF z) and is left as it is.
+    v, _ = unit_parts("weapon", _blade(2, 0.6, 1, -0.1), "rifle", "weapons/models/ak47/weapon_rif_ak47.vmdl_c")["hull"]
+    assert np.allclose(v[1], [0.6, 0, 0]) and np.allclose(v[2], [0, -0.1, 0])
+    # The health shot's needle (down along the fist) and the armour's front (glTF -x) turned to +x.
+    v, _ = unit_parts("weapon", _blade(1, -0.08, 2, 0.01), "equipment", "weapons/models/healthshot/weapon_healthshot.vmdl_c")["hull"]
+    assert np.allclose(v[1], [0.08, 0, 0])
+    v, _ = unit_parts("weapon", _blade(0, -0.15, 1, 0.3), "equipment", "models/weapons/w_eq_armor.vmdl_c")["hull"]
+    assert np.allclose(v[1], [0.15, 0, 0]) and np.allclose(v[2], [0, 0.3, 0])
+    # Every turn is a rotation (the winding and handedness stay); the C4 and the taser are not turned.
+    for cls, model in (("knife", ""), ("grenade", ""), ("equipment", "x/weapon_healthshot.vmdl"),
+                       ("equipment", "weapons/models/defuser/defuser.vmdl_c")):
+        m = item_turn(cls, model)
+        assert m is not None and np.allclose(m @ m.T, np.eye(3)) and np.isclose(np.linalg.det(m), 1)
+    assert item_turn("c4", "weapons/models/c4/weapon_c4.vmdl_c") is None
+    assert item_turn("taser", "weapons/models/taser/weapon_pist_taser.vmdl_c") is None
+    assert item_turn("equipment", "weapons/models/other/weapon_other.vmdl_c") is None

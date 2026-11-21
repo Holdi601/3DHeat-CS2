@@ -9,6 +9,12 @@ CS2's catalogue and model pack, from the user's own installation.
 
 Source2Viewer writes glTF in metres, Y up, the game's X (forward) as glTF Z and the game's Y (left) as glTF X; the
 viewer's figure frame is x forward, y up, z right: (z, y, -x) of the glTF, a rotation, so the winding stays.
+
+A weapon's world model is drawn in the frame of the hand that holds it (the `ag1_hand_r` / `weapon_hand_r` bone it
+is merged onto). A gun's barrel points along the hand's forward, so it lies along x as it comes; a knife, a grenade
+and the health shot are held through the fist, so their length runs along the fist, the model's up. Those are turned
+forward (`item_turn`), and the armour and defuser, drawn side-on, are turned to face forward, so every item lies
+like the guns: long side along x, business end toward +x, y up.
 """
 
 from __future__ import annotations
@@ -302,6 +308,25 @@ def to_frame(v: np.ndarray) -> np.ndarray:
     return np.stack([v[:, 2], v[:, 1], -v[:, 0]], 1)
 
 
+#: Turns from a model's own frame (already in the figure frame) to the item lying along x; `v @ M.T`.
+#: Held through the fist: the fist's axis (up) turned forward, so the blade tip or the grenade's top points to +x and
+#: the knife's edge, which faces the hand's forward, points down.
+FIST_FORWARD = np.array([[0.0, 1.0, 0.0], [-1.0, 0.0, 0.0], [0.0, 0.0, 1.0]])
+#: The health shot is held the same way, needle down, button under the thumb: the needle turned to +x.
+NEEDLE_FORWARD = np.array([[0.0, -1.0, 0.0], [1.0, 0.0, 0.0], [0.0, 0.0, 1.0]])
+#: Drawn side-on (front toward +z): the armour stands as worn and the defuser kit lies, each turned to face +x.
+SIDE_FORWARD = np.array([[0.0, 0.0, 1.0], [0.0, 1.0, 0.0], [-1.0, 0.0, 0.0]])
+TURN_BY_CLASS = {"knife": FIST_FORWARD, "grenade": FIST_FORWARD}
+TURN_BY_MODEL = {"weapon_healthshot": NEEDLE_FORWARD, "defuser": SIDE_FORWARD, "w_eq_armor": SIDE_FORWARD,
+                 "w_eq_armor_helmet": SIDE_FORWARD}
+
+
+def item_turn(cls: str, model: str = "") -> np.ndarray | None:
+    """The turn that lays an item like the guns, or None where the model already lies so (guns, C4, taser)."""
+    stem = re.sub(r"\.vmdl(_c)?$", "", model.replace("\\", "/").rsplit("/", 1)[-1].lower())
+    return TURN_BY_MODEL.get(stem, TURN_BY_CLASS.get(cls))
+
+
 def export_glb(tool: Path, pak: Path, inner: str, tmp: Path) -> Path:
     out = tmp / (Path(inner).stem + ".glb")
     run = subprocess.run([str(tool), "-i", str(pak), "-d", "-f", inner, "--gltf_export_format", "glb", "-o", str(out)],
@@ -367,7 +392,7 @@ def hit_regions(meshes: list) -> list:
     return out
 
 
-def unit_parts(kind: str, meshes: list) -> dict:
+def unit_parts(kind: str, meshes: list, cls: str = "", model: str = "") -> dict:
     if kind == "person":
         keep = [(v, f) for n, v, f in meshes if not _SKIP_AGENT.search(n.rsplit(".", 1)[-1])]
     else:
@@ -382,6 +407,8 @@ def unit_parts(kind: str, meshes: list) -> dict:
     v = to_frame(v)
     if kind == "person":
         v[:, 1] -= v[:, 1].min()  # stands on its feet
+    elif (turn := item_turn(cls, model)) is not None:
+        v = v @ turn.T
     return {"hull": (v, f)}
 
 
@@ -440,7 +467,7 @@ def run_models(game: str | None, out: str | None, s2v: str | None, only: list[st
                 continue
             try:
                 glb = export_glb(tool, csgo / "pak01_dir.vpk", inner, tmp)
-                parts = unit_parts(it["kind"], _read_glb(glb))
+                parts = unit_parts(it["kind"], _read_glb(glb), it["class"], inner)
                 phys = glb.with_name(glb.stem + "_physics.glb")
                 dm = hit_regions(_read_glb(phys)) if it["kind"] == "person" and phys.is_file() else None
                 for f in tmp.iterdir():

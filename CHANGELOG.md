@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.7
+
+- `models`: the knives, grenades and health shot lie like the guns, long side along x and the business end (blade
+  tip, the grenade's top, the needle) forward; a knife's edge faces down. Their world models are drawn in the frame
+  of the hand that holds them, and they are held through the fist, so they came out standing up. The armour and the
+  defuser kit face forward instead of sideways.
+
 ## 1.0.6
 
 - `catalog` and `models` read the installed game's `weapons.vdata` through Source2Viewer 21.1; `--vdata` stays as an
