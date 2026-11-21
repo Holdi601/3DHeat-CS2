@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.5
+
+- `catalog`: every weapon, item and agent of the installed game as `catalog.json` (class, side, numbers; the
+  agents' units), for the viewer's names and order.
+- `models`: the agents' and weapons' models of the installed game as a local model pack (`model-pack.json` and a
+  `.glb` per unit, three levels of detail; the agents' hit groups), drawn by the viewer in place of its figures.
+
 ## 1.0.4
 
 - `layouts <map>|all -o <folder>`: a map's bomb sites and buy zones (their outlines and heights), hostage spots

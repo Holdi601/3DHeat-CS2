@@ -108,6 +108,11 @@ install folder; demos from a tournament site are wherever you saved them.
 | | `--source2viewer EXE` | `HEAT3D_SOURCE2VIEWER`, then `PATH` | the Source2Viewer CLI (this option first, then the variable, then `PATH`) |
 | `layouts <names>\|all` | `-o`, `--out` | required | the folder beside the maps' `.glb` (or a `.json` for one map); `all`: every map with a `.glb` there |
 | | `--game`, `--source2viewer` | as `map` | |
+| `catalog` | `-o`, `--out` | `$HEAT3D_LEVELS/cs2` | every weapon, item and agent of the install as `catalog.json` |
+| | `--vdata FILE` | | a decompiled `weapons.vdata`, when the Source2Viewer build cannot read the game's |
+| `models` | `-o`, `--out` | `$HEAT3D_LEVELS/model-packs/cs2` | the agents' and weapons' models as a local model pack |
+| | `--only WORD...`, `--force` | | only some units; rewrite units already written |
+| | `--game`, `--source2viewer` | as `map` | (both commands) |
 | `scoreboard <match>` | | | print a match's scoreboard as text, from its `.3dheat` or `.match.json` |
 
 `python -m heat3d_cs2 <command> --help` lists the same. Every option with examples:
@@ -345,6 +350,28 @@ python -m heat3d_cs2 layouts all -o levels/cs2
 
 A map whose entity file is newer than the Source2Viewer build can read says so
 and is skipped; a newer Source2Viewer reads it.
+
+## Catalogue and models
+
+`catalog` reads the install's item definitions (`scripts/items/items_game.txt`,
+`scripts/weapons.vdata`) and English names, and writes `catalog.json`: each
+weapon and item with its class, side and numbers (price, damage, magazine,
+fire rate, armour penetration, speed), and each agent with its side and unit.
+The viewer names and sorts what a demo holds with it.
+
+`models` exports each agent's third-person body and each weapon's world model
+through Source2Viewer, simplified to three levels of detail, one `.glb` each,
+with `model-pack.json`; an agent's hit capsules are grouped into the game's hit
+groups (head, chest, stomach, arms, legs). The viewer draws them in place of
+its built-in figures.
+
+```bash
+python -m heat3d_cs2 catalog
+python -m heat3d_cs2 models
+```
+
+Both read only the installed game and write only on this machine; nothing they
+make is uploaded or meant to be shared.
 
 ## What to point it at
 

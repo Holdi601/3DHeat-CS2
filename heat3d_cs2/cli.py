@@ -156,6 +156,18 @@ def _layouts(args) -> int:
     return 1 if names and failed == len(names) else 0
 
 
+def _catalog(args) -> int:
+    from .gear import run_catalog
+
+    return run_catalog(args.game, args.out, args.source2viewer, args.vdata)
+
+
+def _models(args) -> int:
+    from .gear import run_models
+
+    return run_models(args.game, args.out, args.source2viewer, args.only, args.force)
+
+
 def _scoreboard(args) -> int:
     from .stats import scoreboard_text
 
@@ -206,6 +218,19 @@ def main(argv: list[str] | None = None) -> int:
     y.add_argument("--game", help="the CS2 install folder, when Steam does not know it")
     y.add_argument("--source2viewer", help="Source2Viewer-CLI executable, when it is not on PATH")
     y.set_defaults(run=_layouts)
+    c = sub.add_parser("catalog", help="every weapon, item and agent of your CS2 install -> catalog.json")
+    c.add_argument("-o", "--out", help="the folder to write into (default <HEAT3D_LEVELS>/cs2)")
+    c.add_argument("--game", help="the CS2 install folder, when Steam does not know it")
+    c.add_argument("--source2viewer", help="Source2Viewer-CLI executable, when it is not on PATH")
+    c.add_argument("--vdata", help="a decompiled scripts/weapons.vdata, when Source2Viewer cannot read this game build's")
+    c.set_defaults(run=_catalog)
+    k = sub.add_parser("models", help="the agents' and weapons' models of your CS2 install -> a local model pack")
+    k.add_argument("-o", "--out", help="the pack folder (default <HEAT3D_LEVELS>/model-packs/cs2)")
+    k.add_argument("--game", help="the CS2 install folder, when Steam does not know it")
+    k.add_argument("--source2viewer", help="Source2Viewer-CLI executable, when it is not on PATH")
+    k.add_argument("--only", nargs="+", help="only the units whose id contains one of these words")
+    k.add_argument("--force", action="store_true", help="rewrite units already written for this game build")
+    k.set_defaults(run=_models)
     s = sub.add_parser("scoreboard", help="print a match's scoreboard")
     s.add_argument("match", help="<match>.3dheat, or <match>.match.json from --loose")
     s.set_defaults(run=_scoreboard)
