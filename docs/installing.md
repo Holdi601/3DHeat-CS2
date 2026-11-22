@@ -36,6 +36,10 @@ reports the maps' state, `heat3d-cs2 extract --new` exports only the new and
 `heat3d-cs2 --check --json` what is found and missing.
 The 3DHeat app's Extractors panel installs, updates and starts it for you.
 
+The window walks through four steps (find the game, choose, work, done) in the 3DHeat look, dark or light. On Windows the program opens only its window, with no console window; in a terminal it prints as usual, and `heat3d-cs2-cli.cmd` in the same folder makes the terminal wait for it and pass on its exit code.
+
+Replays from the command line: `heat3d-cs2 convert <replay>... -o <folder> [--progress-json]` converts them (one JSON line per replay with `--progress-json`), and `heat3d-cs2 info <replay> --json` prints what a replay says about its match (map, mode, date, length, players, teams, result, game version), read from its header without converting it. The 3DHeat Library uses both.
+
 ## From the source (Python)
 
 3DHeat CS2 is a Python package run from its own folder. There is nothing to

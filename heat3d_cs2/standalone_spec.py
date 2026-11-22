@@ -12,7 +12,7 @@ from pathlib import Path
 
 from . import __version__
 from .app import paths
-from .app.spec import Check, GameSpec, Input, MapSource, Spec, Task, game_folders
+from .app.spec import Check, GameSpec, Input, MapSource, Replays, Spec, Task, game_folders
 
 #: The install's folder name in a Steam library.
 STEAM_FOLDER = "Counter-Strike Global Offensive"
@@ -109,6 +109,12 @@ def _replays(levels: Path) -> str:
     folder = game / "game" / "csgo" / "replays" if game else None
     return str(folder) if folder and folder.is_dir() else ""
 
+def _replay_info(path: Path) -> dict:
+    """`info <replay> --json`: the header only (replay_info.py)."""
+    from .replay_info import info
+
+    return info(path)
+
 
 SPEC = Spec(
     id="heat3d-cs2",
@@ -147,6 +153,7 @@ SPEC = Spec(
         ),
     ],
     min_free_gb=2.0,
+    replays=Replays("cs2", (".dem",), lambda r, out: ["heat3d_cs2", "demos", str(r), "-o", str(out)], info=_replay_info),
     notice="Not affiliated with or endorsed by Valve Corporation.",
 )
 
