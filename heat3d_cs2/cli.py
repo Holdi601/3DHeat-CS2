@@ -206,9 +206,9 @@ def main(argv: list[str] | None = None) -> int:
     d.add_argument("--container", action="store_true", help="pack each match into one .3dheat file (the default)")
     d.add_argument("--loose", action="store_true",
                    help="keep each match as separate files (table, match.json, sidecars), not one .3dheat container")
-    d.add_argument("--levels", help="the levels folder with the maps' .glb (`map`), for tracing which hits went through a "
-                                    "wall (default HEAT3D_LEVELS, else the 3DHeat levels folder; without a map's .glb its hits "
-                                    "are not traced)")
+    d.add_argument("--levels", help="the levels folder with the maps' .glb (`map`), for tracing what the hits went through "
+                                    "(default HEAT3D_LEVELS, else the 3DHeat levels folder; without a map's .glb its hits are "
+                                    "not traced, and whether one went through something is told by its damage alone)")
     d.set_defaults(run=_demos)
     m = sub.add_parser("map", help="a map's collision geometry -> .glb in the demos' frame")
     m.add_argument("name", help="the map's name (like de_x) or the path to its .vpk")

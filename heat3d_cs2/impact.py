@@ -12,6 +12,12 @@ was hit. Where it passes that part by (spread, recoil, the victim moving
 within the tick), the point is the part's surface nearest the ray: the part
 is the game's word, the ray only says where on it.
 
+The shot's angles are where the shooter aimed; the bullet left them by the
+weapon's spread, which the game draws from the shot's own seed (`fire_bullets`
+`seed`, `inaccuracy`, `spread`) with Valve's uniform random stream - the same
+draw is made here, so the line is the bullet's own. A shotgun's pellet is not
+known, so only the shot's inaccuracy is applied to it.
+
 The body is drawn from a player's standing proportions in game units (72
 tall, the eye at 64), not from the game's hitboxes. The point is written in
 the victim's own frame in metres - x forward, y up from the feet, z to the
@@ -78,6 +84,72 @@ def direction(pitch_deg: float, yaw_deg: float) -> np.ndarray:
     return np.array([np.cos(p) * np.cos(y), np.cos(p) * np.sin(y), -np.sin(p)])
 
 
+class Stream:
+    """
+    Valve's uniform random stream (a Park-Miller generator with a Bays-Durham
+    shuffle, Numerical Recipes' ran1): seeded per shot, its first draws place
+    the bullet within the weapon's spread.
+    """
+
+    A, M, Q, R, TABLE = 16807, 2147483647, 127773, 2836, 32
+    DIV = 1 + (M - 1) // TABLE
+
+    def __init__(self, seed: int):
+        seed = int(seed) & 0xFFFFFFFF
+        seed = seed - (1 << 32) if seed >= 1 << 31 else seed
+        self.state = seed if seed < 0 else -seed
+        self.last = 0
+        self.table = [0] * self.TABLE
+
+    def _step(self) -> None:
+        k = self.state // self.Q
+        self.state = self.A * (self.state - k * self.Q) - self.R * k
+        if self.state < 0:
+            self.state += self.M
+
+    def number(self) -> int:
+        if self.state <= 0 or not self.last:
+            self.state = 1 if -self.state < 1 else -self.state
+            for j in range(self.TABLE + 7, -1, -1):
+                self._step()
+                if j < self.TABLE:
+                    self.table[j] = self.state
+            self.last = self.table[0]
+        self._step()
+        j = self.last // self.DIV
+        if not 0 <= j < self.TABLE:
+            j = (j % self.TABLE) & 0x7FFFFFFF
+        self.last = self.table[j]
+        self.table[j] = self.state
+        return self.last
+
+    def uniform(self, low: float = 0.0, high: float = 1.0) -> float:
+        return min(self.number() / self.M, 1.0 - 1.2e-7) * (high - low) + low
+
+
+#: Weapons that fire pellets (the game's item numbers): which pellet struck is not known.
+PELLETS = {25, 27, 29, 35}
+
+
+def spread(seed: float, inaccuracy: float, spread: float, item: float = np.nan) -> tuple[float, float]:
+    """How far the bullet left the aim (right, up; tangents) for a shot's seed, inaccuracy and spread."""
+    if not (np.isfinite(seed) and np.isfinite(inaccuracy)):
+        return 0.0, 0.0
+    s = Stream(int(seed) + 1)
+    r0, a0, r1, a1 = s.uniform(), s.uniform(0, 2 * np.pi), s.uniform(), s.uniform(0, 2 * np.pi)
+    r0 *= inaccuracy
+    r1 = 0.0 if (np.isfinite(item) and int(item) in PELLETS) or not np.isfinite(spread) else r1 * spread
+    return float(np.cos(a0) * r0 + np.cos(a1) * r1), float(np.sin(a0) * r0 + np.sin(a1) * r1)
+
+
+def bullet(pitch_deg: float, yaw_deg: float, right: float = 0.0, up: float = 0.0) -> np.ndarray:
+    """The aim's direction moved by a spread (tangents right and up), as a unit vector."""
+    p, y = np.radians(pitch_deg), np.radians(yaw_deg)
+    d = direction(pitch_deg, yaw_deg)
+    d = d + right * np.array([np.sin(y), -np.cos(y), 0.0]) + up * np.array([np.sin(p) * np.cos(y), np.sin(p) * np.sin(y), np.cos(p)])
+    return d / np.linalg.norm(d)
+
+
 def _segment_distance(p: np.ndarray, a: np.ndarray, b: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     """For points p (n x 3): the distance to the segment a-b, and the nearest point on it."""
     ab = b - a
@@ -126,17 +198,27 @@ def hit_points(hurts: pd.DataFrame, bullets: pd.DataFrame | None) -> dict[str, n
     NaN and "" where the hit is no place on the body or nothing says where
     the shot came from. Besides, in the game's frame and units, for the
     wallbang trace (wallbang.py; not written to the table): where the shot
-    left (`_fromX/Y/Z`) and the point on its line as far as the point struck
-    (`_atX/Y/Z`).
+    left (`_fromX/Y/Z`), the point on its line as far as the point struck
+    (`_atX/Y/Z`) and the weapon by the game's item number (`_weapon`, from
+    the shot).
     """
     n = len(hurts)
     out = {k: np.full(n, np.nan) for k in ("hitLocalX", "hitLocalY", "hitLocalZ", "hitDirX", "hitDirY", "hitDirZ", "hitMiss",
                                            "_fromX", "_fromY", "_fromZ", "_atX", "_atY", "_atZ")}
     source = np.full(n, "", dtype=object)
-    shots: dict[tuple[int, str], tuple[np.ndarray, float, float]] = {}
+    out["_weapon"] = np.full(n, np.nan)
+    shots: dict[tuple[int, str], tuple[np.ndarray, np.ndarray, float]] = {}
     if bullets is not None and len(bullets) and {"origin_x", "angles_x", "angles_y", "tick", "user_steamid"} <= set(bullets.columns):
-        for tick, sid, ox, oy, oz, ax, ay in zip(bullets["tick"], bullets["user_steamid"].astype(str), bullets["origin_x"], bullets["origin_y"], bullets["origin_z"], bullets["angles_x"], bullets["angles_y"]):
-            shots.setdefault((int(tick), sid), (np.array([ox, oy, oz], dtype=float), float(ax), float(ay)))
+
+        def shot_col(name: str) -> np.ndarray:
+            return pd.to_numeric(bullets[name], errors="coerce").to_numpy(dtype=float) if name in bullets else np.full(len(bullets), np.nan)
+
+        seed, inacc, spr, item = shot_col("seed"), shot_col("inaccuracy"), shot_col("spread"), shot_col("item_def_index")
+        for k, (tick, sid, ox, oy, oz, ax, ay) in enumerate(zip(bullets["tick"], bullets["user_steamid"].astype(str), bullets["origin_x"],
+                                                                 bullets["origin_y"], bullets["origin_z"], bullets["angles_x"], bullets["angles_y"])):
+            if (int(tick), sid) not in shots:
+                d = bullet(float(ax), float(ay), *spread(seed[k], inacc[k], spr[k], item[k]))
+                shots[(int(tick), sid)] = (np.array([ox, oy, oz], dtype=float), d, item[k])
 
     def col(name: str) -> np.ndarray:
         return pd.to_numeric(hurts[name], errors="coerce").to_numpy(dtype=float) if name in hurts else np.full(n, np.nan)
@@ -152,7 +234,8 @@ def hit_points(hurts: pd.DataFrame, bullets: pd.DataFrame | None) -> dict[str, n
             continue
         shot = shots.get((int(ticks[i]), attackers[i])) if np.isfinite(ticks[i]) else None
         if shot is not None:
-            origin, d, source[i] = shot[0], direction(shot[1], shot[2]), "bullet"
+            origin, d, source[i] = shot[0], shot[1], "bullet"
+            out["_weapon"][i] = shot[2]
         elif np.isfinite(ax[i]) and np.isfinite(apitch[i]) and np.isfinite(ayaw[i]):
             eye = EYE - CROUCH_DROP * (aduck[i] if np.isfinite(aduck[i]) else 0.0)
             origin, d, source[i] = np.array([ax[i], ay[i], az[i] + eye]), direction(apitch[i], ayaw[i]), "aim"

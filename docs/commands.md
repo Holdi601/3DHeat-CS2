@@ -39,7 +39,7 @@ python -m heat3d_cs2 demos D:\Demos -o out --map final --jobs 4
 | `--force` | off | convert matches that are already written, overwriting them |
 | `--loose` | off | keep each match as separate files - table, `.match.json`, sidecars - instead of packing them into one `.3dheat` container. See [One file a match](output-container.md). |
 | `--container` | on | pack each match into one `.3dheat` file; the default, so only there to be explicit |
-| `--levels FOLDER` | `HEAT3D_LEVELS`, else the 3DHeat levels folder | where the maps' `.glb` from `map` are (`<FOLDER>/cs2/<map>.glb` or `<FOLDER>/<map>.glb`): with the match's map there, every hit is traced through it for `wallbang`; without it, those columns stay empty and nothing else changes |
+| `--levels FOLDER` | `HEAT3D_LEVELS`, else the 3DHeat levels folder | where the maps' `.glb` from `map` are (`<FOLDER>/cs2/<map>.glb` or `<FOLDER>/<map>.glb`): with the match's map there, every hit is traced through it for what it went through (`wallCount`, `wallThickness`, `wallSurfaces`, `wallGrates`) and railings on its line; without it, those columns stay empty and `wallbang` is told by the hit's damage alone |
 | `--no-bulk` | off | leave the entity stream, the players' commands and the animation stream out of the packets sidecar - over half of a demo's size even compressed. The match document's self-check then counts them `lost`, by name. |
 
 ![demos --help](assets/img/demos-help.svg)

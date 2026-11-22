@@ -40,3 +40,21 @@ def test_a_crouch_lowers_the_head_and_generic_hits_have_no_place():
     down = impact.hit_points(hurt(user_yaw=180.0, user_duck_amount=1.0, attacker_Z=-18.0), None)["hitLocalY"][0]
     assert up - down == pytest.approx(impact.CROUCH_DROP * impact.METRES, abs=0.03)
     assert np.isnan(impact.hit_points(hurt(hitgroup="generic"), None)["hitLocalX"][0])
+
+
+def test_the_bullet_leaves_the_aim_by_the_spread_its_seed_draws():
+    a, b = impact.Stream(7), impact.Stream(7)
+    draws = [a.uniform() for _ in range(50)]
+    assert draws == [b.uniform() for _ in range(50)] and all(0 <= x < 1 for x in draws) and len(set(draws)) == 50
+    x, y = impact.spread(1234.0, 0.01, 0.002)
+    assert 0 < np.hypot(x, y) <= 0.012
+    # No seed, no spread; a shotgun's pellet spread is not drawn (which pellet struck is not known).
+    assert impact.spread(np.nan, 0.01, 0.002) == (0.0, 0.0)
+    sx, sy = impact.spread(1234.0, 0.0, 0.5, item=35)
+    assert (sx, sy) == (0.0, 0.0)
+    d = impact.bullet(0.0, 0.0, 0.01, 0.0)
+    assert d[1] == pytest.approx(-0.01, abs=1e-4) and np.linalg.norm(d) == pytest.approx(1.0)
+    bullets = pd.DataFrame([{"tick": 100, "user_steamid": "1", "origin_x": -500.0, "origin_y": 0.0, "origin_z": 64.0,
+                             "angles_x": 0.0, "angles_y": 0.0, "seed": 99.0, "inaccuracy": 0.01, "spread": 0.0, "item_def_index": 7}])
+    p = impact.hit_points(hurt(user_yaw=180.0), bullets)
+    assert p["_weapon"][0] == 7 and p["hitDirX"][0] != pytest.approx(-1.0, abs=1e-9)

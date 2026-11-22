@@ -53,7 +53,11 @@ rendering of the map.
    Source2Viewer writes it on the node (`SurfaceProperty`); where it has none
    (or `default`), the name in lower case with a leading `physics` or
    `physics_group` (and the underscore after it) removed: `physics_group_concrete`
-   is `concrete`, a bare `physics_group` is `world`. A group bullets pass
+   is `concrete`, a bare `physics_group` is `world`. A surface Source2Viewer
+   gives only as a hash (`vrf_unknown_key_<number>`) gets the game's name
+   back (since 1.4.0): the number is the MurmurHash2 of the name, matched
+   against the game's surface names (`vrf_unknown_key_2838185980` is
+   `metalrailing`). A group bullets pass
    through untouched (its `InteractAs` or its name says `passbullets`:
    chain-link fences, grates, some ladders) is kept, as `passbullets:<surface>`
    (`passbullets:chainlink`), apart from the solid surfaces of the same

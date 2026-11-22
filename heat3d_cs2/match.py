@@ -826,9 +826,11 @@ def build_match(raws: list[RawPart], name: str, levels: str | Path | None = None
             h = live_ev(ev["player_hurt"])
             # Where on the body: traced in the part, whose ticks the shots share.
             h = h.assign(**impact.hit_points(h, ev.get("fire_bullets")))
-            # Through a wall: the shot traced through the map, where its level is on this machine.
+            # Through a wall: the damage dealt against the weapon's full damage, and the shot traced through the map
+            # where its level is on this machine.
             h = h.assign(**wallbang.columns(level, h[["_fromX", "_fromY", "_fromZ"]].to_numpy(dtype=float),
-                                            h[["_atX", "_atY", "_atZ"]].to_numpy(dtype=float)))
+                                            h[["_atX", "_atY", "_atZ"]].to_numpy(dtype=float), h,
+                                            h["_weapon"].to_numpy(dtype=float)))
             hurts.append(h.assign(time=part.at(h["tick"].to_numpy()) - origin))
         if "player_blind" in ev:
             b = live_ev(ev["player_blind"])

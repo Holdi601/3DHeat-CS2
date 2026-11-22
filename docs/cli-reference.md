@@ -55,9 +55,10 @@ options:
   --container      pack each match into one .3dheat file (the default)
   --loose          keep each match as separate files (table, match.json, sidecars),
                    not one .3dheat container
-  --levels LEVELS  the levels folder with the maps' .glb (`map`), for tracing which
-                   hits went through a wall (default HEAT3D_LEVELS, else the 3DHeat
-                   levels folder; without a map's .glb its hits are not traced)
+  --levels LEVELS  the levels folder with the maps' .glb (`map`), for tracing what the
+                   hits went through (default HEAT3D_LEVELS, else the 3DHeat levels
+                   folder; without a map's .glb its hits are not traced, and whether
+                   one went through something is told by its damage alone)
 ```
 
 ## `map`

@@ -129,3 +129,58 @@ def test_the_level_is_found_in_the_levels_folder(tmp_path):
     assert wallbang.find("de_test", tmp_path) == tmp_path / "cs2" / "de_test.glb"
     assert wallbang.find("de_other", tmp_path) is None
     assert wallbang.find("", tmp_path) is None
+
+
+def hits(**columns):
+    """Hurt rows: an AK-47 (item 7) chest hit on an unarmoured enemy, unless told otherwise."""
+    n = max(len(v) if isinstance(v, list) else 1 for v in columns.values()) if columns else 1
+    row = {"dmg_health": 35, "dmg_armor": 0, "armor": 0, "hitgroup": "chest", "weapon": "ak47", "attacker_team_num": 2, "user_team_num": 3}
+    row.update(columns)
+    return pd.DataFrame({k: v if isinstance(v, list) else [v] * n for k, v in row.items()})
+
+
+def test_the_damage_says_whether_anything_was_passed():
+    # An AK-47's 36 points lose 2 % per 500 units flown: at 500 units a chest hit deals 35.
+    flown = np.full(6, 500.0)
+    h = hits(dmg_health=[35, 31, 27, 141, 10, 11], dmg_armor=[0, 0, 4, 0, 0, 0], armor=[0, 0, 96, 0, 0, 0],
+             hitgroup=["chest", "chest", "chest", "head", "chest", "chest"], attacker_team_num=[2, 2, 2, 2, 3, 3])
+    lost = wallbang.damage_lost(h, np.full(6, 7.0), flown)
+    # Full damage; 4 short (anything passed costs more); through armour (ratio 1.55: 77.5 %) in full; a bare head
+    # (x4); a team-mate's third, short and in full.
+    assert list(lost) == [0.0, 1.0, 0.0, 0.0, 1.0, 0.0]
+
+
+def test_the_damage_cannot_tell_without_the_weapon_or_a_place():
+    h = hits(weapon=["m4a1", "ak47", "ak47", "hegrenade"], hitgroup=["chest", "generic", "chest", "chest"], dmg_health=[30, 30, 0, 30])
+    lost = wallbang.damage_lost(h, np.full(4, np.nan), np.full(4, 500.0))
+    # `m4a1` is the M4A4 or the M4A1-S: not known by name alone; nor a hit with no place, no damage, or a grenade.
+    assert np.isnan(lost).all()
+    # The shot's item number tells the M4A1-S (60): 38 points, 6 % lost per 500 units.
+    assert wallbang.damage_lost(hits(weapon="m4a1", dmg_health=35), np.array([60.0]), np.array([500.0]))[0] == 0.0
+
+
+def test_the_damage_decides_and_the_trace_says_what_was_passed(tmp_path):
+    lv = level([("structure:wood_panel", *box((100, -100, -100), (104, 100, 100))),
+                ("structure:passbullets:metalrailing", *sheet(200.0, half=20.0))], tmp_path)
+    origins = np.zeros((4, 3))
+    points = np.array([[500.0, 100, 0], [500.0, 100, 0], [500.0, 0, 0], [-500.0, 0, 0]])
+    flown = np.linalg.norm(points, axis=1)
+    full = int(36 * 0.98 ** (flown[0] / 500))
+    h = hits(dmg_health=[full, 20, full, 10])
+    c = wallbang.columns(lv, origins, points, h, np.full(4, 7.0))
+    # Full damage through the traced wood: the line was off, no wallbang. Short: through the wood. Full damage
+    # through a railing: the game counts it. Short with nothing on the line: through something not in the level.
+    assert list(c["wallbang"]) == [0.0, 1.0, 1.0, 1.0]
+    assert list(c["wallSurfaces"]) == ["", "wood_panel", "metalrailing", ""]
+    assert c["wallCount"][0] == 0 and c["wallCount"][1] == 1 and np.isnan(c["wallCount"][3])
+    # Without a level, the damage alone.
+    alone = wallbang.columns(None, origins, points, h, np.full(4, 7.0))
+    assert list(alone["wallbang"]) == [0.0, 1.0, 0.0, 1.0] and np.isnan(alone["wallCount"]).all()
+
+
+def test_hashed_surface_names_are_put_back():
+    from heat3d_cs2.mapexport import murmur2, surface_name
+
+    assert murmur2(b"default") == 1977497166
+    assert surface_name("vrf_unknown_key_2838185980") == "metalrailing"
+    assert surface_name("vrf_unknown_key_12") == "vrf_unknown_key_12"

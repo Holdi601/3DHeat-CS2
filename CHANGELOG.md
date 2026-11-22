@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.4.0
+
+- Wallbangs are now told by the damage the hit dealt: a gun's damage is exact (its base damage, its falloff over the
+  distance flown, the part struck, the armour worn, a third from a team-mate), and anything a bullet passes on its way
+  costs it damage, so a hit that dealt less than the full damage went through something - a wall, a door, a crate or a
+  player, seen in the map or not. Checked against the game's own count on 25,649 kills of 176 demos on 8 maps: 97.3 %
+  of the game's wallbangs found (902 of 927; was 60 %) and 96.8 % of the ones found right (was 57 %); per map 100 %
+  both on five, 97 % / 100 % and 97 % / 98 % on two, 89 % / 84 % on one (a balcony railing the game counts on about
+  one shot in five, with no damage lost, that the map's railing geometry does not tell apart).
+- The shot's line is the bullet's own: the game draws each bullet's spread from the shot's seed (`fire_bullets`), and
+  the same draw is now made here, so the point struck (`hitLocalX`..) and the trace follow where the bullet went, not
+  only where it was aimed.
+- Railings are the one thing bullets pass at no cost that the game still counts as passed: a shot whose line crosses
+  one (surface `metalrailing`) is a wallbang with the railing as its wall. The map's surfaces that Source2Viewer names
+  only by a hash (`vrf_unknown_key_...`) get their game names back, in `map` and when an older level is read.
+- `wallCount`, `wallThickness` and `wallSurfaces` say what the trace saw on the line; where the damage shows the
+  bullet went through something the map does not have (a door, a prop, a player), they stay empty.
+
 ## 1.3.0
 
 - Wallbangs on every hit, not only kills: each `hurt` row says whether the shot went through a wall (`wallbang`),

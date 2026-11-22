@@ -103,6 +103,54 @@ def to_viewer(game: np.ndarray) -> np.ndarray:
 
 #: The interaction a physics group has when bullets pass through it as if it were not there.
 PASS_BULLETS = "passbullets"
+#: The game's surface names (its `surfaceproperties`), for the ones Source2Viewer gives only as a hash
+#: (`vrf_unknown_key_<hash>`): the hash is MurmurHash2 of the lower-case name.
+SURFACE_NAMES = """
+alienflesh armorflesh asphalt audioblocker audioblocker_inneredge audioblocker_middleedge audioblocker_outeredge balloon
+beans blockbullets bloodyflesh boulder brakingrubbertire brass_bell_large brass_bell_medium brass_bell_small
+brass_bell_smallest brass_bell_smallest_g brick canister cardboard cardboard_smallbox carpet ceiling_tile chain chainlink
+clay cloth computer concrete concrete_block concrete_polished default default_silent defuser dirt dufflebag_survivalcase
+flesh floating_metal_barrel floatingstandable foliage fruit glass glassbottle glassfloor grass grate gravel grenade ice
+item jalopy jalopytire jeeptire ladder metal metal_barrel metal_barrel_explodingsurvival metal_barrelsoundoverride
+metal_bouncy metal_box metal_dumpster metal_sand_barrel metal_sheet_corrugated metal_sheetmetal metal_shield
+metal_survivalcase metal_survivalcase_unpunchable metal_vehiclesoundoverride metal_ventslat metaldogtags metalgrate
+metalpanel metalrailing metalvehicle metalvent mud no_decal paintcan paper papercup papertowel plaster plaster_drywall
+plastic plastic_autocover plastic_barrel plastic_barrel_buoyant plastic_box plastic_dumpster plastic_milkcrate
+plastic_solid plastic_survivalcase plastic_tape plasticbottle player player_control_clip playerflesh popcan porcelain
+pottery potterylarge puddle quicksand rock roller rubber rubbertire sand sheetrock slidingrubbertire
+slidingrubbertire_front slidingrubbertire_jalopyfront slidingrubbertire_jalopyrear slidingrubbertire_rear slime
+slipperymetal slipperyslide slipperyslime slowgrass snow soccerball solidmetal strongman_bell stucco sugarcane tile
+tile_survivalcase tile_survivalcase_gib upholstery wade water watermelon weapon weapon_magazine weaponc4 weaponflashbang
+weaponheavy weaponhegrenade weaponincendiary weaponknife weaponmagazine weaponmolotov weaponpistol weaponrifle
+weaponshotgun weaponsmg weaponsniper wet wet_concrete wet_mud wet_sand wood wood_basket wood_box wood_crate wood_dense
+wood_furniture wood_ladder wood_lowdensity wood_panel wood_plank wood_solid wood_tree
+""".split()
+UNKNOWN = re.compile(r"vrf_unknown_key_(\d+)")
+
+
+def murmur2(data: bytes, seed: int = 0x31415926) -> int:
+    """MurmurHash2, as Source 2 hashes its names."""
+    m, h = 0x5BD1E995, (seed ^ len(data)) & 0xFFFFFFFF
+    whole = len(data) - len(data) % 4
+    for i in range(0, whole, 4):
+        k = int.from_bytes(data[i : i + 4], "little") * m & 0xFFFFFFFF
+        k = (k ^ (k >> 24)) * m & 0xFFFFFFFF
+        h = (h * m & 0xFFFFFFFF) ^ k
+    rest = data[whole:]
+    if rest:
+        for j in range(len(rest) - 1, -1, -1):
+            h ^= rest[j] << (8 * j)
+        h = h * m & 0xFFFFFFFF
+    h = (h ^ (h >> 13)) * m & 0xFFFFFFFF
+    return h ^ (h >> 15)
+
+
+_BY_HASH = {murmur2(n.encode()): n for n in SURFACE_NAMES}
+
+
+def surface_name(text: str) -> str:
+    """A surface name with Source2Viewer's `vrf_unknown_key_<hash>` put back to the game's name, where it is known."""
+    return UNKNOWN.sub(lambda m: _BY_HASH.get(int(m.group(1)), m.group(0)), text)
 
 
 def surface_of(node: str, extras: dict | None = None) -> str | None:
@@ -125,7 +173,7 @@ def surface_of(node: str, extras: dict | None = None) -> str | None:
         surface = re.sub(r"^.*passbullets_?", "", node)
     else:
         surface = re.sub(r"^physics(_group)?_?", "", node)
-    surface = surface or "world"
+    surface = surface_name(surface or "world")
     return f"{PASS_BULLETS}:{surface}" if passes else surface
 
 
