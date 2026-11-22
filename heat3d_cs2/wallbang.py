@@ -69,6 +69,9 @@ NEAR = 4.0
 FAR = 4.0
 #: Crossings closer than this along the segment (game units) are one (a shared edge of two triangles).
 SAME = 0.05
+#: Crossings of one bullet-passing surface closer than this (game units, 15 cm) are one sheet: both faces of a
+#: railing's bar, of a grate's mesh.
+SHEET = 6.0
 #: A wall thinner than this (m) is a graze of its edge, not a wall the bullet went through.
 MIN_WALL = 0.01
 #: More solid than this (m) in all, or any of STOPS, is more than a bullet passes: the hit shows the shot did not
@@ -243,14 +246,14 @@ class Level:
         ids, t = ids[hit], t[hit]
         entering = (self.normal[ids] @ seg) < 0
         grates = self.passes[ids]
-        # Grates: each crossing of a sheet, a shared edge once.
+        # Grates: each sheet crossed once - a shared edge, or both faces of one bar or mesh (within SHEET), are one.
         order = np.argsort(t[grates], kind="stable")
         sheets: list[str] = []
-        last_t = None
+        last_t, last_k = None, None
         for tt, k in zip(t[grates][order] * length, self.surface[ids[grates]][order]):
-            if last_t is None or tt - last_t > SAME:
+            if last_t is None or tt - last_t > SHEET or k != last_k:
                 sheets.append(self.names[k])
-            last_t = tt
+            last_t, last_k = tt, k
         solid = ~grates
         order = np.argsort(t[solid], kind="stable")
         ts, ins, surf = t[solid][order] * length, entering[solid][order], self.surface[ids[solid]][order]

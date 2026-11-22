@@ -184,3 +184,10 @@ def test_hashed_surface_names_are_put_back():
     assert murmur2(b"default") == 1977497166
     assert surface_name("vrf_unknown_key_2838185980") == "metalrailing"
     assert surface_name("vrf_unknown_key_12") == "vrf_unknown_key_12"
+
+
+def test_both_faces_of_a_bar_are_one_railing(tmp_path):
+    lv = level([("structure:passbullets:metalrailing", *box((200, -20, -20), (201, 20, 20))),
+                ("structure:passbullets:metalrailing", *box((300, -20, -20), (301, 20, 20)))], tmp_path)
+    walls, sheets = lv.passed(np.array([0.0, 0, 0]), np.array([500.0, 0, 0]))
+    assert walls == [] and sheets == ["metalrailing", "metalrailing"]
