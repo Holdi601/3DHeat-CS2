@@ -69,9 +69,12 @@ def _local(node: dict) -> np.ndarray:
     return m
 
 
-def meshes(doc: dict, blob: bytes) -> list[tuple[str, np.ndarray, np.ndarray]]:
-    """Every mesh in the scene as (node name, world positions, triangles)."""
-    out: list[tuple[str, np.ndarray, np.ndarray]] = []
+def meshes(doc: dict, blob: bytes, extras: bool = False) -> list[tuple]:
+    """
+    Every mesh in the scene as (node name, world positions, triangles); with
+    `extras`, (node name, the node's extras, world positions, triangles).
+    """
+    out: list[tuple] = []
 
     def walk(index: int, parent: np.ndarray) -> None:
         node = doc["nodes"][index]
@@ -86,7 +89,9 @@ def meshes(doc: dict, blob: bytes) -> list[tuple[str, np.ndarray, np.ndarray]]:
                     if "indices" in prim
                     else np.arange(len(p)).reshape(-1, 3)
                 )
-                out.append((node.get("name", ""), (np.c_[p, np.ones(len(p))] @ world.T)[:, :3], tris))
+                placed = (np.c_[p, np.ones(len(p))] @ world.T)[:, :3]
+                name = node.get("name", "")
+                out.append((name, node.get("extras") or {}, placed, tris) if extras else (name, placed, tris))
         for child in node.get("children", []):
             walk(child, world)
 

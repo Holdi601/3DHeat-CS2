@@ -15,6 +15,12 @@ viewer draws the demo tables (see output.HINTS): game units, (X, Z, -Y). Clip
 brushes - the invisible walls that stop players and grenades - and the sky
 are left out. Each surface is split into ground (facing up, walkable) and
 structure, by the triangle's normal.
+
+What bullets pass through untouched - chain-link fences, grates, some
+ladders, the groups the map marks `passbullets` - is kept apart, as its own
+parts (`ground:passbullets:<surface>`, `structure:passbullets:<surface>`):
+drawn like the rest, but no wall to a shot traced through the map
+(wallbang.py).
 """
 
 from __future__ import annotations
@@ -95,20 +101,44 @@ def to_viewer(game: np.ndarray) -> np.ndarray:
     return np.stack([game[:, 0], game[:, 2], -game[:, 1]], axis=1)
 
 
-def surface_of(node: str) -> str | None:
-    """The surface a physics group is made of, in lower case; None for clip brushes and the sky."""
+#: The interaction a physics group has when bullets pass through it as if it were not there.
+PASS_BULLETS = "passbullets"
+
+
+def surface_of(node: str, extras: dict | None = None) -> str | None:
+    """
+    The surface a physics group is made of, in lower case; `passbullets:<surface>`
+    for one bullets pass through; None for clip brushes and the sky. The
+    node's extras (Source2Viewer's `SurfaceProperty`, `InteractAs`) are used
+    where there are any, else its name.
+    """
     node = node.lower()
-    if "clip" in node or "sky" in node:
+    extras = extras or {}
+    interact = [str(i).lower() for i in extras.get("InteractAs") or []]
+    if "clip" in node or "sky" in node or any("clip" in i or i == "sky" for i in interact):
         return None
-    surface = re.sub(r"^physics(_group|_passbullets)?_?", "", node)
-    return surface or "world"
+    passes = PASS_BULLETS in interact or PASS_BULLETS in node
+    named = str(extras.get("SurfaceProperty") or "").lower()
+    if named and named != "default":
+        surface = named
+    elif passes:
+        surface = re.sub(r"^.*passbullets_?", "", node)
+    else:
+        surface = re.sub(r"^physics(_group)?_?", "", node)
+    surface = surface or "world"
+    return f"{PASS_BULLETS}:{surface}" if passes else surface
 
 
-def parts_from(meshes: list[tuple[str, np.ndarray, np.ndarray]]) -> list[tuple[str, np.ndarray, np.ndarray]]:
-    """Ground and structure parts by surface, in the viewer's frame."""
+def parts_from(meshes: list[tuple]) -> list[tuple[str, np.ndarray, np.ndarray]]:
+    """
+    Ground and structure parts by surface, in the viewer's frame, from
+    (node name, positions, triangles) or (node name, extras, positions,
+    triangles).
+    """
     grouped: dict[str, list[tuple[np.ndarray, np.ndarray]]] = {}
-    for node, gl, triangles in meshes:
-        surface = surface_of(node)
+    for mesh in meshes:
+        node, extras, gl, triangles = mesh if len(mesh) == 4 else (mesh[0], None, mesh[1], mesh[2])
+        surface = surface_of(node, extras)
         if surface is None or not len(triangles):
             continue
         game = to_game(gl)
@@ -146,11 +176,12 @@ def export_map(name: str, out: str | Path, game: str | None = None, source2viewe
         if run.returncode != 0 or not found:
             raise RuntimeError(f"Source2Viewer did not export {stem}'s collision mesh:\n{run.stdout[-800:]}{run.stderr[-800:]}")
         doc, blob = glb.read(found[0])
-    parts = parts_from(glb.meshes(doc, blob))
+    parts = parts_from(glb.meshes(doc, blob, extras=True))
     if not parts:
         raise RuntimeError(f"{stem}'s collision mesh has nothing but clip brushes")
     Path(out).parent.mkdir(parents=True, exist_ok=True)
     glb.write(out, parts)
     triangles = sum(len(t) for _, _, t in parts)
     ground = sum(len(t) for n, _, t in parts if n.startswith("ground:"))
-    return f"{out}: {stem}, {triangles:,} triangles ({ground:,} ground) in {len(parts)} parts"
+    passing = sum(len(t) for n, _, t in parts if f":{PASS_BULLETS}:" in n)
+    return f"{out}: {stem}, {triangles:,} triangles ({ground:,} ground, {passing:,} bullets pass) in {len(parts)} parts"

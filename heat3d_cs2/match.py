@@ -41,7 +41,7 @@ import numpy as np
 import pandas as pd
 
 from . import events as more
-from . import impact
+from . import impact, wallbang
 from .demo import OVERTIME, TICKRATE, RawPart
 
 TRADE_SECONDS = 5.0
@@ -647,9 +647,10 @@ def _assign_phases(times: np.ndarray, rounds: list[Round]) -> tuple[np.ndarray, 
 
 def _frame(columns: dict) -> pd.DataFrame:
     df = pd.DataFrame(columns)
-    for c in ROW_COLUMNS:
-        if c not in df:
-            df[c] = np.nan if c in NUMERIC else ""
+    # The columns this kind of row does not have, all at once (one by one fragments the frame).
+    missing = {c: np.nan if c in NUMERIC else "" for c in ROW_COLUMNS if c not in df}
+    if missing:
+        df = pd.concat([df, pd.DataFrame(missing, index=df.index)], axis=1)
     return df[ROW_COLUMNS]
 
 
@@ -749,7 +750,7 @@ def _offsets(parts: list[_Part]) -> None:
             part.offset = part.first_clock - (ended + 1.0)
 
 
-def build_match(raws: list[RawPart], name: str) -> Match:
+def build_match(raws: list[RawPart], name: str, levels: str | Path | None = None) -> Match:
     """One match from its demo parts, in whatever order they come."""
     parts = _in_order([_Part(r) for r in raws])
     if not parts:
@@ -766,6 +767,8 @@ def build_match(raws: list[RawPart], name: str) -> Match:
     windows = [by_index[i][1] for i in sorted(by_index)]
     incomplete -= {r.number for r in rounds}
     map_name = next((p.raw.map for p in parts if p.raw.map), "")
+    # The map's level (`map`), for the wallbang trace: in `levels`, else the levels folder; without it, not traced.
+    level = wallbang.level_for(map_name, levels)
     players = _players(parts)
     teams = _name_teams(rounds, windows, players)
     # The buy waits for the teams: a pistol round is known from where they swap sides.
@@ -823,6 +826,9 @@ def build_match(raws: list[RawPart], name: str) -> Match:
             h = live_ev(ev["player_hurt"])
             # Where on the body: traced in the part, whose ticks the shots share.
             h = h.assign(**impact.hit_points(h, ev.get("fire_bullets")))
+            # Through a wall: the shot traced through the map, where its level is on this machine.
+            h = h.assign(**wallbang.columns(level, h[["_fromX", "_fromY", "_fromZ"]].to_numpy(dtype=float),
+                                            h[["_atX", "_atY", "_atZ"]].to_numpy(dtype=float)))
             hurts.append(h.assign(time=part.at(h["tick"].to_numpy()) - origin))
         if "player_blind" in ev:
             b = live_ev(ev["player_blind"])
@@ -946,6 +952,8 @@ def build_match(raws: list[RawPart], name: str) -> Match:
                     "hitgroup": _texts(all_hurts, "hitgroup"),
                     **{c: _numbers(all_hurts, c) for c in impact.COLUMNS},
                     "hitFrom": _texts(all_hurts, "hitFrom"),
+                    **{c: _numbers(all_hurts, c) for c in wallbang.COLUMNS},
+                    "wallSurfaces": _texts(all_hurts, "wallSurfaces"),
                     "weapon": [weapon_name(w) for w in all_hurts["weapon"]],
                     "detail": more.detail(all_hurts),
                 }

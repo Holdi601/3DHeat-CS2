@@ -49,11 +49,16 @@ rendering of the map.
 5. **Leave out what is not a wall or a floor.** A node whose name contains
    `clip` - player clips, NPC clips, grenade clips: the invisible walls that
    stop players and grenades - or `sky`, in any case, is dropped.
-6. **Name the surface.** The physics groups are named by their surface; the
-   name in lower case, with a leading `physics`, `physics_group` or
-   `physics_passbullets` (and the underscore after it) removed is the surface:
-   `physics_group_concrete` is `concrete`, `physics_passbullets_chainlink` is `chainlink`, a bare
-   `physics_group` is `world`. Surfaces bullets pass through are kept.
+6. **Name the surface.** The surface is the group's own surface property, as
+   Source2Viewer writes it on the node (`SurfaceProperty`); where it has none
+   (or `default`), the name in lower case with a leading `physics` or
+   `physics_group` (and the underscore after it) removed: `physics_group_concrete`
+   is `concrete`, a bare `physics_group` is `world`. A group bullets pass
+   through untouched (its `InteractAs` or its name says `passbullets`:
+   chain-link fences, grates, some ladders) is kept, as `passbullets:<surface>`
+   (`passbullets:chainlink`), apart from the solid surfaces of the same
+   material - drawn like the rest, but no wall to a shot (see
+   [The heatmap table](output-table.md), `wallbang`).
 7. **Back to the game's frame.** Source2Viewer writes glTF in metres with Y
    up: the game's (Y, Z, X) multiplied by 0.0254. That is undone - each point
    becomes the game's (X, Y, Z) in inches.
@@ -66,7 +71,7 @@ rendering of the map.
    follows their `heat3d` hints. A rotation, not a mirror.
 10. **Write the `.glb`.** If nothing is left (only clip brushes), the command
     stops with an error. Otherwise it prints the file, the map, the triangle
-    count, how many are ground, and the number of parts.
+    count, how many are ground and how many bullets pass, and the number of parts.
 
 Nothing here reads anything but the map's own `.vpk`, and nothing of
 Source2Viewer is bundled or copied.
@@ -79,7 +84,7 @@ A glTF 2.0 binary (`.glb`), one buffer, written by `heat3d_cs2` (the
 | Aspect | What |
 |---|---|
 | Nodes | one per part, all at the root, no transforms, each with its own mesh of the same name |
-| Node names | `ground:<surface>` or `structure:<surface>` (`ground:concrete`, `structure:metal`, `structure:world`), sorted by name |
+| Node names | `ground:<surface>` or `structure:<surface>` (`ground:concrete`, `structure:metal`, `structure:world`), and `ground:passbullets:<surface>`, `structure:passbullets:<surface>` for what bullets pass (since 1.3.0; before, merged into the solid surface), sorted by name |
 | Primitives | one per mesh, triangles, `POSITION` (float32, with min/max) and `NORMAL` (float32), `uint32` indices |
 | Shading | flat: one vertex per triangle corner, each carrying its triangle's normal |
 | Materials, textures, UVs, colours | none |

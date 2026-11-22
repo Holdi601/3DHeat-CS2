@@ -124,10 +124,14 @@ def hit_points(hurts: pd.DataFrame, bullets: pd.DataFrame | None) -> dict[str, n
     (m, 0 where it went through it) and where the ray came from ("bullet":
     the game's account of the shot; "aim": the attacker's eye and view).
     NaN and "" where the hit is no place on the body or nothing says where
-    the shot came from.
+    the shot came from. Besides, in the game's frame and units, for the
+    wallbang trace (wallbang.py; not written to the table): where the shot
+    left (`_fromX/Y/Z`) and the point on its line as far as the point struck
+    (`_atX/Y/Z`).
     """
     n = len(hurts)
-    out = {k: np.full(n, np.nan) for k in ("hitLocalX", "hitLocalY", "hitLocalZ", "hitDirX", "hitDirY", "hitDirZ", "hitMiss")}
+    out = {k: np.full(n, np.nan) for k in ("hitLocalX", "hitLocalY", "hitLocalZ", "hitDirX", "hitDirY", "hitDirZ", "hitMiss",
+                                           "_fromX", "_fromY", "_fromZ", "_atX", "_atY", "_atZ")}
     source = np.full(n, "", dtype=object)
     shots: dict[tuple[int, str], tuple[np.ndarray, float, float]] = {}
     if bullets is not None and len(bullets) and {"origin_x", "angles_x", "angles_y", "tick", "user_steamid"} <= set(bullets.columns):
@@ -164,4 +168,10 @@ def hit_points(hurts: pd.DataFrame, bullets: pd.DataFrame | None) -> dict[str, n
         out["hitLocalX"][i], out["hitLocalY"][i], out["hitLocalZ"][i] = p * METRES
         out["hitDirX"][i], out["hitDirY"][i], out["hitDirZ"][i] = ld
         out["hitMiss"][i] = miss * METRES
+        # The shot's own line, as far as the point struck: the shot's direction is exact, the victim's place is the
+        # server's at the tick (lag compensation struck them where the shooter saw them).
+        struck = np.array([vx[i], vy[i], vz[i]]) + p[0] * f + p[1] * u + p[2] * r
+        at = origin + d * max(0.0, float((struck - origin) @ d))
+        out["_fromX"][i], out["_fromY"][i], out["_fromZ"][i] = origin
+        out["_atX"][i], out["_atY"][i], out["_atZ"][i] = at
     return {**out, "hitFrom": source}

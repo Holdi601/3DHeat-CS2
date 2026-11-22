@@ -11,16 +11,20 @@ command step by step; this one lists everything exactly as the program has it.
 ## `python -m heat3d_cs2`
 
 ```text
-usage: heat3d_cs2 [-h] {demos,map,layouts,scoreboard} ...
+usage: heat3d_cs2 [-h] {demos,map,layouts,catalog,models,scoreboard} ...
 
 CS2 demos and maps for the 3DHeat viewer
 
 positional arguments:
-  {demos,map,layouts,scoreboard}
+  {demos,map,layouts,catalog,models,scoreboard}
     demos               demos -> one heatmap table and one match document per match
     map                 a map's collision geometry -> .glb in the demos' frame
     layouts             a map's bomb sites, buy zones, hostage spots and spawns ->
                         <map>.layouts.json
+    catalog             every weapon, item and agent of your CS2 install ->
+                        catalog.json
+    models              the agents' and weapons' models of your CS2 install -> a local
+                        model pack
     scoreboard          print a match's scoreboard
 
 options:
@@ -32,24 +36,28 @@ options:
 ```text
 usage: heat3d_cs2 demos [-h] -o OUT [--every EVERY] [--jobs JOBS] [--map MAP]
                         [--force] [--no-bulk] [--container] [--loose]
+                        [--levels LEVELS]
                         paths [paths ...]
 
 positional arguments:
-  paths          demo files or folders
+  paths            demo files or folders
 
 options:
-  -h, --help     show this help message and exit
-  -o, --out OUT  folder to write into
-  --every EVERY  sample players every N ticks (64 a second; default 8: 8 a second)
-  --jobs JOBS    matches converted at once (default: half the cores)
-  --map MAP      only matches whose file name contains this text
-  --force        rewrite matches already written
-  --no-bulk      leave the entity stream, the players' commands and the animation
-                 (over half a demo's size) out of the packets sidecar; the self-check
-                 counts them lost
-  --container    pack each match into one .3dheat file (the default)
-  --loose        keep each match as separate files (table, match.json, sidecars), not
-                 one .3dheat container
+  -h, --help       show this help message and exit
+  -o, --out OUT    folder to write into
+  --every EVERY    sample players every N ticks (64 a second; default 8: 8 a second)
+  --jobs JOBS      matches converted at once (default: half the cores)
+  --map MAP        only matches whose file name contains this text
+  --force          rewrite matches already written
+  --no-bulk        leave the entity stream, the players' commands and the animation
+                   (over half a demo's size) out of the packets sidecar; the self-
+                   check counts them lost
+  --container      pack each match into one .3dheat file (the default)
+  --loose          keep each match as separate files (table, match.json, sidecars),
+                   not one .3dheat container
+  --levels LEVELS  the levels folder with the maps' .glb (`map`), for tracing which
+                   hits went through a wall (default HEAT3D_LEVELS, else the 3DHeat
+                   levels folder; without a map's .glb its hits are not traced)
 ```
 
 ## `map`
@@ -85,6 +93,39 @@ options:
   --game GAME           the CS2 install folder, when Steam does not know it
   --source2viewer SOURCE2VIEWER
                         Source2Viewer-CLI executable, when it is not on PATH
+```
+
+## `catalog`
+
+```text
+usage: heat3d_cs2 catalog [-h] [-o OUT] [--game GAME] [--source2viewer SOURCE2VIEWER]
+                          [--vdata VDATA]
+
+options:
+  -h, --help            show this help message and exit
+  -o, --out OUT         the folder to write into (default <HEAT3D_LEVELS>/cs2)
+  --game GAME           the CS2 install folder, when Steam does not know it
+  --source2viewer SOURCE2VIEWER
+                        Source2Viewer-CLI executable, when it is not on PATH
+  --vdata VDATA         a decompiled scripts/weapons.vdata, when Source2Viewer cannot
+                        read this game build's
+```
+
+## `models`
+
+```text
+usage: heat3d_cs2 models [-h] [-o OUT] [--game GAME] [--source2viewer SOURCE2VIEWER]
+                         [--only ONLY [ONLY ...]] [--force]
+
+options:
+  -h, --help            show this help message and exit
+  -o, --out OUT         the pack folder (default <HEAT3D_LEVELS>/model-packs/cs2)
+  --game GAME           the CS2 install folder, when Steam does not know it
+  --source2viewer SOURCE2VIEWER
+                        Source2Viewer-CLI executable, when it is not on PATH
+  --only ONLY [ONLY ...]
+                        only the units whose id contains one of these words
+  --force               rewrite units already written for this game build
 ```
 
 ## `scoreboard`
@@ -151,6 +192,7 @@ Read from a conversion of the tests' synthetic demo. What each column means:
 | `text` | dictionary<values=string, indices=int32, ordered=0> |
 | `hitFrom` | dictionary<values=string, indices=int32, ordered=0> |
 | `attackerSide` | dictionary<values=string, indices=int32, ordered=0> |
+| `wallSurfaces` | dictionary<values=string, indices=int32, ordered=0> |
 | `entity` | int32 |
 | `armorDamage` | int16 |
 | `penetrated` | int16 |
@@ -168,6 +210,10 @@ Read from a conversion of the tests' synthetic demo. What each column means:
 | `attackerX` | float |
 | `attackerY` | float |
 | `attackerZ` | float |
+| `wallbang` | int8 |
+| `wallCount` | int16 |
+| `wallThickness` | float |
+| `wallGrates` | int16 |
 | `flash` | float |
 | `flashAlpha` | float |
 | `helmet` | int8 |

@@ -182,6 +182,7 @@ default). Matches already written are skipped unless `--force`.
 | `won`, `buy` | 0/1 whether this row's side won the round; its side's buy that round |
 | `detail`, `text`, `entity` | every other field of the event as JSON; a chat line; a grenade's entity (flight, detonation and flashes share it) |
 | `hitgroup`, `armorDamage`, `penetrated`, `throughSmoke`, `distance`, `assister` | where a bullet struck, armour lost; for a kill: walls, smoke, distance, assist |
+| `wallbang`, `wallCount`, `wallThickness`, `wallSurfaces`, `wallGrates` | for every hit: whether the shot went through a wall, traced through the map's level (`map`) when it is in the levels folder; how many walls, how thick, which surfaces, and the fences it crossed |
 | `state_helmet`, `state_defuser`, `state_kevlar`, `state_scoped`, `state_flashed`, `state_utility`, `state_weapon` | the player's state at the row's time, on every row naming a player (events take it from the last sample) |
 | the player's state, on positions | flash, helmet, defuser, scoped, zoom, walking, crouch, airborne, buy and bomb zone, defusing, spotted and by whom, inventory, ammunition, recoil, ping, the game's scoreboard counts, money spent |
 

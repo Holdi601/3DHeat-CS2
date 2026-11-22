@@ -33,7 +33,7 @@ def test_clips_and_sky_are_left_out_and_surfaces_named():
     assert surface_of("physics_csgo_grenadeclip") is None
     assert surface_of("physics_sky") is None
     assert surface_of("physics_group_concrete") == "concrete"
-    assert surface_of("physics_passbullets_chainlink") == "chainlink"
+    assert surface_of("physics_passbullets_chainlink") == "passbullets:chainlink"
     assert surface_of("physics_group") == "world"
     # Whatever the case of the name.
     assert surface_of("Physics_PlayerClip") is None

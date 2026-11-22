@@ -1,5 +1,26 @@
 # Changelog
 
+## 1.3.0
+
+- Wallbangs on every hit, not only kills: each `hurt` row says whether the shot went through a wall (`wallbang`),
+  how many (`wallCount`), how thick in all (`wallThickness`, m), which surfaces (`wallSurfaces`) and the fences and
+  grates it crossed (`wallGrates`), traced through the map's level from `map`.
+- The trace: the shot's own line (the game's `fire_bullets`: where it left and its direction) as far as the point
+  struck, through the map's collision mesh in a 2 m grid. Fences, grates and foliage that bullets pass are no wall,
+  nor is a wall's edge grazed (under 1 cm); a line through more than 80 cm of solid, or solid metal, cannot be the
+  bullet's and stays empty. Doors, other moving parts and players are not in the mesh, so a shot through one is
+  not seen.
+- Checked against the game's own count on 25,372 kills of 176 demos on 8 maps: they agree on 97.0 % (both yes 530,
+  both no 24,086; traced only 399, game only 357; 1.1 % of the kills left empty as above). On hits that did not
+  kill, 80 % of the traced wallbangs dealt clearly less damage than the weapon deals at that range (a wall's
+  damage drop), against 6 % of the clear shots.
+- `demos --levels <folder>`: where the maps' `.glb` are (default `HEAT3D_LEVELS`, else the 3DHeat levels folder).
+  Without the match's map there, the new columns stay empty and nothing else changes.
+- `map`: what bullets pass (the map's `passbullets` groups) is kept as its own parts, `ground|structure:passbullets:<surface>`,
+  and surfaces are named from the group's own surface property. Export your maps again for the trace to tell
+  fences from walls (the window lists maps from before 1.3.0 as exported by an older version); a level from an
+  older version is still traced, with its fences as walls.
+
 ## 1.2.0
 
 - `hurt` rows say which way the victim looked at the hit (`dirX`, `dirY`, `dirZ`, from the event's own view angles) and

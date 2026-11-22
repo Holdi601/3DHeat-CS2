@@ -1,7 +1,7 @@
 """
 Command line.
 
-    python -m heat3d_cs2 demos <demo files or folders> -o <folder> [--every 8] [--jobs N] [--no-bulk] [--loose]
+    python -m heat3d_cs2 demos <demo files or folders> -o <folder> [--every 8] [--jobs N] [--no-bulk] [--loose] [--levels <folder>]
     python -m heat3d_cs2 map <map name | path to its .vpk> -o <map>.glb
     python -m heat3d_cs2 scoreboard <match.3dheat | match.json>
 
@@ -48,7 +48,8 @@ def _version() -> str | None:
         return None
 
 
-def convert(name: str, files: list[Path], folder: Path, every: int, bulk: bool = True, container: bool = True) -> str:
+def convert(name: str, files: list[Path], folder: Path, every: int, bulk: bool = True, container: bool = True,
+            levels: str | None = None) -> str:
     from .demo import read_part
     from .match import build_match, chains
     from .output import write
@@ -66,7 +67,7 @@ def convert(name: str, files: list[Path], folder: Path, every: int, bulk: bool =
         lines.append(f"{name}: no round in {', '.join(alone)} - not written")
     for k, raws in enumerate(groups):
         label = name if k == 0 else f"{name}-{chr(ord('a') + k)}"
-        match = build_match(raws, label)
+        match = build_match(raws, label, levels)
         if not match.rounds:
             lines.append(f"{label}: no complete round in {len(raws)} file(s) - nothing written")
             continue
@@ -112,7 +113,7 @@ def _demos(args) -> int:
     print(f"{len(todo)} match(es), {jobs} at a time")
     failed = 0
     with ProcessPoolExecutor(jobs) as pool:
-        futures = {pool.submit(convert, n, f, folder, args.every, not args.no_bulk, not args.loose): n
+        futures = {pool.submit(convert, n, f, folder, args.every, not args.no_bulk, not args.loose, args.levels): n
                    for n, f in todo.items()}
         for done in as_completed(futures):
             try:
@@ -205,6 +206,9 @@ def main(argv: list[str] | None = None) -> int:
     d.add_argument("--container", action="store_true", help="pack each match into one .3dheat file (the default)")
     d.add_argument("--loose", action="store_true",
                    help="keep each match as separate files (table, match.json, sidecars), not one .3dheat container")
+    d.add_argument("--levels", help="the levels folder with the maps' .glb (`map`), for tracing which hits went through a "
+                                    "wall (default HEAT3D_LEVELS, else the 3DHeat levels folder; without a map's .glb its hits "
+                                    "are not traced)")
     d.set_defaults(run=_demos)
     m = sub.add_parser("map", help="a map's collision geometry -> .glb in the demos' frame")
     m.add_argument("name", help="the map's name (like de_x) or the path to its .vpk")

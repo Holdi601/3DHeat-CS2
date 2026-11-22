@@ -46,19 +46,21 @@ HINTS = {
         "dirZ": "dirZ",
         "extra": ["event", "match", "round", "roundTime", "phase", "weapon", "place", "won", "matchWon", "roundEndReason", "buy", "opening", "team",
                   "other", "damage", "health", "armor", "money", "text", "detail", "hitgroup", "armorDamage",
-                  "hitLocalX", "hitLocalY", "hitLocalZ", "hitDirX", "hitDirY", "hitDirZ", "hitMiss", "hitFrom"],
+                  "hitLocalX", "hitLocalY", "hitLocalZ", "hitDirX", "hitDirY", "hitDirZ", "hitMiss", "hitFrom",
+                  "wallbang", "wallCount", "wallThickness", "wallSurfaces", "wallGrates"],
     },
 }
 
 #: Columns stored as small integers or 32-bit floats; the rest are strings or float64.
 INT16 = {"round", "health", "armor", "armorDamage", "penetrated", "ammo", "ammoReserve", "shotsFired", "zoom",
          "moveType", "ping", "killsTotal", "deathsTotal", "assistsTotal", "headshotKillsTotal", "enemiesFlashedTotal",
-         "objectiveTotal", "aceRoundsTotal", "threeKillRoundsTotal", "mvps", "score", "state_utility", "earn_round_cs2"}
+         "objectiveTotal", "aceRoundsTotal", "threeKillRoundsTotal", "mvps", "score", "state_utility", "earn_round_cs2",
+         "wallCount", "wallGrates"}
 INT32 = {"money", "equipment", "entity", "damageTotal", "utilityDamageTotal", "aliveTimeTotal", "moneySavedTotal",
          "cashSpent", "cashSpentTotal", "roundStartEquipment"}
 FLOAT64 = {"time"}
 #: 0/1 flags, stored as int8.
-FLAGS = {"headshot", "opening", "traded", "noscope", "attackerBlind", "won", "matchWon", "throughSmoke", "helmet", "defuser",
+FLAGS = {"wallbang", "headshot", "opening", "traded", "noscope", "attackerBlind", "won", "matchWon", "throughSmoke", "helmet", "defuser",
          "scoped", "walking", "airborne", "buyZone", "bombZone", "defusing", "spotted", "state_helmet", "state_defuser",
          "state_kevlar", "state_scoped", "state_flashed"}
 

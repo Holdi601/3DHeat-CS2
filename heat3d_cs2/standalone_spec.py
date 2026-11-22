@@ -129,7 +129,8 @@ SPEC = Spec(
         key="cs2", label="Counter-Strike 2", find=_find, subdir="cs2", build=_build,
         maps=_maps, extract=_extract,
         existing_outputs=lambda out, m: [out / f"{m.id}.glb"],
-        output_version="1.0.0",
+        # 1.3.0: what bullets pass (fences, grates) is its own part, for the wallbang trace.
+        output_version="1.3.0",
         platforms=("windows-x64", "linux-x64"),
     )],
     checks=_checks,
