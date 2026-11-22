@@ -17,7 +17,7 @@ from heat3d_cs2.match import Round, _match_winner, _plant_sites, build_match, ch
 from heat3d_cs2.output import HINTS, write
 from heat3d_cs2.stats import player_stats, round_summaries, scoreboard_text, summary
 
-from .fixtures import death, halves, samples, two_rounds
+from .fixtures import POSITIONS, death, halves, samples, two_rounds
 
 
 @pytest.fixture(scope="module")
@@ -221,6 +221,14 @@ class TestScoreboard:
 
 
 class TestTheTable:
+    def test_a_hit_says_where_the_shooter_stood_and_where_the_victim_looked(self, match):
+        hurt = match.rows[match.rows["event"] == "hurt"].iloc[0]
+        # ace (T) hits bob: ace's place and side on bob's row, bob looking along +y (yaw 90).
+        assert (hurt["attackerX"], hurt["attackerY"], hurt["attackerZ"]) == (POSITIONS["1"][0], POSITIONS["1"][1], -160.0)
+        assert hurt["attackerSide"] == "T" and hurt["side"] == "CT"
+        assert (hurt["dirX"], hurt["dirY"], hurt["dirZ"]) == pytest.approx((0.0, 1.0, 0.0), abs=1e-9)
+        assert set(match.rows.loc[match.rows["event"] != "hurt", "attackerSide"]) == {""}
+
     def test_events_where_they_happened(self, match):
         rows = match.rows
         counts = rows["event"].value_counts().to_dict()

@@ -49,9 +49,10 @@ PROJECTILES = {
 TEXT_SAMPLES = {"spottedBy", "inventory"}
 
 #: The extra columns the rows gain here, besides the sampled players' (SAMPLE_COLUMNS).
-EXTRA_TEXT = ["detail", "hitgroup", "assister", "text", "hitFrom"]
+EXTRA_TEXT = ["detail", "hitgroup", "assister", "text", "hitFrom", "attackerSide"]
 EXTRA_NUMERIC = ["entity", "armorDamage", "penetrated", "throughSmoke", "distance", "punchPitch", "punchYaw",
-                 "hitLocalX", "hitLocalY", "hitLocalZ", "hitDirX", "hitDirY", "hitDirZ", "hitMiss"]
+                 "hitLocalX", "hitLocalY", "hitLocalZ", "hitDirX", "hitDirY", "hitDirZ", "hitMiss",
+                 "attackerX", "attackerY", "attackerZ"]
 SAMPLE_COLUMNS = [c for c in SAMPLE_FIELDS.values() if c != "aimPunch"]
 
 

@@ -931,6 +931,13 @@ def build_match(raws: list[RawPart], name: str) -> Match:
                     "y": all_hurts["user_Y"].to_numpy(dtype=float),
                     "z": all_hurts["user_Z"].to_numpy(dtype=float),
                     "place": all_hurts["user_last_place_name"].fillna("").astype(str).to_numpy(),
+                    # Which way the victim looked at the hit, and where the shooter stood and on which side: the
+                    # shot's angle against the victim's facing and its distance, worked out by the viewer.
+                    **dict(zip(("dirX", "dirY", "dirZ"), _direction(_numbers(all_hurts, "user_yaw"), _numbers(all_hurts, "user_pitch")))),
+                    "attackerX": _numbers(all_hurts, "attacker_X"),
+                    "attackerY": _numbers(all_hurts, "attacker_Y"),
+                    "attackerZ": _numbers(all_hurts, "attacker_Z"),
+                    "attackerSide": [side_of(v) for v in all_hurts["attacker_team_num"]] if "attacker_team_num" in all_hurts else "",
                     "other": all_hurts["attacker_name"].fillna("").astype(str).to_numpy(),
                     "damage": more.health_lost(all_hurts, which),
                     "health": all_hurts["health"].to_numpy(dtype=float),

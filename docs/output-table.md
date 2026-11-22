@@ -71,6 +71,7 @@ string. Numeric columns are null where a row has no value.
 | `armorDamage` | int16 | armour lost; `hurt` only |
 | `hitLocalX`, `hitLocalY`, `hitLocalZ` | float32 | where on the body the bullet struck, in the victim's frame in metres (x forward, y up from the feet, z right): the shot's ray (`fire_bullets`, else the attacker's eye and view) traced to a body posed as the victim stood and crouched, onto the part `hitgroup` names; `hurt` only |
 | `hitDirX`, `hitDirY`, `hitDirZ` | float32 | the shot's direction in the same frame; `hitMiss` how far (m) the ray passed the named part by (0: through it); `hitFrom` `bullet` or `aim` |
+| `attackerX`, `attackerY`, `attackerZ`, `attackerSide` | float32, string | where the shooter stood (the game's units) and their side (`T`, `CT`), at the hit; `hurt` only (since 1.2.0). With the row's `dirX`..`dirZ` - which way the victim looked at the hit - they give the shot's distance and its angle against the victim's facing |
 | `penetrated` | int16 | walls the killing bullet went through; `kill` and `death` |
 | `throughSmoke` | int8 | 0/1, killed through a smoke; `kill` and `death` |
 | `distance` | float32 | the kill's distance as the game counts it (metres); `kill` and `death` |
@@ -103,7 +104,7 @@ player's last position sample).
 | `position` | the player | the player (feet) | `dirX`-`dirZ`, `health`, `armor`, `money`, `equipment`, `weapon` (held), `place`, and the player's whole state (the columns from `flash` on) - in freeze time too |
 | `kill` | the killer | where the killer stood | `other` (victim), `weapon`, `headshot`, `opening`, `traded` (a trade kill), `noscope`, `attackerBlind`, `place` |
 | `death` | the victim | where the victim fell | `other` (killer; empty for the world), `weapon`, `headshot`, `opening`, `traded` (avenged), `noscope`, `attackerBlind`, `place` |
-| `hurt` | the victim | where the victim was hit | `other` (attacker), `damage`, `health`, `armor`, `armorDamage`, `hitgroup`, `weapon`, `place` - teammates' and the world's hits too |
+| `hurt` | the victim | where the victim was hit | `other` (attacker), `damage`, `health`, `armor`, `armorDamage`, `hitgroup`, `weapon`, `place`, the victim's facing (`dirX`..`dirZ`) and the shooter's place and side (`attackerX`..`attackerZ`, `attackerSide`) - teammates' and the world's hits too |
 | `shot` | the shooter | where the shot was fired from | `weapon`, `place`, `detail` (the game's account of the bullets) |
 | `slash` | the player | where a knife was swung | `weapon` = `Knife` |
 | `grenade` | the thrower | the grenade in flight, at the players' sampling and where it stopped | `weapon` (the grenade), `entity` |

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "heat3d-cs2"
-version = "1.1.0"
+version = "1.2.0"
 description = "Counter-Strike 2 demos into the tables the 3DHeat viewer reads, and the maps of your CS2 install into .glb levels"
 readme = "README.md"
 license = { text = "MIT" }

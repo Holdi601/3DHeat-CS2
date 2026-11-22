@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.0
+
+- `hurt` rows say which way the victim looked at the hit (`dirX`, `dirY`, `dirZ`, from the event's own view angles) and
+  where the shooter stood and on which side (`attackerX`, `attackerY`, `attackerZ`, `attackerSide`), so a hit's
+  distance and its angle against the victim's facing are exact at the hit, not read from the 8-a-second samples.
+  Tables converted before keep working; convert again for the new columns.
+
 ## 1.1.0
 
 - A standalone program for Windows and Linux (no Python needed), built by CI with a `SHA256SUMS` file. Without

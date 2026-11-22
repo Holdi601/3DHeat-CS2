@@ -128,6 +128,8 @@ def hurt(tick: int, attacker: str, victim: str, dmg: int, health_after: int, wea
         "tick": tick,
         **player_columns("attacker", attacker, tick),
         **player_columns("user", victim, tick),
+        "user_yaw": 90.0,
+        "user_pitch": 0.0,
         "weapon": weapon,
         "dmg_health": dmg,
         "health": health_after,

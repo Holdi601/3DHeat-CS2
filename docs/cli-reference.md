@@ -150,6 +150,7 @@ Read from a conversion of the tests' synthetic demo. What each column means:
 | `assister` | dictionary<values=string, indices=int32, ordered=0> |
 | `text` | dictionary<values=string, indices=int32, ordered=0> |
 | `hitFrom` | dictionary<values=string, indices=int32, ordered=0> |
+| `attackerSide` | dictionary<values=string, indices=int32, ordered=0> |
 | `entity` | int32 |
 | `armorDamage` | int16 |
 | `penetrated` | int16 |
@@ -164,6 +165,9 @@ Read from a conversion of the tests' synthetic demo. What each column means:
 | `hitDirY` | float |
 | `hitDirZ` | float |
 | `hitMiss` | float |
+| `attackerX` | float |
+| `attackerY` | float |
+| `attackerZ` | float |
 | `flash` | float |
 | `flashAlpha` | float |
 | `helmet` | int8 |
