@@ -11,13 +11,15 @@ command step by step; this one lists everything exactly as the program has it.
 ## `python -m heat3d_cs2`
 
 ```text
-usage: heat3d_cs2 [-h] {demos,map,layouts,catalog,models,scoreboard} ...
+usage: heat3d_cs2 [-h] {demos,view,map,layouts,catalog,models,scoreboard} ...
 
 CS2 demos and maps for the 3DHeat viewer
 
 positional arguments:
-  {demos,map,layouts,catalog,models,scoreboard}
+  {demos,view,map,layouts,catalog,models,scoreboard}
     demos               demos -> one heatmap table and one match document per match
+    view                demos -> only the `view` sidecar (every tick's view and line
+                        of sight), beside matches already written
     map                 a map's collision geometry -> .glb in the demos' frame
     layouts             a map's bomb sites, buy zones, hostage spots and spawns ->
                         <map>.layouts.json
@@ -59,6 +61,26 @@ options:
                    hits went through (default HEAT3D_LEVELS, else the 3DHeat levels
                    folder; without a map's .glb its hits are not traced, and whether
                    one went through something is told by its damage alone)
+```
+
+## `view`
+
+```text
+usage: heat3d_cs2 view [-h] -o OUT [--jobs JOBS] [--map MAP] [--force]
+                       [--levels LEVELS]
+                       paths [paths ...]
+
+positional arguments:
+  paths            demo files or folders
+
+options:
+  -h, --help       show this help message and exit
+  -o, --out OUT    the folder the matches were written into (by `demos`)
+  --jobs JOBS      matches read at once (default: a quarter of the cores)
+  --map MAP        only matches whose file name contains this text
+  --force          rewrite view sidecars already written
+  --levels LEVELS  the levels folder with the maps' .glb (as for `demos`); without a
+                   match's map, the line-of-sight columns stay empty
 ```
 
 ## `map`

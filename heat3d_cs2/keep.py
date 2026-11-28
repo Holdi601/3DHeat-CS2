@@ -665,8 +665,9 @@ def _entry(seen: int, decoded: int = 0, partial: int = 0, raw: int = 0) -> dict:
     return {"seen": seen, "decoded": decoded, "partial": partial, "raw": raw, "lost": seen - decoded - partial - raw}
 
 
-def write_sidecars(match, folder: str | Path, bulk: bool = True) -> dict:
-    """Write the four sidecars beside the match's table; the `completeness` block of its self-check."""
+def write_sidecars(match, folder: str | Path, bulk: bool = True, levels: str | Path | None = None) -> dict:
+    """Write the sidecars beside the match's table (and the `view` one, `view.py`); the `completeness` block of its
+    self-check."""
     folder = Path(folder)
     names = {what: folder / f"{match.name}.{what}.parquet" for what in ("events", "props", "strings", "packets")}
     types: dict[str, dict] = {}
@@ -689,6 +690,14 @@ def write_sidecars(match, folder: str | Path, bulk: bool = True) -> dict:
                    ("itemDrops", len(match.item_drops))):
         if n:
             types[key] = _entry(n, decoded=n)
+
+    from .view import write_view
+
+    view_path = folder / f"{match.name}.view.parquet"
+    if write_view(match, view_path, levels):
+        names["view"] = view_path
+    else:
+        view_path.unlink(missing_ok=True)
 
     out = {
         "rule": RULE,

@@ -1,5 +1,6 @@
 # CS2 demos and maps. Everything here is permissive; see LICENSES.md.
 demoparser2>=0.42
+scipy>=1.10
 pyarrow>=15
 pandas>=2.0
 numpy>=1.24

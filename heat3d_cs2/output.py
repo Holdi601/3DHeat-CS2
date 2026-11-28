@@ -94,7 +94,7 @@ def table(match: Match) -> pa.Table:
     return pa.Table.from_arrays(arrays, schema=schema)
 
 
-def write(match: Match, folder: str | Path, bulk: bool = True) -> tuple[Path, Path]:
+def write(match: Match, folder: str | Path, bulk: bool = True, levels: str | Path | None = None) -> tuple[Path, Path]:
     """
     `<match>.parquet` and `<match>.match.json` in `folder`, and beside them
     the sidecars with everything else the demo holds (`keep.py`; `bulk`
@@ -110,6 +110,6 @@ def write(match: Match, folder: str | Path, bulk: bool = True) -> tuple[Path, Pa
     doc = folder / f"{match.name}.match.json"
     pq.write_table(table(match), data, compression="snappy", row_group_size=256_000)
     document = summary(match)
-    document["selfCheck"] = {"completeness": write_sidecars(match, folder, bulk=bulk)}
+    document["selfCheck"] = {"completeness": write_sidecars(match, folder, bulk=bulk, levels=levels)}
     doc.write_text(json.dumps(document, indent=1, ensure_ascii=False), encoding="utf-8")
     return data, doc

@@ -2,15 +2,17 @@
 Command line.
 
     python -m heat3d_cs2 demos <demo files or folders> -o <folder> [--every 8] [--jobs N] [--no-bulk] [--loose] [--levels <folder>]
+    python -m heat3d_cs2 view <demo files or folders> -o <folder> [--jobs N] [--levels <folder>]
     python -m heat3d_cs2 map <map name | path to its .vpk> -o <map>.glb
     python -m heat3d_cs2 scoreboard <match.3dheat | match.json>
 
 `demos` groups a match's parts by name (`...-p1.dem`, `...-p2.dem` are one
 match) and writes `<map>/<match>.parquet` and `<map>/<match>.match.json` for
-each, with the sidecars beside them (`<match>.events|props|strings|packets.parquet`),
+each, with the sidecars beside them (`<match>.events|props|strings|packets|view.parquet`),
 skipping what is already written unless `--force`. Each match is then packed
 into one file, `<map>/<match>.3dheat` (container.py); `--loose` keeps the
-separate files instead.
+separate files instead. `view` writes only the `view` sidecar (view.py: every
+tick's view and line of sight) beside matches written before 1.5.0.
 """
 
 from __future__ import annotations
@@ -72,7 +74,7 @@ def convert(name: str, files: list[Path], folder: Path, every: int, bulk: bool =
             lines.append(f"{label}: no complete round in {len(raws)} file(s) - nothing written")
             continue
         # A folder per map: a heatmap is of one map, so loading one folder is loading one map.
-        data, doc = write(match, folder / (match.map or "unknown"), bulk=bulk)
+        data, doc = write(match, folder / (match.map or "unknown"), bulk=bulk, levels=levels)
         score = " ".join(f"{t} {s}" for t, s in match.rounds[-1].score.items()) if match.rounds else "no rounds"
         cut = f", {len(match.incomplete)} incomplete round(s) left out" if match.incomplete else ""
         late = f", recorded from round {match.rounds[0].number}" if match.rounds and match.rounds[0].number > 1 else ""
@@ -115,6 +117,50 @@ def _demos(args) -> int:
     with ProcessPoolExecutor(jobs) as pool:
         futures = {pool.submit(convert, n, f, folder, args.every, not args.no_bulk, not args.loose, args.levels): n
                    for n, f in todo.items()}
+        for done in as_completed(futures):
+            try:
+                print(done.result(), flush=True)
+            except Exception as e:  # one bad demo does not stop the rest
+                failed += 1
+                print(f"{futures[done]}: failed - {e}", flush=True)
+    return 1 if failed else 0
+
+
+def view_only(name: str, files: list[Path], folder: Path, levels: str | None = None) -> str:
+    """The `view` sidecar of a match alone, beside a table (or container) already written (`view`)."""
+    from .demo import read_part
+    from .match import build_match, chains
+    from .view import write_view
+
+    lines = []
+    for k, raws in enumerate(chains([read_part(f, 8) for f in files])):
+        label = name if k == 0 else f"{name}-{chr(ord('a') + k)}"
+        match = build_match(raws, label, levels)
+        if not match.rounds:
+            lines.append(f"{label}: no complete round - nothing written")
+            continue
+        out = folder / (match.map or "unknown")
+        out.mkdir(parents=True, exist_ok=True)
+        path = out / f"{label}.view.parquet"
+        rows = write_view(match, path, levels)
+        lines.append(f"{label}: {match.map}, {rows:,} view rows -> {path}")
+    return "\n".join(lines)
+
+
+def _view(args) -> int:
+    folder = Path(args.out)
+    have = {p.name[: -len(".view.parquet")] for p in folder.rglob("*.view.parquet")} if folder.exists() else set()
+    todo = {n: f for n, f in matches_in(args.paths).items() if args.force or n not in have}
+    if args.map:
+        todo = {n: f for n, f in todo.items() if args.map.lower() in n.lower()}
+    if not todo:
+        print("nothing to do: no demos found, or every match has its view sidecar already (--force redoes them)")
+        return 0
+    jobs = max(1, min(args.jobs or max(1, (os.cpu_count() or 2) // 4), len(todo)))
+    print(f"{len(todo)} match(es), {jobs} at a time")
+    failed = 0
+    with ProcessPoolExecutor(jobs) as pool:
+        futures = {pool.submit(view_only, n, f, folder, args.levels): n for n, f in todo.items()}
         for done in as_completed(futures):
             try:
                 print(done.result(), flush=True)
@@ -210,6 +256,16 @@ def main(argv: list[str] | None = None) -> int:
                                     "(default HEAT3D_LEVELS, else the 3DHeat levels folder; without a map's .glb its hits are "
                                     "not traced, and whether one went through something is told by its damage alone)")
     d.set_defaults(run=_demos)
+    w = sub.add_parser("view", help="demos -> only the `view` sidecar (every tick's view and line of sight), beside "
+                                    "matches already written")
+    w.add_argument("paths", nargs="+", help="demo files or folders")
+    w.add_argument("-o", "--out", required=True, help="the folder the matches were written into (by `demos`)")
+    w.add_argument("--jobs", type=int, default=0, help="matches read at once (default: a quarter of the cores)")
+    w.add_argument("--map", help="only matches whose file name contains this text")
+    w.add_argument("--force", action="store_true", help="rewrite view sidecars already written")
+    w.add_argument("--levels", help="the levels folder with the maps' .glb (as for `demos`); without a match's map, the "
+                                    "line-of-sight columns stay empty")
+    w.set_defaults(run=_view)
     m = sub.add_parser("map", help="a map's collision geometry -> .glb in the demos' frame")
     m.add_argument("name", help="the map's name (like de_x) or the path to its .vpk")
     m.add_argument("-o", "--out", required=True, help=".glb to write")

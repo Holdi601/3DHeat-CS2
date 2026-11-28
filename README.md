@@ -118,6 +118,8 @@ install folder; demos from a tournament site are wherever you saved them.
 | | `--loose` | off | separate files per match instead of one `.3dheat` container |
 | | `--container` | on | one `.3dheat` file per match (the default) |
 | | `--no-bulk` | off | leave the entity stream, players' commands and animation out of the packets sidecar (the self-check counts them lost) |
+| `view <paths>` | `-o`, `--out` | required | only the `view` sidecar (every tick's view and line of sight), into the folder `demos` wrote, beside each match |
+| | `--jobs N`, `--map TEXT`, `--force`, `--levels FOLDER` | a quarter of the cores | as for `demos` |
 | `map <name or .vpk>` | `-o`, `--out` | required | the `.glb` to write |
 | | `--game FOLDER` | from Steam | the CS2 install folder |
 | | `--source2viewer EXE` | `HEAT3D_SOURCE2VIEWER`, then `PATH` | the Source2Viewer CLI (this option first, then the variable, then `PATH`) |
@@ -156,6 +158,10 @@ separate files:
 - `<match>.events.parquet`, `.props.parquet`, `.strings.parquet`,
   `.packets.parquet` (sidecar roles `events`, `props`, `strings`, `packets`) - everything else the demo holds, whole (see
   [Completeness](#completeness)).
+- `<match>.view.parquet` (role `view`, since 1.5.0) - every tick of every living player: position, view, mouse
+  movement, recoil, and which enemies were in clear line of sight through the map. The viewer's "Suspicious play"
+  check reads it ([the view sidecar](docs/output-table.md#the-view-sidecar)). `view` writes it alone beside matches
+  converted before 1.5.0.
 
 A folder of a few hundred demos takes minutes (`--jobs`, half the cores by
 default). Matches already written are skipped unless `--force`.

@@ -152,6 +152,18 @@ read at every tick, a window of ticks at a time (about two minutes for a
 40-minute demo, near 3 GB of memory at most per job), then the demo is
 walked once more for its frames and messages.
 
+## `view` - only the view sidecar
+
+```text
+python -m heat3d_cs2 view D:\Demos\event -o out
+```
+
+Reads the demos again and writes only `<map>/<match>.view.parquet` (see [the view sidecar](output-table.md#the-view-sidecar))
+into the folder `demos` wrote, beside each match - for matches converted before 1.5.0, which then need not be
+converted again whole. Matches that already have the sidecar are skipped unless `--force`. Options as for
+`demos`: `--jobs N` (default a quarter of the cores), `--map TEXT`, `--levels FOLDER` (without the map's level the
+line-of-sight columns stay empty). About a minute a match.
+
 ## `map` - a map's geometry as `.glb`
 
 ![map --help](assets/img/map-help.svg)

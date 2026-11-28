@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.5.0
+
+- A new sidecar, `<match>.view.parquet` (role `view`), for the viewer's "Suspicious play" check: every tick (64 a
+  second) of every living player in a round - position, the view, how far the view the player's own command asked
+  for was from the one the server gave (`cmdOff`), the mouse movement the command carried, the recoil's aim punch,
+  crouch, speed, flash, zoom, the gun in hand - and which enemies were in clear line of sight (`sees`; `smoked` for
+  those behind a smoke only), checked through the map's level with five points on each enemy, sixteen times a
+  second and at every tick where it changes. Without the map's level the line-of-sight columns stay empty.
+- `view <demos> -o <folder>`: writes only that sidecar beside matches written by an earlier version (no new
+  table, no new container), so older conversions need not be redone whole.
+
 ## 1.4.0
 
 - Wallbangs are now told by the damage the hit dealt: a gun's damage is exact (its base damage, its falloff over the

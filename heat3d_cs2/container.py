@@ -27,7 +27,7 @@ from pathlib import Path
 FORMAT = "3dheat"
 FORMAT_VERSION = "1.0"  # major.minor: readers take any minor of their major
 # Sidecar words (docs/converters.md) and the converters' other side tables.
-SIDE_ROLES = ("messages", "flight", "packets", "events", "entities", "props", "units", "combatlog", "strings",
+SIDE_ROLES = ("messages", "flight", "packets", "events", "entities", "props", "units", "combatlog", "strings", "view",
               "raw", "effects", "objectives", "chat")
 _SIDE = re.compile(rf"^\.({'|'.join(SIDE_ROLES)})\.parquet$", re.I)
 _JSON = re.compile(r"^\.(\w+)\.json$", re.I)

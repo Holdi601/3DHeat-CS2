@@ -2,7 +2,7 @@
   "spec": "heat3d_cs2.standalone_spec",
   "collect": ["polars", "_polars_runtime_32"],
   "collect_submodules": ["numpy", "pyarrow", "pandas"],
-  "hidden_imports": ["demoparser2", "tqdm", "scipy.sparse.csgraph", "fast_simplification"],
+  "hidden_imports": ["demoparser2", "tqdm", "scipy.sparse.csgraph", "scipy.ndimage", "fast_simplification"],
   "platforms": {
     "windows-x64": {"build": true, "tested": true, "note": "demos and maps; CI builds and smoke-runs, maps checked on a real install; maps need Source2Viewer-CLI"},
     "linux-x64": {"build": true, "tested": false, "note": "native Steam installs found (also flatpak and Steam Deck); CI builds and smoke-runs; maps need Source2Viewer-CLI for Linux"}

@@ -205,6 +205,35 @@ rows = table.to_pandas()
 kills = rows[rows["event"] == "kill"]
 ```
 
+## The view sidecar
+
+`<match>.view.parquet` (role `view`, since 1.5.0): one row per living player per tick (64 a second) from the end of
+freeze time until four seconds after the round was decided. What the viewer's "Suspicious play" check reads.
+
+| Column | Type | Holds |
+|---|---|---|
+| `time`, `tick`, `part`, `round` | float64, int32, int8, int16 | the table's clock, the demo's tick, which file of the match, the round |
+| `slot`, `steamid` | int8, string | the player; `slot` is their place in the footer's `players` list and their bit in the masks |
+| `x`, `y`, `z` | float32 | position (feet), game units |
+| `pitch`, `yaw` | float32 | the view (eye angles), degrees; pitch positive looking down, as the game has it |
+| `cmdOff` | float32 | degrees between the view the player's command asked for and the view the server gave (0 in normal play) |
+| `mouseX`, `mouseY` | int16 | the mouse movement (counts) the player's command carried |
+| `duck`, `vx`, `vy`, `vz` | float32 | crouch 0..1; velocity, units a second |
+| `flash` | float32 | the last flash's length, seconds |
+| `punchPitch`, `punchYaw` | float32 | the recoil's aim punch, degrees (bullets go where the view is plus twice this) |
+| `zoom`, `airborne` | int8 | scoped in; in the air |
+| `weapon` | string | the gun in hand |
+| `sees` | int32 | bitmask of the enemies (by `slot`) with a clear line of sight from the player's eye to any of five points on them (head, chest, chest a little to either side, knee), through the map's level and clear of smoke; whatever the player looked at. Empty without the map's level |
+| `smoked` | int32 | the enemies whose line was clear of walls but not of smoke |
+
+The line of sight is checked sixteen times a second and at every tick where it changes. The level is a grid of
+30 cm cubes, a line that reaches a solid one tested against its triangles; glass, chain-link, railings, grates,
+foliage and what bullets pass are seen through; doors and other moving parts are not in the level. A smoke is an
+ellipsoid around where it went off, from a second after it popped until it fades. On 2,197 kills of 16 demos, of
+those the game says went through no wall and no smoke, the line was clear within a quarter second before the kill
+on 96 %. The footer key `heat3d` (`kind: cs2-view`) lists the players with their slots, the sight rules and the
+smokes.
+
 ## Axes and units
 
 The coordinates are the game's own: **inches** (one game unit; a player is 72
